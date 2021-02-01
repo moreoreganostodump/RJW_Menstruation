@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30907.101
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RJW_Menstruation", "RJW_Menstruation\RJW_Menstruation.csproj", "{847C0F22-0689-42A0-A09E-FBE17A53BD08}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{847C0F22-0689-42A0-A09E-FBE17A53BD08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{847C0F22-0689-42A0-A09E-FBE17A53BD08}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{847C0F22-0689-42A0-A09E-FBE17A53BD08}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{847C0F22-0689-42A0-A09E-FBE17A53BD08}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7C747E50-BD18-4B79-AB42-D6788A4024E3}
+	EndGlobalSection
+EndGlobal

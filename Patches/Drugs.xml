@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Patch>
+	<Operation Class="PatchOperationAdd">
+		<xpath>Defs/ThingDef[defName="RJW_FertPill"]/ingestible/outcomeDoers</xpath>
+		<value>
+				<li Class="RJW_Menstruation.FertPillOutcomDoer"/>
+		</value>
+	</Operation>
+</Patch>

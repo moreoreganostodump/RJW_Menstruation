@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <Mod_Title>RJW Menstrution Cycle</Mod_Title>
+  
+  <Menstrual_Blood>menstrual blood</Menstrual_Blood>
+  <Info_noCum>Empty</Info_noCum>
+  <Stage_Follicular>Follicular</Stage_Follicular>
+  <Stage_Ovulatory>Ovulation</Stage_Ovulatory> 
+  <Stage_Luteal>Luteal</Stage_Luteal>
+  <Stage_Bleeding>In period</Stage_Bleeding>
+  <Stage_Fertilized>Luteal</Stage_Fertilized>
+  <Stage_Pregnant>Pregnant</Stage_Pregnant>
+  <Stage_Recover>Recovering from birth</Stage_Recover>
+  <Dialog_WombInfo01>State</Dialog_WombInfo01>
+  <Dialog_WombInfo02>Fetus</Dialog_WombInfo02>
+  <Dialog_WombInfo03>Father</Dialog_WombInfo03>
+  <Dialog_WombInfo04>Cum list</Dialog_WombInfo04>
+  <Dialog_WombInfo05>Fertilized</Dialog_WombInfo05>
+  <Dialog_WombInfo06>Fertilizing</Dialog_WombInfo06>
+  <Dialog_WombInfo07>Ovulation</Dialog_WombInfo07>
+  <Dialog_WombInfo08></Dialog_WombInfo08>
+  <Dialog_WombInfo09></Dialog_WombInfo09>
+  
+  <Option1_Label>enable womb icon</Option1_Label>
+  <Option1_Desc>enable womb icon gizmo</Option1_Desc>
+  <Option2_Label>enable animal cycle</Option2_Label>
+  <Option2_Desc>simulate animal's cycle.&#10;this option will apply after save loaded&#10;not recommended</Option2_Desc>
+  <Option3_Label>implantation chance</Option3_Label>
+  <Option3_Desc>set implantation chance of fertilized egg</Option3_Desc>
+  <Option4_Label>fertilization chance</Option4_Label>
+  <Option4_Desc>set fertilize chance of sperm on every hour</Option4_Desc>
+  <Option5_Label>cum decay ratio per hour</Option5_Label>
+  <Option5_Desc>cum will decrease about this ratio</Option5_Desc>
+  <Option6_Label>cum fertility decay ratio per hour</Option6_Label>
+  <Option6_Desc>cum will lose fertility about this ratio</Option6_Desc>
+  <Option7_Label>cycle accelerate</Option7_Label>
+  <Option7_Desc>accelerate menstrution cycle</Option7_Desc>
+  <Option8_Label>Debug</Option8_Label>
+  <Option8_Desc>show debug informations.</Option8_Desc>
+  <Option9_Label></Option9_Label>
+  <Option9_Desc> </Option9_Desc>
+  <Option10_Label></Option10_Label>
+  <Option10_Desc> </Option10_Desc>
+  <Option11_Label></Option11_Label>
+  <Option11_Desc> </Option11_Desc>
+  
+  
+</LanguageData>

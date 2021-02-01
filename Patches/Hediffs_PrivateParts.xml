@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- one cycle = folicularIntervalDays + lutealIntervalDays -->
+<!-- folicularIntervalDays includes bleedingIntervalDays.  -->
+<!-- bleedingIntervalDays must be smaller than folicularIntervalDays  -->
+<!-- unit of maxCumCapacity is ml -->
+
+<Patch>
+	<Operation Class="PatchOperationAdd">
+		<xpath>Defs/rjw.HediffDef_PartBase[defName="Vagina"]</xpath>
+		<value>
+			<comps>
+				<li Class="RJW_Menstruation.CompProperties_Menstruation">
+					<maxCumCapacity>500</maxCumCapacity>
+					<baseImplantationChanceFactor>1.0</baseImplantationChanceFactor>
+					<basefertilizationChanceFactor>1.0</basefertilizationChanceFactor>
+					<deviationFactor>0.05</deviationFactor>
+					<folicularIntervalDays>14</folicularIntervalDays>
+					<lutealIntervalDays>14</lutealIntervalDays>
+					<bleedingIntervalDays>6</bleedingIntervalDays>
+					<recoveryIntervalDays>10</recoveryIntervalDays>
+					<eggLifespanDays>3</eggLifespanDays>
+					<wombTex>Womb/Womb</wombTex>
+				</li>
+			</comps>
+		</value>
+	</Operation>
+</Patch>
