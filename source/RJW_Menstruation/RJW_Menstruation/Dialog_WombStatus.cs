@@ -179,7 +179,7 @@ namespace RJW_Menstruation
 			Rect genitalRect = new Rect(24, pawnRectHeight + 2*fontheight, genitalRectWidth, genitalRectHeight + fontheight*2);
 			Rect genitalIconRect = new Rect(genitalRect.x,genitalRect.y + fontheight ,genitalRectWidth,genitalRectHeight);
 			Rect genitalVaginaLabelRect = new Rect(genitalRect.x,genitalRect.y,genitalRectWidth,fontheight);
-			Rect genitalAnusLabelRect = new Rect(genitalRect.x,genitalRect.y +genitalRectHeight ,genitalRectWidth,fontheight);
+			Rect genitalAnusLabelRect = new Rect(genitalRect.x,genitalRect.y + fontheight + genitalRectHeight ,genitalRectWidth,fontheight);
 
 			vagina = Utility.GetGenitalIcon(pawn);
 			anal = Utility.GetAnalIcon(pawn);
