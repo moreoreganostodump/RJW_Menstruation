@@ -208,12 +208,12 @@ namespace RJW_Menstruation
         public static string GetVaginaLabel(Pawn pawn)
         {
             var hediff = Genital_Helper.get_PartsHediffList(pawn, Genital_Helper.get_genitalsBPR(pawn)).Find((Hediff h) => h.def.defName.ToLower().Contains("vagina"));
-            return hediff.LabelBase + "\n" + hediff.LabelInBrackets;
+            return hediff.LabelBase + "\n(" + hediff.LabelInBrackets + ")";
         }
         public static string GetAnusLabel(Pawn pawn)
         {
             var hediff = Genital_Helper.get_PartsHediffList(pawn, Genital_Helper.get_anusBPR(pawn)).Find((Hediff h) => h.def.defName.ToLower().Contains("anus"));
-            return hediff.Label;
+            return hediff.LabelBase + "\n(" + hediff.LabelInBrackets + ")";
         }
 
 
