@@ -31,6 +31,8 @@ namespace RJW_Menstruation
         public static int CycleAcceleration = CycleAccelerationDefault;
         public static bool EnableWombIcon = true;
         public static bool EnableAnimalCycle = false;
+        public static bool DrawWombStatus = true;
+        public static bool DrawVaginaStatus = true;
         public static bool Debug = false;
 
         public override void ExposeData()
@@ -45,6 +47,9 @@ namespace RJW_Menstruation
             Scribe_Values.Look(ref CumFertilityDecayRatio, "CumFertilityDecayRatio", CumFertilityDecayRatio, true);
             Scribe_Values.Look(ref EnableWombIcon, "EnableWombIcon", EnableWombIcon, true);
             Scribe_Values.Look(ref EnableAnimalCycle, "EnableAnimalCycle", EnableAnimalCycle, true);
+            Scribe_Values.Look(ref DrawWombStatus, "DrawWombStatus", DrawWombStatus, true);
+            Scribe_Values.Look(ref DrawVaginaStatus, "DrawVaginaStatus", DrawVaginaStatus, true);
+            Scribe_Values.Look(ref Debug, "Debug", Debug, true);
             base.ExposeData();
         }
 
@@ -74,6 +79,13 @@ namespace RJW_Menstruation
             listmain.Begin(mainRect);
 
             listmain.CheckboxLabeled(Translations.Option1_Label, ref Configurations.EnableWombIcon, Translations.Option1_Desc);
+            if (Configurations.EnableWombIcon)
+            {
+                Listing_Standard wombsection = listmain.BeginSection_NewTemp(50);
+                wombsection.CheckboxLabeled(Translations.Option9_Label, ref Configurations.DrawWombStatus, Translations.Option9_Desc);
+                wombsection.CheckboxLabeled(Translations.Option10_Label, ref Configurations.DrawVaginaStatus, Translations.Option10_Desc);
+                listmain.EndSection(wombsection);
+            }
             
             listmain.CheckboxLabeled(Translations.Option2_Label, ref Configurations.EnableAnimalCycle, Translations.Option2_Desc);
             

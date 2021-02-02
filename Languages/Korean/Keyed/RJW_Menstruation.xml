@@ -38,10 +38,10 @@
   <Option7_Desc>월경주기를 더 빠르게합니다.</Option7_Desc>
   <Option8_Label>Debug</Option8_Label>
   <Option8_Desc>디버그정보를 보여줍니다.</Option8_Desc>
-  <Option9_Label></Option9_Label>
-  <Option9_Desc> </Option9_Desc>
-  <Option10_Label></Option10_Label>
-  <Option10_Desc> </Option10_Desc>
+  <Option9_Label>자궁 그림</Option9_Label>
+  <Option9_Desc>상태창에 자궁그림을 표시합니다.</Option9_Desc>
+  <Option10_Label>보지 그림</Option10_Label>
+  <Option10_Desc>상태창에 보지와 항문그림을 표시합니다.</Option10_Desc>
   <Option11_Label></Option11_Label>
   <Option11_Desc> </Option11_Desc>
   

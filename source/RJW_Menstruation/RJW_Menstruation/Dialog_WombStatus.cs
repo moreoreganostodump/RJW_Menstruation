@@ -40,7 +40,11 @@ namespace RJW_Menstruation
         {
             get
             {
-				return new Vector2(300f + 2*windowMargin,800f);
+				float width = 300f + 2 * windowMargin;
+				float height = 800f;
+				if (!Configurations.DrawWombStatus) height -= wombRectHeight; 
+				if (!Configurations.DrawVaginaStatus) height -= genitalRectHeight; 
+				return new Vector2(width,height);
             }
         }
 
@@ -79,7 +83,7 @@ namespace RJW_Menstruation
 		}
 
 		private void MainContents(Rect mainRect)
-        {
+		{
 
 			boxstyle.hover = boxstyle.normal;
 			boxstyle.onHover = boxstyle.normal;
@@ -121,22 +125,30 @@ namespace RJW_Menstruation
 
 
 			Rect pawnRect = new Rect(0, 0, pawnRectWidth, pawnRectHeight);
-			Widgets.DrawTextureFitted(pawnRect,PortraitsCache.Get(pawn, pawnRect.size),1.0f);
-			Rect pawnLabelRect = new Rect(0, pawnRectHeight, pawnRectWidth, fontheight-10);
-			Rect pawnLabel2Rect = new Rect(0, pawnRectHeight+fontheight-10, pawnRectWidth, fontheight-10);
+			Widgets.DrawTextureFitted(pawnRect, PortraitsCache.Get(pawn, pawnRect.size), 1.0f);
+			Rect pawnLabelRect = new Rect(0, pawnRectHeight, pawnRectWidth, fontheight - 10);
+			Rect pawnLabel2Rect = new Rect(0, pawnRectHeight + fontheight - 10, pawnRectWidth, fontheight - 10);
 			fontstylecenter.normal.textColor = pawn.DrawColor;
 			GUI.Label(pawnLabelRect, pawn.Name.ToStringFull, fontstylecenter);
 			GUI.Label(pawnLabel2Rect, pawn.story.Title, fontstylecenter);
 			GUI.color = Color.white;
 
+			float wombrecth = 0;
+			if (Configurations.DrawWombStatus)
+			{
+				wombrecth = wombRectHeight;
+				cumcolor = comp.GetCumMixtureColor;
+				Rect wombRect = new Rect(0f, mainRect.yMax - wombRectHeight + preginfoheight, wombRectWidth, wombRectHeight);
+				DrawWomb(wombRect);
+			}
 
-			Rect wombInfoRect = new Rect(0f, mainRect.yMax - wombRectHeight - fontheight - 2, wombRectWidth, fontheight);
+			Rect wombInfoRect = new Rect(0f, mainRect.yMax - wombrecth - fontheight - 2, wombRectWidth, fontheight);
 
 			buttonstyle.normal.textColor = Color.white;
 			//boxstyle.normal.background = Texture2D.whiteTexture;
 			buttonstyle.alignment = TextAnchor.MiddleLeft;
 			GUI.backgroundColor = new Color(0.24f, 0.29f, 0.35f, 1);
-			GUI.Box(wombInfoRect, Translations.Dialog_WombInfo01 + ": " + comp.GetCurStageLabel,buttonstyle);
+			GUI.Box(wombInfoRect, Translations.Dialog_WombInfo01 + ": " + comp.GetCurStageLabel, buttonstyle);
 			GUI.color = Color.white;
 
 
@@ -144,30 +156,25 @@ namespace RJW_Menstruation
 			if (comp.GetFertilization) GUI.Label(wombInfoRect, Translations.Dialog_WombInfo05 + "  ", fontstyleright);
 			else if (comp.GetEggFertilizing) GUI.Label(wombInfoRect, Translations.Dialog_WombInfo06 + "  ", fontstyleright);
 			else if (comp.GetEgg) GUI.Label(wombInfoRect, Translations.Dialog_WombInfo07 + "  ", fontstyleright);
-			
+
 			//Widgets.Label(wombInfoRect,Translations.Dialog_WombInfo01 + ": " + comp.GetCurStageLabel);
 
+			if (Configurations.DrawVaginaStatus)
+			{
+				Rect genitalRect = new Rect(24, pawnRectHeight + 2 * fontheight, genitalRectWidth, genitalRectHeight + fontheight * 2);
+				DrawVagina(genitalRect);
+			}
 
-			cumcolor = comp.GetCumMixtureColor;
-			Rect wombRect = new Rect(0f, mainRect.yMax - wombRectHeight + preginfoheight, wombRectWidth, wombRectHeight);
-			GUI.color = new Color(1.00f,0.47f,0.47f,1);
-			GUI.Box(wombRect,"",boxstyle);
-			//GUI.color = Color.white;
-			//Widgets.DrawTextureFitted(wombRect, womb,1.0f);
-			//GUI.color = cumcolor;
-			//Widgets.DrawTextureFitted(wombRect, cum,1.0f);
-			GUI.DrawTexture(wombRect, womb, ScaleMode.ScaleToFit, true, 0, Color.white, 0, 0);
-			GUI.DrawTexture(wombRect, cum, ScaleMode.ScaleToFit, true, 0, cumcolor,0,0);
-			GUI.color = Color.white;
+			
 
 			Rect cumlistTitle = new Rect(pawnRectWidth, 0, wombRectWidth - pawnRectWidth, fontheight);
 			GUI.Label(cumlistTitle,Translations.Dialog_WombInfo04);
 
-			Rect cumlistRect = new Rect(pawnRectWidth, fontheight, wombRectWidth - pawnRectWidth, mainRect.yMax - wombRectHeight - fontheight);
+
+			Rect cumlistRect = new Rect(pawnRectWidth, fontheight, wombRectWidth - pawnRectWidth, mainRect.yMax - wombrecth - fontheight);
 			DrawCumlist(cumlistRect);
 
-			Rect genitalRect = new Rect(24, pawnRectHeight + 2*fontheight, genitalRectWidth, genitalRectHeight + fontheight*2);
-			DrawVagina(genitalRect);
+			
 
 
 
@@ -193,7 +200,18 @@ namespace RJW_Menstruation
 			cumlist.End();
 		}
 
-
+		private void DrawWomb(Rect rect)
+        {
+			GUI.color = new Color(1.00f, 0.47f, 0.47f, 1);
+			GUI.Box(rect, "", boxstyle);
+			//GUI.color = Color.white;
+			//Widgets.DrawTextureFitted(wombRect, womb,1.0f);
+			//GUI.color = cumcolor;
+			//Widgets.DrawTextureFitted(wombRect, cum,1.0f);
+			GUI.DrawTexture(rect, womb, ScaleMode.ScaleToFit, true, 0, Color.white, 0, 0);
+			GUI.DrawTexture(rect, cum, ScaleMode.ScaleToFit, true, 0, cumcolor, 0, 0);
+			GUI.color = Color.white;
+		}
 
 		private void DrawVagina(Rect rect)
         {

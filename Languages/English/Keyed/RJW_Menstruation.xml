@@ -38,10 +38,10 @@
   <Option7_Desc>accelerate menstrution cycle</Option7_Desc>
   <Option8_Label>Debug</Option8_Label>
   <Option8_Desc>show debug informations.</Option8_Desc>
-  <Option9_Label></Option9_Label>
-  <Option9_Desc> </Option9_Desc>
-  <Option10_Label></Option10_Label>
-  <Option10_Desc> </Option10_Desc>
+  <Option9_Label>womb status</Option9_Label>
+  <Option9_Desc>draw womb icon in status window</Option9_Desc>
+  <Option10_Label>vagina status</Option10_Label>
+  <Option10_Desc>draw vagina and anus icon in status window</Option10_Desc>
   <Option11_Label></Option11_Label>
   <Option11_Desc> </Option11_Desc>
   
