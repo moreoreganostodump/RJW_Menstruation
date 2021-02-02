@@ -11,6 +11,7 @@
   <Stage_Fertilized>Luteal</Stage_Fertilized>
   <Stage_Pregnant>Pregnant</Stage_Pregnant>
   <Stage_Recover>Recovering from birth</Stage_Recover>
+  <Stage_None>None</Stage_None>
   <Dialog_WombInfo01>State</Dialog_WombInfo01>
   <Dialog_WombInfo02>Fetus</Dialog_WombInfo02>
   <Dialog_WombInfo03>Father</Dialog_WombInfo03>

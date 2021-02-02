@@ -174,19 +174,23 @@ namespace RJW_Menstruation
         public static Texture2D GetGenitalIcon(Pawn pawn)
         {
             var hediff = Genital_Helper.get_PartsHediffList(pawn, Genital_Helper.get_genitalsBPR(pawn)).Find((Hediff h) => h.def.defName.ToLower().Contains("vagina"));
-            string icon = "Genitals/";
-            if (hediff.Severity < 0.20f) icon += "Vagina00";        //micro 
-            else if (hediff.Severity < 0.30f) icon += "Vagina01";   //tight
-            else if (hediff.Severity < 0.40f) icon += "Vagina02";   //tight
-            else if (hediff.Severity < 0.47f) icon += "Vagina03";   //average
-            else if (hediff.Severity < 0.53f) icon += "Vagina04";   //average
-            else if (hediff.Severity < 0.60f) icon += "Vagina05";   //average
-            else if (hediff.Severity < 0.70f) icon += "Vagina06";   //accomodating
-            else if (hediff.Severity < 0.80f) icon += "Vagina07";   //accomodating
-            else if (hediff.Severity < 0.87f) icon += "Vagina08";   //cavernous
-            else if (hediff.Severity < 0.94f) icon += "Vagina09";   //cavernous
-            else if (hediff.Severity < 1.01f) icon += "Vagina10";   //cavernous
-            else icon += "Vagina11";                                //abyssal
+            CompProperties_Menstruation Props = (CompProperties_Menstruation)hediff.TryGetComp<HediffComp_Menstruation>().props;
+            string icon;
+            if (Props != null) icon = Props.vagTex;
+            else icon = "Genitals/Vagina";
+
+            if (hediff.Severity < 0.20f) icon += "00";        //micro 
+            else if (hediff.Severity < 0.30f) icon += "01";   //tight
+            else if (hediff.Severity < 0.40f) icon += "02";   //tight
+            else if (hediff.Severity < 0.47f) icon += "03";   //average
+            else if (hediff.Severity < 0.53f) icon += "04";   //average
+            else if (hediff.Severity < 0.60f) icon += "05";   //average
+            else if (hediff.Severity < 0.70f) icon += "06";   //accomodating
+            else if (hediff.Severity < 0.80f) icon += "07";   //accomodating
+            else if (hediff.Severity < 0.87f) icon += "08";   //cavernous
+            else if (hediff.Severity < 0.94f) icon += "09";   //cavernous
+            else if (hediff.Severity < 1.01f) icon += "10";   //cavernous
+            else icon += "11";                                //abyssal
 
             return ContentFinder<Texture2D>.Get((icon), true);
         }
@@ -194,13 +198,16 @@ namespace RJW_Menstruation
         public static Texture2D GetAnalIcon(Pawn pawn)
         {
             var hediff = Genital_Helper.get_PartsHediffList(pawn, Genital_Helper.get_anusBPR(pawn)).Find((Hediff h) => h.def.defName.ToLower().Contains("anus"));
-            string icon = "Genitals/";
-            if (hediff.Severity < 0.20f) icon += "Anal00";        //micro 
-            else if (hediff.Severity < 0.40f) icon += "Anal01";   //tight
-            else if (hediff.Severity < 0.60f) icon += "Anal02";   //average
-            else if (hediff.Severity < 0.80f) icon += "Anal03";   //accomodating
-            else if (hediff.Severity < 1.01f) icon += "Anal04";   //cavernous
-            else icon += "Anal05";   //abyssal
+            CompProperties_Anus Props = (CompProperties_Anus)hediff.TryGetComp<HediffComp_Anus>().props;
+            string icon;
+            if (Props != null) icon = Props.analTex;
+            else icon = "Genitals/Anal";
+            if (hediff.Severity < 0.20f) icon += "00";        //micro 
+            else if (hediff.Severity < 0.40f) icon += "01";   //tight
+            else if (hediff.Severity < 0.60f) icon += "02";   //average
+            else if (hediff.Severity < 0.80f) icon += "03";   //accomodating
+            else if (hediff.Severity < 1.01f) icon += "04";   //cavernous
+            else icon += "05";   //abyssal
 
             return ContentFinder<Texture2D>.Get((icon), true);
         }

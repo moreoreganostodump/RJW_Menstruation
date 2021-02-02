@@ -11,7 +11,8 @@
   <Stage_Fertilized>황체기</Stage_Fertilized>
   <Stage_Pregnant>임신</Stage_Pregnant>
   <Stage_Recover>회복기</Stage_Recover>
-  <Dialog_WombInfo01>주기</Dialog_WombInfo01>
+  <Stage_None>없음</Stage_None>
+  <Dialog_WombInfo01>상태</Dialog_WombInfo01>
   <Dialog_WombInfo02>태아</Dialog_WombInfo02>
   <Dialog_WombInfo03>부</Dialog_WombInfo03>
   <Dialog_WombInfo04>정액목록</Dialog_WombInfo04>

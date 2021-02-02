@@ -23,7 +23,8 @@ namespace RJW_Menstruation
         public int recoveryIntervalDays = 10; //additional infertile days after gave birth
         public int eggLifespanDays = 2; //fertiledays = ovaluationday - spermlifespan ~ ovaluationday + egglifespanday
         public string wombTex = "Womb/Womb"; //fertiledays = ovaluationday - spermlifespan ~ ovaluationday + egglifespanday
-
+        public string vagTex = "Genitals/Vagina"; //fertiledays = ovaluationday - spermlifespan ~ ovaluationday + egglifespanday
+        public bool infertile = false;
 
         public CompProperties_Menstruation()
         {
@@ -31,6 +32,21 @@ namespace RJW_Menstruation
             compClass = typeof(HediffComp_Menstruation);
         }
     }
+
+    public class CompProperties_Anus : HediffCompProperties
+    {
+        public string analTex = "Genitals/Anal";
+
+        public CompProperties_Anus()
+        {
+            compClass = typeof(HediffComp_Anus);
+        }
+    }
+
+
+
+
+
 
 
     public class HediffComp_Menstruation : HediffComp
@@ -50,7 +66,8 @@ namespace RJW_Menstruation
             Bleeding,
             Fertilized,
             Pregnant,
-            Recover
+            Recover,
+            None
         }
 
         private List<Cum> cums;
@@ -191,6 +208,8 @@ namespace RJW_Menstruation
                         return Translations.Stage_Pregnant;
                     case Stage.Recover:
                         return Translations.Stage_Recover;
+                    case Stage.None:
+                        return Translations.Stage_None;
                     default:
                         return "";
                 }
@@ -248,29 +267,17 @@ namespace RJW_Menstruation
 
         }
 
+        public override void CompPostPostAdd(DamageInfo? dinfo)
+        {
+            Initialize();
+        }
+
+
         public override void CompPostTick(ref float severityAdjustment)
         {
             if (!loaded)
             {
-                Props = (CompProperties_Menstruation)props;
-                if (follicularIntervalhours < 0)
-                {    
-                    follicularIntervalhours = PeriodRandomizer(Props.folicularIntervalDays*24,Props.deviationFactor);
-                    curStage = RandomStage();
-                }
-                
-                if (lutealIntervalhours < 0) lutealIntervalhours = PeriodRandomizer(Props.lutealIntervalDays*24, Props.deviationFactor);
-                if (bleedingIntervalhours < 0) bleedingIntervalhours = PeriodRandomizer(Props.bleedingIntervalDays*24, Props.deviationFactor);
-                if (recoveryIntervalhours < 0) recoveryIntervalhours = PeriodRandomizer(Props.recoveryIntervalDays * 24, Props.deviationFactor);
-                if (cums == null) cums = new List<Cum>();
-                if (eggs == null) eggs = new List<Egg>();
-                if (parent.pawn.IsPregnant()) curStage = Stage.Pregnant;
-                if (Configurations.EnableAnimalCycle)
-                {
-                    HugsLibController.Instance.TickDelayScheduler.ScheduleCallback(PeriodSimulator(curStage), tickInterval, parent.pawn, false);
-                }
-                else if (!parent.pawn.IsAnimal()) HugsLibController.Instance.TickDelayScheduler.ScheduleCallback(PeriodSimulator(curStage), tickInterval, parent.pawn, false);
-                loaded = true;
+                Initialize();
             }
         }
 
@@ -281,6 +288,10 @@ namespace RJW_Menstruation
             base.CompPostPostRemoved();
         }
 
+
+
+
+        
 
         public Cum GetNotCum(string notcumlabel)
         {
@@ -470,6 +481,39 @@ namespace RJW_Menstruation
             else return false;
         }
 
+        private void Initialize()
+        {
+            Props = (CompProperties_Menstruation)props;
+
+            if (!Props.infertile)
+            {
+                if (follicularIntervalhours < 0)
+                {
+                    follicularIntervalhours = PeriodRandomizer(Props.folicularIntervalDays * 24, Props.deviationFactor);
+                    curStage = RandomStage();
+                }
+
+                if (lutealIntervalhours < 0) lutealIntervalhours = PeriodRandomizer(Props.lutealIntervalDays * 24, Props.deviationFactor);
+                if (bleedingIntervalhours < 0) bleedingIntervalhours = PeriodRandomizer(Props.bleedingIntervalDays * 24, Props.deviationFactor);
+                if (recoveryIntervalhours < 0) recoveryIntervalhours = PeriodRandomizer(Props.recoveryIntervalDays * 24, Props.deviationFactor);
+                if (cums == null) cums = new List<Cum>();
+                if (eggs == null) eggs = new List<Egg>();
+                if (parent.pawn.IsPregnant()) curStage = Stage.Pregnant;
+                if (Configurations.EnableAnimalCycle)
+                {
+                    HugsLibController.Instance.TickDelayScheduler.ScheduleCallback(PeriodSimulator(curStage), tickInterval, parent.pawn, false);
+                }
+                else if (!parent.pawn.IsAnimal()) HugsLibController.Instance.TickDelayScheduler.ScheduleCallback(PeriodSimulator(curStage), tickInterval, parent.pawn, false);
+            }
+            else
+            {
+                if (cums == null) cums = new List<Cum>();
+                curStage = Stage.None;
+                HugsLibController.Instance.TickDelayScheduler.ScheduleCallback(PeriodSimulator(curStage), tickInterval, parent.pawn, false);
+            }
+            loaded = true;
+        }
+
         private Pawn Fertilize()
         {
             if (cums.NullOrEmpty()) return null;
@@ -605,8 +649,16 @@ namespace RJW_Menstruation
                         }
                         else
                         {
-                            bleedingIntervalhours = PeriodRandomizer(bleedingIntervalhours, Props.deviationFactor);
-                            GoNextStage(Stage.Bleeding);
+                            if (Props.bleedingIntervalDays == 0)
+                            {
+                                follicularIntervalhours = PeriodRandomizer(follicularIntervalhours, Props.deviationFactor);
+                                GoNextStage(Stage.Follicular);
+                            }
+                            else
+                            {
+                                bleedingIntervalhours = PeriodRandomizer(bleedingIntervalhours, Props.deviationFactor);
+                                GoNextStage(Stage.Bleeding);
+                            }
                         }
                     };
                     break;
@@ -667,6 +719,12 @@ namespace RJW_Menstruation
                             curStageHrs+=Configurations.CycleAcceleration;
                             StayCurrentStage();
                         }
+                    };
+                    break;
+                case Stage.None:
+                    action = delegate
+                    {
+                        StayCurrentStageConst(Stage.None);
                     };
                     break;
                 default:
@@ -777,4 +835,12 @@ namespace RJW_Menstruation
 
 
     }
+
+    public class HediffComp_Anus : HediffComp
+    {
+        public override void CompPostTick(ref float severityAdjustment)
+        {
+        }
+    }
+
 }

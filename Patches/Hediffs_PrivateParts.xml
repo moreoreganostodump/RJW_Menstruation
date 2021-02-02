@@ -21,8 +21,108 @@
 					<recoveryIntervalDays>10</recoveryIntervalDays>
 					<eggLifespanDays>3</eggLifespanDays>
 					<wombTex>Womb/Womb</wombTex>
+					<vagTex>Genitals/Vagina</vagTex>
 				</li>
 			</comps>
 		</value>
 	</Operation>
+	
+	<Operation Class="PatchOperationAdd">
+		<xpath>Defs/rjw.HediffDef_PartBase[defName="HydraulicVagina"]</xpath>
+		<value>
+			<comps>
+				<li Class="RJW_Menstruation.CompProperties_Menstruation">
+					<maxCumCapacity>500</maxCumCapacity>
+					<wombTex>Womb/Womb</wombTex>
+					<vagTex>Genitals/BionicVagina</vagTex>
+					<infertile>true</infertile>
+				</li>
+			</comps>
+		</value>
+	</Operation>
+	
+	<Operation Class="PatchOperationAdd">
+		<xpath>Defs/rjw.HediffDef_PartBase[defName="BionicVagina"]</xpath>
+		<value>
+			<comps>
+				<li Class="RJW_Menstruation.CompProperties_Menstruation">
+					<maxCumCapacity>500</maxCumCapacity>
+					<wombTex>Womb/Womb</wombTex>
+					<vagTex>Genitals/BionicVagina</vagTex>
+					<infertile>true</infertile>
+				</li>
+			</comps>
+		</value>
+	</Operation>
+	
+	<Operation Class="PatchOperationAdd">
+		<xpath>Defs/rjw.HediffDef_PartBase[defName="ArchotechVagina"]</xpath>
+		<value>
+			<comps>
+				<li Class="RJW_Menstruation.CompProperties_Menstruation">
+					<maxCumCapacity>500</maxCumCapacity>
+					<baseImplantationChanceFactor>1.0</baseImplantationChanceFactor>
+					<basefertilizationChanceFactor>1.0</basefertilizationChanceFactor>
+					<deviationFactor>0.05</deviationFactor>
+					<folicularIntervalDays>14</folicularIntervalDays>
+					<lutealIntervalDays>14</lutealIntervalDays>
+					<bleedingIntervalDays>0</bleedingIntervalDays>
+					<recoveryIntervalDays>0</recoveryIntervalDays>
+					<eggLifespanDays>3</eggLifespanDays>
+					<wombTex>Womb/Womb</wombTex>
+					<vagTex>Genitals/Vagina</vagTex>
+				</li>
+			</comps>
+		</value>
+	</Operation>
+	
+	<Operation Class="PatchOperationAdd">
+		<xpath>Defs/rjw.HediffDef_PartBase[defName="Anus"]</xpath>
+		<value>
+			<comps>
+				<li Class="RJW_Menstruation.CompProperties_Anus">
+					<analTex>Genitals/Anal</analTex>
+				</li>
+			</comps>
+		</value>
+	</Operation>
+	
+	<Operation Class="PatchOperationAdd">
+		<xpath>Defs/rjw.HediffDef_PartBase[defName="HydraulicAnus"]</xpath>
+		<value>
+			<comps>
+				<li Class="RJW_Menstruation.CompProperties_Anus">
+					<analTex>Genitals/BionicAnal</analTex>
+				</li>
+			</comps>
+		</value>
+	</Operation>
+	
+	<Operation Class="PatchOperationAdd">
+		<xpath>Defs/rjw.HediffDef_PartBase[defName="BionicAnus"]</xpath>
+		<value>
+			<comps>
+				<li Class="RJW_Menstruation.CompProperties_Anus">
+					<analTex>Genitals/BionicAnal</analTex>
+				</li>
+			</comps>
+		</value>
+	</Operation>
+	
+	<Operation Class="PatchOperationAdd">
+		<xpath>Defs/rjw.HediffDef_PartBase[defName="ArchotechAnus"]</xpath>
+		<value>
+			<comps>
+				<li Class="RJW_Menstruation.CompProperties_Anus">
+					<analTex>Genitals/Anal</analTex>
+				</li>
+			</comps>
+		</value>
+	</Operation>
+	
+	
+	
+	
+	
+	
 </Patch>

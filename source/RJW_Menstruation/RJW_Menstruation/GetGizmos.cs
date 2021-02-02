@@ -47,19 +47,21 @@ namespace RJW_Menstruation
 
         private static void AddWombGizmos(Pawn __instance, ref List<Gizmo> gizmoList)
         {
-            gizmoList.Add(CreateGizmo_WombStatus(__instance));
+            //HediffComp_Menstruation comp = __instance.health.hediffSet.GetFirstHediffOfDef(Genital_Helper.average_vagina).TryGetComp<HediffComp_Menstruation>();
+            HediffComp_Menstruation comp = Utility.GetMenstruationComp(__instance);
+
+            if (comp != null) gizmoList.Add(CreateGizmo_WombStatus(__instance, comp));
         }
 
-        private static Gizmo CreateGizmo_WombStatus(Pawn pawn)
+        private static Gizmo CreateGizmo_WombStatus(Pawn pawn , HediffComp_Menstruation comp)
         {
-            HediffComp_Menstruation comp = pawn.health.hediffSet.GetFirstHediffOfDef(Genital_Helper.average_vagina).TryGetComp<HediffComp_Menstruation>();
             Texture2D icon,icon_overay;
-            Hediff hediff = PregnancyHelper.GetPregnancy(pawn);
             string description = "";
             if (Configurations.Debug) description += comp.curStage + ": " + comp.curStageHrs + "\n" + "fertcums: " + comp.TotalFertCum;
             else description += comp.GetCurStageLabel + "\n";
             if (pawn.IsPregnant())
             {
+                Hediff hediff = PregnancyHelper.GetPregnancy(pawn);
                 icon = Utility.GetPregnancyIcon(comp,hediff);
                 if (hediff is Hediff_BasePregnancy)
                 {
