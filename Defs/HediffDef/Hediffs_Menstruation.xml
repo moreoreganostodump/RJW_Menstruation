@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>	
+	<HediffDef Name="Hediff_MenstrualCramp">
+		<hediffClass>HediffWithComps</hediffClass>	
+		<defName>Hediff_MenstrualCramp</defName>
+		<label>In period</label>
+		<labelNoun>in period</labelNoun>
+		<description>in period</description>
+		<labelNounPretty>{1} in period</labelNounPretty>
+		<defaultLabelColor>(0.70,0.00,0.00)</defaultLabelColor>	
+		<isBad>true</isBad>
+		<tendable>false</tendable>
+		<makesSickThought>true</makesSickThought>
+		<makesAlert>false</makesAlert>	
+		<maxSeverity>1</maxSeverity>
+		<initialSeverity>0.1</initialSeverity>
+		<injuryProps>
+			<canMerge>true</canMerge>
+		</injuryProps>	
+		<stages>
+			<li>
+				<label>unpleasant</label>
+        <painOffset>0.05</painOffset>
+			</li>
+			<li>
+				<minSeverity>0.2</minSeverity>
+				<label>annoy</label>
+        <painOffset>0.1</painOffset>
+			</li>
+			<li>
+				<minSeverity>0.4</minSeverity>
+				<label>ache</label>
+        <painOffset>0.2</painOffset>
+			</li>
+			<li>
+				<minSeverity>0.6</minSeverity>
+				<label>painful</label>
+        <painOffset>0.4</painOffset>
+			</li>
+		</stages>	
+		<comps>
+			<li Class="HediffCompProperties_SeverityPerDay">
+        <severityPerDay>-0.1</severityPerDay>
+			</li>
+		</comps>
+	</HediffDef>
+</Defs>

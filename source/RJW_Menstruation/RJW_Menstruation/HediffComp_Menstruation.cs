@@ -79,6 +79,7 @@ namespace RJW_Menstruation
         private int lutealIntervalhours = -1;
         private int bleedingIntervalhours = -1;
         private int recoveryIntervalhours = -1;
+        private float crampPain= -1;
 
         public float TotalCum
         {
@@ -165,7 +166,7 @@ namespace RJW_Menstruation
             {
                 if (!cums.NullOrEmpty()) foreach (Cum cum in cums)
                     {
-                        if (!cum.notcum) yield return String.Format(cum.pawn.Label + ": {0:0.##}ml", cum.volume);
+                        if (!cum.notcum) yield return String.Format(cum.pawn?.Label + ": {0:0.##}ml", cum.volume);
                         else yield return String.Format(cum.notcumLabel + ": {0:0.##}ml", cum.volume);
                     }
                 else yield return Translations.Info_noCum;
@@ -264,6 +265,7 @@ namespace RJW_Menstruation
             Scribe_Values.Look(ref lutealIntervalhours, "lutealIntervalhours", lutealIntervalhours, true);
             Scribe_Values.Look(ref bleedingIntervalhours, "bleedingIntervalhours", bleedingIntervalhours, true);
             Scribe_Values.Look(ref recoveryIntervalhours, "recoveryIntervalhours", recoveryIntervalhours, true);
+            Scribe_Values.Look(ref crampPain, "crampPain", crampPain, true);
 
 
         }
@@ -314,7 +316,6 @@ namespace RJW_Menstruation
                 }
             return null;
         }
-
         
 
         public void CumIn(Pawn pawn, float injectedvolume, float fertility = 1.0f, ThingDef filthdef = null)
@@ -500,6 +501,7 @@ namespace RJW_Menstruation
                 if (lutealIntervalhours < 0) lutealIntervalhours = PeriodRandomizer(Props.lutealIntervalDays * 24, Props.deviationFactor);
                 if (bleedingIntervalhours < 0) bleedingIntervalhours = PeriodRandomizer(Props.bleedingIntervalDays * 24, Props.deviationFactor);
                 if (recoveryIntervalhours < 0) recoveryIntervalhours = PeriodRandomizer(Props.recoveryIntervalDays * 24, Props.deviationFactor);
+                if (crampPain < 0) crampPain = PainRandomizer();
                 if (cums == null) cums = new List<Cum>();
                 if (eggs == null) eggs = new List<Egg>();
                 if (parent.pawn.IsPregnant()) curStage = Stage.Pregnant;
@@ -662,6 +664,9 @@ namespace RJW_Menstruation
                             else
                             {
                                 bleedingIntervalhours = PeriodRandomizer(bleedingIntervalhours, Props.deviationFactor);
+                                Hediff hediff = HediffMaker.MakeHediff(VariousDefOf.Hediff_MenstrualCramp, parent.pawn);
+                                hediff.Severity = crampPain * Rand.Range(0.9f,1.1f);
+                                parent.pawn.health.AddHediff(hediff,Genital_Helper.get_genitalsBPR(parent.pawn));
                                 GoNextStage(Stage.Bleeding);
                             }
                         }
@@ -785,6 +790,15 @@ namespace RJW_Menstruation
         {
             if (RJWPregnancySettings.complex_interspecies) return SexUtility.BodySimilarity(parent.pawn, fertilizer);
             else return RJWPregnancySettings.interspecies_impregnation_modifier;
+        }
+
+        private float PainRandomizer()
+        {
+            float rand = Rand.Range(0.0f, 1.0f);
+            if (rand < 0.2f) return Rand.Range(0.1f, 0.2f);
+            else if (rand < 0.8f) return Rand.Range(0.2f, 0.4f);
+            else if (rand < 0.95f) return Rand.Range(0.4f, 0.6f);
+            else return Rand.Range(0.6f, 1.0f);
         }
 
         private Stage RandomStage()

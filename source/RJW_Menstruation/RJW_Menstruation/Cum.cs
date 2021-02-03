@@ -42,7 +42,7 @@ namespace RJW_Menstruation
             {
                 if (DNAcache == null)
                 {
-                    DNAcache = DefDatabase<DNADef>.GetNamedSilentFail(pawn.def.defName);
+                    DNAcache = DefDatabase<DNADef>.GetNamedSilentFail(pawn?.def.defName ?? "Human");
                     if (DNAcache == null)
                     {
                         DNAcache = VariousDefOf.defaultDNA;
@@ -121,6 +121,7 @@ namespace RJW_Menstruation
         public void ExposeData()
         {
             Scribe_References.Look(ref pawn, "pawn", true);
+            Scribe_Defs.Look(ref DNAcache, "DNAcache");
             Scribe_Values.Look(ref volume, "volume", volume, true);
             Scribe_Values.Look(ref fertvolume, "fertvolume", fertvolume, true);
             Scribe_Values.Look(ref notcumthickness, "notcumthickness", notcumthickness, true);
