@@ -32,14 +32,14 @@
 		<value>
 			<comps>
 				<li Class="RJW_Menstruation.CompProperties_Menstruation">
-					<maxCumCapacity>500</maxCumCapacity>
+					<maxCumCapacity>1000</maxCumCapacity>
 					<baseImplantationChanceFactor>0.5</baseImplantationChanceFactor>
 					<basefertilizationChanceFactor>0.2</basefertilizationChanceFactor>
 					<deviationFactor>0.05</deviationFactor>
 					<folicularIntervalDays>30</folicularIntervalDays>
 					<lutealIntervalDays>30</lutealIntervalDays>
 					<bleedingIntervalDays>0</bleedingIntervalDays>
-					<recoveryIntervalDays>10</recoveryIntervalDays>
+					<recoveryIntervalDays>15</recoveryIntervalDays>
 					<eggLifespanDays>30</eggLifespanDays>
 					<wombTex>Womb/Womb</wombTex>
 					<vagTex>Genitals/Vagina</vagTex>

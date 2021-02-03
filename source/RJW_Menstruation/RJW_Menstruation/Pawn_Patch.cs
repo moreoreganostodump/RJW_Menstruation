@@ -17,7 +17,7 @@ namespace RJW_Menstruation
     {
         public static void Postfix(Map map, bool respawningAfterLoad, Pawn __instance)
         {
-            Log.Message("Initialize on spawnsetup");
+            //Log.Message("Initialize on spawnsetup");
             HediffComp_Menstruation comp = Utility.GetMenstruationComp(__instance);
             if (comp != null)
             {

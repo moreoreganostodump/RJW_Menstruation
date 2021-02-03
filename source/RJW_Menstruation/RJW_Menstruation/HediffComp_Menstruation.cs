@@ -275,7 +275,6 @@ namespace RJW_Menstruation
             //Initialize();
         }
 
-
         public override void CompPostTick(ref float severityAdjustment)
         {
             //initializer moved to SpawnSetup
@@ -516,7 +515,7 @@ namespace RJW_Menstruation
                 curStage = Stage.None;
                 HugsLibController.Instance.TickDelayScheduler.ScheduleCallback(PeriodSimulator(curStage), tickInterval, parent.pawn, false);
             }
-            Log.Message(parent.pawn.Label + " - Initialized menstruation comp");
+            //Log.Message(parent.pawn.Label + " - Initialized menstruation comp");
             loaded = true;
         }
 
