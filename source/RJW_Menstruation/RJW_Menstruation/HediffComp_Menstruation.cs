@@ -576,7 +576,7 @@ namespace RJW_Menstruation
         private void BleedOut()
         {
             //FilthMaker.TryMakeFilth(parent.pawn.Position, parent.pawn.Map, ThingDefOf.Filth_Blood,parent.pawn.Label);
-            CumIn(parent.pawn, Rand.Range(0f, 20f), Translations.Menstrual_Blood,-4.0f,ThingDefOf.Filth_Blood);
+            CumIn(parent.pawn, Rand.Range(0f, 15f), Translations.Menstrual_Blood,-4.0f,ThingDefOf.Filth_Blood);
             GetNotCum(Translations.Menstrual_Blood).color = Colors.blood;
         }
 
@@ -664,9 +664,12 @@ namespace RJW_Menstruation
                             else
                             {
                                 bleedingIntervalhours = PeriodRandomizer(bleedingIntervalhours, Props.deviationFactor);
-                                Hediff hediff = HediffMaker.MakeHediff(VariousDefOf.Hediff_MenstrualCramp, parent.pawn);
-                                hediff.Severity = crampPain * Rand.Range(0.9f,1.1f);
-                                parent.pawn.health.AddHediff(hediff,Genital_Helper.get_genitalsBPR(parent.pawn));
+                                if (crampPain >= 0.05f)
+                                {
+                                    Hediff hediff = HediffMaker.MakeHediff(VariousDefOf.Hediff_MenstrualCramp, parent.pawn);
+                                    hediff.Severity = crampPain * Rand.Range(0.9f, 1.1f);
+                                    parent.pawn.health.AddHediff(hediff, Genital_Helper.get_genitalsBPR(parent.pawn));
+                                }
                                 GoNextStage(Stage.Bleeding);
                             }
                         }
@@ -795,7 +798,8 @@ namespace RJW_Menstruation
         private float PainRandomizer()
         {
             float rand = Rand.Range(0.0f, 1.0f);
-            if (rand < 0.2f) return Rand.Range(0.1f, 0.2f);
+            if (rand < 0.01f) return Rand.Range(0.0f,0.2f);
+            else if (rand < 0.2f) return Rand.Range(0.1f, 0.2f);
             else if (rand < 0.8f) return Rand.Range(0.2f, 0.4f);
             else if (rand < 0.95f) return Rand.Range(0.4f, 0.6f);
             else return Rand.Range(0.6f, 1.0f);
