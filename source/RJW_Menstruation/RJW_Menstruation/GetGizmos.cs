@@ -35,7 +35,6 @@ namespace RJW_Menstruation
                 {
                     AddWombGizmos(__instance, ref gizmoList);
                 }
-
             }
 
 
@@ -47,7 +46,6 @@ namespace RJW_Menstruation
 
         private static void AddWombGizmos(Pawn __instance, ref List<Gizmo> gizmoList)
         {
-            //HediffComp_Menstruation comp = __instance.health.hediffSet.GetFirstHediffOfDef(Genital_Helper.average_vagina).TryGetComp<HediffComp_Menstruation>();
             HediffComp_Menstruation comp = Utility.GetMenstruationComp(__instance);
 
             if (comp != null) gizmoList.Add(CreateGizmo_WombStatus(__instance, comp));

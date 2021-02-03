@@ -21,17 +21,17 @@ namespace RJW_Menstruation
 
         public static float GetCumVolume(Pawn pawn)
         {
-            CompHediffBodyPart part = Genital_Helper.get_PartsHediffList(pawn, Genital_Helper.get_genitalsBPR(pawn)).FindAll((Hediff hed) => hed.def.defName.ToLower().Contains("penis")).InRandomOrder().FirstOrDefault().TryGetComp<rjw.CompHediffBodyPart>();
-            if (part == null) part = Genital_Helper.get_PartsHediffList(pawn, Genital_Helper.get_genitalsBPR(pawn)).FindAll((Hediff hed) => hed.def.defName.ToLower().Contains("ovipositorf")).InRandomOrder().FirstOrDefault().TryGetComp<rjw.CompHediffBodyPart>();
-            if (part == null) part = Genital_Helper.get_PartsHediffList(pawn, Genital_Helper.get_genitalsBPR(pawn)).FindAll((Hediff hed) => hed.def.defName.ToLower().Contains("ovipositorm")).InRandomOrder().FirstOrDefault().TryGetComp<rjw.CompHediffBodyPart>();
-            if (part == null) part = Genital_Helper.get_PartsHediffList(pawn, Genital_Helper.get_genitalsBPR(pawn)).FindAll((Hediff hed) => hed.def.defName.ToLower().Contains("tentacle")).InRandomOrder().FirstOrDefault().TryGetComp<rjw.CompHediffBodyPart>();
+            CompHediffBodyPart part = Genital_Helper.get_PartsHediffList(pawn, Genital_Helper.get_genitalsBPR(pawn))?.FindAll((Hediff hed) => hed.def.defName.ToLower().Contains("penis")).InRandomOrder().FirstOrDefault().TryGetComp<rjw.CompHediffBodyPart>();
+            if (part == null) part = Genital_Helper.get_PartsHediffList(pawn, Genital_Helper.get_genitalsBPR(pawn))?.FindAll((Hediff hed) => hed.def.defName.ToLower().Contains("ovipositorf")).InRandomOrder().FirstOrDefault().TryGetComp<rjw.CompHediffBodyPart>();
+            if (part == null) part = Genital_Helper.get_PartsHediffList(pawn, Genital_Helper.get_genitalsBPR(pawn))?.FindAll((Hediff hed) => hed.def.defName.ToLower().Contains("ovipositorm")).InRandomOrder().FirstOrDefault().TryGetComp<rjw.CompHediffBodyPart>();
+            if (part == null) part = Genital_Helper.get_PartsHediffList(pawn, Genital_Helper.get_genitalsBPR(pawn))?.FindAll((Hediff hed) => hed.def.defName.ToLower().Contains("tentacle")).InRandomOrder().FirstOrDefault().TryGetComp<rjw.CompHediffBodyPart>();
 
             return part?.FluidAmmount * part.FluidModifier * Rand.Range(0.8f, 1.2f) ?? 0.0f;
         }
 
         public static HediffComp_Menstruation GetMenstruationComp(Pawn pawn)
         {
-            var hedifflist = Genital_Helper.get_PartsHediffList(pawn, Genital_Helper.get_genitalsBPR(pawn)).FindAll((Hediff h) => h.def.defName.ToLower().Contains("vagina"));
+            var hedifflist = Genital_Helper.get_PartsHediffList(pawn, Genital_Helper.get_genitalsBPR(pawn))?.FindAll((Hediff h) => h.def.defName.ToLower().Contains("vagina"));
             HediffComp_Menstruation result;
             if (hedifflist.NullOrEmpty()) return null;
             else

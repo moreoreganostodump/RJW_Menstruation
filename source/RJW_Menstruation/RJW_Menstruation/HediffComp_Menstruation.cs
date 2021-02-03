@@ -33,6 +33,7 @@ namespace RJW_Menstruation
         }
     }
 
+
     public class CompProperties_Anus : HediffCompProperties
     {
         public string analTex = "Genitals/Anal";
@@ -45,10 +46,10 @@ namespace RJW_Menstruation
 
 
 
+    
 
 
-
-
+    
     public class HediffComp_Menstruation : HediffComp
     {
         const float minmakefilthvalue = 1.0f;
@@ -57,7 +58,9 @@ namespace RJW_Menstruation
         public CompProperties_Menstruation Props;
         public Stage curStage = Stage.Follicular;
         public int curStageHrs = 0;
-        
+        public Action actionref;
+        public bool loaded = false;
+
         public enum Stage
         {
             Follicular,
@@ -71,13 +74,11 @@ namespace RJW_Menstruation
         }
 
         private List<Cum> cums;
-        private bool loaded = false;
         private List<Egg> eggs;
         private int follicularIntervalhours = -1;
         private int lutealIntervalhours = -1;
         private int bleedingIntervalhours = -1;
         private int recoveryIntervalhours = -1;
-        private Action actionref; 
 
         public float TotalCum
         {
@@ -267,22 +268,26 @@ namespace RJW_Menstruation
 
         }
 
+        
         public override void CompPostPostAdd(DamageInfo? dinfo)
         {
-            Initialize();
+            //initializer moved to SpawnSetup
+            //Initialize();
         }
 
 
         public override void CompPostTick(ref float severityAdjustment)
         {
-            if (!loaded)
-            {
-                Initialize();
-            }
+            //initializer moved to SpawnSetup
+            //if (!loaded)
+            //{
+            //    Initialize();
+            //}
         }
 
         public override void CompPostPostRemoved()
         {
+            
             HugsLibController.Instance.TickDelayScheduler.TryUnscheduleCallback(actionref);
             ModLog.Message(parent.pawn.Label + "tick scheduler removed");
             base.CompPostPostRemoved();
@@ -481,7 +486,7 @@ namespace RJW_Menstruation
             else return false;
         }
 
-        private void Initialize()
+        public void Initialize()
         {
             Props = (CompProperties_Menstruation)props;
 
@@ -511,6 +516,7 @@ namespace RJW_Menstruation
                 curStage = Stage.None;
                 HugsLibController.Instance.TickDelayScheduler.ScheduleCallback(PeriodSimulator(curStage), tickInterval, parent.pawn, false);
             }
+            Log.Message(parent.pawn.Label + " - Initialized menstruation comp");
             loaded = true;
         }
 
@@ -741,7 +747,7 @@ namespace RJW_Menstruation
             };
 
             actionref = action;
-            return action;
+            return actionref;
 
             void GoNextStage(Stage nextstage, float factor = 1.0f)
             {
@@ -842,5 +848,12 @@ namespace RJW_Menstruation
         {
         }
     }
+
+
+
+
+
+
+
 
 }

@@ -64,6 +64,7 @@
     <Compile Include="Gizmo_Womb.cs" />
     <Compile Include="Harmony.cs" />
     <Compile Include="HediffComp_Menstruation.cs" />
+    <Compile Include="Pawn_Patch.cs" />
     <Compile Include="RJW_Patch.cs" />
     <Compile Include="Translations.cs" />
     <Compile Include="Utility.cs" />

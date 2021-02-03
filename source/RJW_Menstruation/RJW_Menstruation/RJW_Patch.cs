@@ -25,6 +25,7 @@ namespace RJW_Menstruation
 			
 				if (Genital_Helper.has_vagina(partner, partnerparts))
 				{
+					if (partner.IsAnimal() && !Configurations.EnableAnimalCycle) return true;
 					HediffComp_Menstruation comp = Utility.GetMenstruationComp(partner);
 					if (comp != null)
 					{
@@ -38,6 +39,7 @@ namespace RJW_Menstruation
 				}
 				else if (Genital_Helper.has_vagina(pawn, pawnparts))
 				{
+					if (pawn.IsAnimal() && !Configurations.EnableAnimalCycle) return true;
 					HediffComp_Menstruation comp = Utility.GetMenstruationComp(pawn);
 					if (comp != null)
 					{
@@ -61,6 +63,7 @@ namespace RJW_Menstruation
 	{
 		public static bool Prefix(Pawn pawn, Pawn partner) // partner has vagina
 		{
+			if (partner.IsAnimal() && !Configurations.EnableAnimalCycle) return true;
 			HediffComp_Menstruation comp = Utility.GetMenstruationComp(partner);
 			if (comp != null)
             {
