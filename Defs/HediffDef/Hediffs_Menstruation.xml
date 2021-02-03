@@ -20,27 +20,27 @@
 		<stages>
 			<li>
 				<label>unpleasant</label>
-        <painOffset>0.05</painOffset>
+				<painOffset>0.05</painOffset>
 			</li>
 			<li>
 				<minSeverity>0.2</minSeverity>
 				<label>annoy</label>
-        <painOffset>0.1</painOffset>
+				<painOffset>0.1</painOffset>
 			</li>
 			<li>
 				<minSeverity>0.4</minSeverity>
 				<label>ache</label>
-        <painOffset>0.2</painOffset>
+				<painOffset>0.2</painOffset>
 			</li>
 			<li>
 				<minSeverity>0.6</minSeverity>
 				<label>painful</label>
-        <painOffset>0.4</painOffset>
+				<painOffset>0.4</painOffset>
 			</li>
 		</stages>	
 		<comps>
 			<li Class="HediffCompProperties_SeverityPerDay">
-        <severityPerDay>-0.1</severityPerDay>
+				<severityPerDay>-0.1</severityPerDay>
 			</li>
 		</comps>
 	</HediffDef>

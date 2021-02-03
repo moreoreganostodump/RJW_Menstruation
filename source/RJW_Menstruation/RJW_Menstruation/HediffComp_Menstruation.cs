@@ -545,7 +545,7 @@ namespace RJW_Menstruation
                 bool pregnant = false;
                 foreach(Egg egg in eggs)
                 {
-                    if (!egg.fertilized) continue;
+                    if (egg.position < 24 || !egg.fertilized) continue;
                     else if (Rand.Range(0.0f, 1.0f) <= Configurations.ImplantationChance * Props.baseImplantationChanceFactor * ImplantFactor * InterspeciesImplantFactor(egg.fertilizer))
                     {
                         PregnancyHelper.PregnancyDecider(parent.pawn, egg.fertilizer);
@@ -592,7 +592,8 @@ namespace RJW_Menstruation
             List<Egg> deadeggs = new List<Egg>();
             foreach (Egg egg in eggs)
             {
-                egg.lifespanhrs--;
+                egg.lifespanhrs -= Configurations.CycleAcceleration;
+                egg.position += Configurations.CycleAcceleration;
                 if (egg.lifespanhrs < 0) deadeggs.Add(egg);
             }
 
@@ -639,20 +640,19 @@ namespace RJW_Menstruation
                     {
                         if (!eggs.NullOrEmpty())
                         {
-                            if (FertilizationCheck())
-                            {
-                                GoNextStage(Stage.Fertilized);
-                            }
+                            EggDecay();
+                            FertilizationCheck();
+                            if (Implant()) GoNextStage(Stage.Pregnant);
                             else
                             {
-                                curStageHrs+=Configurations.CycleAcceleration;
+                                curStageHrs += Configurations.CycleAcceleration;
                                 StayCurrentStage();
                             }
                         }
                         else if (curStageHrs <= lutealIntervalhours)
                         {
                             curStageHrs+=Configurations.CycleAcceleration;
-                            StayCurrentStage();
+                            StayCurrentStage(); 
                         }
                         else
                         {
@@ -668,6 +668,8 @@ namespace RJW_Menstruation
                                 {
                                     Hediff hediff = HediffMaker.MakeHediff(VariousDefOf.Hediff_MenstrualCramp, parent.pawn);
                                     hediff.Severity = crampPain * Rand.Range(0.9f, 1.1f);
+                                    HediffCompProperties_SeverityPerDay Prop = (HediffCompProperties_SeverityPerDay)hediff.TryGetComp<HediffComp_SeverityPerDay>().props;
+                                    Prop.severityPerDay = - hediff.Severity / (bleedingIntervalhours/24) * Configurations.CycleAcceleration;
                                     parent.pawn.health.AddHediff(hediff, Genital_Helper.get_genitalsBPR(parent.pawn));
                                 }
                                 GoNextStage(Stage.Bleeding);
@@ -691,7 +693,7 @@ namespace RJW_Menstruation
                         }
                     };
                     break;
-                case Stage.Fertilized:
+                case Stage.Fertilized:  //Obsoleted stage. merged in luteal stage
                     action = delegate
                     {
                         if (curStageHrs >= 24)
@@ -750,7 +752,6 @@ namespace RJW_Menstruation
             action += () =>
             {
                 CumOut();
-                if (!eggs.NullOrEmpty()) EggDecay();
             };
 
             actionref = action;
@@ -833,12 +834,14 @@ namespace RJW_Menstruation
             public bool fertilized;
             public int lifespanhrs;
             public Pawn fertilizer;
+            public int position;
 
             public Egg()
             {
                 fertilized = false;
                 lifespanhrs = 96;
                 fertilizer = null;
+                position = 0;
             }
 
             public Egg(int lifespanhrs)
@@ -846,6 +849,7 @@ namespace RJW_Menstruation
                 fertilized = false;
                 this.lifespanhrs = lifespanhrs;
                 fertilizer = null;
+                position = 0;
             }
 
             public void ExposeData()
@@ -853,6 +857,7 @@ namespace RJW_Menstruation
                 Scribe_References.Look(ref fertilizer, "fertilizer", true);
                 Scribe_Values.Look(ref fertilized, "fertilized", fertilized, true);
                 Scribe_Values.Look(ref lifespanhrs, "lifespanhrs", lifespanhrs, true);
+                Scribe_Values.Look(ref position, "position", position, true);
             }
         }
 
