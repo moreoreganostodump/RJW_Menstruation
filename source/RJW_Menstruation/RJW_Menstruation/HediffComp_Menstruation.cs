@@ -124,7 +124,7 @@ namespace RJW_Menstruation
         {
             get
             {
-                float res = Props.maxCumCapacity;
+                float res = Props.maxCumCapacity * parent.pawn.BodySize;
                 if (curStage == Stage.Pregnant) res *= 0.2f;
                 return res;
             }
@@ -154,7 +154,7 @@ namespace RJW_Menstruation
             get
             {
                 float factor = 1.0f;
-                if (xxx.has_quirk(parent.pawn, "Breeder")) factor = 10.0f;
+                if (parent.pawn.Has(Quirk.Breeder)) factor = 10.0f;
                 if (xxx.is_animal(parent.pawn)) factor *= RJWPregnancySettings.animal_impregnation_chance/100f;
                 else factor *= RJWPregnancySettings.humanlike_impregnation_chance/100f;
                 return parent.pawn.health.capacities.GetLevel(xxx.reproduction) * factor;

@@ -60,12 +60,12 @@
     <Compile Include="Dialog_WombStatus.cs" />
     <Compile Include="DNADef.cs" />
     <Compile Include="DrugOutcomDoers.cs" />
-    <Compile Include="GetGizmos.cs" />
+    <Compile Include="Patch\GetGizmos.cs" />
     <Compile Include="Gizmo_Womb.cs" />
-    <Compile Include="Harmony.cs" />
+    <Compile Include="Patch\Harmony.cs" />
     <Compile Include="HediffComp_Menstruation.cs" />
-    <Compile Include="Pawn_Patch.cs" />
-    <Compile Include="RJW_Patch.cs" />
+    <Compile Include="Patch\Pawn_Patch.cs" />
+    <Compile Include="Patch\RJW_Patch.cs" />
     <Compile Include="Translations.cs" />
     <Compile Include="Utility.cs" />
     <Compile Include="VariousDefOf.cs" />

@@ -25,8 +25,11 @@ namespace RJW_Menstruation
             if (part == null) part = Genital_Helper.get_PartsHediffList(pawn, Genital_Helper.get_genitalsBPR(pawn))?.FindAll((Hediff hed) => hed.def.defName.ToLower().Contains("ovipositorf")).InRandomOrder().FirstOrDefault().TryGetComp<rjw.CompHediffBodyPart>();
             if (part == null) part = Genital_Helper.get_PartsHediffList(pawn, Genital_Helper.get_genitalsBPR(pawn))?.FindAll((Hediff hed) => hed.def.defName.ToLower().Contains("ovipositorm")).InRandomOrder().FirstOrDefault().TryGetComp<rjw.CompHediffBodyPart>();
             if (part == null) part = Genital_Helper.get_PartsHediffList(pawn, Genital_Helper.get_genitalsBPR(pawn))?.FindAll((Hediff hed) => hed.def.defName.ToLower().Contains("tentacle")).InRandomOrder().FirstOrDefault().TryGetComp<rjw.CompHediffBodyPart>();
+            
+            float res = part?.FluidAmmount * part.FluidModifier * pawn.BodySize * Rand.Range(0.8f, 1.2f) * RJWSettings.cum_on_body_amount_adjust * 0.3f ?? 0.0f;
+            if (pawn.Has(Quirk.Messy)) res *= Rand.Range(4.0f,8.0f);
 
-            return part?.FluidAmmount * part.FluidModifier * Rand.Range(0.8f, 1.2f) ?? 0.0f;
+            return res;
         }
 
         public static HediffComp_Menstruation GetMenstruationComp(Pawn pawn)
@@ -135,27 +138,27 @@ namespace RJW_Menstruation
 
         public static Texture2D GetCumIcon(HediffComp_Menstruation comp)
         {
-            string icon = "Womb/";
+            string icon = comp.Props.wombTex;
             float cumpercent = comp.TotalCumPercent;
-            if (cumpercent < 0.001f) icon += "Empty";
-            else if (cumpercent < 0.01f) icon += "Cum_00";
-            else if (cumpercent < 0.05f) icon += "Cum_01";
-            else if (cumpercent < 0.11f) icon += "Cum_02";
-            else if (cumpercent < 0.17f) icon += "Cum_03";
-            else if (cumpercent < 0.23f) icon += "Cum_04";
-            else if (cumpercent < 0.29f) icon += "Cum_05";
-            else if (cumpercent < 0.35f) icon += "Cum_06";
-            else if (cumpercent < 0.41f) icon += "Cum_07";
-            else if (cumpercent < 0.47f) icon += "Cum_08";
-            else if (cumpercent < 0.53f) icon += "Cum_09";
-            else if (cumpercent < 0.59f) icon += "Cum_10";
-            else if (cumpercent < 0.65f) icon += "Cum_11";
-            else if (cumpercent < 0.71f) icon += "Cum_12";
-            else if (cumpercent < 0.77f) icon += "Cum_13";
-            else if (cumpercent < 0.83f) icon += "Cum_14";
-            else if (cumpercent < 0.89f) icon += "Cum_15";
-            else if (cumpercent < 0.95f) icon += "Cum_16";
-            else icon += "Cum_17";
+            if (cumpercent < 0.001f) icon = "Womb/Empty";
+            else if (cumpercent < 0.01f) icon += "_Cum_00";
+            else if (cumpercent < 0.05f) icon += "_Cum_01";
+            else if (cumpercent < 0.11f) icon += "_Cum_02";
+            else if (cumpercent < 0.17f) icon += "_Cum_03";
+            else if (cumpercent < 0.23f) icon += "_Cum_04";
+            else if (cumpercent < 0.29f) icon += "_Cum_05";
+            else if (cumpercent < 0.35f) icon += "_Cum_06";
+            else if (cumpercent < 0.41f) icon += "_Cum_07";
+            else if (cumpercent < 0.47f) icon += "_Cum_08";
+            else if (cumpercent < 0.53f) icon += "_Cum_09";
+            else if (cumpercent < 0.59f) icon += "_Cum_10";
+            else if (cumpercent < 0.65f) icon += "_Cum_11";
+            else if (cumpercent < 0.71f) icon += "_Cum_12";
+            else if (cumpercent < 0.77f) icon += "_Cum_13";
+            else if (cumpercent < 0.83f) icon += "_Cum_14";
+            else if (cumpercent < 0.89f) icon += "_Cum_15";
+            else if (cumpercent < 0.95f) icon += "_Cum_16";
+            else icon += "_Cum_17";
             Texture2D cumtex = ContentFinder<Texture2D>.Get((icon), true);
             return cumtex;
         }

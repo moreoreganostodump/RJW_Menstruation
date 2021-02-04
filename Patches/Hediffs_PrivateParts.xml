@@ -32,7 +32,7 @@
 		<value>
 			<comps>
 				<li Class="RJW_Menstruation.CompProperties_Menstruation">
-					<maxCumCapacity>1000</maxCumCapacity>
+					<maxCumCapacity>500</maxCumCapacity>
 					<baseImplantationChanceFactor>0.5</baseImplantationChanceFactor>
 					<basefertilizationChanceFactor>0.2</basefertilizationChanceFactor>
 					<deviationFactor>0.05</deviationFactor>

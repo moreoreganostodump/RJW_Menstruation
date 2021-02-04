@@ -55,7 +55,7 @@ namespace RJW_Menstruation
         {
             Texture2D icon,icon_overay;
             string description = "";
-            if (Configurations.Debug) description += comp.curStage + ": " + comp.curStageHrs + "\n" + "fertcums: " + comp.TotalFertCum;
+            if (Configurations.Debug) description += comp.curStage + ": " + comp.curStageHrs + "\n" + "fertcums: " + comp.TotalFertCum + "\n";
             else description += comp.GetCurStageLabel + "\n";
             if (pawn.IsPregnant())
             {

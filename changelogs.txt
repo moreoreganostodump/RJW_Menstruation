@@ -1,0 +1,28 @@
+Version 1.0.0.5
+ - womb cum capacity is affected by pawn's bodysize
+ - changed cum volume calculate method.
+   - cum volume is affected by pawn's bodysize
+   - generic cum volume decreased.
+   - if pawn has messy quirk, cum volume increases 4~8times.
+ - cum textures are dependent on womb texture
+
+Version 1.0.0.4
+
+ - fixed errors when runtimeGC removed pawns in cum list.
+ - added menstrual cramp - now pawns will get mood debuff during in period
+ - merged some stages into one stage
+
+Version 1.0.0.3
+
+ - fixed sometimes hediffcomp stops working.
+ - changed initializing method
+ - added patches for generic vagina and dragon vagina
+
+Version 1.0.0.2
+
+ - add options for turn on/off vagina/womb image in status window
+
+Version 1.0.0.1
+
+ - supports for other type of vagina
+ - custom images support for vagina&anus

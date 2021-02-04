@@ -113,7 +113,7 @@ namespace RJW_Menstruation
 						GUI.Box(preginfo, h.babies.Count + " " + fetus.def.label + " " + Translations.Dialog_WombInfo02, buttonstyle);
 						GUI.Label(preginfo, Translations.Dialog_WombInfo03 + ": " + h.father.LabelShort + "  ", fontstyleright);
 					}
-
+					
 				}
 				else cum = ContentFinder<Texture2D>.Get(("Womb/Empty"), true);
 			}
