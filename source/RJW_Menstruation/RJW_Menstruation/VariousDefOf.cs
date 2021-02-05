@@ -15,7 +15,7 @@ namespace RJW_Menstruation
         {
             fetusTexPath = "Fetus/Fetus_Default",
             cumColor = new ColorInt(255, 255, 255, 255),
-            cumTickness = 0
+            cumThickness = 0
         };
 
         public static readonly ThingDef CumFilth = DefDatabase<ThingDef>.GetNamed("FilthCum");

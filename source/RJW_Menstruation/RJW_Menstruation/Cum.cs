@@ -27,7 +27,7 @@ namespace RJW_Menstruation
         {
             get
             {
-                if (!notcum) return DNA.cumTickness;
+                if (!notcum) return DNA.cumThickness;
                 else return notcumthickness;
             }
             set

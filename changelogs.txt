@@ -2,6 +2,7 @@ Version 1.0.0.6
  - if pawn is fertility stat is 0, stage is fixed at none.
  - added option for fetus information level.
    - depend on information level, pregnant stage display as luteal stage
+ - rewrote misspelled DNADef attribute
 Version 1.0.0.5
  - womb cum capacity is affected by pawn's bodysize
  - changed cum volume calculate method.
