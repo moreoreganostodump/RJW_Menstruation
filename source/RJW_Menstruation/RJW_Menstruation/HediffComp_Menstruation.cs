@@ -67,10 +67,11 @@ namespace RJW_Menstruation
             Ovulatory,
             Luteal,
             Bleeding,
-            Fertilized,
+            Fertilized, //Obsoleted
             Pregnant,
             Recover,
-            None
+            None,
+            Young
         }
 
         private List<Cum> cums;
@@ -207,10 +208,12 @@ namespace RJW_Menstruation
                     case Stage.Fertilized:
                         return Translations.Stage_Fertilized;
                     case Stage.Pregnant:
-                        return Translations.Stage_Pregnant;
+                        if (Configurations.InfoDetail == Configurations.DetailLevel.All || (PregnancyHelper.GetPregnancy(parent.pawn)?.Visible ?? false)) return Translations.Stage_Pregnant;
+                        else return Translations.Stage_Luteal;
                     case Stage.Recover:
                         return Translations.Stage_Recover;
                     case Stage.None:
+                    case Stage.Young:
                         return Translations.Stage_None;
                     default:
                         return "";
@@ -298,7 +301,11 @@ namespace RJW_Menstruation
 
 
         
-
+        /// <summary>
+        /// Get fluid in womb that not a cum
+        /// </summary>
+        /// <param name="notcumlabel"></param>
+        /// <returns></returns>
         public Cum GetNotCum(string notcumlabel)
         {
             if (!cums.NullOrEmpty()) foreach (Cum cum in cums)
@@ -308,6 +315,11 @@ namespace RJW_Menstruation
             return null;
         }
 
+        /// <summary>
+        /// Get pawn's cum in womb
+        /// </summary>
+        /// <param name="pawn"></param>
+        /// <returns></returns>
         public Cum GetCum(Pawn pawn)
         {
             if (!cums.NullOrEmpty()) foreach (Cum cum in cums)
@@ -317,7 +329,13 @@ namespace RJW_Menstruation
             return null;
         }
         
-
+        /// <summary>
+        /// Inject pawn's cum into womb
+        /// </summary>
+        /// <param name="pawn"></param>
+        /// <param name="injectedvolume"></param>
+        /// <param name="fertility"></param>
+        /// <param name="filthdef"></param>
         public void CumIn(Pawn pawn, float injectedvolume, float fertility = 1.0f, ThingDef filthdef = null)
         {
             float volume = injectedvolume * CumInFactor;
@@ -358,6 +376,14 @@ namespace RJW_Menstruation
             }
         }
 
+        /// <summary>
+        /// Inject pawn's fluid into womb
+        /// </summary>
+        /// <param name="pawn"></param>
+        /// <param name="volume"></param>
+        /// <param name="notcumlabel"></param>
+        /// <param name="decayresist"></param>
+        /// <param name="filthdef"></param>
         public void CumIn(Pawn pawn, float volume, string notcumlabel, float decayresist = 0, ThingDef filthdef = null)
         {
             float tmp = TotalCum + volume;
@@ -399,7 +425,9 @@ namespace RJW_Menstruation
             }
         }
 
-
+        /// <summary>
+        /// Excrete cums in womb naturally
+        /// </summary>
         public void CumOut()
         {
             if (cums.NullOrEmpty()) return;
@@ -420,6 +448,12 @@ namespace RJW_Menstruation
             removecums.Clear();
         }
 
+        /// <summary>
+        /// Excrete cums in womb and get excreted amount of specific cum
+        /// </summary>
+        /// <param name="targetcum"></param>
+        /// <param name="portion"></param>
+        /// <returns></returns>
         public float CumOut(Cum targetcum, float portion = 0.1f)
         {
             if (cums.NullOrEmpty()) return 0;
@@ -443,7 +477,12 @@ namespace RJW_Menstruation
             return outcum;
         }
 
-        //ignores cum.decayresist
+        /// <summary>
+        /// Ignores cum's decayratio and get excreted amount of specific cum
+        /// </summary>
+        /// <param name="targetcum"></param>
+        /// <param name="portion"></param>
+        /// <returns></returns>
         public float CumOutForce(Cum targetcum, float portion = 0.1f)
         {
             if (cums.NullOrEmpty()) return 0;
@@ -467,7 +506,10 @@ namespace RJW_Menstruation
             return outcum;
         }
 
-
+        /// <summary>
+        /// Fertilize eggs and return the result
+        /// </summary>
+        /// <returns></returns>
         public bool FertilizationCheck()
         {
             if (!eggs.NullOrEmpty())
@@ -505,11 +547,19 @@ namespace RJW_Menstruation
                 if (cums == null) cums = new List<Cum>();
                 if (eggs == null) eggs = new List<Egg>();
                 if (parent.pawn.IsPregnant()) curStage = Stage.Pregnant;
-                if (Configurations.EnableAnimalCycle)
+                if (parent.pawn.IsAnimal())
                 {
-                    HugsLibController.Instance.TickDelayScheduler.ScheduleCallback(PeriodSimulator(curStage), tickInterval, parent.pawn, false);
+                    if (Configurations.EnableAnimalCycle)
+                    {
+                        HugsLibController.Instance.TickDelayScheduler.ScheduleCallback(PeriodSimulator(curStage), tickInterval, parent.pawn, false);
+                    }
                 }
-                else if (!parent.pawn.IsAnimal()) HugsLibController.Instance.TickDelayScheduler.ScheduleCallback(PeriodSimulator(curStage), tickInterval, parent.pawn, false);
+                else
+                {
+                    
+                    if (parent.pawn.health.capacities.GetLevel(xxx.reproduction) <= 0) HugsLibController.Instance.TickDelayScheduler.ScheduleCallback(PeriodSimulator(Stage.Young), tickInterval, parent.pawn, false);
+                    else HugsLibController.Instance.TickDelayScheduler.ScheduleCallback(PeriodSimulator(curStage), tickInterval, parent.pawn, false);
+                }
             }
             else
             {
@@ -520,6 +570,7 @@ namespace RJW_Menstruation
             //Log.Message(parent.pawn.Label + " - Initialized menstruation comp");
             loaded = true;
         }
+
 
         private Pawn Fertilize()
         {
@@ -534,7 +585,6 @@ namespace RJW_Menstruation
             }
             return null;
         }
-
 
         //for now, only one egg can be implanted
         private bool Implant()
@@ -630,7 +680,7 @@ namespace RJW_Menstruation
                 case Stage.Ovulatory:
                     action = delegate
                     {
-                        eggs.Add(new Egg(Props.eggLifespanDays * 24));
+                        eggs.Add(new Egg((int)(Props.eggLifespanDays * 24 / CycleFactor)));
                         lutealIntervalhours = PeriodRandomizer(lutealIntervalhours, Props.deviationFactor);
                         GoNextStage(Stage.Luteal);
                     };
@@ -742,6 +792,13 @@ namespace RJW_Menstruation
                         StayCurrentStageConst(Stage.None);
                     };
                     break;
+                case Stage.Young:
+                    action = delegate
+                    {
+                        if (parent.pawn.health.capacities.GetLevel(xxx.reproduction) <= 0) StayCurrentStageConst(Stage.Young);
+                        else GoNextStage(Stage.Follicular);
+                    };
+                    break;
                 default:
                     curStage = Stage.Follicular;
                     curStageHrs = 0;
@@ -751,6 +808,7 @@ namespace RJW_Menstruation
             }
             action += () =>
             {
+                if (parent.pawn.health.capacities.GetLevel(xxx.reproduction) <= 0) curStage = Stage.Young;
                 CumOut();
             };
 
@@ -771,11 +829,13 @@ namespace RJW_Menstruation
                 HugsLibController.Instance.TickDelayScheduler.ScheduleCallback(PeriodSimulator(nextstage), (int)(tickInterval * factor), parent.pawn, false);
             }
 
+            //stage can be interrupted in other reasons
             void StayCurrentStage(float factor = 1.0f)
             {
                 HugsLibController.Instance.TickDelayScheduler.ScheduleCallback(PeriodSimulator(curStage), (int)(tickInterval * factor), parent.pawn, false);
             }
 
+            //stage never changes
             void StayCurrentStageConst(Stage curstage, float factor = 1.0f)
             {
                 HugsLibController.Instance.TickDelayScheduler.ScheduleCallback(PeriodSimulator(curstage), (int)(tickInterval * factor), parent.pawn, false);

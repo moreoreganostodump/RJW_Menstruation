@@ -60,14 +60,22 @@ namespace RJW_Menstruation
             if (pawn.IsPregnant())
             {
                 Hediff hediff = PregnancyHelper.GetPregnancy(pawn);
-                icon = Utility.GetPregnancyIcon(comp,hediff);
-                if (hediff is Hediff_BasePregnancy)
+                if (Utility.ShowFetusImage((Hediff_BasePregnancy)hediff))
                 {
-                    Hediff_BasePregnancy h = (Hediff_BasePregnancy)hediff;
-                    if (h.GestationProgress < 0.2f) icon_overay = Utility.GetCumIcon(comp);
+                    icon = Utility.GetPregnancyIcon(comp, hediff);
+                    if (hediff is Hediff_BasePregnancy && Utility.ShowFetusImage((Hediff_BasePregnancy)hediff))
+                    {
+                        Hediff_BasePregnancy h = (Hediff_BasePregnancy)hediff;
+                        if (h.GestationProgress < 0.2f) icon_overay = Utility.GetCumIcon(comp);
+                        else icon_overay = ContentFinder<Texture2D>.Get(("Womb/Empty"), true);
+                    }
                     else icon_overay = ContentFinder<Texture2D>.Get(("Womb/Empty"), true);
                 }
-                else icon_overay = ContentFinder<Texture2D>.Get(("Womb/Empty"), true);
+                else
+                {
+                    icon = Utility.GetWombIcon(comp);
+                    icon_overay = Utility.GetCumIcon(comp);
+                }
             }
             else
             {

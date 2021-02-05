@@ -42,8 +42,13 @@
   <Option9_Desc>상태창에 자궁그림을 표시합니다.</Option9_Desc>
   <Option10_Label>보지 그림</Option10_Label>
   <Option10_Desc>상태창에 보지와 항문그림을 표시합니다.</Option10_Desc>
-  <Option11_Label></Option11_Label>
-  <Option11_Desc> </Option11_Desc>
+  <Option11_Label>태아 정보</Option11_Label>
+  <Option11_Desc_1>태아에 대한 모든 정보를 표시합니다.</Option11_Desc_1>
+  <Option11_Desc_2>임신을 발견한 이후에 태아에 대한 모든 정보를 표시합니다.</Option11_Desc_2>
+  <Option11_Desc_3>태아에 대한 정보를 표시하지 않지만, 임신한 이후 태아이미지를 표시합니다.</Option11_Desc_3>
+  <Option11_Desc_4>태아에 대한 어떠한 정보도 표시하지 않습니다.</Option11_Desc_4>
+  <Option12_Label></Option12_Label>
+  <Option12_Desc> </Option12_Desc>
   
   
 </LanguageData>

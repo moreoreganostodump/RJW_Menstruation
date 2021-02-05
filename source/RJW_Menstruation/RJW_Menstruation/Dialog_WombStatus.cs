@@ -36,6 +36,9 @@ namespace RJW_Menstruation
 		private GUIStyle boxstyle = new GUIStyle(GUI.skin.textArea);
 		private GUIStyle buttonstyle = new GUIStyle(GUI.skin.button);
 
+		
+
+
 		public override Vector2 InitialSize
         {
             get
@@ -95,7 +98,7 @@ namespace RJW_Menstruation
 
 			float preginfoheight = 0f;
 			Hediff hediff = PregnancyHelper.GetPregnancy(pawn);
-			if (pawn.IsPregnant())
+			if (pawn.IsPregnant() && Utility.ShowFetusImage((Hediff_BasePregnancy)hediff))
 			{
 				womb = Utility.GetPregnancyIcon(comp, hediff);
 				if (hediff is Hediff_BasePregnancy)
@@ -104,10 +107,10 @@ namespace RJW_Menstruation
 					if (h.GestationProgress < 0.2f) cum = Utility.GetCumIcon(comp);
 					else cum = ContentFinder<Texture2D>.Get(("Womb/Empty"), true);
 					Pawn fetus = Utility.GetFetus(pawn);
-					preginfoheight = fontheight;
-					Rect preginfo = new Rect(0f, mainRect.yMax - wombRectHeight - 2, wombRectWidth, preginfoheight);
-					if (fetus != null)
+					if (fetus != null && Utility.ShowFetusInfo())
 					{
+						preginfoheight = fontheight;
+						Rect preginfo = new Rect(0f, mainRect.yMax - wombRectHeight - 2, wombRectWidth, preginfoheight);
 						fontstyleright.normal.textColor = Color.white;
 						buttonstyle.alignment = TextAnchor.MiddleLeft;
 						GUI.Box(preginfo, h.babies.Count + " " + fetus.def.label + " " + Translations.Dialog_WombInfo02, buttonstyle);

@@ -42,8 +42,12 @@
   <Option9_Desc>draw womb icon in status window</Option9_Desc>
   <Option10_Label>vagina status</Option10_Label>
   <Option10_Desc>draw vagina and anus icon in status window</Option10_Desc>
-  <Option11_Label></Option11_Label>
-  <Option11_Desc> </Option11_Desc>
-  
+  <Option11_Label>Fetus information level</Option11_Label>
+  <Option11_Desc_1>Show all informations about fetus</Option11_Desc_1>
+  <Option11_Desc_2>Show all informations about fetus after noticed pregnancy</Option11_Desc_2>
+  <Option11_Desc_3>Do not show informations about fetus, but display image of fetus after noticed pregnancy</Option11_Desc_3>
+  <Option11_Desc_4>Do not show fetus image and informations</Option11_Desc_4>
+  <Option12_Label></Option12_Label>
+  <Option12_Desc> </Option12_Desc>
   
 </LanguageData>

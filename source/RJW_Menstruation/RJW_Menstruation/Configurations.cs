@@ -20,6 +20,7 @@ namespace RJW_Menstruation
         public static readonly int CumFertilityDecayRatioAdjustDefault = 200;
         public static readonly int CycleAccelerationDefault = 6;
 
+
         public static float ImplantationChance = ImplantationChanceDefault;
         public static int ImplantationChanceAdjust = ImplantationChanceAdjustDefault;
         public static float FertilizeChance = FertilizeChanceDefault; 
@@ -34,6 +35,36 @@ namespace RJW_Menstruation
         public static bool DrawWombStatus = true;
         public static bool DrawVaginaStatus = true;
         public static bool Debug = false;
+        public static DetailLevel InfoDetail = DetailLevel.All;
+
+
+        public enum DetailLevel
+        {
+            All,
+            OnReveal,
+            HideFetusInfo,
+            Hide
+        }
+
+        public static string LevelString(DetailLevel level)
+        {
+            switch (level)
+            {
+                case DetailLevel.All:
+                    return "All";
+                case DetailLevel.OnReveal:
+                    return "On reveal";
+                case DetailLevel.HideFetusInfo:
+                    return "Hide fetus info";
+                case DetailLevel.Hide:
+                    return "Hide";
+                default:
+                    return "";
+
+            }
+
+
+        }
 
         public override void ExposeData()
         {
@@ -50,6 +81,7 @@ namespace RJW_Menstruation
             Scribe_Values.Look(ref DrawWombStatus, "DrawWombStatus", DrawWombStatus, true);
             Scribe_Values.Look(ref DrawVaginaStatus, "DrawVaginaStatus", DrawVaginaStatus, true);
             Scribe_Values.Look(ref Debug, "Debug", Debug, true);
+            Scribe_Values.Look(ref InfoDetail, "InfoDetail", InfoDetail, true);
             base.ExposeData();
         }
 
@@ -81,9 +113,29 @@ namespace RJW_Menstruation
             listmain.CheckboxLabeled(Translations.Option1_Label, ref Configurations.EnableWombIcon, Translations.Option1_Desc);
             if (Configurations.EnableWombIcon)
             {
-                Listing_Standard wombsection = listmain.BeginSection_NewTemp(50);
+                Listing_Standard wombsection = listmain.BeginSection_NewTemp(111);
                 wombsection.CheckboxLabeled(Translations.Option9_Label, ref Configurations.DrawWombStatus, Translations.Option9_Desc);
                 wombsection.CheckboxLabeled(Translations.Option10_Label, ref Configurations.DrawVaginaStatus, Translations.Option10_Desc);
+                if (wombsection.ButtonText(Translations.Option11_Label + ": " + Configurations.LevelString(Configurations.InfoDetail)))
+                {
+                    if (Configurations.InfoDetail == Configurations.DetailLevel.Hide) Configurations.InfoDetail = Configurations.DetailLevel.All;
+                    else Configurations.InfoDetail++;
+                }
+                switch (Configurations.InfoDetail)
+                {
+                    case Configurations.DetailLevel.All:
+                        wombsection.Label(Translations.Option11_Desc_1);
+                        break;
+                    case Configurations.DetailLevel.OnReveal:
+                        wombsection.Label(Translations.Option11_Desc_2);
+                        break;
+                    case Configurations.DetailLevel.HideFetusInfo:
+                        wombsection.Label(Translations.Option11_Desc_3);
+                        break;
+                    case Configurations.DetailLevel.Hide:
+                        wombsection.Label(Translations.Option11_Desc_4);
+                        break;
+                }
                 listmain.EndSection(wombsection);
             }
             

@@ -64,7 +64,6 @@ namespace RJW_Menstruation
             return false;
         }
 
-
         public static HediffComp_Menstruation.Stage GetCurStage(Pawn pawn)
         {
             return GetMenstruationComp(pawn)?.curStage ?? HediffComp_Menstruation.Stage.Bleeding;
@@ -226,7 +225,19 @@ namespace RJW_Menstruation
             return hediff.LabelBase + "\n(" + hediff.LabelInBrackets + ")";
         }
 
+        public static bool ShowFetusImage(Hediff_BasePregnancy hediff)
+        {
+            if (Configurations.InfoDetail == Configurations.DetailLevel.All) return true;
+            else if (Configurations.InfoDetail == Configurations.DetailLevel.Hide) return false;
+            else if (hediff.Visible) return true;
+            else return false;
+        }
 
+        public static bool ShowFetusInfo()
+        {
+            if (Configurations.InfoDetail == Configurations.DetailLevel.All || Configurations.InfoDetail == Configurations.DetailLevel.OnReveal) return true;
+            else return false;
+        }
 
 
     }
