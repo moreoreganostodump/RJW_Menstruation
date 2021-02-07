@@ -4,6 +4,7 @@
 <!-- folicularIntervalDays includes bleedingIntervalDays.  -->
 <!-- bleedingIntervalDays must be smaller than folicularIntervalDays  -->
 <!-- unit of maxCumCapacity is ml -->
+<!-- one egg = 1 ovaryPower-->
 
 <Patch>
 	<Operation Class="PatchOperationAdd">
@@ -22,6 +23,7 @@
 					<eggLifespanDays>3</eggLifespanDays>
 					<wombTex>Womb/Womb</wombTex>
 					<vagTex>Genitals/Vagina</vagTex>
+					<ovaryPower>420</ovaryPower>
 				</li>
 			</comps>
 		</value>

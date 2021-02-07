@@ -35,6 +35,7 @@ namespace RJW_Menstruation
         public static bool DrawWombStatus = true;
         public static bool DrawVaginaStatus = true;
         public static bool Debug = false;
+        public static bool EnableMenopause = true;
         public static DetailLevel InfoDetail = DetailLevel.All;
 
 
@@ -82,6 +83,7 @@ namespace RJW_Menstruation
             Scribe_Values.Look(ref DrawVaginaStatus, "DrawVaginaStatus", DrawVaginaStatus, true);
             Scribe_Values.Look(ref Debug, "Debug", Debug, true);
             Scribe_Values.Look(ref InfoDetail, "InfoDetail", InfoDetail, true);
+            Scribe_Values.Look(ref EnableMenopause, "EnableMenopause", EnableMenopause, true);
             base.ExposeData();
         }
 
@@ -140,6 +142,8 @@ namespace RJW_Menstruation
             }
             
             listmain.CheckboxLabeled(Translations.Option2_Label, ref Configurations.EnableAnimalCycle, Translations.Option2_Desc);
+
+            listmain.CheckboxLabeled(Translations.Option12_Label, ref Configurations.EnableMenopause, Translations.Option12_Desc);
             
             listmain.Label(Translations.Option3_Label + " " + Configurations.ImplantationChance*100 + "%", -1, Translations.Option3_Desc);
             Configurations.ImplantationChanceAdjust = (int)listmain.Slider(Configurations.ImplantationChanceAdjust, 0, 1000);

@@ -1,8 +1,28 @@
+Version 1.0.0.8
+ - added option for disable menopause.
+
+Version 1.0.0.7
+ - fixed errors when attatch new vagina.
+ - ovulation stage produces multiple eggs and number of eggs are determined by race's litter size curve.
+   - but still, only one egg can proceed to pregnancy.
+ - added new attribute ovaryPower to CompProperties_Menstruation.
+   - default value is almost unlimited that never comes menopause.
+   - every ovulation decreases ovaryPower.
+   - when ovaryPower is low, climacteric begins.
+   - during in climacteric, cycles become irregular and lose fertility in progress.
+   - ovulation using hyperfertility pills consumes ovaryPower double times.
+   - hyperfertility pills decrease additional ovaryPower (abuse of hyperfertility pills will cause premature menopause)
+   - climacteric and menopause decrease sex drive and satisfaction.
+ - added ovary regeneration pill that can prevent climacteric.  
+   - ovary regeneration pill increases 30% of ovaryPower. (no limit, cannot cure climacteric)
+ - in period hediff decrease sex drive and satisfaction.
+
 Version 1.0.0.6
  - if pawn is fertility stat is 0, stage is fixed at none.
  - added option for fetus information level.
    - depend on information level, pregnant stage display as luteal stage
- - rewrote misspelled DNADef attribute
+ - rewrote misspelled DNADef attribute and mod title in mod settings
+ 
 Version 1.0.0.5
  - womb cum capacity is affected by pawn's bodysize
  - changed cum volume calculate method.

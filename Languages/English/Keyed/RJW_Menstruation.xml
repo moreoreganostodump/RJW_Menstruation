@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
-  <Mod_Title>RJW Menstrution Cycle</Mod_Title>
+  <Mod_Title>RJW Menstruation Cycle</Mod_Title>
   
   <Menstrual_Blood>menstrual blood</Menstrual_Blood>
   <Info_noCum>Empty</Info_noCum>
@@ -12,6 +12,7 @@
   <Stage_Pregnant>Pregnant</Stage_Pregnant>
   <Stage_Recover>Recovering from birth</Stage_Recover>
   <Stage_None>None</Stage_None>
+  <Stage_Climacteric>Climacteric</Stage_Climacteric>
   <Dialog_WombInfo01>State</Dialog_WombInfo01>
   <Dialog_WombInfo02>Fetus</Dialog_WombInfo02>
   <Dialog_WombInfo03>Father</Dialog_WombInfo03>
@@ -47,7 +48,9 @@
   <Option11_Desc_2>Show all informations about fetus after noticed pregnancy</Option11_Desc_2>
   <Option11_Desc_3>Do not show informations about fetus, but display image of fetus after noticed pregnancy</Option11_Desc_3>
   <Option11_Desc_4>Do not show fetus image and informations</Option11_Desc_4>
-  <Option12_Label></Option12_Label>
-  <Option12_Desc> </Option12_Desc>
+  <Option12_Label>enable menopause</Option12_Label>
+  <Option12_Desc>enable menopause effect that makes pawn infertile in time progress&#10;if you have problems with long life races, turn off this option.&#10;this option will apply after save loaded</Option12_Desc>
+  <Option13_Label></Option13_Label>
+  <Option13_Desc> </Option13_Desc>
   
 </LanguageData>

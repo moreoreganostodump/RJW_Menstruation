@@ -15,6 +15,7 @@ namespace RJW_Menstruation
         public static readonly string Stage_Pregnant = "Stage_Pregnant".Translate();
         public static readonly string Stage_Recover = "Stage_Recover".Translate();
         public static readonly string Stage_None = "Stage_None".Translate();
+        public static readonly string Stage_Climacteric = "Stage_Climacteric".Translate();
 
         public static readonly string Dialog_WombInfo01 = "Dialog_WombInfo01".Translate();
         public static readonly string Dialog_WombInfo02 = "Dialog_WombInfo02".Translate();
