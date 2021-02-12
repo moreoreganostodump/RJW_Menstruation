@@ -67,6 +67,7 @@
     <Compile Include="HediffComp_Menstruation.cs" />
     <Compile Include="Patch\Pawn_Patch.cs" />
     <Compile Include="Patch\RJW_Patch.cs" />
+    <Compile Include="Things.cs" />
     <Compile Include="Translations.cs" />
     <Compile Include="Utility.cs" />
     <Compile Include="VariousDefOf.cs" />

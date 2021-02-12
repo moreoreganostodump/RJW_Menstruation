@@ -4,6 +4,7 @@
 <!-- folicularIntervalDays includes bleedingIntervalDays.  -->
 <!-- bleedingIntervalDays must be smaller than folicularIntervalDays  -->
 <!-- unit of maxCumCapacity is ml -->
+<!-- actual max cum capacity is 500times of maxCumCapacity -->
 <!-- one egg = 1 ovaryPower-->
 
 <Patch>
@@ -12,7 +13,7 @@
 		<value>
 			<comps>
 				<li Class="RJW_Menstruation.CompProperties_Menstruation">
-					<maxCumCapacity>15</maxCumCapacity>
+					<maxCumCapacity>10</maxCumCapacity>
 					<baseImplantationChanceFactor>1.0</baseImplantationChanceFactor>
 					<basefertilizationChanceFactor>1.0</basefertilizationChanceFactor>
 					<deviationFactor>0.05</deviationFactor>
@@ -55,7 +56,7 @@
 		<value>
 			<comps>
 				<li Class="RJW_Menstruation.CompProperties_Menstruation">
-					<maxCumCapacity>15</maxCumCapacity>
+					<maxCumCapacity>10</maxCumCapacity>
 					<baseImplantationChanceFactor>1.0</baseImplantationChanceFactor>
 					<basefertilizationChanceFactor>1.0</basefertilizationChanceFactor>
 					<deviationFactor>0.05</deviationFactor>
@@ -76,7 +77,7 @@
 		<value>
 			<comps>
 				<li Class="RJW_Menstruation.CompProperties_Menstruation">
-					<maxCumCapacity>15</maxCumCapacity>
+					<maxCumCapacity>10</maxCumCapacity>
 					<wombTex>Womb/Womb</wombTex>
 					<vagTex>Genitals/BionicVagina</vagTex>
 					<infertile>true</infertile>
@@ -90,7 +91,7 @@
 		<value>
 			<comps>
 				<li Class="RJW_Menstruation.CompProperties_Menstruation">
-					<maxCumCapacity>15</maxCumCapacity>
+					<maxCumCapacity>10</maxCumCapacity>
 					<wombTex>Womb/Womb</wombTex>
 					<vagTex>Genitals/BionicVagina</vagTex>
 					<infertile>true</infertile>
@@ -104,7 +105,7 @@
 		<value>
 			<comps>
 				<li Class="RJW_Menstruation.CompProperties_Menstruation">
-					<maxCumCapacity>15</maxCumCapacity>
+					<maxCumCapacity>10</maxCumCapacity>
 					<baseImplantationChanceFactor>1.0</baseImplantationChanceFactor>
 					<basefertilizationChanceFactor>1.0</basefertilizationChanceFactor>
 					<deviationFactor>0.05</deviationFactor>

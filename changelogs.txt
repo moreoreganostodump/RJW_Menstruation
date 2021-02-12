@@ -1,3 +1,12 @@
+Version 1.0.1.1
+ - requires RJW 4.6.1 or later
+ - added superovulation inducing agent
+ - cumflations (no effects yet)
+ - added tampon and sanitary pad can absorb fluids.
+   - tampon blocks fluids completly. however, keep wearing dirty tampon can cause infection.
+   - pad blocks fluids for a while, but if exceed over the absorbable, fluids leak again.
+ - fixed erros when male pawn take hyperfertility pills.
+
 Version 1.0.1.0
  - requires RJW 4.6.1 or later
  - added multiple pregnancy

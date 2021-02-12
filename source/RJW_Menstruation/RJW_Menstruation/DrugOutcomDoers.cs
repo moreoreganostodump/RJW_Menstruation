@@ -13,11 +13,11 @@ namespace RJW_Menstruation
         protected override void DoIngestionOutcomeSpecial(Pawn pawn, Thing ingested)
         {
             HediffComp_Menstruation comp = Utility.GetMenstruationComp(pawn);
-            if (comp != null && comp.curStage.Equals(HediffComp_Menstruation.Stage.Follicular) 
+            if (comp != null && (comp.curStage.Equals(HediffComp_Menstruation.Stage.Follicular) 
                 || comp.curStage.Equals(HediffComp_Menstruation.Stage.Luteal)
                 || comp.curStage.Equals(HediffComp_Menstruation.Stage.ClimactericFollicular)
                 || comp.curStage.Equals(HediffComp_Menstruation.Stage.ClimactericLuteal)
-                )
+                ))
             {
                 comp.curStage = HediffComp_Menstruation.Stage.Ovulatory;
                 comp.ovarypower--;
@@ -42,7 +42,19 @@ namespace RJW_Menstruation
         }
     }
 
-    
+    public class SuperOvulationOutcomDoer : IngestionOutcomeDoer
+    {
+        protected override void DoIngestionOutcomeSpecial(Pawn pawn, Thing ingested)
+        {
+            HediffComp_Menstruation comp = Utility.GetMenstruationComp(pawn);
+            if (comp != null)
+            {
+                comp.eggstack += Rand.Range(1,4);
+            }
+
+
+        }
+    }
 
 
 

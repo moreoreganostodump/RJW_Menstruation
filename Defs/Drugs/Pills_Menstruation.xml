@@ -12,7 +12,7 @@
 		<rotatable>false</rotatable>
 		<statBases>
 			<WorkToMake>2400</WorkToMake>
-			<MarketValue>120</MarketValue>
+			<MarketValue>160</MarketValue>
 			<Mass>0.05</Mass>
 		</statBases>
 		<techLevel>Industrial</techLevel>
@@ -46,4 +46,52 @@
 			</li>
 		</comps>
 	</ThingDef>
+	
+	<ThingDef ParentName="MakeableDrugPillBase">
+		<defName>SuperovulationInducingAgent</defName>
+		<label>Superovulation inducing agent</label>
+		<description>Induce superovulation&#10;&#10;May cause early menopause</description>
+		<graphicData>
+			<texPath>Things/Item/SIA</texPath>
+			<graphicClass>Graphic_StackCount</graphicClass>
+		</graphicData>
+		<rotatable>false</rotatable>
+		<statBases>
+			<WorkToMake>2400</WorkToMake>
+			<MarketValue>140</MarketValue>
+			<Mass>0.05</Mass>
+		</statBases>
+		<techLevel>Industrial</techLevel>
+		<ingestible>
+			<drugCategory>Medical</drugCategory>
+			<outcomeDoers>
+				<li Class="RJW_Menstruation.SuperOvulationOutcomDoer">
+				</li>
+			</outcomeDoers>
+		</ingestible>
+		<recipeMaker>
+			<researchPrerequisite>DrugProduction</researchPrerequisite>
+			<recipeUsers>
+				<li>DrugLab</li>
+			</recipeUsers>
+		</recipeMaker>
+		<costList>
+			<MedicineHerbal>12</MedicineHerbal>
+			<Neutroamine>6</Neutroamine>
+		</costList>
+		<comps>
+			<li Class="CompProperties_Drug">
+			<addictiveness>0</addictiveness>
+			<listOrder>1000</listOrder>
+				<overdoseSeverityOffset>
+					<min>0.08</min>
+					<max>0.14</max>
+				</overdoseSeverityOffset>
+			</li>
+		</comps>
+	</ThingDef>
+	
+	
+	
+	
 </Defs>

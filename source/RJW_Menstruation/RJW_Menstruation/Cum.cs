@@ -45,7 +45,7 @@ namespace RJW_Menstruation
                     DNAcache = DefDatabase<DNADef>.GetNamedSilentFail(pawn?.def.defName ?? "Human");
                     if (DNAcache == null)
                     {
-                        DNAcache = VariousDefOf.defaultDNA;
+                        DNAcache = VariousDefOf.HumanDNA;
                     }
                     return DNAcache;
                 }
