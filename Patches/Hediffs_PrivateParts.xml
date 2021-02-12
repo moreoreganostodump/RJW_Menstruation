@@ -12,7 +12,7 @@
 		<value>
 			<comps>
 				<li Class="RJW_Menstruation.CompProperties_Menstruation">
-					<maxCumCapacity>500</maxCumCapacity>
+					<maxCumCapacity>15</maxCumCapacity>
 					<baseImplantationChanceFactor>1.0</baseImplantationChanceFactor>
 					<basefertilizationChanceFactor>1.0</basefertilizationChanceFactor>
 					<deviationFactor>0.05</deviationFactor>
@@ -34,7 +34,7 @@
 		<value>
 			<comps>
 				<li Class="RJW_Menstruation.CompProperties_Menstruation">
-					<maxCumCapacity>500</maxCumCapacity>
+					<maxCumCapacity>50</maxCumCapacity>
 					<baseImplantationChanceFactor>0.5</baseImplantationChanceFactor>
 					<basefertilizationChanceFactor>0.2</basefertilizationChanceFactor>
 					<deviationFactor>0.05</deviationFactor>
@@ -55,7 +55,7 @@
 		<value>
 			<comps>
 				<li Class="RJW_Menstruation.CompProperties_Menstruation">
-					<maxCumCapacity>500</maxCumCapacity>
+					<maxCumCapacity>15</maxCumCapacity>
 					<baseImplantationChanceFactor>1.0</baseImplantationChanceFactor>
 					<basefertilizationChanceFactor>1.0</basefertilizationChanceFactor>
 					<deviationFactor>0.05</deviationFactor>
@@ -76,7 +76,7 @@
 		<value>
 			<comps>
 				<li Class="RJW_Menstruation.CompProperties_Menstruation">
-					<maxCumCapacity>500</maxCumCapacity>
+					<maxCumCapacity>15</maxCumCapacity>
 					<wombTex>Womb/Womb</wombTex>
 					<vagTex>Genitals/BionicVagina</vagTex>
 					<infertile>true</infertile>
@@ -90,7 +90,7 @@
 		<value>
 			<comps>
 				<li Class="RJW_Menstruation.CompProperties_Menstruation">
-					<maxCumCapacity>500</maxCumCapacity>
+					<maxCumCapacity>15</maxCumCapacity>
 					<wombTex>Womb/Womb</wombTex>
 					<vagTex>Genitals/BionicVagina</vagTex>
 					<infertile>true</infertile>
@@ -104,7 +104,7 @@
 		<value>
 			<comps>
 				<li Class="RJW_Menstruation.CompProperties_Menstruation">
-					<maxCumCapacity>500</maxCumCapacity>
+					<maxCumCapacity>15</maxCumCapacity>
 					<baseImplantationChanceFactor>1.0</baseImplantationChanceFactor>
 					<basefertilizationChanceFactor>1.0</basefertilizationChanceFactor>
 					<deviationFactor>0.05</deviationFactor>

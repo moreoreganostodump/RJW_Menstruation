@@ -50,7 +50,7 @@ namespace RJW_Menstruation
 
         public static bool HasMenstruationComp(Pawn pawn)
         {
-            var hedifflist = Genital_Helper.get_PartsHediffList(pawn, Genital_Helper.get_genitalsBPR(pawn)).FindAll((Hediff h) => h.def.defName.ToLower().Contains("vagina"));
+            var hedifflist = Genital_Helper.get_PartsHediffList(pawn, Genital_Helper.get_genitalsBPR(pawn))?.FindAll((Hediff h) => h.def.defName.ToLower().Contains("vagina"));
             HediffComp_Menstruation result;
             if (hedifflist.NullOrEmpty()) return false;
             else
@@ -238,6 +238,22 @@ namespace RJW_Menstruation
             if (Configurations.InfoDetail == Configurations.DetailLevel.All || Configurations.InfoDetail == Configurations.DetailLevel.OnReveal) return true;
             else return false;
         }
+
+        public static Pawn GetFather(Pawn pawn, Pawn mother)
+        {
+            Pawn res = pawn.GetFather();
+            if (res != null) return res;
+            else
+            {
+                res = pawn.relations?.GetFirstDirectRelationPawn(VariousDefOf.Relation_birthgiver, x => !x.Equals(mother)) ?? null;
+                return res;
+            }
+
+
+
+
+        }
+
 
 
     }

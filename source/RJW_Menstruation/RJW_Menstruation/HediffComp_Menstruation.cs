@@ -233,6 +233,31 @@ namespace RJW_Menstruation
             }
 
         }
+
+        public string GetFertilizingInfo
+        {
+            get
+            {
+                string res = "";
+                if (!eggs.NullOrEmpty())
+                {
+                    if (cums.NullOrEmpty()) return eggs.Count + " " + Translations.Dialog_WombInfo07;
+                    else
+                    {
+                        int fertilized = 0;
+                        foreach (Egg egg in eggs)
+                        {
+                            if (egg.fertilized) fertilized++;
+                        }
+                        if (fertilized != 0) res += fertilized + " " + Translations.Dialog_WombInfo05;
+                        if (fertilized != 0 && eggs.Count - fertilized != 0) res += ", ";
+                        if (eggs.Count - fertilized != 0) res += eggs.Count - fertilized + " " + Translations.Dialog_WombInfo06;
+                    }
+                }
+                return res;
+            }
+        }
+
         public bool GetEggFertilizing
         {
             get
@@ -627,6 +652,7 @@ namespace RJW_Menstruation
                 float rand = Rand.Range(0.0f, 1.0f);
                 if (!cum.notcum && rand < cum.fertvolume * cum.fertFactor * Configurations.FertilizeChance * Props.basefertilizationChanceFactor)
                 {
+                    if (!RJWPregnancySettings.bestial_pregnancy_enabled && (xxx.is_animal(parent.pawn) ^ xxx.is_animal(cum.pawn))) continue;
                     return cum.pawn;
                 }
             }
@@ -645,14 +671,48 @@ namespace RJW_Menstruation
                     if (egg.position < 24 || !egg.fertilized) continue;
                     else if (Rand.Range(0.0f, 1.0f) <= Configurations.ImplantationChance * Props.baseImplantationChanceFactor * ImplantFactor * InterspeciesImplantFactor(egg.fertilizer))
                     {
-                        if (!parent.pawn.IsPregnant()) PregnancyHelper.PregnancyDecider(parent.pawn, egg.fertilizer);
-                        pregnant = true;
-                        break;
+                        if (!parent.pawn.IsPregnant())
+                        {
+                            if (!Configurations.UseMultiplePregnancy)
+                            {
+                                PregnancyHelper.PregnancyDecider(parent.pawn, egg.fertilizer);
+                                pregnant = true;
+                                break;
+                            }
+                            else
+                            {
+                                Hediff_BasePregnancy.Create<Hediff_MultiplePregnancy>(parent.pawn, egg.fertilizer);
+                                Hediff hediff = PregnancyHelper.GetPregnancy(parent.pawn);
+                                if (hediff is Hediff_BasePregnancy)
+                                {
+                                    Hediff_BasePregnancy h = (Hediff_BasePregnancy)hediff;
+                                    if (h.babies.Count > 1) h.babies.RemoveRange(1, h.babies.Count - 1);
+                                }
+                                pregnant = true;
+                                deadeggs.Add(egg);
+                            }
+                        }
+                        else if (Configurations.UseMultiplePregnancy && Configurations.EnableHeteroOvularTwins)
+                        {
+                            Hediff hediff = PregnancyHelper.GetPregnancy(parent.pawn);
+                            if (hediff is Hediff_MultiplePregnancy)
+                            {
+                                Hediff_MultiplePregnancy h = (Hediff_MultiplePregnancy)hediff;
+                                h.AddNewBaby(parent.pawn, egg.fertilizer);
+                            }
+                            pregnant = true;
+                            deadeggs.Add(egg);
+                        }
+                        else
+                        {
+                            pregnant = true;
+                            break;
+                        }
                     }
                     else deadeggs.Add(egg);
                 }
 
-                if (pregnant)
+                if (pregnant && (!Configurations.UseMultiplePregnancy || !Configurations.EnableHeteroOvularTwins))
                 {
                     eggs.Clear();
                     deadeggs.Clear();
@@ -666,6 +726,7 @@ namespace RJW_Menstruation
                     }
                     deadeggs.Clear();
                 }
+                if (pregnant) return true;
             }
             return false;
         }
@@ -673,7 +734,7 @@ namespace RJW_Menstruation
         private void BleedOut()
         {
             //FilthMaker.TryMakeFilth(parent.pawn.Position, parent.pawn.Map, ThingDefOf.Filth_Blood,parent.pawn.Label);
-            CumIn(parent.pawn, Rand.Range(0f, 15f), Translations.Menstrual_Blood,-4.0f,ThingDefOf.Filth_Blood);
+            CumIn(parent.pawn, Rand.Range(0f, 5f), Translations.Menstrual_Blood,-5.0f,ThingDefOf.Filth_Blood);
             GetNotCum(Translations.Menstrual_Blood).color = Colors.blood;
         }
 
@@ -812,7 +873,7 @@ namespace RJW_Menstruation
                         }
                         else
                         {
-                            if (curStageHrs < bleedingIntervalhours / 6) for (int i = 0; i < Configurations.CycleAcceleration; i++) BleedOut();
+                            if (curStageHrs < bleedingIntervalhours / 4) for (int i = 0; i < Configurations.CycleAcceleration; i++) BleedOut();
                             curStageHrs+=Configurations.CycleAcceleration;
                             StayCurrentStage();
                         }
@@ -842,6 +903,12 @@ namespace RJW_Menstruation
                 case Stage.Pregnant:
                     action = delegate
                     {
+                        if (!eggs.NullOrEmpty())
+                        {
+                            EggDecay();
+                            FertilizationCheck();
+                            Implant();
+                        }
                         if (parent.pawn.IsPregnant()) StayCurrentStageConst(Stage.Pregnant);
                         else GoNextStage(Stage.Recover);
                     };
@@ -1056,6 +1123,8 @@ namespace RJW_Menstruation
 
 
         }
+
+
 
 
         

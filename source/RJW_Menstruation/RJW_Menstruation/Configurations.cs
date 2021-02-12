@@ -10,16 +10,18 @@ namespace RJW_Menstruation
 {
     public class Configurations : ModSettings
     {
-        public static readonly float ImplantationChanceDefault = 0.25f;
-        public static readonly int ImplantationChanceAdjustDefault = 25;
-        public static readonly float FertilizeChanceDefault = 0.05f;
-        public static readonly int FertilizeChanceAdjustDefault = 50;
-        public static readonly float CumDecayRatioDefault = 0.05f;
-        public static readonly int CumDecayRatioAdjustDefault = 50;
-        public static readonly float CumFertilityDecayRatioDefault = 0.2f;
-        public static readonly int CumFertilityDecayRatioAdjustDefault = 200;
-        public static readonly int CycleAccelerationDefault = 6;
-
+        public const float ImplantationChanceDefault = 0.25f;
+        public const int ImplantationChanceAdjustDefault = 25;
+        public const float FertilizeChanceDefault = 0.05f;
+        public const int FertilizeChanceAdjustDefault = 50;
+        public const float CumDecayRatioDefault = 0.05f;
+        public const int CumDecayRatioAdjustDefault = 50;
+        public const float CumFertilityDecayRatioDefault = 0.2f;
+        public const int CumFertilityDecayRatioAdjustDefault = 200;
+        public const int CycleAccelerationDefault = 6;
+        public const float EnzygoticTwinsChanceDefault = 0.002f;
+        public const int EnzygoticTwinsChanceAdjustDefault = 2;
+        public const int MaxEnzygoticTwinsDefault = 9;
 
         public static float ImplantationChance = ImplantationChanceDefault;
         public static int ImplantationChanceAdjust = ImplantationChanceAdjustDefault;
@@ -37,6 +39,12 @@ namespace RJW_Menstruation
         public static bool Debug = false;
         public static bool EnableMenopause = true;
         public static DetailLevel InfoDetail = DetailLevel.All;
+        public static bool UseMultiplePregnancy = true;
+        public static bool EnableHeteroOvularTwins = true;
+        public static bool EnableEnzygoticTwins = true;
+        public static float EnzygoticTwinsChance = EnzygoticTwinsChanceDefault;
+        public static int EnzygoticTwinsChanceAdjust = EnzygoticTwinsChanceAdjustDefault;
+        public static int MaxEnzygoticTwins = MaxEnzygoticTwinsDefault;
 
 
         public enum DetailLevel
@@ -77,13 +85,19 @@ namespace RJW_Menstruation
             Scribe_Values.Look(ref CumDecayRatio, "CumDecayRatio", CumDecayRatio, true);
             Scribe_Values.Look(ref CumFertilityDecayRatioAdjust, "CumFertilityDecayRatioAdjust", CumFertilityDecayRatioAdjust, true);
             Scribe_Values.Look(ref CumFertilityDecayRatio, "CumFertilityDecayRatio", CumFertilityDecayRatio, true);
+            Scribe_Values.Look(ref CycleAcceleration, "CycleAcceleration", CycleAcceleration, true);
             Scribe_Values.Look(ref EnableWombIcon, "EnableWombIcon", EnableWombIcon, true);
             Scribe_Values.Look(ref EnableAnimalCycle, "EnableAnimalCycle", EnableAnimalCycle, true);
             Scribe_Values.Look(ref DrawWombStatus, "DrawWombStatus", DrawWombStatus, true);
             Scribe_Values.Look(ref DrawVaginaStatus, "DrawVaginaStatus", DrawVaginaStatus, true);
             Scribe_Values.Look(ref Debug, "Debug", Debug, true);
             Scribe_Values.Look(ref InfoDetail, "InfoDetail", InfoDetail, true);
-            Scribe_Values.Look(ref EnableMenopause, "EnableMenopause", EnableMenopause, true);
+            Scribe_Values.Look(ref UseMultiplePregnancy, "UseMultiplePregnancy", UseMultiplePregnancy, true);
+            Scribe_Values.Look(ref EnableHeteroOvularTwins, "EnableHeteroOvularTwins", EnableHeteroOvularTwins, true);
+            Scribe_Values.Look(ref EnableEnzygoticTwins, "EnableEnzygoticTwins", EnableEnzygoticTwins, true);
+            Scribe_Values.Look(ref EnzygoticTwinsChance, "EnzygoticTwinsChance", EnzygoticTwinsChance, true);
+            Scribe_Values.Look(ref EnzygoticTwinsChanceAdjust, "EnzygoticTwinsChanceAdjust", EnzygoticTwinsChanceAdjust, true);
+            Scribe_Values.Look(ref MaxEnzygoticTwins, "MaxEnzygoticTwins", MaxEnzygoticTwins, true);
             base.ExposeData();
         }
 
@@ -95,11 +109,15 @@ namespace RJW_Menstruation
     {
 
         private readonly Configurations config;
+        private static Vector2 scroll;
+
         public RJW_Menstruation(ModContentPack content) : base(content)
         {
             config = GetSettings<Configurations>();
 
         }
+
+        
 
         public override string SettingsCategory()
         {
@@ -108,10 +126,13 @@ namespace RJW_Menstruation
 
         public override void DoSettingsWindowContents(Rect inRect)
         {
-            Rect mainRect = inRect.ContractedBy(20f);
+            Rect outRect = new Rect(0f, 30f, inRect.width, inRect.height - 30f);
+            Rect mainRect = new Rect(0f, 0f, inRect.width - 30f, inRect.height + 300f);
             Listing_Standard listmain = new Listing_Standard();
+            listmain.maxOneColumn = true;
+            listmain.BeginScrollView(outRect, ref scroll, ref mainRect);
             listmain.Begin(mainRect);
-
+            listmain.Gap(20f);
             listmain.CheckboxLabeled(Translations.Option1_Label, ref Configurations.EnableWombIcon, Translations.Option1_Desc);
             if (Configurations.EnableWombIcon)
             {
@@ -164,6 +185,28 @@ namespace RJW_Menstruation
             listmain.Label(Translations.Option7_Label + " x" + Configurations.CycleAcceleration, -1, Translations.Option7_Desc);
             Configurations.CycleAcceleration = (int)listmain.Slider(Configurations.CycleAcceleration,1,50);
 
+            listmain.CheckboxLabeled(Translations.Option13_Label, ref Configurations.UseMultiplePregnancy, Translations.Option13_Desc);
+            if (Configurations.UseMultiplePregnancy)
+            {
+                float sectionheight = 50f;
+                if (Configurations.EnableEnzygoticTwins) sectionheight += 100;
+                Listing_Standard twinsection = listmain.BeginSection_NewTemp(sectionheight);
+                twinsection.CheckboxLabeled(Translations.Option14_Label, ref Configurations.EnableHeteroOvularTwins, Translations.Option14_Desc);
+                twinsection.CheckboxLabeled(Translations.Option15_Label, ref Configurations.EnableEnzygoticTwins, Translations.Option15_Desc);
+                if (Configurations.EnableEnzygoticTwins)
+                {
+                    twinsection.Label(Translations.Option16_Label + " " + Configurations.EnzygoticTwinsChance*100 + "%", -1, Translations.Option16_Desc);
+                    Configurations.EnzygoticTwinsChanceAdjust = (int)twinsection.Slider(Configurations.EnzygoticTwinsChanceAdjust, 0, 1000);
+                    Configurations.EnzygoticTwinsChance = (float)Configurations.EnzygoticTwinsChanceAdjust / 1000;
+
+                    twinsection.Label(Translations.Option17_Label + " " + Configurations.MaxEnzygoticTwins, -1, Translations.Option17_Desc);
+                    Configurations.MaxEnzygoticTwins = (int)twinsection.Slider(Configurations.MaxEnzygoticTwins, 2, 100);
+                }
+
+
+                listmain.EndSection(twinsection);
+            }
+            listmain.EndScrollView(ref mainRect);
 
             listmain.CheckboxLabeled(Translations.Option8_Label, ref Configurations.Debug, Translations.Option8_Desc);
             if (listmain.ButtonText("reset to default"))
@@ -175,8 +218,12 @@ namespace RJW_Menstruation
                 Configurations.EnableWombIcon = true;
                 Configurations.EnableAnimalCycle = false;
                 Configurations.CycleAcceleration = Configurations.CycleAccelerationDefault;
+                Configurations.EnzygoticTwinsChanceAdjust = Configurations.EnzygoticTwinsChanceAdjustDefault;
+                Configurations.EnableEnzygoticTwins = true;
+                Configurations.EnableHeteroOvularTwins = true;
+                Configurations.UseMultiplePregnancy = true;
+                Configurations.MaxEnzygoticTwins = Configurations.MaxEnzygoticTwinsDefault;
             }
-
 
             listmain.End();
 

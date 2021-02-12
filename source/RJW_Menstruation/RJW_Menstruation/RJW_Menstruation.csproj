@@ -60,6 +60,7 @@
     <Compile Include="Dialog_WombStatus.cs" />
     <Compile Include="DNADef.cs" />
     <Compile Include="DrugOutcomDoers.cs" />
+    <Compile Include="Hediff_MultiplePregnancy.cs" />
     <Compile Include="Patch\GetGizmos.cs" />
     <Compile Include="Gizmo_Womb.cs" />
     <Compile Include="Patch\Harmony.cs" />
@@ -84,7 +85,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="RJW">
-      <HintPath>..\..\..\..\RJW\1.1\Assemblies\RJW.dll</HintPath>
+      <HintPath>..\..\..\..\RJW\1.2\Assemblies\RJW.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.TextMeshPro">

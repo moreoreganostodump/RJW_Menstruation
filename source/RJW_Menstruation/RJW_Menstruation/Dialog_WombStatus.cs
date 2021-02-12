@@ -44,7 +44,7 @@ namespace RJW_Menstruation
             get
             {
 				float width = 300f + 2 * windowMargin;
-				float height = 800f;
+				float height = 820f;
 				if (!Configurations.DrawWombStatus) height -= wombRectHeight; 
 				if (!Configurations.DrawVaginaStatus) height -= genitalRectHeight; 
 				return new Vector2(width,height);
@@ -76,7 +76,7 @@ namespace RJW_Menstruation
 			}
 
 			Rect windowRect = inRect.ContractedBy(windowMargin);
-			Rect mainRect = new Rect(windowRect.x, windowRect.y, windowRect.width, windowRect.height - 20f);
+			Rect mainRect = new Rect(windowRect.x, windowRect.y, windowRect.width, windowRect.height);
 			Rect closeRect = new Rect(windowRect.xMax, 0f, 20f, 20f);
 			MainContents(mainRect);
 			if (Widgets.CloseButtonFor(closeRect))
@@ -101,7 +101,36 @@ namespace RJW_Menstruation
 			if (pawn.IsPregnant() && Utility.ShowFetusImage((Hediff_BasePregnancy)hediff))
 			{
 				womb = Utility.GetPregnancyIcon(comp, hediff);
-				if (hediff is Hediff_BasePregnancy)
+				if (hediff is Hediff_MultiplePregnancy)
+				{
+					Hediff_MultiplePregnancy h = (Hediff_MultiplePregnancy)hediff;
+					if (h.GestationProgress < 0.2f) cum = Utility.GetCumIcon(comp);
+					else cum = ContentFinder<Texture2D>.Get(("Womb/Empty"), true);
+					Pawn fetus = Utility.GetFetus(pawn);
+					if (fetus != null && Utility.ShowFetusInfo())
+					{
+						string feinfo = h.GetBabyInfo();
+						string fainfo = h.GetFatherInfo() + "  ";
+						if (feinfo.Length + fainfo.Length > 45)
+                        {
+							preginfoheight = fontheight + 2;
+							buttonstyle.alignment = TextAnchor.UpperLeft;
+							fontstyleright.alignment = TextAnchor.LowerRight;
+						}
+						else
+                        {
+							preginfoheight = fontheight;
+							buttonstyle.alignment = TextAnchor.MiddleLeft;
+
+						}
+						Rect preginfo = new Rect(0f, mainRect.yMax - wombRectHeight - 2, wombRectWidth, preginfoheight);
+						fontstyleright.normal.textColor = Color.white;
+						GUI.Box(preginfo, feinfo, buttonstyle);
+						GUI.Label(preginfo, fainfo, fontstyleright);
+					}
+
+				}
+				else if (hediff is Hediff_BasePregnancy)
 				{
 					Hediff_BasePregnancy h = (Hediff_BasePregnancy)hediff;
 					if (h.GestationProgress < 0.2f) cum = Utility.GetCumIcon(comp);
@@ -109,10 +138,13 @@ namespace RJW_Menstruation
 					Pawn fetus = Utility.GetFetus(pawn);
 					if (fetus != null && Utility.ShowFetusInfo())
 					{
+
 						preginfoheight = fontheight;
 						Rect preginfo = new Rect(0f, mainRect.yMax - wombRectHeight - 2, wombRectWidth, preginfoheight);
 						fontstyleright.normal.textColor = Color.white;
+						fontstyleright.alignment = TextAnchor.MiddleRight;
 						buttonstyle.alignment = TextAnchor.MiddleLeft;
+						
 						GUI.Box(preginfo, h.babies.Count + " " + fetus.def.label + " " + Translations.Dialog_WombInfo02, buttonstyle);
 						GUI.Label(preginfo, Translations.Dialog_WombInfo03 + ": " + h.father.LabelShort + "  ", fontstyleright);
 					}
@@ -156,9 +188,12 @@ namespace RJW_Menstruation
 
 
 			fontstyleright.normal.textColor = Color.red;
-			if (comp.GetFertilization) GUI.Label(wombInfoRect, Translations.Dialog_WombInfo05 + "  ", fontstyleright);
-			else if (comp.GetEggFertilizing) GUI.Label(wombInfoRect, Translations.Dialog_WombInfo06 + "  ", fontstyleright);
-			else if (comp.GetEgg) GUI.Label(wombInfoRect, Translations.Dialog_WombInfo07 + "  ", fontstyleright);
+			fontstyleright.alignment = TextAnchor.MiddleRight;
+			//if (comp.GetFertilization) GUI.Label(wombInfoRect, Translations.Dialog_WombInfo05 + "  ", fontstyleright);
+			//else if (comp.GetEggFertilizing) GUI.Label(wombInfoRect, Translations.Dialog_WombInfo06 + "  ", fontstyleright);
+			//else if (comp.GetEgg) GUI.Label(wombInfoRect, Translations.Dialog_WombInfo07 + "  ", fontstyleright);
+			GUI.Label(wombInfoRect, comp.GetFertilizingInfo + "  ", fontstyleright);
+
 
 			//Widgets.Label(wombInfoRect,Translations.Dialog_WombInfo01 + ": " + comp.GetCurStageLabel);
 

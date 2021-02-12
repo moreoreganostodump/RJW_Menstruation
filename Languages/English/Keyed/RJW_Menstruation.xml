@@ -50,7 +50,15 @@
   <Option11_Desc_4>Do not show fetus image and informations</Option11_Desc_4>
   <Option12_Label>enable menopause</Option12_Label>
   <Option12_Desc>enable menopause effect that makes pawn infertile in time progress&#10;if you have problems with long life races, turn off this option.&#10;this option will apply after save loaded</Option12_Desc>
-  <Option13_Label></Option13_Label>
-  <Option13_Desc> </Option13_Desc>
+  <Option13_Label>use multiple pregnancy</Option13_Label>
+  <Option13_Desc>use multiple pregnancy instead RJW's default pregnancy</Option13_Desc>
+  <Option14_Label>enable hetero ovular twins</Option14_Label>
+  <Option14_Desc>enable multiple eggs can get pregnant</Option14_Desc>
+  <Option15_Label>enable enzygotic twins</Option15_Label>
+  <Option15_Desc>enable single egg to result multiple offsprings</Option15_Desc>
+  <Option16_Label>enzygotic twins chance</Option16_Label>
+  <Option16_Desc>set chance of twins</Option16_Desc>
+  <Option17_Label>max enzygotic twins</Option17_Label>
+  <Option17_Desc>set max number of twins</Option17_Desc>
   
 </LanguageData>

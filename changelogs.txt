@@ -1,3 +1,20 @@
+Version 1.0.1.0
+ - requires RJW 4.6.1 or later
+ - added multiple pregnancy
+   - added options for twins
+     - if you turn off both twin options, you will get only one baby on every pregnancy. 
+   - male's litter curve size does not affect to number of offspring
+   - female can get multiple offsprings with multiple races.
+
+Version 1.0.0.10
+ - fixed cycle acceleration option was not saved.
+ - cum capacity decreased greatly.
+ - blood amount during in period decreased.
+
+Version 1.0.0.9
+ - update for RJW 4.6.0 (if you didn't update RJW, you don't need to update this mod)
+   - removed patch file for IUD.
+
 Version 1.0.0.8
  - added option for disable menopause.
 
