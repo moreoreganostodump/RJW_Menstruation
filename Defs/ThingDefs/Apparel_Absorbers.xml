@@ -74,7 +74,7 @@
     <description>An wet used tampon</description>
     <thingClass>RJW_Menstruation.Absorber_Tampon</thingClass>
     <graphicData>
-      <texPath>Things/Item/Tampon_Dirty</texPath>
+      <texPath>Things/Item/Tampon</texPath>
       <graphicClass>Graphic_Single</graphicClass>
     </graphicData>
     <tickerType>Never</tickerType>
@@ -133,7 +133,7 @@
     <tickerType>Never</tickerType>
     <smeltable>false</smeltable>
     <statBases>
-      <MaxHitPoints>20</MaxHitPoints>
+      <MaxHitPoints>40</MaxHitPoints>
       <Mass>0.02</Mass>
       <WorkToMake>1000</WorkToMake>
       <Flammability>1.0</Flammability>
@@ -192,13 +192,13 @@
     <description>An wet used pad</description>
     <thingClass>RJW_Menstruation.Absorber</thingClass>
     <graphicData>
-      <texPath>Things/Item/Pad_Dirty</texPath>
+      <texPath>Things/Item/Pad</texPath>
       <graphicClass>Graphic_Single</graphicClass>
     </graphicData>
     <tickerType>Never</tickerType>
     <smeltable>false</smeltable>
     <statBases>
-      <MaxHitPoints>20</MaxHitPoints>
+      <MaxHitPoints>40</MaxHitPoints>
       <Mass>0.10</Mass>
 	  <MarketValue>0</MarketValue>
       <WorkToMake>1000</WorkToMake>

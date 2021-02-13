@@ -61,6 +61,7 @@
     <Compile Include="DNADef.cs" />
     <Compile Include="DrugOutcomDoers.cs" />
     <Compile Include="Hediff_MultiplePregnancy.cs" />
+    <Compile Include="JobDrivers.cs" />
     <Compile Include="Patch\GetGizmos.cs" />
     <Compile Include="Gizmo_Womb.cs" />
     <Compile Include="Patch\Harmony.cs" />

@@ -122,7 +122,7 @@ namespace RJW_Menstruation
             {
                 Hediff_BasePregnancy h = (Hediff_BasePregnancy)hediff;
                 string fetustex = DefDatabase<DNADef>.GetNamedSilentFail(h.babies.First().def.defName)?.fetusTexPath ?? "Fetus/Fetus_Default";
-                if (h.GestationProgress < 0.2f) icon = comp.Props.wombTex + "_Implanted";
+                if (h.GestationProgress < 0.2f) icon = comp.wombTex + "_Implanted";
                 else if (h.GestationProgress < 0.3f) icon += "Fetus/Fetus_Early00";
                 else if (h.GestationProgress < 0.4f) icon += fetustex + "00";
                 else if (h.GestationProgress < 0.5f) icon += fetustex + "01";
@@ -137,7 +137,7 @@ namespace RJW_Menstruation
 
         public static Texture2D GetCumIcon(HediffComp_Menstruation comp)
         {
-            string icon = comp.Props.wombTex;
+            string icon = comp.wombTex;
             float cumpercent = comp.TotalCumPercent;
             if (cumpercent < 0.001f) icon = "Womb/Empty";
             else if (cumpercent < 0.01f) icon += "_Cum_00";
@@ -164,7 +164,7 @@ namespace RJW_Menstruation
 
         public static Texture2D GetWombIcon(HediffComp_Menstruation comp)
         {
-            string icon = comp.Props.wombTex;
+            string icon = comp.wombTex;
             HediffComp_Menstruation.Stage stage = comp.curStage;
             if (stage == HediffComp_Menstruation.Stage.Bleeding) icon += "_Bleeding";
 

@@ -21,7 +21,7 @@
 			<li>
 				<label>unpleasant</label>
 				<statFactors>
-					<SexFrequency>0.90</SexFrequency>
+					<SexFrequency>0.50</SexFrequency>
 					<SexSatisfaction>0.95</SexSatisfaction>
 				</statFactors>
 				<painOffset>0.05</painOffset>
@@ -30,8 +30,8 @@
 				<minSeverity>0.2</minSeverity>
 				<label>annoy</label>
 				<statFactors>
-					<SexFrequency>0.70</SexFrequency>
-					<SexSatisfaction>0.90</SexSatisfaction>
+					<SexFrequency>0.40</SexFrequency>
+					<SexSatisfaction>0.95</SexSatisfaction>
 				</statFactors>
 				<painOffset>0.1</painOffset>
 			</li>
@@ -39,8 +39,8 @@
 				<minSeverity>0.4</minSeverity>
 				<label>ache</label>
 				<statFactors>
-					<SexFrequency>0.50</SexFrequency>
-					<SexSatisfaction>0.70</SexSatisfaction>
+					<SexFrequency>0.20</SexFrequency>
+					<SexSatisfaction>0.95</SexSatisfaction>
 				</statFactors>
 				<painOffset>0.2</painOffset>
 			</li>
@@ -49,7 +49,7 @@
 				<label>painful</label>
 				<statFactors>
 					<SexFrequency>0.0</SexFrequency>
-					<SexSatisfaction>0.50</SexSatisfaction>
+					<SexSatisfaction>0.95</SexSatisfaction>
 				</statFactors>
 				<painOffset>0.4</painOffset>
 			</li>
@@ -81,8 +81,8 @@
 		<stages>
 			<li>
 				<statFactors>
-					<SexFrequency>0.20</SexFrequency>
-					<SexSatisfaction>0.25</SexSatisfaction>
+					<SexFrequency>0.01</SexFrequency>
+					<SexSatisfaction>0.50</SexSatisfaction>
 				</statFactors>
 				<capMods>
 					<li>
@@ -117,7 +117,7 @@
 			<li>
 				<label>early</label>
 				<statFactors>
-					<SexFrequency>0.75</SexFrequency>
+					<SexFrequency>0.50</SexFrequency>
 					<SexSatisfaction>0.8</SexSatisfaction>
 				</statFactors>
 				<capMods>
@@ -131,8 +131,8 @@
 				<label>middle</label>
 				<minSeverity>0.2</minSeverity>
 				<statFactors>
-					<SexFrequency>0.50</SexFrequency>
-					<SexSatisfaction>0.6</SexSatisfaction>
+					<SexFrequency>0.25</SexFrequency>
+					<SexSatisfaction>0.7</SexSatisfaction>
 				</statFactors>
 				<capMods>
 					<li>
@@ -145,8 +145,8 @@
 				<label>latter</label>
 				<minSeverity>0.4</minSeverity>
 				<statFactors>
-					<SexFrequency>0.40</SexFrequency>
-					<SexSatisfaction>0.4</SexSatisfaction>
+					<SexFrequency>0.10</SexFrequency>
+					<SexSatisfaction>0.6</SexSatisfaction>
 				</statFactors>
 				<capMods>
 					<li>
@@ -159,8 +159,8 @@
 				<label>end</label>
 				<minSeverity>0.6</minSeverity>
 				<statFactors>
-					<SexFrequency>0.25</SexFrequency>
-					<SexSatisfaction>0.25</SexSatisfaction>
+					<SexFrequency>0.05</SexFrequency>
+					<SexSatisfaction>0.5</SexSatisfaction>
 				</statFactors>
 				<capMods>
 					<li>

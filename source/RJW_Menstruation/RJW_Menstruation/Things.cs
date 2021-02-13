@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using RimWorld;
 using Verse;
 using rjw;
+using UnityEngine;
 
 namespace RJW_Menstruation
 {
@@ -29,7 +30,9 @@ namespace RJW_Menstruation
         public virtual ThingDef DirtyDef => def.GetModExtension<AbsorberModExtention>().dirtyDef;
         public virtual int MinHrstoDirtyEffect => def.GetModExtension<AbsorberModExtention>().minHourstoDirtyEffect;
 
+        public Color fluidColor = Color.white;
 
+        
 
         public virtual void DirtyEffect() {}
 
@@ -38,12 +41,15 @@ namespace RJW_Menstruation
             wearhours++;
         }
 
+        public override Color DrawColorTwo => fluidColor;
+
         public override void ExposeData()
         {
             base.ExposeData();
             Scribe_Values.Look(ref absorbedfluids, "absorbedfluids", absorbedfluids, true);
             Scribe_Values.Look(ref dirty, "dirty", dirty, true);
             Scribe_Values.Look(ref wearhours, "wearhours", wearhours, true);
+            Scribe_Values.Look(ref fluidColor, "fluidColor", fluidColor, true);
         }
 
     }

@@ -1,9 +1,15 @@
+Version 1.0.1.2
+ - reduced sex satisfaction debuffs
+ - if pawn is climacteric or menopause sex need recover to 50%.
+ - added vaginal washing
+ - fixed bugs absorber does not work properly
+ - used absorbers are colored fluid's color
 Version 1.0.1.1
  - requires RJW 4.6.1 or later
  - added superovulation inducing agent
  - cumflations (no effects yet)
  - added tampon and sanitary pad can absorb fluids.
-   - tampon blocks fluids completly. however, keep wearing dirty tampon can cause infection.
+   - tampon blocks fluids completely. however, keep wearing dirty tampon can cause infection.
    - pad blocks fluids for a while, but if exceed over the absorbable, fluids leak again.
  - fixed erros when male pawn take hyperfertility pills.
 

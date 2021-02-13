@@ -89,6 +89,8 @@ namespace RJW_Menstruation
         private int bleedingIntervalhours = -1;
         private int recoveryIntervalhours = -1;
         private float crampPain= -1;
+        private Need sexNeed = null;
+        private string customwombtex = null;
 
         public float TotalCum
         {
@@ -234,6 +236,19 @@ namespace RJW_Menstruation
                 }
             }
 
+        }
+
+        public string wombTex
+        {
+            get
+            {
+                if (customwombtex == null) return Props.wombTex;
+                else return customwombtex;
+            }
+            set
+            {
+                customwombtex = value;
+            }
         }
 
         public string GetFertilizingInfo
@@ -555,7 +570,7 @@ namespace RJW_Menstruation
         /// <param name="targetcum"></param>
         /// <param name="portion"></param>
         /// <returns></returns>
-        public float CumOutForce(Cum targetcum, float portion = 0.1f)
+        public float CumOutForce(Cum targetcum = null, float portion = 0.1f)
         {
             if (cums.NullOrEmpty()) return 0;
             float outcum = 0;
@@ -674,6 +689,19 @@ namespace RJW_Menstruation
             loaded = true;
         }
 
+        public void AfterSimulator()
+        {
+            if (ovarypower < ovarypowerthreshold)
+            {
+                if (sexNeed == null) sexNeed = parent.pawn.needs.TryGetNeed(VariousDefOf.SexNeed);
+                else
+                {
+                    if (sexNeed.CurLevel < 0.5) sexNeed.CurLevel += 0.02f;
+                }
+            }
+
+        }
+
 
         private Pawn Fertilize()
         {
@@ -765,7 +793,7 @@ namespace RJW_Menstruation
         private void BleedOut()
         {
             //FilthMaker.TryMakeFilth(parent.pawn.Position, parent.pawn.Map, ThingDefOf.Filth_Blood,parent.pawn.Label);
-            CumIn(parent.pawn, Rand.Range(0f, 5f), Translations.Menstrual_Blood,-5.0f,ThingDefOf.Filth_Blood);
+            CumIn(parent.pawn, Rand.Range(1f, 2f), Translations.Menstrual_Blood,-5.0f,ThingDefOf.Filth_Blood);
             GetNotCum(Translations.Menstrual_Blood).color = Colors.blood;
         }
 
@@ -777,9 +805,11 @@ namespace RJW_Menstruation
                 if (!absorber.dirty)
                 {
                     absorber.absorbedfluids += amount;
-                    if (absorber.absorbedfluids < 10)
+                    if (absorber.absorbedfluids > absorber.GetStatValue(VariousDefOf.MaxAbsorbable))
                     {
                         absorber.def = absorber.DirtyDef;
+                        //absorber.fluidColor = GetCumMixtureColor;
+                        absorber.SetColor(GetCumMixtureColor);
                         absorber.dirty = true;
                     }
                 }
@@ -814,7 +844,7 @@ namespace RJW_Menstruation
         }
 
 
-        private Action PeriodSimulator(Enum targetstage)
+        private Action PeriodSimulator(Stage targetstage)
         {
             Action action = null;
             switch (targetstage)
@@ -930,22 +960,24 @@ namespace RJW_Menstruation
                 case Stage.Fertilized:  //Obsoleted stage. merged in luteal stage
                     action = delegate
                     {
-                        if (curStageHrs >= 24)
-                        {
-                            if (Implant())
-                            {
-                                GoNextStage(Stage.Pregnant);
-                            }
-                            else
-                            {
-                                GoNextStageSetHour(Stage.Luteal, 96);
-                            }
-                        }
-                        else
-                        {
-                            curStageHrs+=Configurations.CycleAcceleration;
-                            StayCurrentStage();
-                        }
+                        ModLog.Message("Obsoleted stage. skipping...");
+                        GoNextStage(Stage.Luteal);
+                        //if (curStageHrs >= 24)
+                        //{
+                        //    if (Implant())
+                        //    {
+                        //        GoNextStage(Stage.Pregnant);
+                        //    }
+                        //    else
+                        //    {
+                        //        GoNextStageSetHour(Stage.Luteal, 96);
+                        //    }
+                        //}
+                        //else
+                        //{
+                        //    curStageHrs+=Configurations.CycleAcceleration;
+                        //    StayCurrentStage();
+                        //}
                     };
                     break;
                 case Stage.Pregnant:
@@ -1095,6 +1127,7 @@ namespace RJW_Menstruation
             {
                 if (parent.pawn.health.capacities.GetLevel(xxx.reproduction) <= 0) curStage = Stage.Young;
                 CumOut();
+                AfterSimulator();
             };
 
             actionref = action;
@@ -1107,6 +1140,7 @@ namespace RJW_Menstruation
                 HugsLibController.Instance.TickDelayScheduler.ScheduleCallback(PeriodSimulator(nextstage), (int)(tickInterval * factor), parent.pawn, false);
             }
 
+            
             void GoNextStageSetHour(Stage nextstage, int hour, float factor = 1.0f)
             {
                 curStageHrs = hour;

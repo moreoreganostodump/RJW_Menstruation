@@ -61,5 +61,6 @@
   <Option17_Label>최대 일란성 쌍둥이 수</Option17_Label>
   <Option17_Desc>일란성 쌍둥이의 수를 제한합니다.</Option17_Desc>
   
+  <FloatMenu_CleanSelf>질세척</FloatMenu_CleanSelf>
   
 </LanguageData>
