@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Patch>
+	<Operation Class="PatchOperationAdd">
+		<xpath>Defs/ThingDef[defName="Cloth"]/stuffProps/statFactors</xpath>
+		<value>
+			<MaxAbsorbable>1.0</MaxAbsorbable>
+		</value>
+	</Operation>
+	
+	<Operation Class="PatchOperationAdd">
+		<xpath>Defs/ThingDef[defName="Synthread"]/stuffProps/statFactors</xpath>
+		<value>
+			<MaxAbsorbable>2.0</MaxAbsorbable>
+		</value>
+	</Operation>
+	
+	<Operation Class="PatchOperationAdd">
+		<xpath>Defs/ThingDef[defName="DevilstrandCloth"]/stuffProps/statFactors</xpath>
+		<value>
+			<MaxAbsorbable>0.5</MaxAbsorbable>
+		</value>
+	</Operation>
+	
+	<Operation Class="PatchOperationAdd">
+		<xpath>Defs/ThingDef[defName="Hyperweave"]/stuffProps/statFactors</xpath>
+		<value>
+			<MaxAbsorbable>0.25</MaxAbsorbable>
+		</value>
+	</Operation>
+	
+	<Operation Class="PatchOperationAdd">
+		<xpath>Defs/ThingDef[@Name="WoolBase"]/stuffProps/statFactors</xpath>
+		<value>
+			<MaxAbsorbable>1.5</MaxAbsorbable>
+		</value>
+	</Operation>
+</Patch>

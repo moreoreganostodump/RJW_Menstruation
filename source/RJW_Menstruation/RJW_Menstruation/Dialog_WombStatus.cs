@@ -17,7 +17,7 @@ namespace RJW_Menstruation
 		private const float windowMargin = 20f;
 		private const float pawnRectWidth = 150f;
 		private const float pawnRectHeight = 150f;
-		private const float wombRectHeight = 270f;
+		private const float wombRectHeight = 300f;
 		private const float wombRectWidth = 300f;
 		private const float fontheight = 30;
 		private const float genitalRectWidth = 102;
@@ -104,9 +104,9 @@ namespace RJW_Menstruation
 				if (hediff is Hediff_MultiplePregnancy)
 				{
 					Hediff_MultiplePregnancy h = (Hediff_MultiplePregnancy)hediff;
-					if (h.GestationProgress < 0.2f) cum = Utility.GetCumIcon(comp);
+					if (h.GestationProgress < 0.2f) cum = comp.GetCumIcon();
 					else cum = ContentFinder<Texture2D>.Get(("Womb/Empty"), true);
-					Pawn fetus = Utility.GetFetus(pawn);
+					Pawn fetus = pawn.GetFetus();
 					if (fetus != null && Utility.ShowFetusInfo())
 					{
 						string feinfo = h.GetBabyInfo();
@@ -133,9 +133,9 @@ namespace RJW_Menstruation
 				else if (hediff is Hediff_BasePregnancy)
 				{
 					Hediff_BasePregnancy h = (Hediff_BasePregnancy)hediff;
-					if (h.GestationProgress < 0.2f) cum = Utility.GetCumIcon(comp);
+					if (h.GestationProgress < 0.2f) cum = comp.GetCumIcon();
 					else cum = ContentFinder<Texture2D>.Get(("Womb/Empty"), true);
-					Pawn fetus = Utility.GetFetus(pawn);
+					Pawn fetus = pawn.GetFetus();
 					if (fetus != null && Utility.ShowFetusInfo())
 					{
 
@@ -154,8 +154,8 @@ namespace RJW_Menstruation
 			}
 			else
 			{
-				womb = Utility.GetWombIcon(comp);
-				cum = Utility.GetCumIcon(comp);
+				womb = comp.GetWombIcon();
+				cum = comp.GetCumIcon();
 			}
 
 
@@ -173,7 +173,7 @@ namespace RJW_Menstruation
 			{
 				wombrecth = wombRectHeight;
 				cumcolor = comp.GetCumMixtureColor;
-				Rect wombRect = new Rect(0f, mainRect.yMax - wombRectHeight + preginfoheight, wombRectWidth, wombRectHeight);
+				Rect wombRect = new Rect(0f, mainRect.yMax - wombRectHeight + preginfoheight, wombRectWidth, wombRectWidth*0.9f);
 				DrawWomb(wombRect);
 			}
 
@@ -257,8 +257,8 @@ namespace RJW_Menstruation
 			Rect genitalVaginaLabelRect = new Rect(rect.x, rect.y, genitalRectWidth, fontheight);
 			Rect genitalAnusLabelRect = new Rect(rect.x, rect.y + fontheight + genitalRectHeight, genitalRectWidth, fontheight);
 
-			vagina = Utility.GetGenitalIcon(pawn);
-			anal = Utility.GetAnalIcon(pawn);
+			vagina = pawn.GetGenitalIcon();
+			anal = pawn.GetAnalIcon();
 			GUI.color = new Color(1.00f, 0.47f, 0.47f, 1);
 			GUI.Box(rect, "", boxstyle);
 			GUI.color = pawn.story.SkinColor;
@@ -268,8 +268,8 @@ namespace RJW_Menstruation
 			GUI.DrawTexture(genitalIconRect, vagina, ScaleMode.ScaleToFit);
 
 			GUI.color = Color.white;
-			GUI.Label(genitalVaginaLabelRect, Utility.GetVaginaLabel(pawn), fontstylecenter);
-			GUI.Label(genitalAnusLabelRect, Utility.GetAnusLabel(pawn), fontstylecenter);
+			GUI.Label(genitalVaginaLabelRect, pawn.GetVaginaLabel(), fontstylecenter);
+			GUI.Label(genitalAnusLabelRect, pawn.GetAnusLabel(), fontstylecenter);
 
 		}
 

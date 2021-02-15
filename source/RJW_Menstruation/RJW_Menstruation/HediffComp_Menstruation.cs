@@ -194,7 +194,7 @@ namespace RJW_Menstruation
                     float mixedsofar = 0;
                     foreach (Cum cum in cums)
                     {
-                        mixedcolor = Color.LerpUnclamped(mixedcolor, cum.color, cum.volume/(mixedsofar + cum.volume));
+                        mixedcolor = Colors.CMYKLerp(mixedcolor, cum.color, cum.volume/(mixedsofar + cum.volume));
                         mixedsofar += cum.volume;
                     }
                 }
@@ -258,7 +258,7 @@ namespace RJW_Menstruation
                 string res = "";
                 if (!eggs.NullOrEmpty())
                 {
-                    if (cums.NullOrEmpty()) return eggs.Count + " " + Translations.Dialog_WombInfo07;
+                    if (cums.NullOrEmpty() || TotalFertCum == 0) return eggs.Count + " " + Translations.Dialog_WombInfo07;
                     else
                     {
                         int fertilized = 0;
@@ -309,13 +309,45 @@ namespace RJW_Menstruation
                 return !eggs.NullOrEmpty();
             }
         }
-
+        public bool IsDangerDay
+        {
+            get
+            {
+                if (curStage == Stage.Follicular || curStage == Stage.ClimactericFollicular)
+                {
+                    if (curStageHrs > 0.7f * (follicularIntervalhours - bleedingIntervalhours)) return true;
+                }
+                else if (curStage == Stage.Luteal || curStage == Stage.ClimactericLuteal)
+                {
+                    if (curStageHrs < Props.eggLifespanDays * 24) return true;
+                }
+                else if (curStage == Stage.Ovulatory) return true;
+                return false;
+            }
+        }
         public int GetNumofEggs
         {
             get
             {
                 if (eggs.NullOrEmpty()) return 0;
                 else return eggs.Count;
+            }
+        }
+
+        public Color BloodColor
+        {
+            get
+            {
+                try
+                {
+                    Color c = parent.pawn.def.race.BloodDef.graphicData.color;
+                    return c;
+                }
+                catch
+                {
+                    return Colors.blood;
+                }
+
             }
         }
 
@@ -437,7 +469,7 @@ namespace RJW_Menstruation
                     }
                 if (!merged) cums.Add(new Cum(pawn, volume, fertility, filthdef));
             }
-            AfterCumIn();
+            AfterCumIn(pawn);
         }
 
         /// <summary>
@@ -487,12 +519,58 @@ namespace RJW_Menstruation
                     }
                 if (!merged) cums.Add(new Cum(pawn, volume, notcumlabel,decayresist, filthdef));
             }
-            AfterCumIn();
+            AfterNotCumIn();
         }
 
-        public void AfterCumIn()
+        public void AfterCumIn(Pawn cummer)
         {
-            
+            if (xxx.is_human(parent.pawn) && xxx.is_human(cummer))
+            {
+                if (parent.pawn.GetStatValue(StatDefOf.PawnBeauty) >= 0 || cummer.Has(Quirk.ImpregnationFetish) || cummer.Has(Quirk.Breeder))
+                {
+                    if (cummer.relations.OpinionOf(parent.pawn) <= -25)
+                    {
+                        cummer.needs.mood.thoughts.memories.TryGainMemory(VariousDefOf.HaterCameInsideM, parent.pawn);
+                    }
+                    else
+                    {
+                        cummer.needs.mood.thoughts.memories.TryGainMemory(VariousDefOf.CameInsideM, parent.pawn);
+                    }
+                }
+
+                if (IsDangerDay)
+                {
+                    if (parent.pawn.Has(Quirk.Breeder) || parent.pawn.Has(Quirk.ImpregnationFetish))
+                    {
+                        parent.pawn.needs.mood.thoughts.memories.TryGainMemory(VariousDefOf.CameInsideFFetish, cummer);
+                    }
+                    else if (!parent.pawn.relations.DirectRelationExists(PawnRelationDefOf.Spouse, cummer) && !parent.pawn.relations.DirectRelationExists(PawnRelationDefOf.Fiance, cummer))
+                    {
+                        if (parent.pawn.health.capacities.GetLevel(xxx.reproduction) < 0.50f) parent.pawn.needs.mood.thoughts.memories.TryGainMemory(VariousDefOf.CameInsideFLowFert, cummer);
+                        else parent.pawn.needs.mood.thoughts.memories.TryGainMemory(VariousDefOf.CameInsideF, cummer);
+                    }
+                    else if (parent.pawn.relations.OpinionOf(cummer) <= -5)
+                    {
+                        parent.pawn.needs.mood.thoughts.memories.TryGainMemory(VariousDefOf.HaterCameInsideF, cummer);
+                    }
+                }
+                else
+                {
+                    if (parent.pawn.Has(Quirk.Breeder) || parent.pawn.Has(Quirk.ImpregnationFetish))
+                    {
+                        parent.pawn.needs.mood.thoughts.memories.TryGainMemory(VariousDefOf.CameInsideFFetishSafe, cummer);
+                    }
+                    else if (parent.pawn.relations.OpinionOf(cummer) <= -5)
+                    {
+                        parent.pawn.needs.mood.thoughts.memories.TryGainMemory(VariousDefOf.HaterCameInsideFSafe, cummer);
+                    }
+                }
+            }
+        }
+
+        public void AfterNotCumIn()
+        {
+
         }
 
         public void BeforeCumOut(out Absorber absorber)
@@ -500,8 +578,15 @@ namespace RJW_Menstruation
             absorber = (Absorber)parent.pawn.apparel?.WornApparel?.Find(x => x.def.apparel.tags.Contains("Absorber"));
             if (absorber != null)
             {
+                absorber.WearEffect();
                 if (absorber.dirty && absorber.EffectAfterDirty) absorber.DirtyEffect();
             }
+        }
+
+
+        public void AfterCumOut()
+        {
+            parent.pawn.needs.mood.thoughts.memories.TryGainMemory(VariousDefOf.LeakingFluids);
         }
 
         /// <summary>
@@ -510,6 +595,7 @@ namespace RJW_Menstruation
         public void CumOut()
         {
             float leakfactor = 1.0f;
+            float totalleak = 0f;
             Absorber absorber;
             BeforeCumOut(out absorber);
             if (cums.NullOrEmpty()) return;
@@ -520,7 +606,8 @@ namespace RJW_Menstruation
                 float vd = cum.volume;
                 cum.volume *= Math.Max(0, (1 - (Configurations.CumDecayRatio * (1 - cum.decayresist)) * leakfactor));
                 cum.fertvolume *= Math.Max(0, (1 - (Configurations.CumDecayRatio * (1 - cum.decayresist)) * leakfactor) * (1 - (Configurations.CumFertilityDecayRatio * (1 - cum.decayresist))));
-                MakeCumFilth(cum, vd - cum.volume, absorber);
+                vd -= cum.volume;
+                totalleak += MakeCumFilth(cum, vd, absorber);
                 if (cum.fertvolume < 0.01f) cum.fertvolume = 0;
                 if (cum.volume < 0.01f) removecums.Add(cum);
             }
@@ -529,10 +616,11 @@ namespace RJW_Menstruation
                 cums.Remove(cum);
             }
             removecums.Clear();
+            if (totalleak >= 1.0f) AfterCumOut();
         }
 
         /// <summary>
-        /// Excrete cums in womb and get excreted amount of specific cum
+        /// Force excrete cums in womb and get excreted amount of specific cum.
         /// </summary>
         /// <param name="targetcum"></param>
         /// <param name="portion"></param>
@@ -540,10 +628,7 @@ namespace RJW_Menstruation
         public float CumOut(Cum targetcum, float portion = 0.1f)
         {
             float leakfactor = 1.0f;
-            Absorber absorber;
-            BeforeCumOut(out absorber);
             if (cums.NullOrEmpty()) return 0;
-            else if (absorber != null && absorber.dirty && !absorber.LeakAfterDirty) leakfactor = 0;
             float outcum = 0;
             List<Cum> removecums = new List<Cum>();
             foreach (Cum cum in cums)
@@ -552,7 +637,7 @@ namespace RJW_Menstruation
                 if (cum.Equals(targetcum)) outcum = cum.volume * (portion * (1 - cum.decayresist));
                 cum.volume *= Math.Max(0, 1 - (portion * (1 - cum.decayresist)) * leakfactor);
                 cum.fertvolume *= Math.Max(0, (1 - (portion * (1 - cum.decayresist)) * leakfactor) * (1 - (Configurations.CumFertilityDecayRatio * (1 - cum.decayresist))));
-                MakeCumFilth(cum, vd - cum.volume,absorber);
+                MakeCumFilth(cum, vd - cum.volume);
                 if (cum.fertvolume < 0.01f) cum.fertvolume = 0;
                 if (cum.volume < 0.01f) removecums.Add(cum);
             }
@@ -696,10 +781,27 @@ namespace RJW_Menstruation
                 if (sexNeed == null) sexNeed = parent.pawn.needs.TryGetNeed(VariousDefOf.SexNeed);
                 else
                 {
-                    if (sexNeed.CurLevel < 0.5) sexNeed.CurLevel += 0.02f;
+                    if (sexNeed.CurLevel < 0.5) sexNeed.CurLevel += 0.01f;
                 }
             }
 
+            //if (Configurations.LLActivated)
+            //{
+            //    float tcp = TotalCumPercent;
+            //    if (tcp > 2.0f)
+            //    {
+            //        Hediff hediff = parent.pawn.health.hediffSet.GetFirstHediffOfDef(VariousDefOf.Cumflation);
+            //        if (hediff != null)
+            //        {
+            //
+            //        }
+            //        else
+            //        {
+            //
+            //        }
+            //    }
+            //
+            //}
         }
 
 
@@ -742,11 +844,11 @@ namespace RJW_Menstruation
                             {
                                 Hediff_BasePregnancy.Create<Hediff_MultiplePregnancy>(parent.pawn, egg.fertilizer);
                                 Hediff hediff = PregnancyHelper.GetPregnancy(parent.pawn);
-                                if (hediff is Hediff_BasePregnancy)
-                                {
-                                    Hediff_BasePregnancy h = (Hediff_BasePregnancy)hediff;
-                                    if (h.babies.Count > 1) h.babies.RemoveRange(1, h.babies.Count - 1);
-                                }
+                                //if (hediff is Hediff_BasePregnancy)
+                                //{
+                                //    Hediff_BasePregnancy h = (Hediff_BasePregnancy)hediff;
+                                //    if (h.babies.Count > 1) h.babies.RemoveRange(1, h.babies.Count - 1);
+                                //}
                                 pregnant = true;
                                 deadeggs.Add(egg);
                             }
@@ -794,31 +896,55 @@ namespace RJW_Menstruation
         {
             //FilthMaker.TryMakeFilth(parent.pawn.Position, parent.pawn.Map, ThingDefOf.Filth_Blood,parent.pawn.Label);
             CumIn(parent.pawn, Rand.Range(1f, 2f), Translations.Menstrual_Blood,-5.0f,ThingDefOf.Filth_Blood);
-            GetNotCum(Translations.Menstrual_Blood).color = Colors.blood;
+            GetNotCum(Translations.Menstrual_Blood).color = BloodColor;
         }
 
-        private void MakeCumFilth(Cum cum, float amount, Absorber absorber = null)
+        /// <summary>
+        /// Make filth ignoring absorber
+        /// </summary>
+        /// <param name="cum"></param>
+        /// <param name="amount"></param>
+        private void MakeCumFilth(Cum cum, float amount) 
+        {
+            if (amount >= minmakefilthvalue) FilthMaker.TryMakeFilth(parent.pawn.Position, parent.pawn.Map, cum.FilthDef, cum.pawn.LabelShort);
+        }
+
+        /// <summary>
+        /// Make filth from considering absorber
+        /// </summary>
+        /// <param name="cum"></param>
+        /// <param name="amount"></param>
+        /// <param name="absorber"></param>
+        /// <returns></returns>
+        private float MakeCumFilth(Cum cum, float amount, Absorber absorber)
         {
             
             if (absorber != null)
             {
+                float absorbable = absorber.GetStatValue(VariousDefOf.MaxAbsorbable);
+                absorber.SetColor(Colors.CMYKLerp(GetCumMixtureColor, absorber.DrawColor, 1f - amount/absorbable));
                 if (!absorber.dirty)
                 {
                     absorber.absorbedfluids += amount;
-                    if (absorber.absorbedfluids > absorber.GetStatValue(VariousDefOf.MaxAbsorbable))
+                    if (absorber.absorbedfluids > absorbable)
                     {
                         absorber.def = absorber.DirtyDef;
                         //absorber.fluidColor = GetCumMixtureColor;
-                        absorber.SetColor(GetCumMixtureColor);
                         absorber.dirty = true;
                     }
                 }
                 else
                 {
                     if (absorber.LeakAfterDirty) FilthMaker.TryMakeFilth(parent.pawn.Position, parent.pawn.Map, cum.FilthDef, cum.pawn.LabelShort);
+                    return amount;
                 }
             }
-            else if (amount >= minmakefilthvalue) FilthMaker.TryMakeFilth(parent.pawn.Position, parent.pawn.Map, cum.FilthDef, cum.pawn.LabelShort);
+            else
+            {
+                if (amount >= minmakefilthvalue) FilthMaker.TryMakeFilth(parent.pawn.Position, parent.pawn.Map, cum.FilthDef, cum.pawn.LabelShort);
+                return amount;
+            }
+            return 0;
         }
 
 

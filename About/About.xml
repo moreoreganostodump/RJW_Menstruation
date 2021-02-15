@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ModMetaData>
-	<name>RJW Menstrution Cycle</name>
+	<name>RJW Menstruation Cycle</name>
 	<author>a</author>
 	<supportedVersions>
 		<li>1.2</li>
@@ -29,6 +29,6 @@
 		<li>brrainz.harmony</li>
 		<li>rim.job.world</li>
 	</loadAfter>
-	<packageId>rjw.menstrution</packageId>
+	<packageId>rjw.menstruation</packageId>
 	<description>yes yes</description>
 </ModMetaData>

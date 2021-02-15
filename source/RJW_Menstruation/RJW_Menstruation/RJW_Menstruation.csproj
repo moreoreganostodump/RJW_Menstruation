@@ -60,6 +60,7 @@
     <Compile Include="Dialog_WombStatus.cs" />
     <Compile Include="DNADef.cs" />
     <Compile Include="DrugOutcomDoers.cs" />
+    <Compile Include="HARCompatibility.cs" />
     <Compile Include="Hediff_MultiplePregnancy.cs" />
     <Compile Include="JobDrivers.cs" />
     <Compile Include="Patch\GetGizmos.cs" />
@@ -68,6 +69,7 @@
     <Compile Include="HediffComp_Menstruation.cs" />
     <Compile Include="Patch\Pawn_Patch.cs" />
     <Compile Include="Patch\RJW_Patch.cs" />
+    <Compile Include="Reflect.cs" />
     <Compile Include="Things.cs" />
     <Compile Include="Translations.cs" />
     <Compile Include="Utility.cs" />

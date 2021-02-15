@@ -38,6 +38,7 @@ namespace RJW_Menstruation
 
         public virtual void WearEffect() 
         {
+            absorbedfluids+=0.1f;
             wearhours++;
         }
 
@@ -59,8 +60,8 @@ namespace RJW_Menstruation
 
         public override void WearEffect()
         {
-            base.WearEffect();
-            absorbedfluids += 0.1f;
+            wearhours++;
+            absorbedfluids += 0.5f;
         }
 
         public override void DirtyEffect()

@@ -34,7 +34,7 @@ namespace RJW_Menstruation
 							PregnancyHelper.Doimpregnate(pawn, partner);
 							return false;
 						}
-						else comp.CumIn(pawn, Utility.GetCumVolume(pawn), 0);
+						else comp.CumIn(pawn, pawn.GetCumVolume(), 0);
 					}
 				}
 				else if (Genital_Helper.has_vagina(pawn, pawnparts))
@@ -48,7 +48,7 @@ namespace RJW_Menstruation
 							PregnancyHelper.Doimpregnate(partner, pawn);
 							return false;
 						}
-						else comp.CumIn(partner, Utility.GetCumVolume(partner), 0);
+						else comp.CumIn(partner, partner.GetCumVolume(), 0);
 					}
 				}
 			}
@@ -64,15 +64,15 @@ namespace RJW_Menstruation
 		public static bool Prefix(Pawn pawn, Pawn partner) // partner has vagina
 		{
 			if (partner.IsAnimal() && !Configurations.EnableAnimalCycle) return true;
-			HediffComp_Menstruation comp = Utility.GetMenstruationComp(partner);
+			HediffComp_Menstruation comp = partner.GetMenstruationComp();
 			if (comp != null)
             {
 				if (AndroidsCompatibility.IsAndroid(pawn) && !AndroidsCompatibility.AndroidPenisFertility(pawn))
 				{
-					comp.CumIn(pawn, Utility.GetCumVolume(pawn),0);
+					comp.CumIn(pawn, pawn.GetCumVolume(), 0);
 					return false;
 				}
-				else comp.CumIn(pawn, Utility.GetCumVolume(pawn), pawn.health.capacities.GetLevel(xxx.reproduction));
+				else comp.CumIn(pawn, pawn.GetCumVolume(), pawn.health.capacities.GetLevel(xxx.reproduction));
 				return false;
 			}
 			ModLog.Message("used original rjw method: Comp missing");
@@ -80,6 +80,7 @@ namespace RJW_Menstruation
 		}
 	}
 
+	
 
 
 

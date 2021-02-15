@@ -46,7 +46,7 @@ namespace RJW_Menstruation
 
         private static void AddWombGizmos(Pawn __instance, ref List<Gizmo> gizmoList)
         {
-            HediffComp_Menstruation comp = Utility.GetMenstruationComp(__instance);
+            HediffComp_Menstruation comp = __instance.GetMenstruationComp();
             if (comp != null) gizmoList.Add(CreateGizmo_WombStatus(__instance, comp));
 
 
@@ -72,21 +72,21 @@ namespace RJW_Menstruation
                     if (hediff is Hediff_BasePregnancy && Utility.ShowFetusImage((Hediff_BasePregnancy)hediff))
                     {
                         Hediff_BasePregnancy h = (Hediff_BasePregnancy)hediff;
-                        if (h.GestationProgress < 0.2f) icon_overay = Utility.GetCumIcon(comp);
+                        if (h.GestationProgress < 0.2f) icon_overay = comp.GetCumIcon();
                         else icon_overay = ContentFinder<Texture2D>.Get(("Womb/Empty"), true);
                     }
                     else icon_overay = ContentFinder<Texture2D>.Get(("Womb/Empty"), true);
                 }
                 else
                 {
-                    icon = Utility.GetWombIcon(comp);
-                    icon_overay = Utility.GetCumIcon(comp);
+                    icon = comp.GetWombIcon();
+                    icon_overay = comp.GetCumIcon();
                 }
             }
             else
             {
-                icon = Utility.GetWombIcon(comp);
-                icon_overay = Utility.GetCumIcon(comp);
+                icon = comp.GetWombIcon();
+                icon_overay = comp.GetCumIcon();
             }
             foreach (string s in comp.GetCumsInfo) description += s + "\n";
 

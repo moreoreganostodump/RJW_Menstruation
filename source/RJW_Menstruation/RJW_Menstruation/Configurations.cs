@@ -47,6 +47,10 @@ namespace RJW_Menstruation
         public static int MaxEnzygoticTwins = MaxEnzygoticTwinsDefault;
 
 
+
+        public static bool HARActivated = false;
+        public static bool LLActivated = false;
+
         public enum DetailLevel
         {
             All,
@@ -111,10 +115,12 @@ namespace RJW_Menstruation
         private readonly Configurations config;
         private static Vector2 scroll;
 
+
         public RJW_Menstruation(ModContentPack content) : base(content)
         {
             config = GetSettings<Configurations>();
-
+            Configurations.HARActivated = ModLister.HasActiveModWithName("Humanoid Alien Races 2.0");
+            Configurations.LLActivated = ModLister.HasActiveModWithName("RimJobWorld - Licentia Labs");
         }
 
         

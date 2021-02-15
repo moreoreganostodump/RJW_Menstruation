@@ -1,4 +1,23 @@
+Version 1.0.1.3
+ *Note* you should update mod list
+ - requires RJW 4.6.1 or later
+ - max absorbable statbase added to vanilla fabrics.
+ - added thoughts for cum inside
+   - male pawn get mood buff if his partner is not ugly or he has breeder or impregnation fetish quirk
+   - female pawn get mood buff if she has breeder or impregnation fetish quirk
+   - female pawn get mood debuff if she is in fertile window or hates her partner
+ - added thought for leaking fluids
+   - absorbers can prevent this
+ - added thought for pregnancy
+   - female pawn without breeder quirk get mood debuff when pregnant without spouse or fiance
+ - mestrual blood color is determined by race's blood color
+ - absorber's color change gradually
+ - fixed bugs with enzygotic twins
+   - enzigotic twins will get same appearance
+   - added HAR compatibllity
+ - 
 Version 1.0.1.2
+ - requires RJW 4.6.1 or later
  - reduced sex satisfaction debuffs
  - if pawn is climacteric or menopause sex need recover to 50%.
  - added vaginal washing

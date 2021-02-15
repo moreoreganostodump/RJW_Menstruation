@@ -31,6 +31,26 @@ namespace RJW_Menstruation
         public static readonly PawnRelationDef Relation_spawn = DefDatabase<PawnRelationDef>.AllDefs.FirstOrDefault(d => d.defName == "RJW_Pup");
         public static readonly NeedDef SexNeed = DefDatabase<NeedDef>.GetNamed("Sex");
         public static readonly JobDef VaginaWashing = DefDatabase<JobDef>.GetNamed("VaginaWashing");
+        public static readonly ThoughtDef LeakingFluids = DefDatabase<ThoughtDef>.GetNamed("LeakingFluids");
+        public static readonly ThoughtDef CameInsideF = DefDatabase<ThoughtDef>.GetNamed("CameInsideF");
+        public static readonly ThoughtDef CameInsideFLowFert = DefDatabase<ThoughtDef>.GetNamed("CameInsideFLowFert");
+        public static readonly ThoughtDef CameInsideFFetish = DefDatabase<ThoughtDef>.GetNamed("CameInsideFFetish");
+        public static readonly ThoughtDef CameInsideFFetishSafe = DefDatabase<ThoughtDef>.GetNamed("CameInsideFFetishSafe");
+        public static readonly ThoughtDef HaterCameInsideFSafe = DefDatabase<ThoughtDef>.GetNamed("HaterCameInsideFSafe");
+        public static readonly ThoughtDef HaterCameInsideF = DefDatabase<ThoughtDef>.GetNamed("HaterCameInsideF");
+        public static readonly ThoughtDef CameInsideM = DefDatabase<ThoughtDef>.GetNamed("CameInsideM");
+        public static readonly ThoughtDef HaterCameInsideM = DefDatabase<ThoughtDef>.GetNamed("HaterCameInsideM");
+        public static readonly ThoughtDef UnwantedPregnancy = DefDatabase<ThoughtDef>.GetNamed("UnwantedPregnancy");
+
+
+
+
+        // Defs from Licentia Labs
+        public static readonly HediffDef Cumflation = DefDatabase<HediffDef>.GetNamedSilentFail("Cumflation");
+
+
+
+
 
     }
 }

@@ -13,13 +13,39 @@ namespace RJW_Menstruation
     public static class Colors
     {
         public static Color blood = new Color(0.78f, 0, 0);
+        
+
+        public static Color CMYKLerp(Color a, Color b, float t)
+        {
+            RGBtoCMYK(a, out float ac, out float am, out float ay, out float ak);
+            RGBtoCMYK(b, out float bc, out float bm, out float by, out float bk);
+
+            return CMYKtoRGB(Mathf.Lerp(ac, bc, t), Mathf.Lerp(am, bm, t), Mathf.Lerp(ay, by, t), Mathf.Lerp(ak, bk, t));
+        }
+
+        public static void RGBtoCMYK(Color rgb, out float c, out float m, out float y, out float k)
+        {
+            k = 1 - Math.Max(rgb.r,Math.Max(rgb.g,rgb.b));
+            c = (1 - rgb.r - k) / (1 - k);
+            m = (1 - rgb.g - k) / (1 - k);
+            y = (1 - rgb.b - k) / (1 - k);
+
+        }
+
+        public static Color CMYKtoRGB(float c,float m, float y, float k)
+        {
+            return new Color((1 - c) * (1 - k), (1 - m) * (1 - k), (1 - y) * (1 - k));
+        }
+
+
+
     }
 
 
     public static class Utility
     {
 
-        public static float GetCumVolume(Pawn pawn)
+        public static float GetCumVolume(this Pawn pawn)
         {
             CompHediffBodyPart part = Genital_Helper.get_PartsHediffList(pawn, Genital_Helper.get_genitalsBPR(pawn))?.FindAll((Hediff hed) => hed.def.defName.ToLower().Contains("penis")).InRandomOrder().FirstOrDefault().TryGetComp<rjw.CompHediffBodyPart>();
             if (part == null) part = Genital_Helper.get_PartsHediffList(pawn, Genital_Helper.get_genitalsBPR(pawn))?.FindAll((Hediff hed) => hed.def.defName.ToLower().Contains("ovipositorf")).InRandomOrder().FirstOrDefault().TryGetComp<rjw.CompHediffBodyPart>();
@@ -32,7 +58,7 @@ namespace RJW_Menstruation
             return res;
         }
 
-        public static HediffComp_Menstruation GetMenstruationComp(Pawn pawn)
+        public static HediffComp_Menstruation GetMenstruationComp(this Pawn pawn)
         {
             var hedifflist = Genital_Helper.get_PartsHediffList(pawn, Genital_Helper.get_genitalsBPR(pawn))?.FindAll((Hediff h) => h.def.defName.ToLower().Contains("vagina"));
             HediffComp_Menstruation result;
@@ -48,7 +74,7 @@ namespace RJW_Menstruation
             return null;
         }
 
-        public static bool HasMenstruationComp(Pawn pawn)
+        public static bool HasMenstruationComp(this Pawn pawn)
         {
             var hedifflist = Genital_Helper.get_PartsHediffList(pawn, Genital_Helper.get_genitalsBPR(pawn))?.FindAll((Hediff h) => h.def.defName.ToLower().Contains("vagina"));
             HediffComp_Menstruation result;
@@ -64,13 +90,13 @@ namespace RJW_Menstruation
             return false;
         }
 
-        public static HediffComp_Menstruation.Stage GetCurStage(Pawn pawn)
+        public static HediffComp_Menstruation.Stage GetCurStage(this Pawn pawn)
         {
             return GetMenstruationComp(pawn)?.curStage ?? HediffComp_Menstruation.Stage.Bleeding;
         }
 
 
-        public static float GetPregnancyProgress(Pawn pawn)
+        public static float GetPregnancyProgress(this Pawn pawn)
         {
             Hediff hediff = PregnancyHelper.GetPregnancy(pawn);
             if (hediff is Hediff_BasePregnancy)
@@ -81,7 +107,7 @@ namespace RJW_Menstruation
             return -1;
         }
 
-        public static Pawn GetFetus(Pawn pawn)
+        public static Pawn GetFetus(this Pawn pawn)
         {
             Hediff hediff = PregnancyHelper.GetPregnancy(pawn);
             if (hediff is Hediff_BasePregnancy)
@@ -135,7 +161,7 @@ namespace RJW_Menstruation
             return ContentFinder<Texture2D>.Get((icon), true);
         }
 
-        public static Texture2D GetCumIcon(HediffComp_Menstruation comp)
+        public static Texture2D GetCumIcon(this HediffComp_Menstruation comp)
         {
             string icon = comp.wombTex;
             float cumpercent = comp.TotalCumPercent;
@@ -162,7 +188,7 @@ namespace RJW_Menstruation
             return cumtex;
         }
 
-        public static Texture2D GetWombIcon(HediffComp_Menstruation comp)
+        public static Texture2D GetWombIcon(this HediffComp_Menstruation comp)
         {
             string icon = comp.wombTex;
             HediffComp_Menstruation.Stage stage = comp.curStage;
@@ -173,7 +199,7 @@ namespace RJW_Menstruation
             return wombtex;
         }
 
-        public static Texture2D GetGenitalIcon(Pawn pawn)
+        public static Texture2D GetGenitalIcon(this Pawn pawn)
         {
             var hediff = Genital_Helper.get_PartsHediffList(pawn, Genital_Helper.get_genitalsBPR(pawn)).Find((Hediff h) => h.def.defName.ToLower().Contains("vagina"));
             CompProperties_Menstruation Props = (CompProperties_Menstruation)hediff.TryGetComp<HediffComp_Menstruation>().props;
@@ -197,7 +223,7 @@ namespace RJW_Menstruation
             return ContentFinder<Texture2D>.Get((icon), true);
         }
 
-        public static Texture2D GetAnalIcon(Pawn pawn)
+        public static Texture2D GetAnalIcon(this Pawn pawn)
         {
             var hediff = Genital_Helper.get_PartsHediffList(pawn, Genital_Helper.get_anusBPR(pawn)).Find((Hediff h) => h.def.defName.ToLower().Contains("anus"));
             CompProperties_Anus Props = (CompProperties_Anus)hediff.TryGetComp<HediffComp_Anus>().props;
@@ -214,18 +240,18 @@ namespace RJW_Menstruation
             return ContentFinder<Texture2D>.Get((icon), true);
         }
 
-        public static string GetVaginaLabel(Pawn pawn)
+        public static string GetVaginaLabel(this Pawn pawn)
         {
             var hediff = Genital_Helper.get_PartsHediffList(pawn, Genital_Helper.get_genitalsBPR(pawn)).Find((Hediff h) => h.def.defName.ToLower().Contains("vagina"));
-            return hediff.LabelBase + "\n(" + hediff.LabelInBrackets + ")";
+            return hediff.LabelBase.CapitalizeFirst() + "\n(" + hediff.LabelInBrackets + ")";
         }
-        public static string GetAnusLabel(Pawn pawn)
+        public static string GetAnusLabel(this Pawn pawn)
         {
             var hediff = Genital_Helper.get_PartsHediffList(pawn, Genital_Helper.get_anusBPR(pawn)).Find((Hediff h) => h.def.defName.ToLower().Contains("anus"));
-            return hediff.LabelBase + "\n(" + hediff.LabelInBrackets + ")";
+            return hediff.LabelBase.CapitalizeFirst() + "\n(" + hediff.LabelInBrackets + ")";
         }
 
-        public static bool ShowFetusImage(Hediff_BasePregnancy hediff)
+        public static bool ShowFetusImage(this Hediff_BasePregnancy hediff)
         {
             if (Configurations.InfoDetail == Configurations.DetailLevel.All) return true;
             else if (Configurations.InfoDetail == Configurations.DetailLevel.Hide) return false;
@@ -248,11 +274,8 @@ namespace RJW_Menstruation
                 res = pawn.relations?.GetFirstDirectRelationPawn(VariousDefOf.Relation_birthgiver, x => !x.Equals(mother)) ?? null;
                 return res;
             }
-
-
-
-
         }
+
 
 
 

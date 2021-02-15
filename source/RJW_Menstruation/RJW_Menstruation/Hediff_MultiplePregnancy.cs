@@ -7,19 +7,25 @@ using System.Reflection;
 using rjw;
 using Verse;
 using RimWorld;
-
+using UnityEngine;
 
 namespace RJW_Menstruation
 {
     public class Hediff_MultiplePregnancy : Hediff_BasePregnancy
     {
-
-
-		
-
-		public override void GiveBirth()
+        public override void DiscoverPregnancy()
         {
+			if (!is_discovered && xxx.is_human(pawn) && !pawn.Has(Quirk.Breeder) && pawn.relations?.DirectRelations?.Find(x => x.def.Equals(PawnRelationDefOf.Spouse) || x.def.Equals(PawnRelationDefOf.Fiance)) == null)
+            {
+				pawn.needs.mood.thoughts.memories.TryGainMemory(VariousDefOf.UnwantedPregnancy);
+            }
+			base.DiscoverPregnancy();
+        }
 
+
+        public override void GiveBirth()
+        {
+			
 			if (babies.NullOrEmpty())
 			{
 				ModLog.Warning(" no babies (debug?) " + this.GetType().Name);
@@ -155,9 +161,6 @@ namespace RJW_Menstruation
 			//restore melanin, LastName for when baby reset by other mod on spawn/backstorychange
 			//baby.story.melanin = skin_whiteness;
 			//baby.story.birthLastName = last_name;
-
-
-
 		}
 
         protected override void GenerateBabies()
@@ -209,9 +212,15 @@ namespace RJW_Menstruation
 					melanin = father.story.melanin;
 					lastname = NameTriple.FromString(father.Name.ToStringFull).Last;
 				}
-				else melanin = Rand.Range(0, 1.0f);
+                else
+				{
+					melanin = Rand.Range(0, 1.0f);
+					lastname = NameTriple.FromString(mother.Name.ToStringFull).Last;
+				} 
             }
 			
+
+
 			PawnGenerationRequest request = new PawnGenerationRequest(
 				newborn: true,
 				allowDowned: true,
@@ -221,17 +230,82 @@ namespace RJW_Menstruation
 				allowAddictions: false,
 				relationWithExtraPawnChanceFactor: 0,
 				fixedMelanin: melanin,
+				fixedLastName: lastname,
 				kind: BabyPawnKindDecider(mother, father)
 				);
+
+			int division = 1;
+			HairDef firsthair = null;
+			Color firsthaircolor = Color.white;
+			BodyTypeDef firstbody = null;
+			CrownType firstcrown = CrownType.Undefined;
+			string firstheadpath = null;
+			string firstHARcrown = null;
+			while (Rand.Chance(Configurations.EnzygoticTwinsChance) && division < Configurations.MaxEnzygoticTwins) division++;
+			for (int i = 0; i < division; i++)
+			{
+				Pawn baby = GenerateBaby(request, mother, father);
+				if (division > 1)
+				{
+					if (i == 0 && baby.story != null)
+					{
+						firsthair = baby.story.hairDef;
+						firsthaircolor = baby.story.hairColor;
+						request.FixedGender = baby.gender;
+						firstbody = baby.story.bodyType;
+						firstcrown = baby.story.crownType;
+						firstheadpath = (string)baby.story.GetMemberValue("headGraphicPath");
+						if (firstheadpath == null)
+						{
+							baby.story.SetMemberValue("headGraphicPath", GraphicDatabaseHeadRecords.GetHeadRandom(baby.gender, baby.story.SkinColor, baby.story.crownType).GraphicPath);
+							firstheadpath = (string)baby.story.GetMemberValue("headGraphicPath");
+						}
+						if (Configurations.HARActivated && baby.IsHAR())
+                        {
+							firstHARcrown = baby.GetHARCrown();
+                        }
+
+					}
+					else
+					{
+						if (baby.story != null)
+						{
+							baby.story.hairDef = firsthair;
+							baby.story.hairColor = firsthaircolor;
+							baby.story.bodyType = firstbody;
+							baby.story.crownType = firstcrown;
+							baby.story.SetMemberValue("headGraphicPath", firstheadpath);
+
+							if (Configurations.HARActivated && baby.IsHAR())
+							{
+								baby.SetHARCrown(firstHARcrown);
+							}
+						}
+					}
+				}
+
+                if (baby != null) babies.Add(baby);
+			}
+            
+			
+
+
+			return true;
+
+        }
+
+		public Pawn GenerateBaby(PawnGenerationRequest request, Pawn mother, Pawn father)
+		{
+
 			Pawn baby = PawnGenerator.GeneratePawn(request);
 			if (baby != null)
-            {
+			{
 				if (xxx.is_human(baby))
 				{
 					List<Trait> traitpool = new List<Trait>();
 					baby.SetMother(mother);
 					if (mother != father) baby.SetFather(father);
-					
+
 					if (xxx.has_traits(pawn) && pawn.RaceProps.Humanlike)
 					{
 						foreach (Trait momtrait in pawn.story.traits.allTraits)
@@ -252,7 +326,7 @@ namespace RJW_Menstruation
 
 				}
 				else
-                {
+				{
 					baby.relations.AddDirectRelation(VariousDefOf.Relation_birthgiver, mother);
 					mother.relations.AddDirectRelation(VariousDefOf.Relation_spawn, baby);
 					if (mother != father)
@@ -260,20 +334,10 @@ namespace RJW_Menstruation
 						baby.relations.AddDirectRelation(VariousDefOf.Relation_birthgiver, father);
 						father.relations.AddDirectRelation(VariousDefOf.Relation_spawn, baby);
 					}
-                }
-
-				int division = 1;
-				while (Rand.Chance(Configurations.EnzygoticTwinsChance) && division < Configurations.MaxEnzygoticTwins) division++;
-				for (int i = 0; i < division; i++) babies.Add(baby);
-				return true;
-            }
-
-
-			return false;
-
-        }
-
-		
+				}
+			}
+			return baby;
+		}
 
 		/// <summary>
 		/// Decide pawnkind from mother and father <para/>

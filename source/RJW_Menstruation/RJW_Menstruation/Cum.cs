@@ -36,6 +36,7 @@ namespace RJW_Menstruation
             }
         }
         private Color customColor;
+
         public DNADef DNA
         {
             get
@@ -90,6 +91,7 @@ namespace RJW_Menstruation
             volume = 1.0f;
             fertvolume = 1.0f;
             decayresist = 0;
+            
         }
 
         public Cum(Pawn pawn, float volume, string notcumlabel, float decayresist = 0, ThingDef filthDef = null)
