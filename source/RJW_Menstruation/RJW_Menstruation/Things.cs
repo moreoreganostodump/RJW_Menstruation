@@ -76,6 +76,44 @@ namespace RJW_Menstruation
     }
 
 
+    public class Filth_Colored : Filth
+    {
+
+        private Color color = Color.white;
+
+        public override void ExposeData()
+        {
+            base.ExposeData();
+            Scribe_Values.Look(ref color, "color", color, true);
+        }
+
+        public override Color DrawColor
+        {
+            get
+            {
+                if (color != Color.white)
+                {
+                    return color;
+                }
+                if (Stuff != null)
+                {
+                    return def.GetColorForStuff(Stuff);
+                }
+                if (def.graphicData != null)
+                {
+                    return def.graphicData.color;
+                }
+                return color;
+            }
+            set
+            {
+                color = value;
+            }
+        }
+
+
+
+    }
 
 
 

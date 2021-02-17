@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -202,9 +204,9 @@ namespace RJW_Menstruation
         public static Texture2D GetGenitalIcon(this Pawn pawn)
         {
             var hediff = Genital_Helper.get_PartsHediffList(pawn, Genital_Helper.get_genitalsBPR(pawn)).Find((Hediff h) => h.def.defName.ToLower().Contains("vagina"));
-            CompProperties_Menstruation Props = (CompProperties_Menstruation)hediff.TryGetComp<HediffComp_Menstruation>().props;
+            HediffComp_Menstruation comp = pawn.GetMenstruationComp();
             string icon;
-            if (Props != null) icon = Props.vagTex;
+            if (comp != null) icon = comp.vagTex;
             else icon = "Genitals/Vagina";
 
             if (hediff.Severity < 0.20f) icon += "00";        //micro 
@@ -275,6 +277,7 @@ namespace RJW_Menstruation
                 return res;
             }
         }
+
 
 
 

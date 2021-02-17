@@ -22,11 +22,12 @@
 		<durationDays>7.0</durationDays>
 		<stackLimit>5</stackLimit>
 		<stackedEffectMultiplier>0.1</stackedEffectMultiplier>
+		<stackLimitForSameOtherPawn>1</stackLimitForSameOtherPawn>
 		<stages>
 			<li>
 				<label>{0} came inside</label>
 				<description>I'm worried i might get pregnant.</description>
-				<baseMoodEffect>-5</baseMoodEffect>
+				<baseMoodEffect>-3</baseMoodEffect>
 				<baseOpinionOffset>-2</baseOpinionOffset>
 			</li>
 		</stages>
@@ -38,11 +39,12 @@
 		<durationDays>7.0</durationDays>
 		<stackLimit>5</stackLimit>
 		<stackedEffectMultiplier>0.1</stackedEffectMultiplier>
+		<stackLimitForSameOtherPawn>1</stackLimitForSameOtherPawn>
 		<stages>
 			<li>
 				<label>{0} came inside</label>
 				<description>I'm worried i might get pregnant.&#10;The chance is low, but...</description>
-				<baseMoodEffect>-2</baseMoodEffect>
+				<baseMoodEffect>-1</baseMoodEffect>
 			</li>
 		</stages>
 	</ThoughtDef>
@@ -53,11 +55,12 @@
 		<durationDays>3.0</durationDays>
 		<stackLimit>5</stackLimit>
 		<stackedEffectMultiplier>0.1</stackedEffectMultiplier>
+		<stackLimitForSameOtherPawn>1</stackLimitForSameOtherPawn>
 		<stages>
 			<li>
 				<label>{0} came inside</label>
 				<description>I might get pregnant.</description>
-				<baseMoodEffect>15</baseMoodEffect>
+				<baseMoodEffect>10</baseMoodEffect>
 				<baseOpinionOffset>5</baseOpinionOffset>
 			</li>
 		</stages>
@@ -69,11 +72,12 @@
 		<durationDays>3.0</durationDays>
 		<stackLimit>5</stackLimit>
 		<stackedEffectMultiplier>0.1</stackedEffectMultiplier>
+		<stackLimitForSameOtherPawn>1</stackLimitForSameOtherPawn>
 		<stages>
 			<li>
 				<label>{0} came inside</label>
 				<description>I loved it.</description>
-				<baseMoodEffect>5</baseMoodEffect>
+				<baseMoodEffect>3</baseMoodEffect>
 				<baseOpinionOffset>1</baseOpinionOffset>
 			</li>
 		</stages>
@@ -100,6 +104,7 @@
 		<durationDays>3.0</durationDays>
 		<stackLimit>5</stackLimit>
 		<stackedEffectMultiplier>0.1</stackedEffectMultiplier>
+		<stackLimitForSameOtherPawn>1</stackLimitForSameOtherPawn>
 		<stages>
 			<li>
 				<label>{0} came inside</label>
@@ -116,6 +121,7 @@
 		<durationDays>7.0</durationDays>
 		<stackLimit>5</stackLimit>
 		<stackedEffectMultiplier>0.1</stackedEffectMultiplier>
+		<stackLimitForSameOtherPawn>1</stackLimitForSameOtherPawn>
 		<stages>
 			<li>
 				<label>{0} came inside</label>

@@ -1,5 +1,8 @@
+Version 1.0.1.4
+ - fixed bugs that in period hediff not disappear in time
+ - fixed enable menopause setting was not saved
+ - now cum filth is generated as a single mixture filth
 Version 1.0.1.3
- *Note* you should update mod list
  - requires RJW 4.6.1 or later
  - max absorbable statbase added to vanilla fabrics.
  - added thoughts for cum inside
@@ -15,7 +18,7 @@ Version 1.0.1.3
  - fixed bugs with enzygotic twins
    - enzigotic twins will get same appearance
    - added HAR compatibllity
- - 
+ - removed unused textures
 Version 1.0.1.2
  - requires RJW 4.6.1 or later
  - reduced sex satisfaction debuffs

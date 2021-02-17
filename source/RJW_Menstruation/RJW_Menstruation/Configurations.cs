@@ -96,6 +96,7 @@ namespace RJW_Menstruation
             Scribe_Values.Look(ref DrawVaginaStatus, "DrawVaginaStatus", DrawVaginaStatus, true);
             Scribe_Values.Look(ref Debug, "Debug", Debug, true);
             Scribe_Values.Look(ref InfoDetail, "InfoDetail", InfoDetail, true);
+            Scribe_Values.Look(ref EnableMenopause, "EnableMenopause", EnableMenopause, true);
             Scribe_Values.Look(ref UseMultiplePregnancy, "UseMultiplePregnancy", UseMultiplePregnancy, true);
             Scribe_Values.Look(ref EnableHeteroOvularTwins, "EnableHeteroOvularTwins", EnableHeteroOvularTwins, true);
             Scribe_Values.Look(ref EnableEnzygoticTwins, "EnableEnzygoticTwins", EnableEnzygoticTwins, true);

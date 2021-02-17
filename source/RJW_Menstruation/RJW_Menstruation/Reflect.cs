@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Reflection;
+using RimWorld;
 
 namespace RJW_Menstruation
 {
@@ -12,14 +13,14 @@ namespace RJW_Menstruation
         public static object GetMemberValue(this Type type, string name)
         {
             BindingFlags flags = BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic;
-            FieldInfo fieldInfo = (type != null) ? type.GetField(name, flags) : null;
+            FieldInfo fieldInfo = type?.GetField(name, flags);
             return fieldInfo?.GetValue(null);
         }
 
         public static object GetMemberValue(this object obj, string name)
         {
             BindingFlags flags = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
-            FieldInfo fieldInfo = (obj != null) ? obj.GetType().GetField(name, flags) : null;
+            FieldInfo fieldInfo = obj?.GetType().GetField(name, flags);
             return fieldInfo?.GetValue(obj);
         }
 
@@ -42,6 +43,7 @@ namespace RJW_Menstruation
                 fieldInfo.SetValue(obj, value);
             }
         }
+
 
     }
 }

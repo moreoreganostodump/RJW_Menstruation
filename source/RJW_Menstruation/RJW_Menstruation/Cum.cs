@@ -92,6 +92,7 @@ namespace RJW_Menstruation
             fertvolume = 1.0f;
             decayresist = 0;
             
+            
         }
 
         public Cum(Pawn pawn, float volume, string notcumlabel, float decayresist = 0, ThingDef filthDef = null)

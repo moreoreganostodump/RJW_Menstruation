@@ -21,6 +21,7 @@ namespace RJW_Menstruation
         public static readonly ThingDef CumFilth = DefDatabase<ThingDef>.GetNamed("FilthCum");
         public static readonly ThingDef Tampon = DefDatabase<ThingDef>.GetNamed("Absorber_Tampon");
         public static readonly ThingDef Tampon_Dirty = DefDatabase<ThingDef>.GetNamed("Absorber_Tampon_Dirty");
+        public static readonly ThingDef FilthMixture = DefDatabase<ThingDef>.GetNamed("FilthMixture");
         public static readonly HediffDef RJW_IUD = DefDatabase<HediffDef>.GetNamed("RJW_IUD");
         public static readonly HediffDef Hediff_MenstrualCramp = DefDatabase<HediffDef>.GetNamed("Hediff_MenstrualCramp");
         public static readonly HediffDef Hediff_Climacteric = DefDatabase<HediffDef>.GetNamed("Hediff_Climacteric");
@@ -47,6 +48,8 @@ namespace RJW_Menstruation
 
         // Defs from Licentia Labs
         public static readonly HediffDef Cumflation = DefDatabase<HediffDef>.GetNamedSilentFail("Cumflation");
+        public static readonly ThoughtDef GotOverCumflated = DefDatabase<ThoughtDef>.GetNamedSilentFail("GotOverCumflated");
+        public static readonly ThoughtDef GotOverCumflatedEnjoyed = DefDatabase<ThoughtDef>.GetNamedSilentFail("GotOverCumflatedEnjoyed");
 
 
 
