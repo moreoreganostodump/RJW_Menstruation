@@ -1065,16 +1065,6 @@ namespace RJW_Menstruation
             return amount;
         }
 
-        private string FilthLabelMaker(List<string> labels)
-        {
-            string res = "";
-            foreach (string label in labels)
-            {
-                res += label;
-            }
-
-            return res;
-        }
 
 
 

@@ -10,6 +10,14 @@ using UnityEngine;
 
 namespace RJW_Menstruation
 {
+    public class PawnDNAModExtention : DefModExtension
+    {
+        public string fetusTexPath;
+        public ColorInt cumColor;
+        public Color CumColor => cumColor.ToColor;
+        public float cumThickness = 0f;
+    }
+
 
     public class AbsorberModExtention : DefModExtension
     {

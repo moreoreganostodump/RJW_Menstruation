@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Verse;
+using RimWorld;
 using UnityEngine;
 using rjw;
 
@@ -37,23 +38,23 @@ namespace RJW_Menstruation
         }
         private Color customColor;
 
-        public DNADef DNA
+        public PawnDNAModExtention DNA
         {
             get
             {
                 if (DNAcache == null)
                 {
-                    DNAcache = DefDatabase<DNADef>.GetNamedSilentFail(pawn?.def.defName ?? "Human");
+                    DNAcache = pawn.def.GetModExtension<PawnDNAModExtention>();
                     if (DNAcache == null)
                     {
-                        DNAcache = VariousDefOf.HumanDNA;
+                        DNAcache = ThingDefOf.Human.GetModExtension<PawnDNAModExtention>();
                     }
                     return DNAcache;
                 }
                 else return DNAcache;
             }
         }
-        private DNADef DNAcache = null;
+        private PawnDNAModExtention DNAcache = null;
         public ThingDef FilthDef
         {
             get
@@ -124,7 +125,6 @@ namespace RJW_Menstruation
         public void ExposeData()
         {
             Scribe_References.Look(ref pawn, "pawn", true);
-            Scribe_Defs.Look(ref DNAcache, "DNAcache");
             Scribe_Values.Look(ref volume, "volume", volume, true);
             Scribe_Values.Look(ref fertvolume, "fertvolume", fertvolume, true);
             Scribe_Values.Look(ref notcumthickness, "notcumthickness", notcumthickness, true);

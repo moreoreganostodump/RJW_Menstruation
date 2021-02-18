@@ -1,7 +1,11 @@
+Version 1.0.1.5
+ - DNADef is obsoleted and replaced to ModExtention
 Version 1.0.1.4
  - fixed bugs that in period hediff not disappear in time
  - fixed enable menopause setting was not saved
- - now cum filth is generated as a single mixture filth
+ - now cum filths are generated as a single mixture filth
+ - dirty tampons and wet pads are now untradable
+ - DNAdef is obsoleted and replaced with modextention
 Version 1.0.1.3
  - requires RJW 4.6.1 or later
  - max absorbable statbase added to vanilla fabrics.

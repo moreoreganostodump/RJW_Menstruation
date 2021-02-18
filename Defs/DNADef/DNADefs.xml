@@ -1,12 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
+
 <Defs>
+<!-- Obsoleted
   <RJW_Menstruation.DNADef>
-    <defName>Human</defName> <!-- write race defName -->
+    <defName>Human</defName>
     <label>human fetus</label>
 	<fetusTexPath>Fetus/Fetus_Default</fetusTexPath>
-	<cumColor>(255,255,255,255)</cumColor> <!-- RGBA -->
-	<cumThickness>0.2</cumThickness> <!-- 1.0 = never natural flow out. if this value get over 1.0, cum will propagation self in womb -->
-  </RJW_Menstruation.DNADef>
+	<cumThickness>0.2</cumThickness> 
+-->
   
   
   

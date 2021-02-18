@@ -12,6 +12,7 @@
     </graphicData>
     <tickerType>Never</tickerType>
     <smeltable>false</smeltable>
+	<tradeability>Sellable</tradeability>
     <statBases>
       <MaxHitPoints>20</MaxHitPoints>
       <Mass>0.01</Mass>
@@ -79,6 +80,7 @@
     </graphicData>
     <tickerType>Never</tickerType>
     <smeltable>false</smeltable>
+	<tradeability>None</tradeability>
     <statBases>
       <MaxHitPoints>20</MaxHitPoints>
       <Mass>0.05</Mass>
@@ -132,6 +134,7 @@
     </graphicData>
     <tickerType>Never</tickerType>
     <smeltable>false</smeltable>
+	<tradeability>Sellable</tradeability>
     <statBases>
       <MaxHitPoints>40</MaxHitPoints>
       <Mass>0.02</Mass>
@@ -197,6 +200,7 @@
     </graphicData>
     <tickerType>Never</tickerType>
     <smeltable>false</smeltable>
+	<tradeability>None</tradeability>
     <statBases>
       <MaxHitPoints>40</MaxHitPoints>
       <Mass>0.10</Mass>

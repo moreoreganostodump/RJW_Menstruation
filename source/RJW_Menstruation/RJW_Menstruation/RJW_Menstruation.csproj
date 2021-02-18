@@ -58,7 +58,6 @@
     <Compile Include="Configurations.cs" />
     <Compile Include="Cum.cs" />
     <Compile Include="Dialog_WombStatus.cs" />
-    <Compile Include="DNADef.cs" />
     <Compile Include="DrugOutcomDoers.cs" />
     <Compile Include="FilthMaker_Colored.cs" />
     <Compile Include="HARCompatibility.cs" />
