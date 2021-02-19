@@ -76,8 +76,7 @@ namespace RJW_Menstruation
         {
             if (wearhours > MinHrstoDirtyEffect && Rand.Chance(0.02f))
             {
-                Hediff hediff = HediffMaker.MakeHediff(HediffDefOf.WoundInfection, Wearer, Genital_Helper.get_genitalsBPR(Wearer));
-                Wearer.health.AddHediff(hediff, Genital_Helper.get_genitalsBPR(Wearer));
+                Wearer.health.AddHediff(HediffDefOf.WoundInfection, Genital_Helper.get_genitalsBPR(Wearer));
             }
         }
 

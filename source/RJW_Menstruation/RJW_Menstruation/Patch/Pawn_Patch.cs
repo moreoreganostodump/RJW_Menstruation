@@ -38,9 +38,10 @@ namespace RJW_Menstruation
             foreach (LocalTargetInfo t in selftargets)
             {
                 opts.AddDistinct(MakeSelfMenu(pawn, t));
+                break;
             }
-
-
+            
+            
 
 
         }

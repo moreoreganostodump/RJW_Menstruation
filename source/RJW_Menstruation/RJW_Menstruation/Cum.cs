@@ -15,8 +15,6 @@ namespace RJW_Menstruation
     {
         public Pawn pawn;
 
-        //public bool failedFertilization = false;
-        //public bool dead = false;
         public float volume; // ml
         public float fertvolume;
         public float fertFactor = 1.0f;

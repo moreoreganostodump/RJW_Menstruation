@@ -149,7 +149,7 @@ namespace RJW_Menstruation
             else if (hediff is Hediff_BasePregnancy)
             {
                 Hediff_BasePregnancy h = (Hediff_BasePregnancy)hediff;
-                string fetustex = h.babies.First().def.GetModExtension<PawnDNAModExtention>().fetusTexPath ?? "Fetus/Fetus_Default";
+                string fetustex = h.babies?.First()?.def.GetModExtension<PawnDNAModExtention>()?.fetusTexPath ?? "Fetus/Fetus_Default";
                 if (h.GestationProgress < 0.2f) icon = comp.wombTex + "_Implanted";
                 else if (h.GestationProgress < 0.3f) icon += "Fetus/Fetus_Early00";
                 else if (h.GestationProgress < 0.4f) icon += fetustex + "00";

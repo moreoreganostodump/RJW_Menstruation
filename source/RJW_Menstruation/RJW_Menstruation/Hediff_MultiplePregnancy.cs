@@ -304,7 +304,14 @@ namespace RJW_Menstruation
 				{
 					List<Trait> traitpool = new List<Trait>();
 					baby.SetMother(mother);
-					if (mother != father) baby.SetFather(father);
+					if (mother != father)
+                    {
+						if (father.gender != Gender.Female) baby.SetFather(father);
+						else
+                        {
+							baby.relations.AddDirectRelation(PawnRelationDefOf.Parent, father);
+						}
+					}
 
 					if (xxx.has_traits(pawn) && pawn.RaceProps.Humanlike)
 					{

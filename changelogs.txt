@@ -1,3 +1,6 @@
+Version 1.0.1.6
+ - fixed bugs when display fetus image
+ - fixed futa female was not set as parent
 Version 1.0.1.5
  - DNADef is obsoleted and replaced to ModExtention
 Version 1.0.1.4
