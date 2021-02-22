@@ -60,6 +60,8 @@
   <Option16_Desc>set chance of twins</Option16_Desc>
   <Option17_Label>max enzygotic twins</Option17_Label>
   <Option17_Desc>set max number of twins</Option17_Desc>
+  <Option18_Label>enable egg overlay</Option18_Label>
+  <Option18_Desc>enable egg overlay on womb icon</Option18_Desc>
   
   <FloatMenu_CleanSelf>Vaginal washing</FloatMenu_CleanSelf>
   

@@ -37,7 +37,7 @@ namespace RJW_Menstruation
 
             foreach (LocalTargetInfo t in selftargets)
             {
-                opts.AddDistinct(MakeSelfMenu(pawn, t));
+                if (Utility.HasMenstruationComp(pawn)) opts.AddDistinct(MakeSelfMenu(pawn, t));
                 break;
             }
             
@@ -48,15 +48,10 @@ namespace RJW_Menstruation
         
         public static FloatMenuOption MakeSelfMenu(Pawn pawn, LocalTargetInfo target)
         {
-            FloatMenuOption option = null;
-            if (Utility.HasMenstruationComp(pawn))
-            {
-                option = FloatMenuUtility.DecoratePrioritizedTask(new FloatMenuOption(Translations.FloatMenu_CleanSelf, delegate ()
+            FloatMenuOption option = FloatMenuUtility.DecoratePrioritizedTask(new FloatMenuOption(Translations.FloatMenu_CleanSelf, delegate ()
                  {
                      pawn.jobs.TryTakeOrderedJob_NewTemp(new Verse.AI.Job(VariousDefOf.VaginaWashing, null, null, target.Cell));
                  }, MenuOptionPriority.Low), pawn, target);
-            }
-
 
             return option;
         }
@@ -65,7 +60,20 @@ namespace RJW_Menstruation
 
     }
     
-
+    //[HarmonyPatch(typeof(JobGiver_OptimizeApparel), "ApparelScoreGain_NewTmp")]
+    //public class OptimizeApparel_Patch
+    //{
+    //    public static bool Prefix(ref float __result, Pawn pawn, Apparel ap, List<float> wornScoresCache)
+    //    {
+    //        if (ap is Absorber)
+    //        {
+    //            __result = -1000f;
+    //            return false;
+    //        }
+    //        return true;
+    //    }
+    //
+    //}
 
 
 

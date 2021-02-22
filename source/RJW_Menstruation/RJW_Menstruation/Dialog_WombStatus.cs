@@ -23,7 +23,6 @@ namespace RJW_Menstruation
 		private const float genitalRectWidth = 102;
 		private const float genitalRectHeight = 140;
 
-
 		private Texture2D womb;
 		private Texture2D cum;
 		private Texture2D vagina;
@@ -36,7 +35,7 @@ namespace RJW_Menstruation
 		private GUIStyle boxstyle = new GUIStyle(GUI.skin.textArea);
 		private GUIStyle buttonstyle = new GUIStyle(GUI.skin.button);
 
-		
+
 
 
 		public override Vector2 InitialSize
@@ -97,8 +96,9 @@ namespace RJW_Menstruation
 			boxstyle.border.left = 4; boxstyle.border.right = 4; boxstyle.border.bottom = 4; boxstyle.border.top = 4;
 
 			float preginfoheight = 0f;
+			bool pregnant = pawn.IsPregnant();
 			Hediff hediff = PregnancyHelper.GetPregnancy(pawn);
-			if (pawn.IsPregnant() && Utility.ShowFetusImage((Hediff_BasePregnancy)hediff))
+			if (pregnant && Utility.ShowFetusImage((Hediff_BasePregnancy)hediff))
 			{
 				womb = Utility.GetPregnancyIcon(comp, hediff);
 				if (hediff is Hediff_MultiplePregnancy)
@@ -165,7 +165,7 @@ namespace RJW_Menstruation
 			Rect pawnLabel2Rect = new Rect(0, pawnRectHeight + fontheight - 10, pawnRectWidth, fontheight - 10);
 			fontstylecenter.normal.textColor = pawn.DrawColor;
 			GUI.Label(pawnLabelRect, pawn.Name.ToStringFull, fontstylecenter);
-			GUI.Label(pawnLabel2Rect, pawn.story.Title, fontstylecenter);
+			if (pawn.story != null)GUI.Label(pawnLabel2Rect, pawn.story.Title, fontstylecenter);
 			GUI.color = Color.white;
 
 			float wombrecth = 0;
@@ -175,6 +175,14 @@ namespace RJW_Menstruation
 				cumcolor = comp.GetCumMixtureColor;
 				Rect wombRect = new Rect(0f, mainRect.yMax - wombRectHeight + preginfoheight, wombRectWidth, wombRectWidth*0.9f);
 				DrawWomb(wombRect);
+
+
+				if (Configurations.DrawEggOverlay)
+				{
+					comp.DrawEggOverlay(wombRect);
+				}
+
+
 			}
 
 			Rect wombInfoRect = new Rect(0f, mainRect.yMax - wombrecth - fontheight - 2, wombRectWidth, fontheight);
@@ -197,7 +205,7 @@ namespace RJW_Menstruation
 
 			//Widgets.Label(wombInfoRect,Translations.Dialog_WombInfo01 + ": " + comp.GetCurStageLabel);
 
-			if (Configurations.DrawVaginaStatus)
+			if (Configurations.DrawVaginaStatus && !pawn.IsAnimal())
 			{
 				Rect genitalRect = new Rect(24, pawnRectHeight + 2 * fontheight, genitalRectWidth, genitalRectHeight + fontheight * 2);
 				DrawVagina(genitalRect);
@@ -249,7 +257,11 @@ namespace RJW_Menstruation
 			GUI.DrawTexture(rect, womb, ScaleMode.ScaleToFit, true, 0, Color.white, 0, 0);
 			GUI.DrawTexture(rect, cum, ScaleMode.ScaleToFit, true, 0, cumcolor, 0, 0);
 			GUI.color = Color.white;
+
+			
 		}
+
+		
 
 		private void DrawVagina(Rect rect)
         {

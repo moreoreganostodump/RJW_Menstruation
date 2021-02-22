@@ -46,15 +46,25 @@ namespace RJW_Menstruation
 
     public static class Utility
     {
+        
+
 
         public static float GetCumVolume(this Pawn pawn)
         {
-            CompHediffBodyPart part = Genital_Helper.get_PartsHediffList(pawn, Genital_Helper.get_genitalsBPR(pawn))?.FindAll((Hediff hed) => hed.def.defName.ToLower().Contains("penis")).InRandomOrder().FirstOrDefault().TryGetComp<rjw.CompHediffBodyPart>();
-            if (part == null) part = Genital_Helper.get_PartsHediffList(pawn, Genital_Helper.get_genitalsBPR(pawn))?.FindAll((Hediff hed) => hed.def.defName.ToLower().Contains("ovipositorf")).InRandomOrder().FirstOrDefault().TryGetComp<rjw.CompHediffBodyPart>();
-            if (part == null) part = Genital_Helper.get_PartsHediffList(pawn, Genital_Helper.get_genitalsBPR(pawn))?.FindAll((Hediff hed) => hed.def.defName.ToLower().Contains("ovipositorm")).InRandomOrder().FirstOrDefault().TryGetComp<rjw.CompHediffBodyPart>();
-            if (part == null) part = Genital_Helper.get_PartsHediffList(pawn, Genital_Helper.get_genitalsBPR(pawn))?.FindAll((Hediff hed) => hed.def.defName.ToLower().Contains("tentacle")).InRandomOrder().FirstOrDefault().TryGetComp<rjw.CompHediffBodyPart>();
-            
-            float res = part?.FluidAmmount * part.FluidModifier * pawn.BodySize * Rand.Range(0.8f, 1.2f) * RJWSettings.cum_on_body_amount_adjust * 0.3f ?? 0.0f;
+            CompHediffBodyPart part = Genital_Helper.get_PartsHediffList(pawn, Genital_Helper.get_genitalsBPR(pawn))?.FindAll((Hediff hed) => hed.def.defName.ToLower().Contains("penis")).InRandomOrder().FirstOrDefault()?.TryGetComp<CompHediffBodyPart>();
+            if (part == null) part = Genital_Helper.get_PartsHediffList(pawn, Genital_Helper.get_genitalsBPR(pawn))?.FindAll((Hediff hed) => hed.def.defName.ToLower().Contains("ovipositorf")).InRandomOrder().FirstOrDefault()?.TryGetComp<CompHediffBodyPart>();
+            if (part == null) part = Genital_Helper.get_PartsHediffList(pawn, Genital_Helper.get_genitalsBPR(pawn))?.FindAll((Hediff hed) => hed.def.defName.ToLower().Contains("ovipositorm")).InRandomOrder().FirstOrDefault()?.TryGetComp<CompHediffBodyPart>();
+            if (part == null) part = Genital_Helper.get_PartsHediffList(pawn, Genital_Helper.get_genitalsBPR(pawn))?.FindAll((Hediff hed) => hed.def.defName.ToLower().Contains("tentacle")).InRandomOrder().FirstOrDefault()?.TryGetComp<CompHediffBodyPart>();
+
+            float res = 0;
+            try
+            {
+                res = part.FluidAmmount * part.FluidModifier * pawn.BodySize * Rand.Range(0.8f, 1.2f) * RJWSettings.cum_on_body_amount_adjust * 0.3f;
+            }
+            catch (NullReferenceException)
+            {
+                res = 0.0f;
+            }
             if (pawn.Has(Quirk.Messy)) res *= Rand.Range(4.0f,8.0f);
 
             return res;
@@ -149,7 +159,7 @@ namespace RJW_Menstruation
             else if (hediff is Hediff_BasePregnancy)
             {
                 Hediff_BasePregnancy h = (Hediff_BasePregnancy)hediff;
-                string fetustex = h.babies?.First()?.def.GetModExtension<PawnDNAModExtention>()?.fetusTexPath ?? "Fetus/Fetus_Default";
+                string fetustex = h.babies?.FirstOrDefault()?.def.GetModExtension<PawnDNAModExtention>()?.fetusTexPath ?? "Fetus/Fetus_Default";
                 if (h.GestationProgress < 0.2f) icon = comp.wombTex + "_Implanted";
                 else if (h.GestationProgress < 0.3f) icon += "Fetus/Fetus_Early00";
                 else if (h.GestationProgress < 0.4f) icon += fetustex + "00";
@@ -167,7 +177,7 @@ namespace RJW_Menstruation
         {
             string icon = comp.wombTex;
             float cumpercent = comp.TotalCumPercent;
-            if (cumpercent < 0.001f) icon = "Womb/Empty";
+            if (cumpercent < 0.001f) return ContentFinder<Texture2D>.Get("Womb/Empty", true);
             else if (cumpercent < 0.01f) icon += "_Cum_00";
             else if (cumpercent < 0.05f) icon += "_Cum_01";
             else if (cumpercent < 0.11f) icon += "_Cum_02";
@@ -230,7 +240,7 @@ namespace RJW_Menstruation
             var hediff = Genital_Helper.get_PartsHediffList(pawn, Genital_Helper.get_anusBPR(pawn)).Find((Hediff h) => h.def.defName.ToLower().Contains("anus"));
             CompProperties_Anus Props = (CompProperties_Anus)hediff.TryGetComp<HediffComp_Anus>().props;
             string icon;
-            if (Props != null) icon = Props.analTex;
+            if (Props != null) icon = Props.analTex ?? "Genitals/Anal";
             else icon = "Genitals/Anal";
             if (hediff.Severity < 0.20f) icon += "00";        //micro 
             else if (hediff.Severity < 0.40f) icon += "01";   //tight
@@ -278,7 +288,34 @@ namespace RJW_Menstruation
             }
         }
 
+        public static void DrawEggOverlay(this HediffComp_Menstruation comp, Rect wombRect)
+        {
+            Rect rect = new Rect(wombRect.xMax - wombRect.width/3, wombRect.y, wombRect.width / 3, wombRect.width / 3);
+            GUI.color = Color.white;
+            GUI.DrawTexture(rect, comp.GetEggIcon(), ScaleMode.ScaleToFit);
+        }
 
+        public static Texture2D GetEggIcon(this HediffComp_Menstruation comp)
+        {
+            if (comp.parent.pawn.IsPregnant())
+            {
+                if (comp.parent.pawn.GetPregnancyProgress() < 0.2f) return ContentFinder<Texture2D>.Get("Eggs/Egg_Implanted00", true);
+                else return ContentFinder<Texture2D>.Get("Womb/Empty", true);
+            }
+            else if (!comp.IsEggExist) return ContentFinder<Texture2D>.Get("Womb/Empty", true);
+            else
+            {
+                int fertstage = comp.IsFertilized;
+                if (fertstage >= 0)
+                {
+                    if (fertstage < 1) return ContentFinder<Texture2D>.Get("Eggs/Egg_Fertilized00", true);
+                    else if (fertstage < 24) return ContentFinder<Texture2D>.Get("Eggs/Egg_Fertilized01", true);
+                    else return ContentFinder<Texture2D>.Get("Eggs/Egg_Fertilized02", true);
+                }
+                else if (comp.IsEggFertilizing) return ContentFinder<Texture2D>.Get("Eggs/Egg_Fertilizing01", true);
+                else return ContentFinder<Texture2D>.Get("Eggs/Egg", true);
+            }
+        }
 
 
 

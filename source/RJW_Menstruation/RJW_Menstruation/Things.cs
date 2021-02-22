@@ -16,6 +16,7 @@ namespace RJW_Menstruation
         public ColorInt cumColor;
         public Color CumColor => cumColor.ToColor;
         public float cumThickness = 0f;
+
     }
 
 

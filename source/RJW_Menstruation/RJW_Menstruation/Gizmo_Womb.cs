@@ -14,6 +14,7 @@ namespace RJW_Menstruation
     {
         public Texture2D icon_overay;
 		public Color cumcolor;
+		public HediffComp_Menstruation comp;
 
         protected override void DrawIcon(Rect rect, Material buttonMat = null)
         {
@@ -36,6 +37,8 @@ namespace RJW_Menstruation
 			GUI.color = color;
 			Widgets.DrawTextureFitted(rect, overay, iconDrawScale * 0.85f, iconProportions, iconTexCoords, iconAngle, buttonMat);
 			GUI.color = Color.white;
+			if (Configurations.DrawEggOverlay) comp.DrawEggOverlay(rect);
+
 		}
         
 	

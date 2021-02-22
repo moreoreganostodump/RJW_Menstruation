@@ -99,6 +99,7 @@ namespace RJW_Menstruation
                 icon = icon,
                 icon_overay = icon_overay,
                 cumcolor = c,
+                comp = comp,
                 order = 100,
                 action = delegate
                 {

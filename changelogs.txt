@@ -1,3 +1,13 @@
+Version 1.0.1.8
+ - fixed problems with animal status window
+ - fixed RMB menu crash
+ - added egg overlay
+ - default implantation chance changed to 65%
+ - now fertilized eggs are implanted after 7 days later
+Version 1.0.1.7
+ - added chinese translations
+ - major bug fixes
+ - minor bug fixes
 Version 1.0.1.6
  - fixed bugs when display fetus image
  - fixed futa female was not set as parent

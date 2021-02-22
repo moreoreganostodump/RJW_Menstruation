@@ -289,7 +289,7 @@ namespace RJW_Menstruation
             }
         }
 
-        public bool GetEggFertilizing
+        public bool IsEggFertilizing
         {
             get
             {
@@ -305,18 +305,22 @@ namespace RJW_Menstruation
                 else return false;
             }
         }
-        public bool GetFertilization
+
+        /// <summary>
+        /// returns fertstage. if not fertilized returns -1
+        /// </summary>
+        public int IsFertilized
         {
             get
             {
                 if (!eggs.NullOrEmpty()) foreach(Egg egg in eggs)
                     {
-                        if (egg.fertilized) return true;
+                        if (egg.fertilized) return egg.fertstage;
                     }
-                return false;
+                return -1;
             }
         }
-        public bool GetEgg
+        public bool IsEggExist
         {
             get
             {
@@ -655,7 +659,7 @@ namespace RJW_Menstruation
 
         public void BeforeCumOut(out Absorber absorber)
         {
-            absorber = (Absorber)parent.pawn.apparel?.WornApparel?.Find(x => x.def.apparel.tags.Contains("Absorber"));
+            absorber = (Absorber)parent.pawn.apparel?.WornApparel?.Find(x => x is Absorber);
             if (absorber != null)
             {
                 absorber.WearEffect();
@@ -706,7 +710,7 @@ namespace RJW_Menstruation
                 cum.fertvolume *= Math.Max(0, (1 - (Configurations.CumDecayRatio * (1 - cum.decayresist)) * leakfactor) * (1 - (Configurations.CumFertilityDecayRatio * (1 - cum.decayresist))));
                 vd -= cum.volume;
                 totalleak += AbsorbCum(cum, vd, absorber);
-                string tmp = "FilthLabelWithSource".Translate(cum.FilthDef.label, cum.pawn.LabelShort, 1.ToString());
+                string tmp = "FilthLabelWithSource".Translate(cum.FilthDef.label, cum.pawn?.LabelShort ?? "Unknown", 1.ToString());
                 filthlabels.Add(tmp.Replace(" x1",""));
                 if (cum.fertvolume < 0.01f) cum.fertvolume = 0;
                 if (cum.volume < 0.01f) removecums.Add(cum);
@@ -746,7 +750,7 @@ namespace RJW_Menstruation
                 cum.volume *= Math.Max(0, 1 - (portion * (1 - cum.decayresist)) * leakfactor);
                 cum.fertvolume *= Math.Max(0, (1 - (portion * (1 - cum.decayresist)) * leakfactor) * (1 - (Configurations.CumFertilityDecayRatio * (1 - cum.decayresist))));
                 //MakeCumFilth(cum, vd - cum.volume);
-                string tmp = "FilthLabelWithSource".Translate(cum.FilthDef.label, cum.pawn.LabelShort, 1.ToString());
+                string tmp = "FilthLabelWithSource".Translate(cum.FilthDef.label, cum.pawn?.LabelShort ?? "Unknown", 1.ToString());
                 filthlabels.Add(tmp.Replace(" x1", ""));
                 totalleak += vd - cum.volume;
                 if (cum.fertvolume < 0.01f) cum.fertvolume = 0;
@@ -785,7 +789,7 @@ namespace RJW_Menstruation
                 cum.volume *= 1 - (portion);
                 cum.fertvolume *= (1 - (portion)) * (1 - (Configurations.CumFertilityDecayRatio));
                 //MakeCumFilth(cum, vd - cum.volume);
-                string tmp = "FilthLabelWithSource".Translate(cum.FilthDef.label, cum.pawn.LabelShort, 1.ToString());
+                string tmp = "FilthLabelWithSource".Translate(cum.FilthDef.label, cum.pawn?.LabelShort ?? "Unknown", 1.ToString());
                 filthlabels.Add(tmp.Replace(" x1", ""));
                 totalleak += vd - cum.volume;
                 if (cum.fertvolume < 0.01f) cum.fertvolume = 0;
@@ -821,6 +825,7 @@ namespace RJW_Menstruation
                     if (!egg.fertilized) egg.fertilizer = Fertilize();
                     if (egg.fertilizer != null) {
                         egg.fertilized = true;
+                        egg.lifespanhrs += 240;
                         onefertilized = true;
                     }
                 }
@@ -918,7 +923,7 @@ namespace RJW_Menstruation
             foreach (Cum cum in cums)
             {
                 float rand = Rand.Range(0.0f, 1.0f);
-                if (!cum.notcum && rand < cum.fertvolume * cum.fertFactor * Configurations.FertilizeChance * Props.basefertilizationChanceFactor)
+                if (cum.pawn != null && !cum.notcum && rand < cum.fertvolume * cum.fertFactor * Configurations.FertilizeChance * Props.basefertilizationChanceFactor)
                 {
                     if (!RJWPregnancySettings.bestial_pregnancy_enabled && (xxx.is_animal(parent.pawn) ^ xxx.is_animal(cum.pawn))) continue;
                     return cum.pawn;
@@ -936,7 +941,7 @@ namespace RJW_Menstruation
                 bool pregnant = false;
                 foreach(Egg egg in eggs)
                 {
-                    if (egg.position < 24 || !egg.fertilized) continue;
+                    if (!egg.fertilized || egg.fertstage < 168) continue;
                     else if (Rand.Range(0.0f, 1.0f) <= Configurations.ImplantationChance * Props.baseImplantationChanceFactor * ImplantFactor * InterspeciesImplantFactor(egg.fertilizer))
                     {
                         if (!parent.pawn.IsPregnant())
@@ -1013,7 +1018,7 @@ namespace RJW_Menstruation
         /// <param name="amount"></param>
         private void MakeCumFilth(Cum cum, float amount) 
         {
-            if (amount >= minmakefilthvalue) FilthMaker.TryMakeFilth(parent.pawn.Position, parent.pawn.Map, cum.FilthDef, cum.pawn.LabelShort);
+            if (amount >= minmakefilthvalue) FilthMaker.TryMakeFilth(parent.pawn.Position, parent.pawn.Map, cum.FilthDef, cum.pawn?.LabelShort ?? "Unknown");
         }
 
         /// <summary>
@@ -1076,6 +1081,7 @@ namespace RJW_Menstruation
                 egg.lifespanhrs -= Configurations.CycleAcceleration;
                 egg.position += Configurations.CycleAcceleration;
                 if (egg.lifespanhrs < 0) deadeggs.Add(egg);
+                if (egg.fertilized) egg.fertstage += Configurations.CycleAcceleration;
             }
 
             if (!deadeggs.NullOrEmpty())
@@ -1463,6 +1469,7 @@ namespace RJW_Menstruation
             public int lifespanhrs;
             public Pawn fertilizer;
             public int position;
+            public int fertstage = 0;
 
             public Egg()
             {
@@ -1486,6 +1493,7 @@ namespace RJW_Menstruation
                 Scribe_Values.Look(ref fertilized, "fertilized", fertilized, true);
                 Scribe_Values.Look(ref lifespanhrs, "lifespanhrs", lifespanhrs, true);
                 Scribe_Values.Look(ref position, "position", position, true);
+                Scribe_Values.Look(ref fertstage, "fertstage", fertstage, true);
             }
         }
 

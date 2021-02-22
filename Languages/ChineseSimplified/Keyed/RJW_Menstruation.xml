@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <Mod_Title>RJW Menstruation Cycle</Mod_Title>
+  
+  <Menstrual_Blood>月经血</Menstrual_Blood>
+  <Info_noCum>清空</Info_noCum>
+  <Stage_Follicular>卵泡期</Stage_Follicular>
+  <Stage_Ovulatory>排卵</Stage_Ovulatory> 
+  <Stage_Luteal>黄体期</Stage_Luteal>
+  <Stage_Bleeding>月经来潮</Stage_Bleeding>
+  <Stage_Fertilized>已受精</Stage_Fertilized>
+  <Stage_Pregnant>怀孕</Stage_Pregnant>
+  <Stage_Recover>从出生中恢复</Stage_Recover>
+  <Stage_None>无</Stage_None>
+  <Stage_Climacteric>更年期</Stage_Climacteric>
+  <Dialog_WombInfo01>状态</Dialog_WombInfo01>
+  <Dialog_WombInfo02>胎儿</Dialog_WombInfo02>
+  <Dialog_WombInfo03>父亲</Dialog_WombInfo03>
+  <Dialog_WombInfo04>阴道精液列表</Dialog_WombInfo04>
+  <Dialog_WombInfo05>已受精</Dialog_WombInfo05>
+  <Dialog_WombInfo06>受精中</Dialog_WombInfo06>
+  <Dialog_WombInfo07>排卵</Dialog_WombInfo07>
+  <Dialog_WombInfo08></Dialog_WombInfo08>
+  <Dialog_WombInfo09></Dialog_WombInfo09>
+  
+  <Option1_Label>激活子宫图标</Option1_Label>
+  <Option1_Desc>激活子宫图标框</Option1_Desc>
+  <Option2_Label>激活动物经期</Option2_Label>
+  <Option2_Desc>仿真动物的经期.&#10;此选项将在保存读取后生效&#10;不推荐开启此选项</Option2_Desc>
+  <Option3_Label>植入机会</Option3_Label>
+  <Option3_Desc>设置受精卵的植入机会</Option3_Desc>
+  <Option4_Label>受精的机会</Option4_Label>
+  <Option4_Desc>设置每小时受精的机会</Option4_Desc>
+  <Option5_Label>每小时阴道中的精液量衰减率</Option5_Label>
+  <Option5_Desc>阴道中的精液量将以这个比率减少</Option5_Desc>
+  <Option6_Label>每小时生育率衰减率</Option6_Label>
+  <Option6_Desc>精液列表的生育率将以这个比率减少</Option6_Desc>
+  <Option7_Label>循环加速</Option7_Label>
+  <Option7_Desc>加快月经周期</Option7_Desc>
+  <Option8_Label>调试</Option8_Label>
+  <Option8_Desc>显示调试信息</Option8_Desc>
+  <Option9_Label>子宫状态</Option9_Label>
+  <Option9_Desc>在状态窗口中绘制子宫图标</Option9_Desc>
+  <Option10_Label>阴道状态</Option10_Label>
+  <Option10_Desc>在状态窗口中绘制阴道和肛门图标</Option10_Desc>
+  <Option11_Label>胎儿信息级别</Option11_Label>
+  <Option11_Desc_1>显示有关胎儿的所有信息</Option11_Desc_1>
+  <Option11_Desc_2>显示妊娠後胎儿的所有信息</Option11_Desc_2>
+  <Option11_Desc_3>不显示有关胎儿的信息，但显示怀孕後胎儿的图象</Option11_Desc_3>
+  <Option11_Desc_4>不显示胎儿图象和信息</Option11_Desc_4>
+  <Option12_Label>激活更年期</Option12_Label>
+  <Option12_Desc>激活更年期效果，使小人随着时间的推移而变得不育&#10;如果您较长寿的外星人种族有碰到任何问题，请关闭此选项.&#10;此选项将在保存读取后生效</Option12_Desc>
+  <Option13_Label>多重怀孕</Option13_Label>
+  <Option13_Desc>使用多重怀孕代替RJW的默认怀孕</Option13_Desc>
+  <Option14_Label>激活异卵双胞胎</Option14_Label>
+  <Option14_Desc>激活复数个卵子可以个别受精</Option14_Desc>
+  <Option15_Label>激活双胞胎</Option15_Label>
+  <Option15_Desc>允许单个卵子生成多个后代</Option15_Desc>
+  <Option16_Label>双胞胎出现率</Option16_Label>
+  <Option16_Desc>设置双胞胎的出现率</Option16_Desc>
+  <Option17_Label>最大双胞胎数量</Option17_Label>
+  <Option17_Desc>设置最大双胞胎数量</Option17_Desc>
+  
+  <FloatMenu_CleanSelf>清洗阴道</FloatMenu_CleanSelf>
+  
+</LanguageData>

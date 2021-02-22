@@ -60,6 +60,8 @@
   <Option16_Desc>일란성 쌍둥이가 발생할 확률을 설정합니다.</Option16_Desc>
   <Option17_Label>최대 일란성 쌍둥이 수</Option17_Label>
   <Option17_Desc>일란성 쌍둥이의 수를 제한합니다.</Option17_Desc>
+  <Option18_Label>난자 오버레이</Option18_Label>
+  <Option18_Desc>자궁그림 위에 난자그림를 표시합니다.</Option18_Desc>
   
   <FloatMenu_CleanSelf>질세척</FloatMenu_CleanSelf>
   

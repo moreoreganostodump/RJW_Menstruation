@@ -66,6 +66,8 @@ namespace RJW_Menstruation
         public static readonly string Option16_Desc =  "Option16_Desc".Translate();
         public static readonly string Option17_Label = "Option17_Label".Translate();
         public static readonly string Option17_Desc =  "Option17_Desc".Translate();
+        public static readonly string Option18_Label = "Option18_Label".Translate();
+        public static readonly string Option18_Desc =  "Option18_Desc".Translate();
 
         public static readonly string FloatMenu_CleanSelf = "FloatMenu_CleanSelf".Translate();
 

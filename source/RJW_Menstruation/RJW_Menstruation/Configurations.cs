@@ -10,12 +10,12 @@ namespace RJW_Menstruation
 {
     public class Configurations : ModSettings
     {
-        public const float ImplantationChanceDefault = 0.25f;
-        public const int ImplantationChanceAdjustDefault = 25;
+        public const float ImplantationChanceDefault = 0.65f;
+        public const int ImplantationChanceAdjustDefault = 65;
         public const float FertilizeChanceDefault = 0.05f;
         public const int FertilizeChanceAdjustDefault = 50;
-        public const float CumDecayRatioDefault = 0.05f;
-        public const int CumDecayRatioAdjustDefault = 50;
+        public const float CumDecayRatioDefault = 0.15f;
+        public const int CumDecayRatioAdjustDefault = 150;
         public const float CumFertilityDecayRatioDefault = 0.2f;
         public const int CumFertilityDecayRatioAdjustDefault = 200;
         public const int CycleAccelerationDefault = 6;
@@ -36,6 +36,7 @@ namespace RJW_Menstruation
         public static bool EnableAnimalCycle = false;
         public static bool DrawWombStatus = true;
         public static bool DrawVaginaStatus = true;
+        public static bool DrawEggOverlay = true;
         public static bool Debug = false;
         public static bool EnableMenopause = true;
         public static DetailLevel InfoDetail = DetailLevel.All;
@@ -94,6 +95,7 @@ namespace RJW_Menstruation
             Scribe_Values.Look(ref EnableAnimalCycle, "EnableAnimalCycle", EnableAnimalCycle, true);
             Scribe_Values.Look(ref DrawWombStatus, "DrawWombStatus", DrawWombStatus, true);
             Scribe_Values.Look(ref DrawVaginaStatus, "DrawVaginaStatus", DrawVaginaStatus, true);
+            Scribe_Values.Look(ref DrawEggOverlay, "DrawEggOvray", DrawEggOverlay, true);
             Scribe_Values.Look(ref Debug, "Debug", Debug, true);
             Scribe_Values.Look(ref InfoDetail, "InfoDetail", InfoDetail, true);
             Scribe_Values.Look(ref EnableMenopause, "EnableMenopause", EnableMenopause, true);
@@ -143,8 +145,12 @@ namespace RJW_Menstruation
             listmain.CheckboxLabeled(Translations.Option1_Label, ref Configurations.EnableWombIcon, Translations.Option1_Desc);
             if (Configurations.EnableWombIcon)
             {
-                Listing_Standard wombsection = listmain.BeginSection_NewTemp(111);
+                Listing_Standard wombsection = listmain.BeginSection_NewTemp(131);
                 wombsection.CheckboxLabeled(Translations.Option9_Label, ref Configurations.DrawWombStatus, Translations.Option9_Desc);
+                if (Configurations.DrawWombStatus)
+                {
+                    wombsection.CheckboxLabeled(Translations.Option18_Label, ref Configurations.DrawEggOverlay, Translations.Option18_Desc);
+                }
                 wombsection.CheckboxLabeled(Translations.Option10_Label, ref Configurations.DrawVaginaStatus, Translations.Option10_Desc);
                 if (wombsection.ButtonText(Translations.Option11_Label + ": " + Configurations.LevelString(Configurations.InfoDetail)))
                 {

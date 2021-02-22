@@ -42,7 +42,14 @@ namespace RJW_Menstruation
             {
                 if (DNAcache == null)
                 {
-                    DNAcache = pawn.def.GetModExtension<PawnDNAModExtention>();
+                    try
+                    {
+                        DNAcache = pawn.def.GetModExtension<PawnDNAModExtention>();
+                    }
+                    catch (NullReferenceException)
+                    {
+                        DNAcache = ThingDefOf.Human.GetModExtension<PawnDNAModExtention>();
+                    }
                     if (DNAcache == null)
                     {
                         DNAcache = ThingDefOf.Human.GetModExtension<PawnDNAModExtention>();
@@ -89,9 +96,6 @@ namespace RJW_Menstruation
             this.pawn = pawn;
             volume = 1.0f;
             fertvolume = 1.0f;
-            decayresist = 0;
-            
-            
         }
 
         public Cum(Pawn pawn, float volume, string notcumlabel, float decayresist = 0, ThingDef filthDef = null)

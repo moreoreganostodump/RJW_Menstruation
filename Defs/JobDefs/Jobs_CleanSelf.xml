@@ -4,7 +4,7 @@
 	<JobDef Name="VaginaWashing">
 		<defName>VaginaWashing</defName>
 		<driverClass>RJW_Menstruation.JobDriver_VaginaWashing</driverClass>
-		<reportString>wasing vagina</reportString>
+		<reportString>washing vagina</reportString>
 		<casualInterruptible>true</casualInterruptible>
 	</JobDef>
 </Defs>
