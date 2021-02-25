@@ -1,3 +1,11 @@
+Version 1.0.1.9
+ - add estrus effects
+   - estrus increases pawn's sex drive greatly
+ - add consealedEstrus attribute to CompProperties_Menstruation
+   - if consealedEstrus set as true, the pawn will get less effective estrus
+ - hyperfertility pills induce esturs 
+ - now initial ovarypower is affected by pawn's life expectancy and litter size
+
 Version 1.0.1.8
  - fixed problems with animal status window
  - fixed RMB menu crash

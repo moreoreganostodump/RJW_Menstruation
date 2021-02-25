@@ -26,6 +26,7 @@ namespace RJW_Menstruation
         public string vagTex = "Genitals/Vagina"; //fertiledays = ovaluationday - spermlifespan ~ ovaluationday + egglifespanday
         public bool infertile = false;
         public int ovaryPower = 600000000; // default: almost unlimited ovulation 
+        public bool consealedEstrus = false;
 
         public CompProperties_Menstruation()
         {
@@ -54,7 +55,7 @@ namespace RJW_Menstruation
     public class HediffComp_Menstruation : HediffComp
     {
         const float minmakefilthvalue = 1.0f;
-        const int ovarypowerthreshold = 72;
+        //const int ovarypowerthreshold = 72;
 
         public static readonly int tickInterval = 2500; // an hour
         public CompProperties_Menstruation Props;
@@ -92,6 +93,25 @@ namespace RJW_Menstruation
         private Need sexNeed = null;
         private string customwombtex = null;
         private string customvagtex = null;
+        private bool estrusflag = false;
+        private int opcache = -1;
+
+        public int ovarypowerthreshold
+        {
+            get
+            {
+                if (opcache < 0) opcache = (int)(72f * ThingDefOf.Human.race.lifeExpectancy / parent.pawn.def.race.lifeExpectancy);
+                return opcache;
+            }
+        }
+
+        public int FollicularIntervalHours
+        {
+            get
+            {
+                return (int)((follicularIntervalhours - bleedingIntervalhours) * CycleFactor);
+            }
+        }
 
         public float TotalCum
         {
@@ -383,6 +403,7 @@ namespace RJW_Menstruation
             Scribe_Values.Look(ref crampPain, "crampPain", crampPain, true);
             Scribe_Values.Look(ref ovarypower, "ovarypower", ovarypower, true);
             Scribe_Values.Look(ref eggstack, "eggstack", eggstack, true);
+            Scribe_Values.Look(ref estrusflag, "estrusflag", estrusflag, true);
 
 
         }
@@ -863,19 +884,33 @@ namespace RJW_Menstruation
                 }
                 else if (ovarypower < -50000)
                 {
-                    ovarypower = (int)(Props.ovaryPower * Rand.Range(0.7f, 1.3f)) - (Math.Max(0, parent.pawn.ageTracker.AgeBiologicalYears - 15)) * (60 / (Props.folicularIntervalDays + Props.lutealIntervalDays) * Configurations.CycleAcceleration);
-                    if (ovarypower < 1)
+                    if (Props.ovaryPower > 10000000) ovarypower = Props.ovaryPower;
+                    else
                     {
-                        Hediff hediff = HediffMaker.MakeHediff(VariousDefOf.Hediff_Menopause, parent.pawn);
-                        hediff.Severity = 0.2f;
-                        parent.pawn.health.AddHediff(hediff, Genital_Helper.get_genitalsBPR(parent.pawn));
-                        curStage = Stage.Young;
-                    }
-                    else if (ovarypower < ovarypowerthreshold)
-                    {
-                        Hediff hediff = HediffMaker.MakeHediff(VariousDefOf.Hediff_Climacteric, parent.pawn);
-                        hediff.Severity = 0.008f * (ovarypowerthreshold - ovarypower);
-                        parent.pawn.health.AddHediff(hediff, Genital_Helper.get_genitalsBPR(parent.pawn));
+                        float avglittersize;
+                        try
+                        {
+                            avglittersize = Rand.ByCurveAverage(parent.pawn.def.race.litterSizeCurve);
+                        }
+                        catch (NullReferenceException)
+                        {
+                            avglittersize = 1;
+                        }
+                        ovarypower = (int)(((Props.ovaryPower * Rand.Range(0.7f, 1.3f) * parent.pawn.def.race.lifeExpectancy / ThingDefOf.Human.race.lifeExpectancy)
+                            - (Math.Max(0, parent.pawn.ageTracker.AgeBiologicalYears - 15)) * (60 / (Props.folicularIntervalDays + Props.lutealIntervalDays) * Configurations.CycleAcceleration)) * avglittersize);
+                        if (ovarypower < 1)
+                        {
+                            Hediff hediff = HediffMaker.MakeHediff(VariousDefOf.Hediff_Menopause, parent.pawn);
+                            hediff.Severity = 0.2f;
+                            parent.pawn.health.AddHediff(hediff, Genital_Helper.get_genitalsBPR(parent.pawn));
+                            curStage = Stage.Young;
+                        }
+                        else if (ovarypower < ovarypowerthreshold)
+                        {
+                            Hediff hediff = HediffMaker.MakeHediff(VariousDefOf.Hediff_Climacteric, parent.pawn);
+                            hediff.Severity = 0.008f * (ovarypowerthreshold - ovarypower);
+                            parent.pawn.health.AddHediff(hediff, Genital_Helper.get_genitalsBPR(parent.pawn));
+                        }
                     }
                 }
                 
@@ -913,6 +948,25 @@ namespace RJW_Menstruation
                 {
                     if (sexNeed.CurLevel < 0.5) sexNeed.CurLevel += 0.01f;
                 }
+            }
+        }
+
+        public void SetEstrus(int days)
+        {
+            HediffDef estrusdef;
+            if (Props.consealedEstrus) estrusdef = VariousDefOf.Hediff_Estrus_Consealed;
+            else estrusdef = VariousDefOf.Hediff_Estrus;
+            
+            HediffWithComps hediff = (HediffWithComps)parent.pawn.health.hediffSet.GetFirstHediffOfDef(estrusdef);
+            if (hediff != null)
+            {
+                hediff.Severity = (float)days / Configurations.CycleAcceleration + 0.2f;
+            }
+            else
+            {
+                hediff = (HediffWithComps)HediffMaker.MakeHediff(estrusdef, parent.pawn);
+                hediff.Severity = (float)days / Configurations.CycleAcceleration + 0.2f;
+                parent.pawn.health.AddHediff(hediff);
             }
         }
 
@@ -1103,13 +1157,18 @@ namespace RJW_Menstruation
                 case Stage.Follicular:
                     action = delegate
                     {
-                        if (curStageHrs >= (follicularIntervalhours - bleedingIntervalhours) * CycleFactor)
+                        if (curStageHrs >= FollicularIntervalHours)
                         {
                             GoNextStage(Stage.Ovulatory);
                         }
                         else
                         {
                             curStageHrs+=Configurations.CycleAcceleration;
+                            if (!estrusflag && curStageHrs > FollicularIntervalHours - 72)
+                            {
+                                estrusflag = true;
+                                SetEstrus(Props.eggLifespanDays + 3);
+                            }
                             StayCurrentStage();
                         }
                     };
@@ -1117,6 +1176,7 @@ namespace RJW_Menstruation
                 case Stage.Ovulatory:
                     action = delegate
                     {
+                        estrusflag = false;
                         int i = 0;
                         do
                         {

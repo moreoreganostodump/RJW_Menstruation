@@ -6,7 +6,6 @@
 		<label>In period</label>
 		<labelNoun>in period</labelNoun>
 		<description>in period</description>
-		<labelNounPretty>{1} in period</labelNounPretty>
 		<defaultLabelColor>(0.70,0.00,0.00)</defaultLabelColor>	
 		<isBad>true</isBad>
 		<tendable>false</tendable>
@@ -67,12 +66,12 @@
 		<label>Menopause</label>
 		<labelNoun>menopause</labelNoun>
 		<description>reached menopause</description>
-		<labelNounPretty>{1} reached menopause</labelNounPretty>
+		<labelNounPretty>{0} reached menopause</labelNounPretty>
 		<defaultLabelColor>(0.70,0.70,0.00)</defaultLabelColor>	
 		<isBad>false</isBad>
 		<tendable>false</tendable>
 		<makesSickThought>false</makesSickThought>
-		<makesAlert>false</makesAlert>	
+		<makesAlert>true</makesAlert>	
 		<maxSeverity>1</maxSeverity>
 		<initialSeverity>0.1</initialSeverity>
 		<injuryProps>
@@ -102,12 +101,11 @@
 		<label>Climacteric</label>
 		<labelNoun>climacteric</labelNoun>
 		<description>climacteric</description>
-		<labelNounPretty>{1} climacteric</labelNounPretty>
 		<defaultLabelColor>(0.70,0.70,0.00)</defaultLabelColor>	
 		<isBad>false</isBad>
 		<tendable>false</tendable>
 		<makesSickThought>false</makesSickThought>
-		<makesAlert>true</makesAlert>	
+		<makesAlert>false</makesAlert>	
 		<maxSeverity>1</maxSeverity>
 		<initialSeverity>0.1</initialSeverity>
 		<injuryProps>
@@ -175,5 +173,67 @@
 	</HediffDef>
 	
 	
+	<HediffDef Name="Hediff_Estrus">
+		<hediffClass>HediffWithComps</hediffClass>
+		<defName>Hediff_Estrus</defName>
+		<label>Estrus</label>
+		<labelNoun>estrus</labelNoun>
+		<description>estrus</description>
+		<defaultLabelColor>(1.00,0.60,0.75)</defaultLabelColor>	
+		<isBad>false</isBad>
+		<tendable>false</tendable>
+		<makesSickThought>false</makesSickThought>
+		<makesAlert>false</makesAlert>	
+		<maxSeverity>10000</maxSeverity>
+		<initialSeverity>1.0</initialSeverity>
+		<injuryProps>
+			<canMerge>true</canMerge>
+		</injuryProps>	
+		<stages>
+			<li>
+				<statFactors>
+					<SexFrequency>5.0</SexFrequency>
+					<SexSatisfaction>1.5</SexSatisfaction>
+				</statFactors>
+			</li>
+		</stages>	
+		<comps>
+			<li Class="HediffCompProperties_SeverityPerDay">
+				<severityPerDay>-1.0</severityPerDay>
+			</li>
+		</comps>
+	</HediffDef>
+	
+	<HediffDef Name="Hediff_Estrus_Consealed">
+		<hediffClass>HediffWithComps</hediffClass>
+		<defName>Hediff_Estrus_Consealed</defName>
+		<label>Estrus(consealed)</label>
+		<labelNoun>estrus</labelNoun>
+		<description>estrus</description>
+		<defaultLabelColor>(1.00,0.60,0.75)</defaultLabelColor>	
+		<isBad>false</isBad>
+		<tendable>false</tendable>
+		<makesSickThought>false</makesSickThought>
+		<makesAlert>false</makesAlert>	
+		<maxSeverity>10000</maxSeverity>
+		<initialSeverity>1.0</initialSeverity>
+		<injuryProps>
+			<canMerge>true</canMerge>
+		</injuryProps>	
+		<stages>
+			<li>
+				<becomeVisible>false</becomeVisible>
+				<statFactors>
+					<SexFrequency>1.10</SexFrequency>
+					<SexSatisfaction>1.05</SexSatisfaction>
+				</statFactors>
+			</li>
+		</stages>	
+		<comps>
+			<li Class="HediffCompProperties_SeverityPerDay">
+				<severityPerDay>-1.0</severityPerDay>
+			</li>
+		</comps>
+	</HediffDef>
 	
 </Defs>

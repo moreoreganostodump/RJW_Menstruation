@@ -19,6 +19,7 @@ namespace RJW_Menstruation
                 || comp.curStage.Equals(HediffComp_Menstruation.Stage.ClimactericLuteal)
                 ))
             {
+                comp.SetEstrus(comp.Props.eggLifespanDays);
                 comp.curStage = HediffComp_Menstruation.Stage.Ovulatory;
                 comp.ovarypower--;
             }

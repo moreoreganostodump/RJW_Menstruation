@@ -37,7 +37,7 @@ namespace RJW_Menstruation
 
             foreach (LocalTargetInfo t in selftargets)
             {
-                if (Utility.HasMenstruationComp(pawn)) opts.AddDistinct(MakeSelfMenu(pawn, t));
+                if (pawn.HasMenstruationComp()) opts.AddDistinct(MakeSelfMenu(pawn, t));
                 break;
             }
             

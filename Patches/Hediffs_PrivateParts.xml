@@ -20,11 +20,12 @@
 					<folicularIntervalDays>14</folicularIntervalDays>
 					<lutealIntervalDays>14</lutealIntervalDays>
 					<bleedingIntervalDays>6</bleedingIntervalDays>
-					<recoveryIntervalDays>10</recoveryIntervalDays>
+					<recoveryIntervalDays>30</recoveryIntervalDays>
 					<eggLifespanDays>3</eggLifespanDays>
 					<wombTex>Womb/Womb</wombTex>
 					<vagTex>Genitals/Vagina</vagTex>
 					<ovaryPower>420</ovaryPower>
+					<consealedEstrus>true</consealedEstrus>
 				</li>
 			</comps>
 		</value>
@@ -62,8 +63,8 @@
 					<deviationFactor>0.05</deviationFactor>
 					<folicularIntervalDays>14</folicularIntervalDays>
 					<lutealIntervalDays>14</lutealIntervalDays>
-					<bleedingIntervalDays>6</bleedingIntervalDays>
-					<recoveryIntervalDays>10</recoveryIntervalDays>
+					<bleedingIntervalDays>0</bleedingIntervalDays>
+					<recoveryIntervalDays>30</recoveryIntervalDays>
 					<eggLifespanDays>3</eggLifespanDays>
 					<wombTex>Womb/Womb</wombTex>
 					<vagTex>Genitals/Vagina</vagTex>
@@ -106,8 +107,8 @@
 			<comps>
 				<li Class="RJW_Menstruation.CompProperties_Menstruation">
 					<maxCumCapacity>10</maxCumCapacity>
-					<baseImplantationChanceFactor>1.0</baseImplantationChanceFactor>
-					<basefertilizationChanceFactor>1.0</basefertilizationChanceFactor>
+					<baseImplantationChanceFactor>2.0</baseImplantationChanceFactor>
+					<basefertilizationChanceFactor>2.0</basefertilizationChanceFactor>
 					<deviationFactor>0.05</deviationFactor>
 					<folicularIntervalDays>14</folicularIntervalDays>
 					<lutealIntervalDays>14</lutealIntervalDays>
@@ -116,6 +117,7 @@
 					<eggLifespanDays>3</eggLifespanDays>
 					<wombTex>Womb/Womb</wombTex>
 					<vagTex>Genitals/Vagina</vagTex>
+					<consealedEstrus>true</consealedEstrus>
 				</li>
 			</comps>
 		</value>

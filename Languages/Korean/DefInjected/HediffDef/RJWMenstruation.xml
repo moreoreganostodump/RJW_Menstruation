@@ -14,6 +14,10 @@
   <Hediff_Climacteric.stages.3.label>폐경</Hediff_Climacteric.stages.3.label>
   <Hediff_Menopause.label>폐경</Hediff_Menopause.label>
   <Hediff_Menopause.description>임신할수 없습니다.</Hediff_Menopause.description>
+  <Hediff_Estrus.label>발정기</Hediff_Estrus.label>
+  <Hediff_Estrus.description>발정기입니다.</Hediff_Estrus.description>
+  <Hediff_Estrus_Consealed.label>발정기(숨김)</Hediff_Estrus_Consealed.label>
+  <Hediff_Estrus_Consealed.description>발정기입니다.</Hediff_Estrus_Consealed.description>
 
   
   
