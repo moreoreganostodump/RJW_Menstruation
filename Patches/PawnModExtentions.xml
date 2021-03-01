@@ -1,31 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-	<Operation Class="PatchOperationAdd">
+	<Operation Class="PatchOperationAddModExtension">
 		<xpath>Defs/ThingDef[defName="Race's defName"]</xpath>
 		<value>
-			<modExtensions>
 				<li Class="RJW_Menstruation.PawnDNAModExtention">
 					<fetusTexPath>Fetus/Fetus_Default</fetusTexPath>
 					<cumColor>(255,255,255,255)</cumColor>
 					<cumThickness>0.2</cumThickness> 
 				</li>
-			</modExtensions>
 		</value>
 	</Operation>
 -->
 
 <Patch>
-	<Operation Class="PatchOperationAdd">
+	<Operation Class="PatchOperationAddModExtension">
 		<xpath>Defs/ThingDef[defName="Human"]</xpath>
 		<value>
-			<modExtensions>
 				<li Class="RJW_Menstruation.PawnDNAModExtention">
 					<fetusTexPath>Fetus/Fetus_Default</fetusTexPath>
 					<cumColor>(255,255,255,255)</cumColor> 
 					<cumThickness>0.2</cumThickness> 
 				</li>
-			</modExtensions>
 		</value>
 	</Operation>
 	

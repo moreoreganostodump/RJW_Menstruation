@@ -16,6 +16,8 @@ namespace RJW_Menstruation
         public static readonly string Stage_Recover = "Stage_Recover".Translate();
         public static readonly string Stage_None = "Stage_None".Translate();
         public static readonly string Stage_Climacteric = "Stage_Climacteric".Translate();
+        public static readonly string Stage_Anestrus = "Stage_Anestrus".Translate();
+        public static readonly string Button_HealthTab = "Button_HealthTab".Translate();
 
         public static readonly string Dialog_WombInfo01 = "Dialog_WombInfo01".Translate();
         public static readonly string Dialog_WombInfo02 = "Dialog_WombInfo02".Translate();
@@ -29,8 +31,8 @@ namespace RJW_Menstruation
         public static readonly string Dialog_WombInfo10 = "Dialog_WombInfo10".Translate();
 
 
-        public static readonly string Option1_Label = "Option1_Label".Translate();
-        public static readonly string Option1_Desc =  "Option1_Desc".Translate();
+        public static readonly string Option1_Label_1 = "Option1_Label_1".Translate();
+        public static readonly string Option1_Label_2 =  "Option1_Label_2".Translate();
         public static readonly string Option2_Label = "Option2_Label".Translate();
         public static readonly string Option2_Desc =  "Option2_Desc".Translate();
         public static readonly string Option3_Label = "Option3_Label".Translate();
@@ -68,6 +70,16 @@ namespace RJW_Menstruation
         public static readonly string Option17_Desc =  "Option17_Desc".Translate();
         public static readonly string Option18_Label = "Option18_Label".Translate();
         public static readonly string Option18_Desc =  "Option18_Desc".Translate();
+        public static readonly string Option19_Label_1 = "Option19_Label_1".Translate();
+        public static readonly string Option19_Label_2 = "Option19_Label_2".Translate();
+        public static readonly string Option19_Desc =  "Option19_Desc".Translate();
+        public static readonly string Option20_Label_1 = "Option20_Label_1".Translate();
+        public static readonly string Option20_Label_2 = "Option20_Label_2".Translate();
+        public static readonly string Option20_Label_3 = "Option20_Label_3".Translate();
+        public static readonly string Option20_Label_4 = "Option20_Label_4".Translate();
+        public static readonly string Option20_Label_5 = "Option20_Label_5".Translate();
+        public static readonly string Option21_Label = "Option21_Label".Translate();
+        public static readonly string Option21_Desc = "Option21_Desc".Translate();
 
         public static readonly string FloatMenu_CleanSelf = "FloatMenu_CleanSelf".Translate();
 

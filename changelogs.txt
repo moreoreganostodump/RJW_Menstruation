@@ -1,11 +1,20 @@
+Version 1.0.1.11
+ - added a button for opening status window in health tab
+   - added option for this
+ - added option for select which pawn displays status 
+ - fixed erros when pawn's anus missing
+ - added breedingSeason and estrusDaysBeforeOvulation attributes to CompProperties_Menstruation
+ - added patch for dog, cat, horse , narrow, rodent vagina
+Version 1.0.1.10
+ - added option for adjusting bleeding amount
+ - added hotkey for opening status window
 Version 1.0.1.9
- - add estrus effects
+ - added estrus effects
    - estrus increases pawn's sex drive greatly
- - add consealedEstrus attribute to CompProperties_Menstruation
+ - added consealedEstrus attribute to CompProperties_Menstruation
    - if consealedEstrus set as true, the pawn will get less effective estrus
  - hyperfertility pills induce esturs 
  - now initial ovarypower is affected by pawn's life expectancy and litter size
-
 Version 1.0.1.8
  - fixed problems with animal status window
  - fixed RMB menu crash

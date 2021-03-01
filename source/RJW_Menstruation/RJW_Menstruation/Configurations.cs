@@ -22,6 +22,8 @@ namespace RJW_Menstruation
         public const float EnzygoticTwinsChanceDefault = 0.002f;
         public const int EnzygoticTwinsChanceAdjustDefault = 2;
         public const int MaxEnzygoticTwinsDefault = 9;
+        public const int BleedingAmountDefault = 50;
+
 
         public static float ImplantationChance = ImplantationChanceDefault;
         public static int ImplantationChanceAdjust = ImplantationChanceAdjustDefault;
@@ -46,8 +48,9 @@ namespace RJW_Menstruation
         public static float EnzygoticTwinsChance = EnzygoticTwinsChanceDefault;
         public static int EnzygoticTwinsChanceAdjust = EnzygoticTwinsChanceAdjustDefault;
         public static int MaxEnzygoticTwins = MaxEnzygoticTwinsDefault;
-
-
+        public static int BleedingAmount = BleedingAmountDefault;
+        public static bool EnableButtonInHT = false;
+        public static PawnFlags ShowFlag = PawnFlags.Colonist | PawnFlags.Prisoner;
 
         public static bool HARActivated = false;
         public static bool LLActivated = false;
@@ -74,10 +77,19 @@ namespace RJW_Menstruation
                     return "Hide";
                 default:
                     return "";
-
             }
 
 
+        }
+
+        [Flags]public enum PawnFlags
+        {
+            None = 0,
+            Colonist = 1,
+            Prisoner = 2,
+            Ally = 4,
+            Neutral = 8,
+            Hostile = 16
         }
 
         public override void ExposeData()
@@ -105,6 +117,9 @@ namespace RJW_Menstruation
             Scribe_Values.Look(ref EnzygoticTwinsChance, "EnzygoticTwinsChance", EnzygoticTwinsChance, true);
             Scribe_Values.Look(ref EnzygoticTwinsChanceAdjust, "EnzygoticTwinsChanceAdjust", EnzygoticTwinsChanceAdjust, true);
             Scribe_Values.Look(ref MaxEnzygoticTwins, "MaxEnzygoticTwins", MaxEnzygoticTwins, true);
+            Scribe_Values.Look(ref BleedingAmount, "BleedingAmount", BleedingAmount, true);
+            Scribe_Values.Look(ref EnableButtonInHT, "EnableButtonInHT", EnableButtonInHT, true);
+            Scribe_Values.Look(ref ShowFlag, "ShowFlag", ShowFlag, true);
             base.ExposeData();
         }
 
@@ -117,6 +132,26 @@ namespace RJW_Menstruation
 
         private readonly Configurations config;
         private static Vector2 scroll;
+
+
+
+        public static float EstimatedBleedingAmount
+        {
+            get
+            {
+                int days = VariousDefOf.VaginaCompProperties.bleedingIntervalDays;
+                return days * 0.03f * Configurations.BleedingAmount * 6;
+            }
+        }
+
+        public static float EstimatedBleedingAmountPerHour
+        {
+            get
+            {
+                int days = VariousDefOf.VaginaCompProperties.bleedingIntervalDays;
+                return 0.03f * Configurations.BleedingAmount * Configurations.CycleAcceleration;
+            }
+        }
 
 
         public RJW_Menstruation(ModContentPack content) : base(content)
@@ -142,10 +177,13 @@ namespace RJW_Menstruation
             listmain.BeginScrollView(outRect, ref scroll, ref mainRect);
             listmain.Begin(mainRect);
             listmain.Gap(20f);
-            listmain.CheckboxLabeled(Translations.Option1_Label, ref Configurations.EnableWombIcon, Translations.Option1_Desc);
-            if (Configurations.EnableWombIcon)
+            Rect optionrect1 = listmain.GetRect(30f);
+            Widgets.CheckboxLabeled(optionrect1.LeftHalf(), Translations.Option1_Label_1, ref Configurations.EnableWombIcon);
+            Widgets.CheckboxLabeled(optionrect1.RightHalf(), Translations.Option1_Label_2, ref Configurations.EnableButtonInHT);
+            //listmain.CheckboxLabeled(Translations.Option1_Label, ref Configurations.EnableWombIcon, Translations.Option1_Desc);
+            if (Configurations.EnableWombIcon || Configurations.EnableButtonInHT)
             {
-                Listing_Standard wombsection = listmain.BeginSection_NewTemp(131);
+                Listing_Standard wombsection = listmain.BeginSection_NewTemp(186);
                 wombsection.CheckboxLabeled(Translations.Option9_Label, ref Configurations.DrawWombStatus, Translations.Option9_Desc);
                 if (Configurations.DrawWombStatus)
                 {
@@ -172,6 +210,36 @@ namespace RJW_Menstruation
                         wombsection.Label(Translations.Option11_Desc_4);
                         break;
                 }
+                wombsection.Label(Translations.Option21_Label + " " + Configurations.ShowFlag,-1, Translations.Option21_Desc);
+                Rect flagrect = wombsection.GetRect(30f);
+                Rect[] flagrects = new Rect[5];
+                for (int i = 0; i < 5; i++)
+                {
+                    flagrects[i] = new Rect(flagrect.x + (flagrect.width / 5) * i, flagrect.y, flagrect.width / 5, flagrect.height);
+                }
+
+                if (Widgets.ButtonText(flagrects[0], Translations.Option20_Label_1 + ": " + Configurations.ShowFlag.HasFlag(Configurations.PawnFlags.Colonist)))
+                {
+                    Configurations.ShowFlag ^= Configurations.PawnFlags.Colonist;
+                }
+                if (Widgets.ButtonText(flagrects[1], Translations.Option20_Label_2 + ": " + Configurations.ShowFlag.HasFlag(Configurations.PawnFlags.Prisoner)))
+                {
+                    Configurations.ShowFlag ^= Configurations.PawnFlags.Prisoner;
+                }
+                if (Widgets.ButtonText(flagrects[2], Translations.Option20_Label_3 + ": " + Configurations.ShowFlag.HasFlag(Configurations.PawnFlags.Ally)))
+                {
+                    Configurations.ShowFlag ^= Configurations.PawnFlags.Ally;
+                }
+                if (Widgets.ButtonText(flagrects[3], Translations.Option20_Label_4 + ": " + Configurations.ShowFlag.HasFlag(Configurations.PawnFlags.Neutral)))
+                {
+                    Configurations.ShowFlag ^= Configurations.PawnFlags.Neutral;
+                }
+                if (Widgets.ButtonText(flagrects[4], Translations.Option20_Label_5 + ": " + Configurations.ShowFlag.HasFlag(Configurations.PawnFlags.Hostile)))
+                {
+                    Configurations.ShowFlag ^= Configurations.PawnFlags.Hostile;
+                }
+
+
                 listmain.EndSection(wombsection);
             }
             
@@ -198,6 +266,12 @@ namespace RJW_Menstruation
             listmain.Label(Translations.Option7_Label + " x" + Configurations.CycleAcceleration, -1, Translations.Option7_Desc);
             Configurations.CycleAcceleration = (int)listmain.Slider(Configurations.CycleAcceleration,1,50);
 
+
+            float var2 = EstimatedBleedingAmountPerHour;
+            float var1 = Math.Max(EstimatedBleedingAmount,var2);
+            listmain.LabelDouble(Translations.Option19_Label_1, Translations.Option19_Label_2 + ": " + var1 + "ml, " + var2 + "ml/h", Translations.Option19_Desc);
+            Configurations.BleedingAmount = (int)listmain.Slider(Configurations.BleedingAmount, 0, 200);
+
             listmain.CheckboxLabeled(Translations.Option13_Label, ref Configurations.UseMultiplePregnancy, Translations.Option13_Desc);
             if (Configurations.UseMultiplePregnancy)
             {
@@ -215,10 +289,10 @@ namespace RJW_Menstruation
                     twinsection.Label(Translations.Option17_Label + " " + Configurations.MaxEnzygoticTwins, -1, Translations.Option17_Desc);
                     Configurations.MaxEnzygoticTwins = (int)twinsection.Slider(Configurations.MaxEnzygoticTwins, 2, 100);
                 }
-
-
                 listmain.EndSection(twinsection);
             }
+
+
             listmain.EndScrollView(ref mainRect);
 
             listmain.CheckboxLabeled(Translations.Option8_Label, ref Configurations.Debug, Translations.Option8_Desc);
@@ -236,6 +310,7 @@ namespace RJW_Menstruation
                 Configurations.EnableHeteroOvularTwins = true;
                 Configurations.UseMultiplePregnancy = true;
                 Configurations.MaxEnzygoticTwins = Configurations.MaxEnzygoticTwinsDefault;
+                Configurations.BleedingAmount = Configurations.BleedingAmountDefault;
             }
 
             listmain.End();

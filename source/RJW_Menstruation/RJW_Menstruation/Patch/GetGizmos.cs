@@ -18,9 +18,8 @@ namespace RJW_Menstruation
         public static void Postfix(ref IEnumerable<Gizmo> __result, Pawn __instance)
         {
             List<Gizmo> gizmoList = __result.ToList();
-            bool isCreatureMine = __instance.Faction != null && (__instance.Faction.IsPlayer || __instance.IsPrisonerOfColony);
 
-            if (!isCreatureMine)
+            if (!__instance.ShowStatus())
             {
                 return;
             }
@@ -49,12 +48,6 @@ namespace RJW_Menstruation
             HediffComp_Menstruation comp = __instance.GetMenstruationComp();
             if (comp != null) gizmoList.Add(CreateGizmo_WombStatus(__instance, comp));
 
-
-            //If should i have to add multiple vagina support.
-            //foreach (HediffComp comp in __instance.health.hediffSet.GetAllComps())
-            //{
-            //    if (comp is HediffComp_Menstruation) gizmoList.Add(CreateGizmo_WombStatus(__instance, (HediffComp_Menstruation)comp));
-            //}
         }
 
         private static Gizmo CreateGizmo_WombStatus(Pawn pawn , HediffComp_Menstruation comp)
@@ -101,10 +94,10 @@ namespace RJW_Menstruation
                 cumcolor = c,
                 comp = comp,
                 order = 100,
+                hotKey = VariousDefOf.OpenStatusWindowKey,
                 action = delegate
                 {
-                    SoundDefOf.InfoCard_Open.PlayOneShotOnCamera();
-                    Find.WindowStack.Add(new Dialog_WombStatus(pawn, comp,icon));
+                    Dialog_WombStatus.ToggleWindow(pawn, comp);
                 }
             };
             return gizmo;

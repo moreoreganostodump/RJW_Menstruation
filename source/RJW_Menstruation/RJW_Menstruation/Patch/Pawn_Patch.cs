@@ -19,7 +19,7 @@ namespace RJW_Menstruation
         public static void Postfix(Map map, bool respawningAfterLoad, Pawn __instance)
         {
             //Log.Message("Initialize on spawnsetup");
-            HediffComp_Menstruation comp = Utility.GetMenstruationComp(__instance);
+            HediffComp_Menstruation comp = __instance.GetMenstruationComp();
             if (comp != null)
             {
                 HugsLibController.Instance.TickDelayScheduler.TryUnscheduleCallback(comp.actionref);
@@ -60,6 +60,53 @@ namespace RJW_Menstruation
 
     }
     
+    //[HarmonyPatch(typeof(HealthCardUtility), "DrawHediffListing")]
+    //public class DrawHediffListing_Patch
+    //{
+    //    public const float buttonWidth = 80f;
+    //    public const float buttonHeight = 20f;
+    //
+    //    public static void Postfix(Rect rect, Pawn pawn, bool showBloodLoss)
+    //    {
+    //        if (Configurations.EnableButtonInHT && pawn.HasMenstruationComp())
+    //        {
+    //            Rect buttonrect = new Rect(rect.xMax - buttonWidth, rect.yMax - buttonHeight, buttonWidth, buttonHeight);
+    //            if (Widgets.ButtonText(buttonrect, "Status"))
+    //            {
+    //                Dialog_WombStatus.ToggleWindow(pawn,pawn.GetMenstruationComp());
+    //            }
+    //        }
+    //
+    //
+    //    }
+    //}
+
+    [HarmonyPatch(typeof(HealthCardUtility), "DrawHediffRow")]
+    public class DrawHediffRow_Patch
+    {
+        public const float buttonWidth = 50f;
+        public const float buttonHeight = 20f;
+
+        public static void Prefix(Rect rect, Pawn pawn, IEnumerable<Hediff> diffs, ref float curY)
+        {
+            if (Configurations.EnableButtonInHT && pawn.ShowStatus())
+            {
+                HediffComp_Menstruation comp = diffs.First().GetMenstruationComp();
+                if (comp != null)
+                {
+                    Rect buttonrect = new Rect((rect.xMax) / 2 - 5f, curY + 2f, buttonWidth, buttonHeight);
+                    if (Widgets.ButtonText(buttonrect, Translations.Button_HealthTab))
+                    {
+                        Dialog_WombStatus.ToggleWindow(pawn, comp);
+                    }
+                }
+            }
+
+        }
+
+    }
+
+
     //[HarmonyPatch(typeof(JobGiver_OptimizeApparel), "ApparelScoreGain_NewTmp")]
     //public class OptimizeApparel_Patch
     //{

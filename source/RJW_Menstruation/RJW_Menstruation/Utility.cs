@@ -86,6 +86,15 @@ namespace RJW_Menstruation
             return null;
         }
 
+        public static HediffComp_Menstruation GetMenstruationComp(this Hediff hediff)
+        {
+            if (hediff is Hediff_PartBaseNatural || hediff is Hediff_PartBaseArtifical)
+            {
+                return hediff.TryGetComp<HediffComp_Menstruation>();
+            }
+            return null;
+        }
+
         public static bool HasMenstruationComp(this Pawn pawn)
         {
             var hedifflist = Genital_Helper.get_PartsHediffList(pawn, Genital_Helper.get_genitalsBPR(pawn))?.FindAll((Hediff h) => h.def.defName.ToLower().Contains("vagina"));
@@ -101,6 +110,16 @@ namespace RJW_Menstruation
             }
             return false;
         }
+
+        public static bool HasMenstruationComp(this Hediff hediff)
+        {
+            if (hediff is Hediff_PartBaseNatural || hediff is Hediff_PartBaseArtifical)
+            {
+                if (hediff.TryGetComp<HediffComp_Menstruation>() != null) return true;
+            }
+            return false;
+        }
+
 
         public static HediffComp_Menstruation.Stage GetCurStage(this Pawn pawn)
         {
@@ -237,19 +256,26 @@ namespace RJW_Menstruation
 
         public static Texture2D GetAnalIcon(this Pawn pawn)
         {
-            var hediff = Genital_Helper.get_PartsHediffList(pawn, Genital_Helper.get_anusBPR(pawn)).Find((Hediff h) => h.def.defName.ToLower().Contains("anus"));
-            CompProperties_Anus Props = (CompProperties_Anus)hediff.TryGetComp<HediffComp_Anus>().props;
-            string icon;
-            if (Props != null) icon = Props.analTex ?? "Genitals/Anal";
-            else icon = "Genitals/Anal";
-            if (hediff.Severity < 0.20f) icon += "00";        //micro 
-            else if (hediff.Severity < 0.40f) icon += "01";   //tight
-            else if (hediff.Severity < 0.60f) icon += "02";   //average
-            else if (hediff.Severity < 0.80f) icon += "03";   //accomodating
-            else if (hediff.Severity < 1.01f) icon += "04";   //cavernous
-            else icon += "05";   //abyssal
+            var hediff = Genital_Helper.get_PartsHediffList(pawn, Genital_Helper.get_anusBPR(pawn)).FirstOrDefault((Hediff h) => h.def.defName.ToLower().Contains("anus"));
+            if (hediff != null)
+            {
+                CompProperties_Anus Props = (CompProperties_Anus)hediff.TryGetComp<HediffComp_Anus>().props;
+                string icon;
+                if (Props != null) icon = Props.analTex ?? "Genitals/Anal";
+                else icon = "Genitals/Anal";
+                if (hediff.Severity < 0.20f) icon += "00";        //micro 
+                else if (hediff.Severity < 0.40f) icon += "01";   //tight
+                else if (hediff.Severity < 0.60f) icon += "02";   //average
+                else if (hediff.Severity < 0.80f) icon += "03";   //accomodating
+                else if (hediff.Severity < 1.01f) icon += "04";   //cavernous
+                else icon += "05";                                //abyssal
 
-            return ContentFinder<Texture2D>.Get((icon), true);
+                return ContentFinder<Texture2D>.Get((icon), true);
+            }
+            else
+            {
+                return ContentFinder<Texture2D>.Get(("Genitals/Anal00"), true);
+            }
         }
 
         public static string GetVaginaLabel(this Pawn pawn)
@@ -259,8 +285,9 @@ namespace RJW_Menstruation
         }
         public static string GetAnusLabel(this Pawn pawn)
         {
-            var hediff = Genital_Helper.get_PartsHediffList(pawn, Genital_Helper.get_anusBPR(pawn)).Find((Hediff h) => h.def.defName.ToLower().Contains("anus"));
-            return hediff.LabelBase.CapitalizeFirst() + "\n(" + hediff.LabelInBrackets + ")";
+            var hediff = Genital_Helper.get_PartsHediffList(pawn, Genital_Helper.get_anusBPR(pawn)).FirstOrDefault((Hediff h) => h.def.defName.ToLower().Contains("anus"));
+            if (hediff != null) return hediff.LabelBase.CapitalizeFirst() + "\n(" + hediff.LabelInBrackets + ")";
+            else return "";
         }
 
         public static bool ShowFetusImage(this Hediff_BasePregnancy hediff)
@@ -275,6 +302,34 @@ namespace RJW_Menstruation
         {
             if (Configurations.InfoDetail == Configurations.DetailLevel.All || Configurations.InfoDetail == Configurations.DetailLevel.OnReveal) return true;
             else return false;
+        }
+
+        public static bool ShowStatus(this Pawn pawn)
+        {
+            if (pawn.Faction != null && Configurations.ShowFlag != Configurations.PawnFlags.None)
+            {
+                if (pawn.Faction.IsPlayer)
+                {
+                    if (Configurations.ShowFlag.HasFlag(Configurations.PawnFlags.Colonist)) return true;
+                }
+                else if (pawn.IsPrisonerOfColony)
+                {
+                    if (Configurations.ShowFlag.HasFlag(Configurations.PawnFlags.Prisoner)) return true;
+                }
+                else if (pawn.Faction.PlayerRelationKind == FactionRelationKind.Ally)
+                {
+                    if (Configurations.ShowFlag.HasFlag(Configurations.PawnFlags.Ally)) return true;
+                }
+                else if (pawn.Faction.PlayerRelationKind == FactionRelationKind.Hostile)
+                {
+                    if (Configurations.ShowFlag.HasFlag(Configurations.PawnFlags.Hostile)) return true;
+                }
+                else if (Configurations.ShowFlag.HasFlag(Configurations.PawnFlags.Neutral)) return true;
+                else return false;
+            }
+            else if (Configurations.ShowFlag.HasFlag(Configurations.PawnFlags.Neutral)) return true;
+
+            return false;
         }
 
         public static Pawn GetFather(Pawn pawn, Pawn mother)

@@ -13,6 +13,8 @@
   <Stage_Recover>Recovering from birth</Stage_Recover>
   <Stage_None>None</Stage_None>
   <Stage_Climacteric>Climacteric</Stage_Climacteric>
+  <Stage_Anestrus>Anestrus</Stage_Anestrus>
+  <Button_HealthTab>Status</Button_HealthTab>
   <Dialog_WombInfo01>State</Dialog_WombInfo01>
   <Dialog_WombInfo02>Fetus</Dialog_WombInfo02>
   <Dialog_WombInfo03>Father</Dialog_WombInfo03>
@@ -23,8 +25,8 @@
   <Dialog_WombInfo08></Dialog_WombInfo08>
   <Dialog_WombInfo09></Dialog_WombInfo09>
   
-  <Option1_Label>enable womb icon</Option1_Label>
-  <Option1_Desc>enable womb icon gizmo</Option1_Desc>
+  <Option1_Label_1>enable womb icon</Option1_Label_1>
+  <Option1_Label_2>enable button in health tab</Option1_Label_2>
   <Option2_Label>enable animal cycle</Option2_Label>
   <Option2_Desc>simulate animal's cycle.&#10;this option will apply after save loaded&#10;not recommended</Option2_Desc>
   <Option3_Label>implantation chance</Option3_Label>
@@ -62,6 +64,16 @@
   <Option17_Desc>set max number of twins</Option17_Desc>
   <Option18_Label>enable egg overlay</Option18_Label>
   <Option18_Desc>enable egg overlay on womb icon</Option18_Desc>
+  <Option19_Label_1>bleeding amount</Option19_Label_1>
+  <Option19_Label_2>estimated total bleeding amount</Option19_Label_2>
+  <Option19_Desc>set bleeding amount&#10;actual bleeding amount can be different depending on vagina&#10;the generic bleeding amount of human female is about 20~80ml per month</Option19_Desc>
+  <Option20_Label_1>Colonist</Option20_Label_1>
+  <Option20_Label_2>Prisoner</Option20_Label_2>
+  <Option20_Label_3>Ally Faction</Option20_Label_3>
+  <Option20_Label_4>Neutral</Option20_Label_4>
+  <Option20_Label_5>Hostile Faction</Option20_Label_5>
+  <Option21_Label>target pawns</Option21_Label>
+  <Option21_Desc>the gizmo and button will appear for these pawns</Option21_Desc>
   
   <FloatMenu_CleanSelf>Vaginal washing</FloatMenu_CleanSelf>
   

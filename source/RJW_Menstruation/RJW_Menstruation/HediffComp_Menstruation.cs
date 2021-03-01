@@ -11,6 +11,18 @@ using UnityEngine;
 
 namespace RJW_Menstruation
 {
+    [Flags]public enum SeasonalBreed
+    {
+        Always = 0,
+        Spring = 1,
+        Summer = 2,
+        Fall = 4,
+        Winter = 8,
+        FirstHalf = Spring | Summer,
+        SecondHalf = Fall | Winter
+    }
+
+
     public class CompProperties_Menstruation : HediffCompProperties
     {
         public float maxCumCapacity; // ml
@@ -27,6 +39,8 @@ namespace RJW_Menstruation
         public bool infertile = false;
         public int ovaryPower = 600000000; // default: almost unlimited ovulation 
         public bool consealedEstrus = false;
+        public SeasonalBreed breedingSeason = SeasonalBreed.Always;
+        public int estrusDaysBeforeOvulation = 3;
 
         public CompProperties_Menstruation()
         {
@@ -81,6 +95,7 @@ namespace RJW_Menstruation
             ClimactericFollicular,
             ClimactericLuteal,
             ClimactericBleeding,
+            Anestrus
         }
 
         private List<Cum> cums;
@@ -252,6 +267,8 @@ namespace RJW_Menstruation
                         return Translations.Stage_Luteal + " - " + Translations.Stage_Climacteric;
                     case Stage.ClimactericBleeding:
                         return Translations.Stage_Bleeding + " - " + Translations.Stage_Climacteric;
+                    case Stage.Anestrus:
+                        return Translations.Stage_Anestrus;
                     default:
                         return "";
                 }
@@ -1061,7 +1078,7 @@ namespace RJW_Menstruation
         private void BleedOut()
         {
             //FilthMaker.TryMakeFilth(parent.pawn.Position, parent.pawn.Map, ThingDefOf.Filth_Blood,parent.pawn.Label);
-            CumIn(parent.pawn, Rand.Range(1f, 2f), Translations.Menstrual_Blood,-5.0f,ThingDefOf.Filth_Blood);
+            CumIn(parent.pawn, Rand.Range(0.02f * Configurations.BleedingAmount, 0.04f * Configurations.BleedingAmount), Translations.Menstrual_Blood,-5.0f,ThingDefOf.Filth_Blood);
             GetNotCum(Translations.Menstrual_Blood).color = BloodColor;
         }
 
@@ -1137,7 +1154,6 @@ namespace RJW_Menstruation
                 if (egg.lifespanhrs < 0) deadeggs.Add(egg);
                 if (egg.fertilized) egg.fertstage += Configurations.CycleAcceleration;
             }
-
             if (!deadeggs.NullOrEmpty())
             {
                 foreach (Egg egg in deadeggs)
@@ -1157,6 +1173,29 @@ namespace RJW_Menstruation
                 case Stage.Follicular:
                     action = delegate
                     {
+                        if (Props.breedingSeason != SeasonalBreed.Always)
+                        {
+                            if (!Props.breedingSeason.HasFlag(SeasonalBreed.Spring) && GenLocalDate.Season(parent.pawn.Map).Equals(Season.Spring))
+                            {
+                                GoNextStage(Stage.Anestrus);
+                                return;
+                            }
+                            else if (!Props.breedingSeason.HasFlag(SeasonalBreed.Summer) && (GenLocalDate.Season(parent.pawn.Map).Equals(Season.Summer) || GenLocalDate.Season(parent.pawn.Map).Equals(Season.PermanentSummer)))
+                            {
+                                GoNextStage(Stage.Anestrus);
+                                return;
+                            }
+                            else if (!Props.breedingSeason.HasFlag(SeasonalBreed.Fall) && GenLocalDate.Season(parent.pawn.Map).Equals(Season.Fall))
+                            {
+                                GoNextStage(Stage.Anestrus);
+                                return;
+                            }
+                            else if (!Props.breedingSeason.HasFlag(SeasonalBreed.Winter) && (GenLocalDate.Season(parent.pawn.Map).Equals(Season.Winter) || GenLocalDate.Season(parent.pawn.Map).Equals(Season.PermanentWinter)))
+                            {
+                                GoNextStage(Stage.Anestrus);
+                                return;
+                            }
+                        }
                         if (curStageHrs >= FollicularIntervalHours)
                         {
                             GoNextStage(Stage.Ovulatory);
@@ -1164,10 +1203,10 @@ namespace RJW_Menstruation
                         else
                         {
                             curStageHrs+=Configurations.CycleAcceleration;
-                            if (!estrusflag && curStageHrs > FollicularIntervalHours - 72)
+                            if (!estrusflag && curStageHrs > FollicularIntervalHours - Props.estrusDaysBeforeOvulation*24)
                             {
                                 estrusflag = true;
-                                SetEstrus(Props.eggLifespanDays + 3);
+                                SetEstrus(Props.eggLifespanDays + Props.estrusDaysBeforeOvulation);
                             }
                             StayCurrentStage();
                         }
@@ -1428,7 +1467,37 @@ namespace RJW_Menstruation
                         }
                     };
                     break;
-
+                case Stage.Anestrus:
+                    action = delegate
+                    {
+                        if (Props.breedingSeason == SeasonalBreed.Always)
+                        {
+                            //case for XML changes
+                            follicularIntervalhours = PeriodRandomizer(follicularIntervalhours, Props.deviationFactor);
+                            GoNextStage(Stage.Follicular);
+                        }
+                        else if (Props.breedingSeason.HasFlag(SeasonalBreed.Spring) && GenLocalDate.Season(parent.pawn.Map).Equals(Season.Spring))
+                        {
+                            GoFollicularOrBleeding();
+                        }
+                        else if (Props.breedingSeason.HasFlag(SeasonalBreed.Summer) && (GenLocalDate.Season(parent.pawn.Map).Equals(Season.Summer) || GenLocalDate.Season(parent.pawn.Map).Equals(Season.PermanentSummer)))
+                        {
+                            GoFollicularOrBleeding();
+                        }
+                        else if (Props.breedingSeason.HasFlag(SeasonalBreed.Fall) && GenLocalDate.Season(parent.pawn.Map).Equals(Season.Fall))
+                        {
+                            GoFollicularOrBleeding();
+                        }
+                        else if (Props.breedingSeason.HasFlag(SeasonalBreed.Winter) && (GenLocalDate.Season(parent.pawn.Map).Equals(Season.Winter) || GenLocalDate.Season(parent.pawn.Map).Equals(Season.PermanentWinter)))
+                        {
+                            GoFollicularOrBleeding();
+                        }
+                        else
+                        {
+                            StayCurrentStage();
+                        }
+                    };
+                    break;
                 default:
                     curStage = Stage.Follicular;
                     curStageHrs = 0;
@@ -1473,6 +1542,20 @@ namespace RJW_Menstruation
                 HugsLibController.Instance.TickDelayScheduler.ScheduleCallback(PeriodSimulator(curstage), (int)(tickInterval * factor), parent.pawn, false);
             }
             
+            void GoFollicularOrBleeding()
+            {
+                if (Props.bleedingIntervalDays == 0)
+                {
+                    follicularIntervalhours = PeriodRandomizer(follicularIntervalhours, Props.deviationFactor);
+                    GoNextStage(Stage.Follicular);
+                }
+                else
+                {
+                    bleedingIntervalhours = PeriodRandomizer(bleedingIntervalhours, Props.deviationFactor);
+                    GoNextStage(Stage.Bleeding);
+                }
+            }
+
 
         }
 

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using Verse;
+using Verse.Sound;
 using RimWorld;
 using rjw;
 
@@ -12,7 +13,7 @@ namespace RJW_Menstruation
 {
     public class Dialog_WombStatus : Window
     {
-        private Pawn pawn;
+        public Pawn pawn;
 		private HediffComp_Menstruation comp;
 		private const float windowMargin = 20f;
 		private const float pawnRectWidth = 150f;
@@ -50,12 +51,38 @@ namespace RJW_Menstruation
             }
         }
 
-        public Dialog_WombStatus(Pawn pawn, HediffComp_Menstruation comp, Texture2D icon)
+        public Dialog_WombStatus(Pawn pawn, HediffComp_Menstruation comp)
         {
             this.pawn = pawn;
 			this.comp = comp;
-			womb = icon;
         }
+
+		public void ChangePawn(Pawn pawn, HediffComp_Menstruation comp)
+        {
+			this.pawn = pawn;
+			this.comp = comp;
+        }
+
+		public static void ToggleWindow(Pawn pawn, HediffComp_Menstruation comp)
+        {
+			Dialog_WombStatus window = (Dialog_WombStatus)Find.WindowStack.Windows.FirstOrDefault(x => x.GetType().Equals(typeof(Dialog_WombStatus)));
+			if (window != null)
+			{
+				if (window.pawn != pawn)
+				{
+					SoundDefOf.TabOpen.PlayOneShotOnCamera();
+					window.ChangePawn(pawn, comp);
+				}
+				else Find.WindowStack.TryRemove(typeof(Dialog_WombStatus), true);
+			}
+			else
+			{
+				SoundDefOf.InfoCard_Open.PlayOneShotOnCamera();
+				Find.WindowStack.Add(new Dialog_WombStatus(pawn, comp));
+			}
+
+
+		}
 
         public override void DoWindowContents(Rect inRect)
         {
