@@ -1,4 +1,5 @@
 Version 1.0.1.12
+ - requires RJW 4.6.1 or later
  - added HybridExtension attribute to PawnDNAModExtension
    - this will overrides RJW's hybrid definitions
    - supports more detailed hybrid definition

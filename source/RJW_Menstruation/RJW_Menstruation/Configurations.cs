@@ -325,6 +325,7 @@ namespace RJW_Menstruation
                 Configurations.UseMultiplePregnancy = true;
                 Configurations.MaxEnzygoticTwins = Configurations.MaxEnzygoticTwinsDefault;
                 Configurations.BleedingAmount = Configurations.BleedingAmountDefault;
+                Configurations.MotherFirst = false;
             }
 
             listmain.End();
