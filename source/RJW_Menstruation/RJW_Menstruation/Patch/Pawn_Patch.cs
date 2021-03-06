@@ -1,14 +1,10 @@
-﻿using System;
+﻿using HarmonyLib;
+using HugsLib;
+using RimWorld;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
-using RimWorld;
 using Verse;
-using HarmonyLib;
-using HugsLib;
-using rjw;
 
 namespace RJW_Menstruation
 {
@@ -40,12 +36,12 @@ namespace RJW_Menstruation
                 if (pawn.HasMenstruationComp()) opts.AddDistinct(MakeSelfMenu(pawn, t));
                 break;
             }
-            
-            
+
+
 
 
         }
-        
+
         public static FloatMenuOption MakeSelfMenu(Pawn pawn, LocalTargetInfo target)
         {
             FloatMenuOption option = FloatMenuUtility.DecoratePrioritizedTask(new FloatMenuOption(Translations.FloatMenu_CleanSelf, delegate ()
@@ -59,7 +55,7 @@ namespace RJW_Menstruation
 
 
     }
-    
+
     //[HarmonyPatch(typeof(HealthCardUtility), "DrawHediffListing")]
     //public class DrawHediffListing_Patch
     //{

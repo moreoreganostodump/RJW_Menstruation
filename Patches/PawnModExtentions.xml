@@ -4,10 +4,22 @@
 	<Operation Class="PatchOperationAddModExtension">
 		<xpath>Defs/ThingDef[defName="Race's defName"]</xpath>
 		<value>
-				<li Class="RJW_Menstruation.PawnDNAModExtention">
+				<li Class="RJW_Menstruation.PawnDNAModExtension">
 					<fetusTexPath>Fetus/Fetus_Default</fetusTexPath>
 					<cumColor>(255,255,255,255)</cumColor>
 					<cumThickness>0.2</cumThickness> 
+					<hybridExtension>
+						<Other Race's defName>
+							<Race or PawnKind defName>1.0</Race or PawnKind defName>
+							<Race or PawnKind defName>5.0</Race or PawnKind defName>
+							<Race or PawnKind defName>7.0</Race or PawnKind defName>
+							<Race or PawnKind defName>2.0</Race or PawnKind defName>
+						</Other Race's defName>
+						<Other Race's defName>
+							<Race or PawnKind defName>98.0</Race or PawnKind defName>
+							<Race or PawnKind defName>2.0</Race or PawnKind defName>
+						</Other Race's defName>
+					</hybridExtension>
 				</li>
 		</value>
 	</Operation>
@@ -17,16 +29,52 @@
 	<Operation Class="PatchOperationAddModExtension">
 		<xpath>Defs/ThingDef[defName="Human"]</xpath>
 		<value>
-				<li Class="RJW_Menstruation.PawnDNAModExtention">
+				<li Class="RJW_Menstruation.PawnDNAModExtension">
 					<fetusTexPath>Fetus/Fetus_Default</fetusTexPath>
 					<cumColor>(255,255,255,255)</cumColor> 
-					<cumThickness>0.2</cumThickness> 
+					<cumThickness>0.2</cumThickness>
+					<hybridExtension>
+						<Horse>
+							<Alien_Eponalike>1.0</Alien_Eponalike>
+						</Horse>
+					</hybridExtension>
 				</li>
 		</value>
 	</Operation>
 	
 	
 	
+	<Operation Class="PatchOperationAddModExtension">
+		<xpath>Defs/ThingDef[defName="Horse"]</xpath>
+		<value>
+				<li Class="RJW_Menstruation.PawnDNAModExtension">
+					<fetusTexPath>Fetus/Fetus_Default</fetusTexPath>
+					<cumColor>(255,255,255,255)</cumColor> 
+					<cumThickness>0.2</cumThickness>
+					<hybridExtension>
+						<Donkey>
+							<Mule>1.0</Mule>
+						</Donkey>
+					</hybridExtension>
+				</li>
+		</value>
+	</Operation>
+	
+	<Operation Class="PatchOperationAddModExtension">
+		<xpath>Defs/ThingDef[defName="Donkey"]</xpath>
+		<value>
+				<li Class="RJW_Menstruation.PawnDNAModExtension">
+					<fetusTexPath>Fetus/Fetus_Default</fetusTexPath>
+					<cumColor>(255,255,255,255)</cumColor> 
+					<cumThickness>0.2</cumThickness>
+					<hybridExtension>
+						<Horse>
+							<Hinny>1.0</Hinny>
+						</Horse>
+					</hybridExtension>
+				</li>
+		</value>
+	</Operation>
 	
 	
 	

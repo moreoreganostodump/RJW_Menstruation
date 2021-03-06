@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Verse;
-using RimWorld;
+﻿using RimWorld;
+using System;
 using UnityEngine;
-using rjw;
+using Verse;
 
 namespace RJW_Menstruation
 {
@@ -36,7 +30,7 @@ namespace RJW_Menstruation
         }
         private Color customColor;
 
-        public PawnDNAModExtention DNA
+        public PawnDNAModExtension DNA
         {
             get
             {
@@ -44,22 +38,22 @@ namespace RJW_Menstruation
                 {
                     try
                     {
-                        DNAcache = pawn.def.GetModExtension<PawnDNAModExtention>();
+                        DNAcache = pawn.def.GetModExtension<PawnDNAModExtension>();
                     }
                     catch (NullReferenceException)
                     {
-                        DNAcache = ThingDefOf.Human.GetModExtension<PawnDNAModExtention>();
+                        DNAcache = ThingDefOf.Human.GetModExtension<PawnDNAModExtension>();
                     }
                     if (DNAcache == null)
                     {
-                        DNAcache = ThingDefOf.Human.GetModExtension<PawnDNAModExtention>();
+                        DNAcache = ThingDefOf.Human.GetModExtension<PawnDNAModExtension>();
                     }
                     return DNAcache;
                 }
                 else return DNAcache;
             }
         }
-        private PawnDNAModExtention DNAcache = null;
+        private PawnDNAModExtension DNAcache = null;
         public ThingDef FilthDef
         {
             get
@@ -89,7 +83,7 @@ namespace RJW_Menstruation
         }
 
 
-        public Cum() {}
+        public Cum() { }
 
         public Cum(Pawn pawn)
         {

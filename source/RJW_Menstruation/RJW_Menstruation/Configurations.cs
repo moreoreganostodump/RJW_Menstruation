@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 using Verse;
 
@@ -27,7 +23,7 @@ namespace RJW_Menstruation
 
         public static float ImplantationChance = ImplantationChanceDefault;
         public static int ImplantationChanceAdjust = ImplantationChanceAdjustDefault;
-        public static float FertilizeChance = FertilizeChanceDefault; 
+        public static float FertilizeChance = FertilizeChanceDefault;
         public static int FertilizeChanceAdjust = FertilizeChanceAdjustDefault;
         public static float CumDecayRatio = CumDecayRatioDefault;
         public static int CumDecayRatioAdjust = CumDecayRatioAdjustDefault;
@@ -51,6 +47,9 @@ namespace RJW_Menstruation
         public static int BleedingAmount = BleedingAmountDefault;
         public static bool EnableButtonInHT = false;
         public static PawnFlags ShowFlag = PawnFlags.Colonist | PawnFlags.Prisoner;
+        public static bool UseHybridExtention = true;
+        public static bool MotherFirst = false;
+
 
         public static bool HARActivated = false;
         public static bool LLActivated = false;
@@ -81,8 +80,14 @@ namespace RJW_Menstruation
 
 
         }
+        public static string HybridString(bool b)
+        {
+            if (b) return Translations.Option23_Label_1;
+            else return Translations.Option23_Label_2;
+        }
 
-        [Flags]public enum PawnFlags
+        [Flags]
+        public enum PawnFlags
         {
             None = 0,
             Colonist = 1,
@@ -120,6 +125,8 @@ namespace RJW_Menstruation
             Scribe_Values.Look(ref BleedingAmount, "BleedingAmount", BleedingAmount, true);
             Scribe_Values.Look(ref EnableButtonInHT, "EnableButtonInHT", EnableButtonInHT, true);
             Scribe_Values.Look(ref ShowFlag, "ShowFlag", ShowFlag, true);
+            Scribe_Values.Look(ref UseHybridExtention, "UseHybridExtention", UseHybridExtention, true);
+            Scribe_Values.Look(ref MotherFirst, "MotherFirst", MotherFirst, true);
             base.ExposeData();
         }
 
@@ -161,7 +168,7 @@ namespace RJW_Menstruation
             Configurations.LLActivated = ModLister.HasActiveModWithName("RimJobWorld - Licentia Labs");
         }
 
-        
+
 
         public override string SettingsCategory()
         {
@@ -178,8 +185,8 @@ namespace RJW_Menstruation
             listmain.Begin(mainRect);
             listmain.Gap(20f);
             Rect optionrect1 = listmain.GetRect(30f);
-            Widgets.CheckboxLabeled(optionrect1.LeftHalf(), Translations.Option1_Label_1, ref Configurations.EnableWombIcon);
-            Widgets.CheckboxLabeled(optionrect1.RightHalf(), Translations.Option1_Label_2, ref Configurations.EnableButtonInHT);
+            Widgets.CheckboxLabeled(optionrect1.LeftHalf(), Translations.Option1_Label_1, ref Configurations.EnableWombIcon,false,null,null,true);
+            Widgets.CheckboxLabeled(optionrect1.RightHalf(), Translations.Option1_Label_2, ref Configurations.EnableButtonInHT, false, null, null, true);
             //listmain.CheckboxLabeled(Translations.Option1_Label, ref Configurations.EnableWombIcon, Translations.Option1_Desc);
             if (Configurations.EnableWombIcon || Configurations.EnableButtonInHT)
             {
@@ -210,7 +217,7 @@ namespace RJW_Menstruation
                         wombsection.Label(Translations.Option11_Desc_4);
                         break;
                 }
-                wombsection.Label(Translations.Option21_Label + " " + Configurations.ShowFlag,-1, Translations.Option21_Desc);
+                wombsection.Label(Translations.Option21_Label + " " + Configurations.ShowFlag, -1, Translations.Option21_Desc);
                 Rect flagrect = wombsection.GetRect(30f);
                 Rect[] flagrects = new Rect[5];
                 for (int i = 0; i < 5; i++)
@@ -242,47 +249,54 @@ namespace RJW_Menstruation
 
                 listmain.EndSection(wombsection);
             }
-            
+
             listmain.CheckboxLabeled(Translations.Option2_Label, ref Configurations.EnableAnimalCycle, Translations.Option2_Desc);
 
             listmain.CheckboxLabeled(Translations.Option12_Label, ref Configurations.EnableMenopause, Translations.Option12_Desc);
-            
-            listmain.Label(Translations.Option3_Label + " " + Configurations.ImplantationChance*100 + "%", -1, Translations.Option3_Desc);
+
+            listmain.Label(Translations.Option3_Label + " " + Configurations.ImplantationChance * 100 + "%", -1, Translations.Option3_Desc);
             Configurations.ImplantationChanceAdjust = (int)listmain.Slider(Configurations.ImplantationChanceAdjust, 0, 1000);
-            Configurations.ImplantationChance = (float)Configurations.ImplantationChanceAdjust/100;
+            Configurations.ImplantationChance = (float)Configurations.ImplantationChanceAdjust / 100;
 
-            listmain.Label(Translations.Option4_Label + " " + Configurations.FertilizeChance*100 + "%", -1, Translations.Option4_Desc);
+            listmain.Label(Translations.Option4_Label + " " + Configurations.FertilizeChance * 100 + "%", -1, Translations.Option4_Desc);
             Configurations.FertilizeChanceAdjust = (int)listmain.Slider(Configurations.FertilizeChanceAdjust, 0, 1000);
-            Configurations.FertilizeChance = (float)Configurations.FertilizeChanceAdjust/1000;
+            Configurations.FertilizeChance = (float)Configurations.FertilizeChanceAdjust / 1000;
 
-            listmain.Label(Translations.Option5_Label + " " + Configurations.CumDecayRatio*100 + "%", -1, Translations.Option5_Desc);
+            listmain.Label(Translations.Option5_Label + " " + Configurations.CumDecayRatio * 100 + "%", -1, Translations.Option5_Desc);
             Configurations.CumDecayRatioAdjust = (int)listmain.Slider(Configurations.CumDecayRatioAdjust, 0, 1000);
-            Configurations.CumDecayRatio = (float)Configurations.CumDecayRatioAdjust/1000;
-            
-            listmain.Label(Translations.Option6_Label + " " + Configurations.CumFertilityDecayRatio*100 + "%", -1, Translations.Option6_Desc);
+            Configurations.CumDecayRatio = (float)Configurations.CumDecayRatioAdjust / 1000;
+
+            listmain.Label(Translations.Option6_Label + " " + Configurations.CumFertilityDecayRatio * 100 + "%", -1, Translations.Option6_Desc);
             Configurations.CumFertilityDecayRatioAdjust = (int)listmain.Slider(Configurations.CumFertilityDecayRatioAdjust, 0, 1000);
-            Configurations.CumFertilityDecayRatio = (float)Configurations.CumFertilityDecayRatioAdjust/1000;
+            Configurations.CumFertilityDecayRatio = (float)Configurations.CumFertilityDecayRatioAdjust / 1000;
 
             listmain.Label(Translations.Option7_Label + " x" + Configurations.CycleAcceleration, -1, Translations.Option7_Desc);
-            Configurations.CycleAcceleration = (int)listmain.Slider(Configurations.CycleAcceleration,1,50);
+            Configurations.CycleAcceleration = (int)listmain.Slider(Configurations.CycleAcceleration, 1, 50);
 
 
             float var2 = EstimatedBleedingAmountPerHour;
-            float var1 = Math.Max(EstimatedBleedingAmount,var2);
+            float var1 = Math.Max(EstimatedBleedingAmount, var2);
             listmain.LabelDouble(Translations.Option19_Label_1, Translations.Option19_Label_2 + ": " + var1 + "ml, " + var2 + "ml/h", Translations.Option19_Desc);
             Configurations.BleedingAmount = (int)listmain.Slider(Configurations.BleedingAmount, 0, 200);
 
             listmain.CheckboxLabeled(Translations.Option13_Label, ref Configurations.UseMultiplePregnancy, Translations.Option13_Desc);
             if (Configurations.UseMultiplePregnancy)
             {
-                float sectionheight = 50f;
+                float sectionheight = 75f;
                 if (Configurations.EnableEnzygoticTwins) sectionheight += 100;
                 Listing_Standard twinsection = listmain.BeginSection_NewTemp(sectionheight);
+                Rect hybridrect = twinsection.GetRect(25);
+                Widgets.CheckboxLabeled(hybridrect.LeftHalf(), Translations.Option22_Label, ref Configurations.UseHybridExtention, false, null, null, true);
+                if (Widgets.ButtonText(hybridrect.RightHalf(), Translations.Option23_Label + ": " + Configurations.HybridString(Configurations.MotherFirst)))
+                {
+                    Configurations.MotherFirst = !Configurations.MotherFirst;
+                }
+
                 twinsection.CheckboxLabeled(Translations.Option14_Label, ref Configurations.EnableHeteroOvularTwins, Translations.Option14_Desc);
                 twinsection.CheckboxLabeled(Translations.Option15_Label, ref Configurations.EnableEnzygoticTwins, Translations.Option15_Desc);
                 if (Configurations.EnableEnzygoticTwins)
                 {
-                    twinsection.Label(Translations.Option16_Label + " " + Configurations.EnzygoticTwinsChance*100 + "%", -1, Translations.Option16_Desc);
+                    twinsection.Label(Translations.Option16_Label + " " + Configurations.EnzygoticTwinsChance * 100 + "%", -1, Translations.Option16_Desc);
                     Configurations.EnzygoticTwinsChanceAdjust = (int)twinsection.Slider(Configurations.EnzygoticTwinsChanceAdjust, 0, 1000);
                     Configurations.EnzygoticTwinsChance = (float)Configurations.EnzygoticTwinsChanceAdjust / 1000;
 

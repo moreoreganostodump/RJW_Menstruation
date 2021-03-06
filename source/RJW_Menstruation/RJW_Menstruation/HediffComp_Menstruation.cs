@@ -1,17 +1,16 @@
-﻿using System;
+﻿using HugsLib;
+using RimWorld;
+using rjw;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Verse;
-using RimWorld;
-using HugsLib;
-using rjw;
 using UnityEngine;
+using Verse;
 
 namespace RJW_Menstruation
 {
-    [Flags]public enum SeasonalBreed
+    [Flags]
+    public enum SeasonalBreed
     {
         Always = 0,
         Spring = 1,
@@ -26,8 +25,8 @@ namespace RJW_Menstruation
     public class CompProperties_Menstruation : HediffCompProperties
     {
         public float maxCumCapacity; // ml
-        public float baseImplantationChanceFactor;  
-        public float basefertilizationChanceFactor; 
+        public float baseImplantationChanceFactor;
+        public float basefertilizationChanceFactor;
         public float deviationFactor;
         public int folicularIntervalDays = 14; //before ovulation including beginning of bleeding
         public int lutealIntervalDays = 14; //after ovulation until bleeding
@@ -44,7 +43,7 @@ namespace RJW_Menstruation
 
         public CompProperties_Menstruation()
         {
-            
+
             compClass = typeof(HediffComp_Menstruation);
         }
     }
@@ -62,10 +61,10 @@ namespace RJW_Menstruation
 
 
 
-    
 
 
-    
+
+
     public class HediffComp_Menstruation : HediffComp
     {
         const float minmakefilthvalue = 1.0f;
@@ -104,7 +103,7 @@ namespace RJW_Menstruation
         private int lutealIntervalhours = -1;
         private int bleedingIntervalhours = -1;
         private int recoveryIntervalhours = -1;
-        private float crampPain= -1;
+        private float crampPain = -1;
         private Need sexNeed = null;
         private string customwombtex = null;
         private string customvagtex = null;
@@ -164,7 +163,7 @@ namespace RJW_Menstruation
                 {
                     res += cum.volume;
                 }
-                return res/ Props.maxCumCapacity;
+                return res / Props.maxCumCapacity;
             }
         }
         public float CumCapacity
@@ -181,7 +180,7 @@ namespace RJW_Menstruation
             get
             {
                 float res = 1.0f;
-                if (parent.pawn.health.hediffSet.HasHediff(VariousDefOf.RJW_IUD)) res = 0.001f;
+                if (parent.pawn.health.hediffSet.HasHediff(VariousDefOf.RJW_IUD)) res = 0.01f;
                 return res;
             }
         }
@@ -202,8 +201,8 @@ namespace RJW_Menstruation
             {
                 float factor = 1.0f;
                 if (parent.pawn.Has(Quirk.Breeder)) factor = 10.0f;
-                if (xxx.is_animal(parent.pawn)) factor *= RJWPregnancySettings.animal_impregnation_chance/100f;
-                else factor *= RJWPregnancySettings.humanlike_impregnation_chance/100f;
+                if (xxx.is_animal(parent.pawn)) factor *= RJWPregnancySettings.animal_impregnation_chance / 100f;
+                else factor *= RJWPregnancySettings.humanlike_impregnation_chance / 100f;
                 return parent.pawn.health.capacities.GetLevel(xxx.reproduction) * factor;
             }
         }
@@ -230,7 +229,7 @@ namespace RJW_Menstruation
                     float mixedsofar = 0;
                     foreach (Cum cum in cums)
                     {
-                        mixedcolor = Colors.CMYKLerp(mixedcolor, cum.color, cum.volume/(mixedsofar + cum.volume));
+                        mixedcolor = Colors.CMYKLerp(mixedcolor, cum.color, cum.volume / (mixedsofar + cum.volume));
                         mixedsofar += cum.volume;
                     }
                 }
@@ -309,16 +308,19 @@ namespace RJW_Menstruation
                 string res = "";
                 if (!eggs.NullOrEmpty())
                 {
-                    if (cums.NullOrEmpty() || TotalFertCum == 0) return eggs.Count + " " + Translations.Dialog_WombInfo07;
+                    int fertilized = 0;
+                    foreach (Egg egg in eggs)
+                    {
+                        if (egg.fertilized) fertilized++;
+                    }
+                    if (fertilized != 0) res += fertilized + " " + Translations.Dialog_WombInfo05;
+                    if (fertilized != 0 && eggs.Count - fertilized != 0) res += ", ";
+                    if (cums.NullOrEmpty() || TotalFertCum == 0)
+                    {
+                        if (eggs.Count - fertilized != 0) res += eggs.Count - fertilized + " " + Translations.Dialog_WombInfo07;
+                    }
                     else
                     {
-                        int fertilized = 0;
-                        foreach (Egg egg in eggs)
-                        {
-                            if (egg.fertilized) fertilized++;
-                        }
-                        if (fertilized != 0) res += fertilized + " " + Translations.Dialog_WombInfo05;
-                        if (fertilized != 0 && eggs.Count - fertilized != 0) res += ", ";
                         if (eggs.Count - fertilized != 0) res += eggs.Count - fertilized + " " + Translations.Dialog_WombInfo06;
                     }
                 }
@@ -332,7 +334,7 @@ namespace RJW_Menstruation
             {
                 if (!eggs.NullOrEmpty())
                 {
-                    if (!cums.NullOrEmpty()) foreach(Cum cum in cums)
+                    if (!cums.NullOrEmpty()) foreach (Cum cum in cums)
                         {
                             if (cum.fertvolume > 0) return true;
                         }
@@ -350,7 +352,7 @@ namespace RJW_Menstruation
         {
             get
             {
-                if (!eggs.NullOrEmpty()) foreach(Egg egg in eggs)
+                if (!eggs.NullOrEmpty()) foreach (Egg egg in eggs)
                     {
                         if (egg.fertilized) return egg.fertstage;
                     }
@@ -425,7 +427,7 @@ namespace RJW_Menstruation
 
         }
 
-        
+
         public override void CompPostPostAdd(DamageInfo? dinfo)
         {
             if (!loaded) Initialize();
@@ -442,7 +444,7 @@ namespace RJW_Menstruation
 
         public override void CompPostPostRemoved()
         {
-            
+
             HugsLibController.Instance.TickDelayScheduler.TryUnscheduleCallback(actionref);
             ModLog.Message(parent.pawn.Label + "tick scheduler removed");
             base.CompPostPostRemoved();
@@ -451,7 +453,7 @@ namespace RJW_Menstruation
 
 
 
-        
+
         /// <summary>
         /// Get fluid in womb that not a cum
         /// </summary>
@@ -479,7 +481,7 @@ namespace RJW_Menstruation
                 }
             return null;
         }
-        
+
         /// <summary>
         /// Inject pawn's cum into womb
         /// </summary>
@@ -497,18 +499,18 @@ namespace RJW_Menstruation
                 float cumoutrate = 1 - (CumCapacity / tmp);
                 bool merged = false;
                 if (!cums.NullOrEmpty()) foreach (Cum cum in cums)
-                {
-                    if (cum.pawn.Equals(pawn))
                     {
-                        cum.volume += volume;
-                        cum.fertvolume += volume;
-                        cum.FilthDef = filthdef;
-                        merged = true;
+                        if (cum.pawn.Equals(pawn))
+                        {
+                            cum.volume += volume;
+                            cum.fertvolume += volume * CumInFactor;
+                            cum.FilthDef = filthdef;
+                            merged = true;
+                        }
+                        cum.volume *= 1 - cumoutrate;
+                        cum.fertvolume *= 1 - cumoutrate;
                     }
-                    cum.volume *= 1 - cumoutrate;
-                    cum.fertvolume *= 1 - cumoutrate;
-                }
-                if (!merged) cums.Add(new Cum(pawn, volume * (1 - cumoutrate),fertility, filthdef));
+                if (!merged) cums.Add(new Cum(pawn, volume * (1 - cumoutrate), fertility, filthdef));
             }
             else
             {
@@ -560,7 +562,7 @@ namespace RJW_Menstruation
                         cum.volume *= 1 - cumoutrate;
                         cum.fertvolume *= 1 - cumoutrate;
                     }
-                if (!merged) cums.Add(new Cum(pawn, volume * (1 - cumoutrate), notcumlabel,decayresist, filthdef));
+                if (!merged) cums.Add(new Cum(pawn, volume * (1 - cumoutrate), notcumlabel, decayresist, filthdef));
             }
             else
             {
@@ -577,7 +579,7 @@ namespace RJW_Menstruation
                             merged = true;
                         }
                     }
-                if (!merged) cums.Add(new Cum(pawn, volume, notcumlabel,decayresist, filthdef));
+                if (!merged) cums.Add(new Cum(pawn, volume, notcumlabel, decayresist, filthdef));
             }
             cumd = TotalCumPercent - cumd;
             AfterNotCumIn();
@@ -661,7 +663,7 @@ namespace RJW_Menstruation
                 ModLog.Message("cumflation in");
                 BodyPartRecord genital = Genital_Helper.get_genitalsBPR(parent.pawn);
                 HediffWithComps hediff = parent.pawn.health?.hediffSet?.GetHediffs<HediffWithComps>()?.FirstOrDefault(x => x.def == VariousDefOf.Cumflation && x.Part.Equals(genital));
-                
+
                 if (hediff == null) // 1.0 fd = 0.002 severity
                 {
                     ModLog.Message("hediff null");
@@ -688,7 +690,7 @@ namespace RJW_Menstruation
                 {
                     ModLog.Message("decrease severity: " + hediff?.Part?.Label + TotalCumPercent * 0.002f);
                     hediff.Severity -= fd * 0.002f;
-                    if (hediff.Severity < TotalCumPercent * 0.002f) hediff.Severity = TotalCumPercent * 0.002f; 
+                    if (hediff.Severity < TotalCumPercent * 0.002f) hediff.Severity = TotalCumPercent * 0.002f;
                 }
 
             }
@@ -741,7 +743,7 @@ namespace RJW_Menstruation
             if (cums.NullOrEmpty()) return;
             else if (absorber != null && absorber.dirty && !absorber.LeakAfterDirty) leakfactor = 0f;
             List<Cum> removecums = new List<Cum>();
-            foreach(Cum cum in cums)
+            foreach (Cum cum in cums)
             {
                 float vd = cum.volume;
                 cum.volume *= Math.Max(0, (1 - (Configurations.CumDecayRatio * (1 - cum.decayresist)) * leakfactor));
@@ -749,7 +751,7 @@ namespace RJW_Menstruation
                 vd -= cum.volume;
                 totalleak += AbsorbCum(cum, vd, absorber);
                 string tmp = "FilthLabelWithSource".Translate(cum.FilthDef.label, cum.pawn?.LabelShort ?? "Unknown", 1.ToString());
-                filthlabels.Add(tmp.Replace(" x1",""));
+                filthlabels.Add(tmp.Replace(" x1", ""));
                 if (cum.fertvolume < 0.01f) cum.fertvolume = 0;
                 if (cum.volume < 0.01f) removecums.Add(cum);
             }
@@ -845,7 +847,7 @@ namespace RJW_Menstruation
             return outcum;
         }
 
-        
+
 
 
 
@@ -861,7 +863,8 @@ namespace RJW_Menstruation
                 foreach (Egg egg in eggs)
                 {
                     if (!egg.fertilized) egg.fertilizer = Fertilize();
-                    if (egg.fertilizer != null) {
+                    if (egg.fertilizer != null)
+                    {
                         egg.fertilized = true;
                         egg.lifespanhrs += 240;
                         onefertilized = true;
@@ -890,14 +893,18 @@ namespace RJW_Menstruation
                 if (crampPain < 0) crampPain = PainRandomizer();
                 if (cums == null) cums = new List<Cum>();
                 if (eggs == null) eggs = new List<Egg>();
-                
-                
+
+
                 if (!Configurations.EnableMenopause)
                 {
                     Hediff hediff = parent.pawn.health.hediffSet.GetFirstHediffOfDef(VariousDefOf.Hediff_Climacteric);
                     if (hediff != null) parent.pawn.health.RemoveHediff(hediff);
                     hediff = parent.pawn.health.hediffSet.GetFirstHediffOfDef(VariousDefOf.Hediff_Menopause);
                     if (hediff != null) parent.pawn.health.RemoveHediff(hediff);
+                    if (curStage == Stage.ClimactericBleeding) curStage = Stage.Bleeding;
+                    else if (curStage == Stage.ClimactericFollicular) curStage = Stage.Follicular;
+                    else if (curStage == Stage.ClimactericLuteal) curStage = Stage.Luteal;
+
                 }
                 else if (ovarypower < -50000)
                 {
@@ -914,7 +921,8 @@ namespace RJW_Menstruation
                             avglittersize = 1;
                         }
                         ovarypower = (int)(((Props.ovaryPower * Rand.Range(0.7f, 1.3f) * parent.pawn.def.race.lifeExpectancy / ThingDefOf.Human.race.lifeExpectancy)
-                            - (Math.Max(0, parent.pawn.ageTracker.AgeBiologicalYears - 15)) * (60 / (Props.folicularIntervalDays + Props.lutealIntervalDays) * Configurations.CycleAcceleration)) * avglittersize);
+                            - (Math.Max(0, parent.pawn.ageTracker.AgeBiologicalYears - RJWSettings.sex_minimum_age * parent.pawn.def.race.lifeExpectancy / ThingDefOf.Human.race.lifeExpectancy))
+                            * (60 / (Props.folicularIntervalDays + Props.lutealIntervalDays) * Configurations.CycleAcceleration)) * avglittersize);
                         if (ovarypower < 1)
                         {
                             Hediff hediff = HediffMaker.MakeHediff(VariousDefOf.Hediff_Menopause, parent.pawn);
@@ -930,8 +938,8 @@ namespace RJW_Menstruation
                         }
                     }
                 }
-                
-                
+
+
                 if (parent.pawn.IsPregnant()) curStage = Stage.Pregnant;
                 if (parent.pawn.IsAnimal())
                 {
@@ -958,7 +966,7 @@ namespace RJW_Menstruation
 
         public void AfterSimulator()
         {
-            if (ovarypower < ovarypowerthreshold)
+            if (Configurations.EnableMenopause && ovarypower < ovarypowerthreshold)
             {
                 if (sexNeed == null) sexNeed = parent.pawn.needs.TryGetNeed(VariousDefOf.SexNeed);
                 else
@@ -973,7 +981,7 @@ namespace RJW_Menstruation
             HediffDef estrusdef;
             if (Props.consealedEstrus) estrusdef = VariousDefOf.Hediff_Estrus_Consealed;
             else estrusdef = VariousDefOf.Hediff_Estrus;
-            
+
             HediffWithComps hediff = (HediffWithComps)parent.pawn.health.hediffSet.GetFirstHediffOfDef(estrusdef);
             if (hediff != null)
             {
@@ -987,6 +995,30 @@ namespace RJW_Menstruation
             }
         }
 
+        public bool IsBreedingSeason()
+        {
+            if (Props.breedingSeason == SeasonalBreed.Always) return true;
+            switch (GenLocalDate.Season(parent.pawn.Map))
+            {
+                case Season.Spring:
+                    if ((Props.breedingSeason & SeasonalBreed.Spring) != 0) return true;
+                    break;
+                case Season.Summer:
+                case Season.PermanentSummer:
+                    if ((Props.breedingSeason & SeasonalBreed.Summer) != 0) return true;
+                    break;
+                case Season.Fall:
+                    if ((Props.breedingSeason & SeasonalBreed.Fall) != 0) return true;
+                    break;
+                case Season.Winter:
+                case Season.PermanentWinter:
+                    if ((Props.breedingSeason & SeasonalBreed.Winter) != 0) return true;
+                    break;
+                default:
+                    return false;
+            }
+            return false;
+        }
 
         private Pawn Fertilize()
         {
@@ -1010,7 +1042,7 @@ namespace RJW_Menstruation
             {
                 List<Egg> deadeggs = new List<Egg>();
                 bool pregnant = false;
-                foreach(Egg egg in eggs)
+                foreach (Egg egg in eggs)
                 {
                     if (!egg.fertilized || egg.fertstage < 168) continue;
                     else if (Rand.Range(0.0f, 1.0f) <= Configurations.ImplantationChance * Props.baseImplantationChanceFactor * ImplantFactor * InterspeciesImplantFactor(egg.fertilizer))
@@ -1078,7 +1110,7 @@ namespace RJW_Menstruation
         private void BleedOut()
         {
             //FilthMaker.TryMakeFilth(parent.pawn.Position, parent.pawn.Map, ThingDefOf.Filth_Blood,parent.pawn.Label);
-            CumIn(parent.pawn, Rand.Range(0.02f * Configurations.BleedingAmount, 0.04f * Configurations.BleedingAmount), Translations.Menstrual_Blood,-5.0f,ThingDefOf.Filth_Blood);
+            CumIn(parent.pawn, Rand.Range(0.02f * Configurations.BleedingAmount, 0.04f * Configurations.BleedingAmount), Translations.Menstrual_Blood, -5.0f, ThingDefOf.Filth_Blood);
             GetNotCum(Translations.Menstrual_Blood).color = BloodColor;
         }
 
@@ -1087,7 +1119,7 @@ namespace RJW_Menstruation
         /// </summary>
         /// <param name="cum"></param>
         /// <param name="amount"></param>
-        private void MakeCumFilth(Cum cum, float amount) 
+        private void MakeCumFilth(Cum cum, float amount)
         {
             if (amount >= minmakefilthvalue) FilthMaker.TryMakeFilth(parent.pawn.Position, parent.pawn.Map, cum.FilthDef, cum.pawn?.LabelShort ?? "Unknown");
         }
@@ -1101,11 +1133,11 @@ namespace RJW_Menstruation
         /// <returns></returns>
         private float AbsorbCum(Cum cum, float amount, Absorber absorber)
         {
-            
+
             if (absorber != null)
             {
                 float absorbable = absorber.GetStatValue(VariousDefOf.MaxAbsorbable);
-                absorber.SetColor(Colors.CMYKLerp(GetCumMixtureColor, absorber.DrawColor, 1f - amount/absorbable));
+                absorber.SetColor(Colors.CMYKLerp(GetCumMixtureColor, absorber.DrawColor, 1f - amount / absorbable));
                 if (!absorber.dirty)
                 {
                     absorber.absorbedfluids += amount;
@@ -1118,7 +1150,7 @@ namespace RJW_Menstruation
                 }
                 else
                 {
-                    
+
                     //if (absorber.LeakAfterDirty) FilthMaker.TryMakeFilth(parent.pawn.Position, parent.pawn.Map, cum.FilthDef, cum.pawn.LabelShort);
                     return amount;
                 }
@@ -1133,10 +1165,10 @@ namespace RJW_Menstruation
 
         private float MakeCumFilthMixture(float amount, List<string> cumlabels)
         {
-            
+
             if (amount >= minmakefilthvalue)
             {
-                FilthMaker_Colored.TryMakeFilth(parent.pawn.Position, parent.pawn.Map, VariousDefOf.FilthMixture, cumlabels,GetCumMixtureColor,false);
+                FilthMaker_Colored.TryMakeFilth(parent.pawn.Position, parent.pawn.Map, VariousDefOf.FilthMixture, cumlabels, GetCumMixtureColor, false);
             }
             return amount;
         }
@@ -1164,6 +1196,14 @@ namespace RJW_Menstruation
             }
         }
 
+        private void AddCrampPain()
+        {
+            Hediff hediff = HediffMaker.MakeHediff(VariousDefOf.Hediff_MenstrualCramp, parent.pawn);
+            hediff.Severity = crampPain * Rand.Range(0.9f, 1.1f);
+            HediffCompProperties_SeverityPerDay Prop = (HediffCompProperties_SeverityPerDay)hediff.TryGetComp<HediffComp_SeverityPerDay>().props;
+            Prop.severityPerDay = -hediff.Severity / (bleedingIntervalhours / 24) * Configurations.CycleAcceleration;
+            parent.pawn.health.AddHediff(hediff, Genital_Helper.get_genitalsBPR(parent.pawn));
+        }
 
         private Action PeriodSimulator(Stage targetstage)
         {
@@ -1173,28 +1213,10 @@ namespace RJW_Menstruation
                 case Stage.Follicular:
                     action = delegate
                     {
-                        if (Props.breedingSeason != SeasonalBreed.Always)
+                        if (!IsBreedingSeason())
                         {
-                            if (!Props.breedingSeason.HasFlag(SeasonalBreed.Spring) && GenLocalDate.Season(parent.pawn.Map).Equals(Season.Spring))
-                            {
-                                GoNextStage(Stage.Anestrus);
-                                return;
-                            }
-                            else if (!Props.breedingSeason.HasFlag(SeasonalBreed.Summer) && (GenLocalDate.Season(parent.pawn.Map).Equals(Season.Summer) || GenLocalDate.Season(parent.pawn.Map).Equals(Season.PermanentSummer)))
-                            {
-                                GoNextStage(Stage.Anestrus);
-                                return;
-                            }
-                            else if (!Props.breedingSeason.HasFlag(SeasonalBreed.Fall) && GenLocalDate.Season(parent.pawn.Map).Equals(Season.Fall))
-                            {
-                                GoNextStage(Stage.Anestrus);
-                                return;
-                            }
-                            else if (!Props.breedingSeason.HasFlag(SeasonalBreed.Winter) && (GenLocalDate.Season(parent.pawn.Map).Equals(Season.Winter) || GenLocalDate.Season(parent.pawn.Map).Equals(Season.PermanentWinter)))
-                            {
-                                GoNextStage(Stage.Anestrus);
-                                return;
-                            }
+                            GoNextStage(Stage.Anestrus);
+                            return;
                         }
                         if (curStageHrs >= FollicularIntervalHours)
                         {
@@ -1202,8 +1224,8 @@ namespace RJW_Menstruation
                         }
                         else
                         {
-                            curStageHrs+=Configurations.CycleAcceleration;
-                            if (!estrusflag && curStageHrs > FollicularIntervalHours - Props.estrusDaysBeforeOvulation*24)
+                            curStageHrs += Configurations.CycleAcceleration;
+                            if (!estrusflag && curStageHrs > FollicularIntervalHours - Props.estrusDaysBeforeOvulation * 24)
                             {
                                 estrusflag = true;
                                 SetEstrus(Props.eggLifespanDays + Props.estrusDaysBeforeOvulation);
@@ -1265,8 +1287,8 @@ namespace RJW_Menstruation
                         }
                         else if (curStageHrs <= lutealIntervalhours)
                         {
-                            curStageHrs+=Configurations.CycleAcceleration;
-                            StayCurrentStage(); 
+                            curStageHrs += Configurations.CycleAcceleration;
+                            StayCurrentStage();
                         }
                         else
                         {
@@ -1280,11 +1302,7 @@ namespace RJW_Menstruation
                                 bleedingIntervalhours = PeriodRandomizer(bleedingIntervalhours, Props.deviationFactor);
                                 if (crampPain >= 0.05f)
                                 {
-                                    Hediff hediff = HediffMaker.MakeHediff(VariousDefOf.Hediff_MenstrualCramp, parent.pawn);
-                                    hediff.Severity = crampPain * Rand.Range(0.9f, 1.1f);
-                                    HediffCompProperties_SeverityPerDay Prop = (HediffCompProperties_SeverityPerDay)hediff.TryGetComp<HediffComp_SeverityPerDay>().props;
-                                    Prop.severityPerDay = - hediff.Severity / (bleedingIntervalhours/24) * Configurations.CycleAcceleration;
-                                    parent.pawn.health.AddHediff(hediff, Genital_Helper.get_genitalsBPR(parent.pawn));
+                                    AddCrampPain();
                                 }
                                 GoNextStage(Stage.Bleeding);
                             }
@@ -1304,7 +1322,7 @@ namespace RJW_Menstruation
                         else
                         {
                             if (curStageHrs < bleedingIntervalhours / 4) for (int i = 0; i < Configurations.CycleAcceleration; i++) BleedOut();
-                            curStageHrs+=Configurations.CycleAcceleration;
+                            curStageHrs += Configurations.CycleAcceleration;
                             StayCurrentStage();
                         }
                     };
@@ -1366,7 +1384,7 @@ namespace RJW_Menstruation
                         }
                         else
                         {
-                            curStageHrs+=Configurations.CycleAcceleration;
+                            curStageHrs += Configurations.CycleAcceleration;
                             StayCurrentStage();
                         }
                     };
@@ -1429,7 +1447,7 @@ namespace RJW_Menstruation
                                 follicularIntervalhours = PeriodRandomizer(follicularIntervalhours, Props.deviationFactor * 6);
                                 GoNextStage(Stage.ClimactericFollicular);
                             }
-                            else if (ovarypower < ovarypowerthreshold / 4 || (ovarypower < ovarypowerthreshold / 3 && Rand.Range(0.0f,1.0f) < 0.3f)) //skips bleeding
+                            else if (ovarypower < ovarypowerthreshold / 4 || (ovarypower < ovarypowerthreshold / 3 && Rand.Range(0.0f, 1.0f) < 0.3f)) //skips bleeding
                             {
                                 follicularIntervalhours = PeriodRandomizer(follicularIntervalhours, Props.deviationFactor * 6);
                                 GoNextStage(Stage.ClimactericFollicular);
@@ -1439,11 +1457,7 @@ namespace RJW_Menstruation
                                 bleedingIntervalhours = PeriodRandomizer(bleedingIntervalhours, Props.deviationFactor);
                                 if (crampPain >= 0.05f)
                                 {
-                                    Hediff hediff = HediffMaker.MakeHediff(VariousDefOf.Hediff_MenstrualCramp, parent.pawn);
-                                    hediff.Severity = crampPain * Rand.Range(0.9f, 1.1f);
-                                    HediffCompProperties_SeverityPerDay Prop = (HediffCompProperties_SeverityPerDay)hediff.TryGetComp<HediffComp_SeverityPerDay>().props;
-                                    Prop.severityPerDay = -hediff.Severity / (bleedingIntervalhours / 24) * Configurations.CycleAcceleration;
-                                    parent.pawn.health.AddHediff(hediff, Genital_Helper.get_genitalsBPR(parent.pawn));
+                                    AddCrampPain();
                                 }
                                 GoNextStage(Stage.ClimactericBleeding);
                             }
@@ -1470,25 +1484,7 @@ namespace RJW_Menstruation
                 case Stage.Anestrus:
                     action = delegate
                     {
-                        if (Props.breedingSeason == SeasonalBreed.Always)
-                        {
-                            //case for XML changes
-                            follicularIntervalhours = PeriodRandomizer(follicularIntervalhours, Props.deviationFactor);
-                            GoNextStage(Stage.Follicular);
-                        }
-                        else if (Props.breedingSeason.HasFlag(SeasonalBreed.Spring) && GenLocalDate.Season(parent.pawn.Map).Equals(Season.Spring))
-                        {
-                            GoFollicularOrBleeding();
-                        }
-                        else if (Props.breedingSeason.HasFlag(SeasonalBreed.Summer) && (GenLocalDate.Season(parent.pawn.Map).Equals(Season.Summer) || GenLocalDate.Season(parent.pawn.Map).Equals(Season.PermanentSummer)))
-                        {
-                            GoFollicularOrBleeding();
-                        }
-                        else if (Props.breedingSeason.HasFlag(SeasonalBreed.Fall) && GenLocalDate.Season(parent.pawn.Map).Equals(Season.Fall))
-                        {
-                            GoFollicularOrBleeding();
-                        }
-                        else if (Props.breedingSeason.HasFlag(SeasonalBreed.Winter) && (GenLocalDate.Season(parent.pawn.Map).Equals(Season.Winter) || GenLocalDate.Season(parent.pawn.Map).Equals(Season.PermanentWinter)))
+                        if (IsBreedingSeason())
                         {
                             GoFollicularOrBleeding();
                         }
@@ -1501,7 +1497,7 @@ namespace RJW_Menstruation
                 default:
                     curStage = Stage.Follicular;
                     curStageHrs = 0;
-                    if (follicularIntervalhours < 0) follicularIntervalhours = PeriodRandomizer(Props.folicularIntervalDays*24, Props.deviationFactor);
+                    if (follicularIntervalhours < 0) follicularIntervalhours = PeriodRandomizer(Props.folicularIntervalDays * 24, Props.deviationFactor);
                     HugsLibController.Instance.TickDelayScheduler.ScheduleCallback(PeriodSimulator(Stage.Follicular), tickInterval, parent.pawn, false);
                     break;
             }
@@ -1522,7 +1518,7 @@ namespace RJW_Menstruation
                 HugsLibController.Instance.TickDelayScheduler.ScheduleCallback(PeriodSimulator(nextstage), (int)(tickInterval * factor), parent.pawn, false);
             }
 
-            
+
             void GoNextStageSetHour(Stage nextstage, int hour, float factor = 1.0f)
             {
                 curStageHrs = hour;
@@ -1541,7 +1537,7 @@ namespace RJW_Menstruation
             {
                 HugsLibController.Instance.TickDelayScheduler.ScheduleCallback(PeriodSimulator(curstage), (int)(tickInterval * factor), parent.pawn, false);
             }
-            
+
             void GoFollicularOrBleeding()
             {
                 if (Props.bleedingIntervalDays == 0)
@@ -1562,7 +1558,7 @@ namespace RJW_Menstruation
 
         private int PeriodRandomizer(int intervalhours, float deviation)
         {
-            return intervalhours + (int)(intervalhours*Rand.Range(-deviation,deviation));
+            return intervalhours + (int)(intervalhours * Rand.Range(-deviation, deviation));
         }
 
         private float InterspeciesImplantFactor(Pawn fertilizer)
@@ -1574,7 +1570,7 @@ namespace RJW_Menstruation
         private float PainRandomizer()
         {
             float rand = Rand.Range(0.0f, 1.0f);
-            if (rand < 0.01f) return Rand.Range(0.0f,0.2f);
+            if (rand < 0.01f) return Rand.Range(0.0f, 0.2f);
             else if (rand < 0.2f) return Rand.Range(0.1f, 0.2f);
             else if (rand < 0.8f) return Rand.Range(0.2f, 0.4f);
             else if (rand < 0.95f) return Rand.Range(0.4f, 0.6f);
@@ -1583,7 +1579,7 @@ namespace RJW_Menstruation
 
         private Stage RandomStage()
         {
-            int rand = Rand.Range(0,2);
+            int rand = Rand.Range(0, 2);
 
             switch (rand)
             {
@@ -1605,7 +1601,7 @@ namespace RJW_Menstruation
 
 
 
-        
+
         public class Egg : IExposable
         {
             public bool fertilized;

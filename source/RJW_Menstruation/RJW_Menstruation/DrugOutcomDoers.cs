@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RimWorld;
+﻿using RimWorld;
 using Verse;
 
 namespace RJW_Menstruation
@@ -13,7 +8,7 @@ namespace RJW_Menstruation
         protected override void DoIngestionOutcomeSpecial(Pawn pawn, Thing ingested)
         {
             HediffComp_Menstruation comp = Utility.GetMenstruationComp(pawn);
-            if (comp != null && (comp.curStage.Equals(HediffComp_Menstruation.Stage.Follicular) 
+            if (comp != null && (comp.curStage.Equals(HediffComp_Menstruation.Stage.Follicular)
                 || comp.curStage.Equals(HediffComp_Menstruation.Stage.Luteal)
                 || comp.curStage.Equals(HediffComp_Menstruation.Stage.ClimactericFollicular)
                 || comp.curStage.Equals(HediffComp_Menstruation.Stage.ClimactericLuteal)
@@ -50,7 +45,7 @@ namespace RJW_Menstruation
             HediffComp_Menstruation comp = Utility.GetMenstruationComp(pawn);
             if (comp != null)
             {
-                comp.eggstack += Rand.Range(1,4);
+                comp.eggstack += Rand.Range(1, 4);
             }
 
 

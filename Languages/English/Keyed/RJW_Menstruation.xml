@@ -74,6 +74,11 @@
   <Option20_Label_5>Hostile Faction</Option20_Label_5>
   <Option21_Label>target pawns</Option21_Label>
   <Option21_Desc>the gizmo and button will appear for these pawns</Option21_Desc>
+  <Option22_Label>use hybrid extension</Option22_Label>
+  <Option22_Desc>overrides RJW and RaceSupport's hybrid definition&#10;Dominant hybrid extension determines whose definition used first. Not recommended to change this</Option22_Desc>
+  <Option23_Label>Dominant hybrid extension</Option23_Label>
+  <Option23_Label_1>Mother</Option23_Label_1>
+  <Option23_Label_2>Father</Option23_Label_2>
   
   <FloatMenu_CleanSelf>Vaginal washing</FloatMenu_CleanSelf>
   

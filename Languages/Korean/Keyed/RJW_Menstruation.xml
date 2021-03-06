@@ -74,6 +74,11 @@
   <Option20_Label_5>적대관계</Option20_Label_5>
   <Option21_Label>표시 대상</Option21_Label>
   <Option21_Desc>아이콘과 버튼을 표시할 대상입니다.</Option21_Desc>
+  <Option22_Label>잡종 정의 대체</Option22_Label>
+  <Option22_Desc>RJW와 RaceSupport의 잡종정의를 대체합니다.&#10;우선순위는 누구의 잡종 정의를 우선으로 사용할지 정합니다. 변경하지 않는것을 추천합니다.</Option22_Desc>
+  <Option23_Label>우선순위</Option23_Label>
+  <Option23_Label_1>모</Option23_Label_1>
+  <Option23_Label_2>부</Option23_Label_2>
   
   <FloatMenu_CleanSelf>질세척</FloatMenu_CleanSelf>
   

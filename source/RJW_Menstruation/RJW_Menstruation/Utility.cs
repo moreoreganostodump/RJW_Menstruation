@@ -1,21 +1,16 @@
-﻿using System;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.IO;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Verse;
+﻿using RimWorld;
 using rjw;
-using RimWorld;
+using System;
+using System.Linq;
 using UnityEngine;
+using Verse;
 
 namespace RJW_Menstruation
 {
     public static class Colors
     {
         public static Color blood = new Color(0.78f, 0, 0);
-        
+
 
         public static Color CMYKLerp(Color a, Color b, float t)
         {
@@ -27,14 +22,14 @@ namespace RJW_Menstruation
 
         public static void RGBtoCMYK(Color rgb, out float c, out float m, out float y, out float k)
         {
-            k = 1 - Math.Max(rgb.r,Math.Max(rgb.g,rgb.b));
+            k = 1 - Math.Max(rgb.r, Math.Max(rgb.g, rgb.b));
             c = (1 - rgb.r - k) / (1 - k);
             m = (1 - rgb.g - k) / (1 - k);
             y = (1 - rgb.b - k) / (1 - k);
 
         }
 
-        public static Color CMYKtoRGB(float c,float m, float y, float k)
+        public static Color CMYKtoRGB(float c, float m, float y, float k)
         {
             return new Color((1 - c) * (1 - k), (1 - m) * (1 - k), (1 - y) * (1 - k));
         }
@@ -46,7 +41,7 @@ namespace RJW_Menstruation
 
     public static class Utility
     {
-        
+
 
 
         public static float GetCumVolume(this Pawn pawn)
@@ -65,7 +60,7 @@ namespace RJW_Menstruation
             {
                 res = 0.0f;
             }
-            if (pawn.Has(Quirk.Messy)) res *= Rand.Range(4.0f,8.0f);
+            if (pawn.Has(Quirk.Messy)) res *= Rand.Range(4.0f, 8.0f);
 
             return res;
         }
@@ -178,7 +173,7 @@ namespace RJW_Menstruation
             else if (hediff is Hediff_BasePregnancy)
             {
                 Hediff_BasePregnancy h = (Hediff_BasePregnancy)hediff;
-                string fetustex = h.babies?.FirstOrDefault()?.def.GetModExtension<PawnDNAModExtention>()?.fetusTexPath ?? "Fetus/Fetus_Default";
+                string fetustex = h.babies?.FirstOrDefault()?.def.GetModExtension<PawnDNAModExtension>()?.fetusTexPath ?? "Fetus/Fetus_Default";
                 if (h.GestationProgress < 0.2f) icon = comp.wombTex + "_Implanted";
                 else if (h.GestationProgress < 0.3f) icon += "Fetus/Fetus_Early00";
                 else if (h.GestationProgress < 0.4f) icon += fetustex + "00";
@@ -310,24 +305,24 @@ namespace RJW_Menstruation
             {
                 if (pawn.Faction.IsPlayer)
                 {
-                    if (Configurations.ShowFlag.HasFlag(Configurations.PawnFlags.Colonist)) return true;
+                    if ((Configurations.ShowFlag & Configurations.PawnFlags.Colonist) != 0) return true;
                 }
                 else if (pawn.IsPrisonerOfColony)
                 {
-                    if (Configurations.ShowFlag.HasFlag(Configurations.PawnFlags.Prisoner)) return true;
+                    if ((Configurations.ShowFlag & Configurations.PawnFlags.Prisoner) != 0) return true;
                 }
                 else if (pawn.Faction.PlayerRelationKind == FactionRelationKind.Ally)
                 {
-                    if (Configurations.ShowFlag.HasFlag(Configurations.PawnFlags.Ally)) return true;
+                    if ((Configurations.ShowFlag & Configurations.PawnFlags.Ally) != 0) return true;
                 }
                 else if (pawn.Faction.PlayerRelationKind == FactionRelationKind.Hostile)
                 {
-                    if (Configurations.ShowFlag.HasFlag(Configurations.PawnFlags.Hostile)) return true;
+                    if ((Configurations.ShowFlag & Configurations.PawnFlags.Hostile) != 0) return true;
                 }
-                else if (Configurations.ShowFlag.HasFlag(Configurations.PawnFlags.Neutral)) return true;
+                else if ((Configurations.ShowFlag & Configurations.PawnFlags.Neutral) != 0) return true;
                 else return false;
             }
-            else if (Configurations.ShowFlag.HasFlag(Configurations.PawnFlags.Neutral)) return true;
+            else if ((Configurations.ShowFlag & Configurations.PawnFlags.Neutral) != 0) return true;
 
             return false;
         }
@@ -345,7 +340,7 @@ namespace RJW_Menstruation
 
         public static void DrawEggOverlay(this HediffComp_Menstruation comp, Rect wombRect)
         {
-            Rect rect = new Rect(wombRect.xMax - wombRect.width/3, wombRect.y, wombRect.width / 3, wombRect.width / 3);
+            Rect rect = new Rect(wombRect.xMax - wombRect.width / 3, wombRect.y, wombRect.width / 3, wombRect.width / 3);
             GUI.color = Color.white;
             GUI.DrawTexture(rect, comp.GetEggIcon(), ScaleMode.ScaleToFit);
         }

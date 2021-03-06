@@ -1,14 +1,9 @@
-﻿using System;
+﻿using HarmonyLib;
+using rjw;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using HarmonyLib;
-using Verse;
-using RimWorld;
-using rjw;
 using UnityEngine;
-using Verse.Sound;
+using Verse;
 
 namespace RJW_Menstruation
 {
@@ -38,7 +33,7 @@ namespace RJW_Menstruation
 
 
 
-            
+
             __result = gizmoList;
         }
 
@@ -50,9 +45,9 @@ namespace RJW_Menstruation
 
         }
 
-        private static Gizmo CreateGizmo_WombStatus(Pawn pawn , HediffComp_Menstruation comp)
+        private static Gizmo CreateGizmo_WombStatus(Pawn pawn, HediffComp_Menstruation comp)
         {
-            Texture2D icon,icon_overay;
+            Texture2D icon, icon_overay;
             string description = "";
             if (Configurations.Debug) description += comp.curStage + ": " + comp.curStageHrs + "\n" + "fertcums: " + comp.TotalFertCum + "\n" + "ovarypower: " + comp.ovarypower + "\n" + "eggs: " + comp.GetNumofEggs + "\n";
             else description += comp.GetCurStageLabel + "\n";
