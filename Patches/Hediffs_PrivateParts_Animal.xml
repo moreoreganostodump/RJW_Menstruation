@@ -36,19 +36,20 @@
 		<xpath>Defs/rjw.HediffDef_PartBase[defName="CatVagina"]</xpath>
 		<value>
 			<comps>
-				<li Class="RJW_Menstruation.CompProperties_Menstruation">
+				<li Class="RJW_Menstruation.CompProperties_InducedOvulator">
 					<maxCumCapacity>6</maxCumCapacity>
 					<baseImplantationChanceFactor>1.0</baseImplantationChanceFactor>
 					<basefertilizationChanceFactor>2.0</basefertilizationChanceFactor>
 					<deviationFactor>0.05</deviationFactor>
-					<folicularIntervalDays>6</folicularIntervalDays>
-					<lutealIntervalDays>14</lutealIntervalDays>
+					<folicularIntervalDays>9</folicularIntervalDays>
+					<lutealIntervalDays>10</lutealIntervalDays>
 					<bleedingIntervalDays>0</bleedingIntervalDays>
 					<recoveryIntervalDays>15</recoveryIntervalDays>
-					<eggLifespanDays>14</eggLifespanDays>
+					<eggLifespanDays>1</eggLifespanDays>
 					<wombTex>Womb/Womb</wombTex>
 					<vagTex>Genitals/Vagina</vagTex>
 					<breedingSeason>FirstHalf</breedingSeason>
+					<estrusDaysBeforeOvulation>9</estrusDaysBeforeOvulation>
 				</li>
 			</comps>
 		</value>
@@ -126,19 +127,19 @@
 		<xpath>Defs/rjw.HediffDef_PartBase[defName="RodentVagina"]</xpath>
 		<value>
 			<comps>
-				<li Class="RJW_Menstruation.CompProperties_Menstruation">
+				<li Class="RJW_Menstruation.CompProperties_InducedOvulator">
 					<maxCumCapacity>5</maxCumCapacity>
 					<baseImplantationChanceFactor>1.0</baseImplantationChanceFactor>
 					<basefertilizationChanceFactor>2.0</basefertilizationChanceFactor>
 					<deviationFactor>0.05</deviationFactor>
-					<folicularIntervalDays>2</folicularIntervalDays>
-					<lutealIntervalDays>7</lutealIntervalDays>
+					<folicularIntervalDays>6</folicularIntervalDays>
+					<lutealIntervalDays>9</lutealIntervalDays>
 					<bleedingIntervalDays>0</bleedingIntervalDays>
 					<recoveryIntervalDays>3</recoveryIntervalDays>
-					<eggLifespanDays>7</eggLifespanDays>
+					<eggLifespanDays>1</eggLifespanDays>
 					<wombTex>Womb/Womb</wombTex>
 					<vagTex>Genitals/Vagina</vagTex>
-					<estrusDaysBeforeOvulation>1</estrusDaysBeforeOvulation>
+					<estrusDaysBeforeOvulation>6</estrusDaysBeforeOvulation>
 				</li>
 			</comps>
 		</value>

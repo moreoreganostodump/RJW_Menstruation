@@ -63,7 +63,9 @@ namespace RJW_Menstruation
             
             if (childNodes.Count >= 1) foreach (XmlNode node in childNodes)
                 {
-                    //Log.Message(xmlRoot.Name + "HybridInfo: " + node.Name + " " + node.InnerText);
+#if DEBUG
+                    Log.Message(xmlRoot.Name + "HybridInfo: " + node.Name + " " + node.InnerText);
+#endif
                     hybridInfo.Add(node.Name, ParseHelper.FromString<float>(node.InnerText));
                 }
 

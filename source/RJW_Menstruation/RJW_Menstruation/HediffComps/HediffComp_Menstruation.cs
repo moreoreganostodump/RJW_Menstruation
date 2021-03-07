@@ -97,18 +97,18 @@ namespace RJW_Menstruation
             Anestrus
         }
 
-        private List<Cum> cums;
-        private List<Egg> eggs;
-        private int follicularIntervalhours = -1;
-        private int lutealIntervalhours = -1;
-        private int bleedingIntervalhours = -1;
-        private int recoveryIntervalhours = -1;
-        private float crampPain = -1;
-        private Need sexNeed = null;
-        private string customwombtex = null;
-        private string customvagtex = null;
-        private bool estrusflag = false;
-        private int opcache = -1;
+        protected List<Cum> cums;
+        protected List<Egg> eggs;
+        protected int follicularIntervalhours = -1;
+        protected int lutealIntervalhours = -1;
+        protected int bleedingIntervalhours = -1;
+        protected int recoveryIntervalhours = -1;
+        protected float crampPain = -1;
+        protected Need sexNeed = null;
+        protected string customwombtex = null;
+        protected string customvagtex = null;
+        protected bool estrusflag = false;
+        protected int opcache = -1;
 
         public int ovarypowerthreshold
         {
@@ -586,7 +586,7 @@ namespace RJW_Menstruation
             AfterFluidIn(cumd);
         }
 
-        public void AfterCumIn(Pawn cummer)
+        public virtual void AfterCumIn(Pawn cummer)
         {
             if (xxx.is_human(parent.pawn) && xxx.is_human(cummer))
             {
@@ -1205,6 +1205,150 @@ namespace RJW_Menstruation
             parent.pawn.health.AddHediff(hediff, Genital_Helper.get_genitalsBPR(parent.pawn));
         }
 
+        protected virtual void FollicularAction()
+        {
+            if (!IsBreedingSeason())
+            {
+                GoNextStage(Stage.Anestrus);
+                return;
+            }
+            if (curStageHrs >= FollicularIntervalHours)
+            {
+                GoNextStage(Stage.Ovulatory);
+            }
+            else
+            {
+                curStageHrs += Configurations.CycleAcceleration;
+                if (!estrusflag && curStageHrs > FollicularIntervalHours - Props.estrusDaysBeforeOvulation * 24)
+                {
+                    estrusflag = true;
+                    SetEstrus(Props.eggLifespanDays + Props.estrusDaysBeforeOvulation);
+                }
+                StayCurrentStage();
+            }
+        }
+
+        protected virtual void OvulatoryAction()
+        {
+            estrusflag = false;
+            int i = 0;
+            do
+            {
+                ovarypower--;
+                eggs.Add(new Egg((int)(Props.eggLifespanDays * 24 / CycleFactor)));
+                i++;
+            } while (i < Rand.ByCurve(parent.pawn.RaceProps.litterSizeCurve) + eggstack);
+            eggstack = 0;
+            if (Configurations.EnableMenopause && ovarypower < 1)
+            {
+                eggs.Clear();
+                Hediff hediff = parent.pawn.health.hediffSet.GetFirstHediffOfDef(VariousDefOf.Hediff_Climacteric);
+                if (hediff != null) parent.pawn.health.RemoveHediff(hediff);
+                hediff = HediffMaker.MakeHediff(VariousDefOf.Hediff_Menopause, parent.pawn);
+                hediff.Severity = 0.2f;
+                parent.pawn.health.AddHediff(hediff, Genital_Helper.get_genitalsBPR(parent.pawn));
+                GoNextStage(Stage.Young);
+            }
+            else if (Configurations.EnableMenopause && ovarypower < ovarypowerthreshold)
+            {
+                Hediff hediff = HediffMaker.MakeHediff(VariousDefOf.Hediff_Climacteric, parent.pawn);
+                hediff.Severity = 0.008f * i;
+                parent.pawn.health.AddHediff(hediff, Genital_Helper.get_genitalsBPR(parent.pawn));
+                lutealIntervalhours = PeriodRandomizer(lutealIntervalhours, Props.deviationFactor * 6);
+                GoNextStage(Stage.ClimactericLuteal);
+            }
+            else
+            {
+                lutealIntervalhours = PeriodRandomizer(lutealIntervalhours, Props.deviationFactor);
+                GoNextStage(Stage.Luteal);
+            }
+        }
+
+        protected virtual void LutealAction()
+        {
+            if (!eggs.NullOrEmpty())
+            {
+                EggDecay();
+                FertilizationCheck();
+                if (Implant()) GoNextStage(Stage.Pregnant);
+                else
+                {
+                    curStageHrs += Configurations.CycleAcceleration;
+                    StayCurrentStage();
+                }
+            }
+            else if (curStageHrs <= lutealIntervalhours)
+            {
+                curStageHrs += Configurations.CycleAcceleration;
+                StayCurrentStage();
+            }
+            else
+            {
+                if (Props.bleedingIntervalDays == 0)
+                {
+                    follicularIntervalhours = PeriodRandomizer(follicularIntervalhours, Props.deviationFactor);
+                    GoNextStage(Stage.Follicular);
+                }
+                else
+                {
+                    bleedingIntervalhours = PeriodRandomizer(bleedingIntervalhours, Props.deviationFactor);
+                    if (crampPain >= 0.05f)
+                    {
+                        AddCrampPain();
+                    }
+                    GoNextStage(Stage.Bleeding);
+                }
+            }
+        }
+
+        protected virtual void BleedingAction()
+        {
+            if (curStageHrs >= bleedingIntervalhours)
+            {
+                follicularIntervalhours = PeriodRandomizer(follicularIntervalhours, Props.deviationFactor);
+                Hediff hediff = parent.pawn.health.hediffSet.GetFirstHediffOfDef(VariousDefOf.Hediff_MenstrualCramp);
+                if (hediff != null) parent.pawn.health.RemoveHediff(hediff);
+                GoNextStage(Stage.Follicular);
+            }
+            else
+            {
+                if (curStageHrs < bleedingIntervalhours / 4) for (int i = 0; i < Configurations.CycleAcceleration; i++) BleedOut();
+                curStageHrs += Configurations.CycleAcceleration;
+                StayCurrentStage();
+            }
+        }
+
+        protected virtual void PregnantAction()
+        {
+            if (!eggs.NullOrEmpty())
+            {
+                EggDecay();
+                FertilizationCheck();
+                Implant();
+            }
+            if (parent.pawn.IsPregnant()) StayCurrentStageConst(Stage.Pregnant);
+            else GoNextStage(Stage.Recover);
+        }
+
+        protected virtual void YoungAction()
+        {
+            if (parent.pawn.health.capacities.GetLevel(xxx.reproduction) <= 0) StayCurrentStageConst(Stage.Young);
+            else GoNextStage(Stage.Follicular);
+        }
+
+        protected virtual void AnestrusAction()
+        {
+            if (IsBreedingSeason())
+            {
+                GoFollicularOrBleeding();
+            }
+            else
+            {
+                StayCurrentStage();
+            }
+        }
+
+
         private Action PeriodSimulator(Stage targetstage)
         {
             Action action = null;
@@ -1213,118 +1357,25 @@ namespace RJW_Menstruation
                 case Stage.Follicular:
                     action = delegate
                     {
-                        if (!IsBreedingSeason())
-                        {
-                            GoNextStage(Stage.Anestrus);
-                            return;
-                        }
-                        if (curStageHrs >= FollicularIntervalHours)
-                        {
-                            GoNextStage(Stage.Ovulatory);
-                        }
-                        else
-                        {
-                            curStageHrs += Configurations.CycleAcceleration;
-                            if (!estrusflag && curStageHrs > FollicularIntervalHours - Props.estrusDaysBeforeOvulation * 24)
-                            {
-                                estrusflag = true;
-                                SetEstrus(Props.eggLifespanDays + Props.estrusDaysBeforeOvulation);
-                            }
-                            StayCurrentStage();
-                        }
+                        FollicularAction();
                     };
                     break;
                 case Stage.Ovulatory:
                     action = delegate
                     {
-                        estrusflag = false;
-                        int i = 0;
-                        do
-                        {
-                            ovarypower--;
-                            eggs.Add(new Egg((int)(Props.eggLifespanDays * 24 / CycleFactor)));
-                            i++;
-                        } while (i < Rand.ByCurve(parent.pawn.RaceProps.litterSizeCurve) + eggstack);
-                        eggstack = 0;
-                        if (Configurations.EnableMenopause && ovarypower < 1)
-                        {
-                            eggs.Clear();
-                            Hediff hediff = parent.pawn.health.hediffSet.GetFirstHediffOfDef(VariousDefOf.Hediff_Climacteric);
-                            if (hediff != null) parent.pawn.health.RemoveHediff(hediff);
-                            hediff = HediffMaker.MakeHediff(VariousDefOf.Hediff_Menopause, parent.pawn);
-                            hediff.Severity = 0.2f;
-                            parent.pawn.health.AddHediff(hediff, Genital_Helper.get_genitalsBPR(parent.pawn));
-                            GoNextStage(Stage.Young);
-                        }
-                        else if (Configurations.EnableMenopause && ovarypower < ovarypowerthreshold)
-                        {
-                            Hediff hediff = HediffMaker.MakeHediff(VariousDefOf.Hediff_Climacteric, parent.pawn);
-                            hediff.Severity = 0.008f * i;
-                            parent.pawn.health.AddHediff(hediff, Genital_Helper.get_genitalsBPR(parent.pawn));
-                            lutealIntervalhours = PeriodRandomizer(lutealIntervalhours, Props.deviationFactor * 6);
-                            GoNextStage(Stage.ClimactericLuteal);
-                        }
-                        else
-                        {
-                            lutealIntervalhours = PeriodRandomizer(lutealIntervalhours, Props.deviationFactor);
-                            GoNextStage(Stage.Luteal);
-                        }
+                        OvulatoryAction();
                     };
                     break;
                 case Stage.Luteal:
                     action = delegate
                     {
-                        if (!eggs.NullOrEmpty())
-                        {
-                            EggDecay();
-                            FertilizationCheck();
-                            if (Implant()) GoNextStage(Stage.Pregnant);
-                            else
-                            {
-                                curStageHrs += Configurations.CycleAcceleration;
-                                StayCurrentStage();
-                            }
-                        }
-                        else if (curStageHrs <= lutealIntervalhours)
-                        {
-                            curStageHrs += Configurations.CycleAcceleration;
-                            StayCurrentStage();
-                        }
-                        else
-                        {
-                            if (Props.bleedingIntervalDays == 0)
-                            {
-                                follicularIntervalhours = PeriodRandomizer(follicularIntervalhours, Props.deviationFactor);
-                                GoNextStage(Stage.Follicular);
-                            }
-                            else
-                            {
-                                bleedingIntervalhours = PeriodRandomizer(bleedingIntervalhours, Props.deviationFactor);
-                                if (crampPain >= 0.05f)
-                                {
-                                    AddCrampPain();
-                                }
-                                GoNextStage(Stage.Bleeding);
-                            }
-                        }
+                        LutealAction();
                     };
                     break;
                 case Stage.Bleeding:
                     action = delegate
                     {
-                        if (curStageHrs >= bleedingIntervalhours)
-                        {
-                            follicularIntervalhours = PeriodRandomizer(follicularIntervalhours, Props.deviationFactor);
-                            Hediff hediff = parent.pawn.health.hediffSet.GetFirstHediffOfDef(VariousDefOf.Hediff_MenstrualCramp);
-                            if (hediff != null) parent.pawn.health.RemoveHediff(hediff);
-                            GoNextStage(Stage.Follicular);
-                        }
-                        else
-                        {
-                            if (curStageHrs < bleedingIntervalhours / 4) for (int i = 0; i < Configurations.CycleAcceleration; i++) BleedOut();
-                            curStageHrs += Configurations.CycleAcceleration;
-                            StayCurrentStage();
-                        }
+                        BleedingAction();
                     };
                     break;
                 case Stage.Fertilized:  //Obsoleted stage. merged in luteal stage
@@ -1332,35 +1383,12 @@ namespace RJW_Menstruation
                     {
                         ModLog.Message("Obsoleted stage. skipping...");
                         GoNextStage(Stage.Luteal);
-                        //if (curStageHrs >= 24)
-                        //{
-                        //    if (Implant())
-                        //    {
-                        //        GoNextStage(Stage.Pregnant);
-                        //    }
-                        //    else
-                        //    {
-                        //        GoNextStageSetHour(Stage.Luteal, 96);
-                        //    }
-                        //}
-                        //else
-                        //{
-                        //    curStageHrs+=Configurations.CycleAcceleration;
-                        //    StayCurrentStage();
-                        //}
                     };
                     break;
                 case Stage.Pregnant:
                     action = delegate
                     {
-                        if (!eggs.NullOrEmpty())
-                        {
-                            EggDecay();
-                            FertilizationCheck();
-                            Implant();
-                        }
-                        if (parent.pawn.IsPregnant()) StayCurrentStageConst(Stage.Pregnant);
-                        else GoNextStage(Stage.Recover);
+                        PregnantAction();
                     };
                     break;
                 case Stage.Recover:
@@ -1398,8 +1426,7 @@ namespace RJW_Menstruation
                 case Stage.Young:
                     action = delegate
                     {
-                        if (parent.pawn.health.capacities.GetLevel(xxx.reproduction) <= 0) StayCurrentStageConst(Stage.Young);
-                        else GoNextStage(Stage.Follicular);
+                        YoungAction();
                     };
                     break;
                 case Stage.ClimactericFollicular:
@@ -1484,14 +1511,7 @@ namespace RJW_Menstruation
                 case Stage.Anestrus:
                     action = delegate
                     {
-                        if (IsBreedingSeason())
-                        {
-                            GoFollicularOrBleeding();
-                        }
-                        else
-                        {
-                            StayCurrentStage();
-                        }
+                        AnestrusAction();
                     };
                     break;
                 default:
@@ -1511,48 +1531,50 @@ namespace RJW_Menstruation
             actionref = action;
             return actionref;
 
-            void GoNextStage(Stage nextstage, float factor = 1.0f)
+            
+
+
+        }
+
+        protected void GoNextStage(Stage nextstage, float factor = 1.0f)
+        {
+            curStageHrs = 0;
+            curStage = nextstage;
+            HugsLibController.Instance.TickDelayScheduler.ScheduleCallback(PeriodSimulator(nextstage), (int)(tickInterval * factor), parent.pawn, false);
+        }
+
+
+        protected void GoNextStageSetHour(Stage nextstage, int hour, float factor = 1.0f)
+        {
+            curStageHrs = hour;
+            curStage = nextstage;
+            HugsLibController.Instance.TickDelayScheduler.ScheduleCallback(PeriodSimulator(nextstage), (int)(tickInterval * factor), parent.pawn, false);
+        }
+
+        //stage can be interrupted in other reasons
+        protected void StayCurrentStage(float factor = 1.0f)
+        {
+            HugsLibController.Instance.TickDelayScheduler.ScheduleCallback(PeriodSimulator(curStage), (int)(tickInterval * factor), parent.pawn, false);
+        }
+
+        //stage never changes
+        protected void StayCurrentStageConst(Stage curstage, float factor = 1.0f)
+        {
+            HugsLibController.Instance.TickDelayScheduler.ScheduleCallback(PeriodSimulator(curstage), (int)(tickInterval * factor), parent.pawn, false);
+        }
+
+        protected void GoFollicularOrBleeding()
+        {
+            if (Props.bleedingIntervalDays == 0)
             {
-                curStageHrs = 0;
-                curStage = nextstage;
-                HugsLibController.Instance.TickDelayScheduler.ScheduleCallback(PeriodSimulator(nextstage), (int)(tickInterval * factor), parent.pawn, false);
+                follicularIntervalhours = PeriodRandomizer(follicularIntervalhours, Props.deviationFactor);
+                GoNextStage(Stage.Follicular);
             }
-
-
-            void GoNextStageSetHour(Stage nextstage, int hour, float factor = 1.0f)
+            else
             {
-                curStageHrs = hour;
-                curStage = nextstage;
-                HugsLibController.Instance.TickDelayScheduler.ScheduleCallback(PeriodSimulator(nextstage), (int)(tickInterval * factor), parent.pawn, false);
+                bleedingIntervalhours = PeriodRandomizer(bleedingIntervalhours, Props.deviationFactor);
+                GoNextStage(Stage.Bleeding);
             }
-
-            //stage can be interrupted in other reasons
-            void StayCurrentStage(float factor = 1.0f)
-            {
-                HugsLibController.Instance.TickDelayScheduler.ScheduleCallback(PeriodSimulator(curStage), (int)(tickInterval * factor), parent.pawn, false);
-            }
-
-            //stage never changes
-            void StayCurrentStageConst(Stage curstage, float factor = 1.0f)
-            {
-                HugsLibController.Instance.TickDelayScheduler.ScheduleCallback(PeriodSimulator(curstage), (int)(tickInterval * factor), parent.pawn, false);
-            }
-
-            void GoFollicularOrBleeding()
-            {
-                if (Props.bleedingIntervalDays == 0)
-                {
-                    follicularIntervalhours = PeriodRandomizer(follicularIntervalhours, Props.deviationFactor);
-                    GoNextStage(Stage.Follicular);
-                }
-                else
-                {
-                    bleedingIntervalhours = PeriodRandomizer(bleedingIntervalhours, Props.deviationFactor);
-                    GoNextStage(Stage.Bleeding);
-                }
-            }
-
-
         }
 
 

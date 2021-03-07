@@ -227,8 +227,9 @@ namespace RJW_Menstruation
 
         public static Texture2D GetGenitalIcon(this Pawn pawn)
         {
-            var hediff = Genital_Helper.get_PartsHediffList(pawn, Genital_Helper.get_genitalsBPR(pawn)).Find((Hediff h) => h.def.defName.ToLower().Contains("vagina"));
-            HediffComp_Menstruation comp = pawn.GetMenstruationComp();
+            var hediff = Genital_Helper.get_PartsHediffList(pawn, Genital_Helper.get_genitalsBPR(pawn))?.Find((Hediff h) => h.def.defName.ToLower().Contains("vagina"));
+            if (hediff == null) return ContentFinder<Texture2D>.Get("Genitals/Vagina00", true);
+            HediffComp_Menstruation comp = hediff.GetMenstruationComp();
             string icon;
             if (comp != null) icon = comp.vagTex;
             else icon = "Genitals/Vagina";
@@ -254,7 +255,7 @@ namespace RJW_Menstruation
             var hediff = Genital_Helper.get_PartsHediffList(pawn, Genital_Helper.get_anusBPR(pawn)).FirstOrDefault((Hediff h) => h.def.defName.ToLower().Contains("anus"));
             if (hediff != null)
             {
-                CompProperties_Anus Props = (CompProperties_Anus)hediff.TryGetComp<HediffComp_Anus>().props;
+                CompProperties_Anus Props = (CompProperties_Anus)hediff.TryGetComp<HediffComp_Anus>()?.props;
                 string icon;
                 if (Props != null) icon = Props.analTex ?? "Genitals/Anal";
                 else icon = "Genitals/Anal";

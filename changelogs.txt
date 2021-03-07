@@ -1,3 +1,8 @@
+Version 1.0.1.13
+ - requires RJW 4.6.1 or later
+ - added induced ovulator
+   - fenline and rodent vagina ovulate after sex in follicular stage
+ - minor bug fix
 Version 1.0.1.12
  - requires RJW 4.6.1 or later
  - added HybridExtension attribute to PawnDNAModExtension
