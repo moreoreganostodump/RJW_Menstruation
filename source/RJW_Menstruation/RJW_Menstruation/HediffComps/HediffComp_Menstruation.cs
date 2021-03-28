@@ -1020,7 +1020,7 @@ namespace RJW_Menstruation
             return false;
         }
 
-        private Pawn Fertilize()
+        protected Pawn Fertilize()
         {
             if (cums.NullOrEmpty()) return null;
             foreach (Cum cum in cums)
@@ -1036,7 +1036,7 @@ namespace RJW_Menstruation
         }
 
         //for now, only one egg can be implanted
-        private bool Implant()
+        protected bool Implant()
         {
             if (!eggs.NullOrEmpty())
             {
@@ -1107,7 +1107,7 @@ namespace RJW_Menstruation
             return false;
         }
 
-        private void BleedOut()
+        protected void BleedOut()
         {
             //FilthMaker.TryMakeFilth(parent.pawn.Position, parent.pawn.Map, ThingDefOf.Filth_Blood,parent.pawn.Label);
             CumIn(parent.pawn, Rand.Range(0.02f * Configurations.BleedingAmount, 0.04f * Configurations.BleedingAmount), Translations.Menstrual_Blood, -5.0f, ThingDefOf.Filth_Blood);
@@ -1119,7 +1119,7 @@ namespace RJW_Menstruation
         /// </summary>
         /// <param name="cum"></param>
         /// <param name="amount"></param>
-        private void MakeCumFilth(Cum cum, float amount)
+        protected void MakeCumFilth(Cum cum, float amount)
         {
             if (amount >= minmakefilthvalue) FilthMaker.TryMakeFilth(parent.pawn.Position, parent.pawn.Map, cum.FilthDef, cum.pawn?.LabelShort ?? "Unknown");
         }
@@ -1131,7 +1131,7 @@ namespace RJW_Menstruation
         /// <param name="amount"></param>
         /// <param name="absorber"></param>
         /// <returns></returns>
-        private float AbsorbCum(Cum cum, float amount, Absorber absorber)
+        protected float AbsorbCum(Cum cum, float amount, Absorber absorber)
         {
 
             if (absorber != null)
@@ -1163,7 +1163,7 @@ namespace RJW_Menstruation
             return 0;
         }
 
-        private float MakeCumFilthMixture(float amount, List<string> cumlabels)
+        protected float MakeCumFilthMixture(float amount, List<string> cumlabels)
         {
 
             if (amount >= minmakefilthvalue)
@@ -1176,7 +1176,7 @@ namespace RJW_Menstruation
 
 
 
-        private void EggDecay()
+        protected void EggDecay()
         {
             List<Egg> deadeggs = new List<Egg>();
             foreach (Egg egg in eggs)
@@ -1196,7 +1196,7 @@ namespace RJW_Menstruation
             }
         }
 
-        private void AddCrampPain()
+        protected void AddCrampPain()
         {
             Hediff hediff = HediffMaker.MakeHediff(VariousDefOf.Hediff_MenstrualCramp, parent.pawn);
             hediff.Severity = crampPain * Rand.Range(0.9f, 1.1f);
@@ -1578,18 +1578,22 @@ namespace RJW_Menstruation
         }
 
 
-        private int PeriodRandomizer(int intervalhours, float deviation)
+        protected int PeriodRandomizer(int intervalhours, float deviation)
         {
             return intervalhours + (int)(intervalhours * Rand.Range(-deviation, deviation));
         }
 
-        private float InterspeciesImplantFactor(Pawn fertilizer)
+        protected float InterspeciesImplantFactor(Pawn fertilizer)
         {
-            if (RJWPregnancySettings.complex_interspecies) return SexUtility.BodySimilarity(parent.pawn, fertilizer);
-            else return RJWPregnancySettings.interspecies_impregnation_modifier;
+            if (fertilizer.def.defName == parent.pawn.def.defName) return 1.0f;
+            else
+            {
+                if (RJWPregnancySettings.complex_interspecies) return SexUtility.BodySimilarity(parent.pawn, fertilizer);
+                else return RJWPregnancySettings.interspecies_impregnation_modifier;
+            }
         }
 
-        private float PainRandomizer()
+        protected float PainRandomizer()
         {
             float rand = Rand.Range(0.0f, 1.0f);
             if (rand < 0.01f) return Rand.Range(0.0f, 0.2f);
@@ -1599,7 +1603,7 @@ namespace RJW_Menstruation
             else return Rand.Range(0.6f, 1.0f);
         }
 
-        private Stage RandomStage()
+        protected Stage RandomStage()
         {
             int rand = Rand.Range(0, 2);
 

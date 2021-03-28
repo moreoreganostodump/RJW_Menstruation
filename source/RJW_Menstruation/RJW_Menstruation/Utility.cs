@@ -139,22 +139,12 @@ namespace RJW_Menstruation
             if (hediff is Hediff_BasePregnancy)
             {
                 Hediff_BasePregnancy h = (Hediff_BasePregnancy)hediff;
-                return h?.babies?.First() ?? null;
-            }
-            //else if (hediff is Hediff_HumanlikePregnancy)
-            //{
-            //    Hediff_HumanlikePregnancy h = (Hediff_HumanlikePregnancy)hediff;
-            //    return h?.babies?.First() ?? null;
-            //}
-            //else if (hediff is Hediff_BestialPregnancy)
-            //{
-            //    Hediff_BestialPregnancy h = (Hediff_BestialPregnancy)hediff;
-            //    return h?.babies?.First() ?? null;
-            //}
-            else if (hediff is Hediff_MechanoidPregnancy)
-            {
-                Hediff_MechanoidPregnancy h = (Hediff_MechanoidPregnancy)hediff;
-                return h?.babies?.First() ?? null;
+                if (!h.babies.NullOrEmpty()) return h.babies.First();
+                else
+                {
+                    Log.Error("Baby not exist: baby was not created or removed");
+                    return null;
+                }
             }
 
 
@@ -368,7 +358,7 @@ namespace RJW_Menstruation
             }
         }
 
-
+        
 
     }
 }
