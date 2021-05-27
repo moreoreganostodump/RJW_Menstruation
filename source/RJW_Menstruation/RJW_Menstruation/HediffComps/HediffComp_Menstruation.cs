@@ -1355,28 +1355,16 @@ namespace RJW_Menstruation
             switch (targetstage)
             {
                 case Stage.Follicular:
-                    action = delegate
-                    {
-                        FollicularAction();
-                    };
+                    action = FollicularAction;
                     break;
                 case Stage.Ovulatory:
-                    action = delegate
-                    {
-                        OvulatoryAction();
-                    };
+                    action = OvulatoryAction;
                     break;
                 case Stage.Luteal:
-                    action = delegate
-                    {
-                        LutealAction();
-                    };
+                    action = LutealAction;
                     break;
                 case Stage.Bleeding:
-                    action = delegate
-                    {
-                        BleedingAction();
-                    };
+                    action = BleedingAction;
                     break;
                 case Stage.Fertilized:  //Obsoleted stage. merged in luteal stage
                     action = delegate
@@ -1386,10 +1374,7 @@ namespace RJW_Menstruation
                     };
                     break;
                 case Stage.Pregnant:
-                    action = delegate
-                    {
-                        PregnantAction();
-                    };
+                    action = PregnantAction;
                     break;
                 case Stage.Recover:
                     action = delegate
@@ -1424,10 +1409,7 @@ namespace RJW_Menstruation
                     };
                     break;
                 case Stage.Young:
-                    action = delegate
-                    {
-                        YoungAction();
-                    };
+                    action = YoungAction;
                     break;
                 case Stage.ClimactericFollicular:
                     action = delegate
@@ -1509,10 +1491,7 @@ namespace RJW_Menstruation
                     };
                     break;
                 case Stage.Anestrus:
-                    action = delegate
-                    {
-                        AnestrusAction();
-                    };
+                    action = AnestrusAction;
                     break;
                 default:
                     curStage = Stage.Follicular;
@@ -1521,7 +1500,7 @@ namespace RJW_Menstruation
                     HugsLibController.Instance.TickDelayScheduler.ScheduleCallback(PeriodSimulator(Stage.Follicular), tickInterval, parent.pawn, false);
                     break;
             }
-            action += () =>
+            action += delegate
             {
                 if (parent.pawn.health.capacities.GetLevel(xxx.reproduction) <= 0) curStage = Stage.Young;
                 CumOut();

@@ -4,7 +4,7 @@
   <ThingDef ParentName="ApparelNoQualityBase">
     <defName>Absorber_Tampon</defName>
     <label>tampon</label>
-    <description>A tampon for absorbing fluids from vagina</description>
+    <description>A tampon for absorbing fluids from vagina.&#10;May cause infection if using too long.</description>
     <thingClass>RJW_Menstruation.Absorber_Tampon</thingClass>
     <graphicData>
       <texPath>Things/Item/Tampon</texPath>
@@ -63,7 +63,7 @@
 		<li Class="RJW_Menstruation.AbsorberModExtension">
 			<leakAfterDirty>false</leakAfterDirty>
 			<effectsAfterDirty>true</effectsAfterDirty>
-			<minHourstoDirtyEffect>8</minHourstoDirtyEffect>
+			<minHourstoDirtyEffect>10</minHourstoDirtyEffect>
 			<dirtyDef>Absorber_Tampon_Dirty</dirtyDef>
 		</li>
 	</modExtensions>
@@ -72,7 +72,7 @@
   <ThingDef ParentName="ApparelNoQualityBase">
 	<defName>Absorber_Tampon_Dirty</defName>
     <label>dirty tampon</label>
-    <description>An wet used tampon</description>
+    <description>An wet used tampon.&#10;May cause infection.</description>
     <thingClass>RJW_Menstruation.Absorber_Tampon</thingClass>
     <graphicData>
       <texPath>Things/Item/Tampon</texPath>
@@ -126,7 +126,7 @@
   <ThingDef ParentName="ApparelNoQualityBase">
     <defName>Absorber_Pad</defName>
     <label>sanitary pad</label>
-    <description>A pad for absorbing fluids from vagina</description>
+    <description>A pad for absorbing fluids from vagina.</description>
     <thingClass>RJW_Menstruation.Absorber</thingClass>
     <graphicData>
       <texPath>Things/Item/Pad</texPath>
@@ -192,7 +192,7 @@
   <ThingDef ParentName="ApparelNoQualityBase">
 	<defName>Absorber_Pad_Dirty</defName>
     <label>wet sanitary pad</label>
-    <description>An wet used pad</description>
+    <description>An wet used pad.</description>
     <thingClass>RJW_Menstruation.Absorber</thingClass>
     <graphicData>
       <texPath>Things/Item/Pad</texPath>

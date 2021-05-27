@@ -30,13 +30,13 @@
   <Option2_Label>enable animal cycle</Option2_Label>
   <Option2_Desc>simulate animal's cycle.&#10;this option will apply after save loaded&#10;not recommended</Option2_Desc>
   <Option3_Label>implantation chance</Option3_Label>
-  <Option3_Desc>set implantation chance of fertilized egg</Option3_Desc>
+  <Option3_Desc>set implantation chance of fertilized egg&#10;this value determines finalizing chacne of impregnation</Option3_Desc>
   <Option4_Label>fertilization chance</Option4_Label>
-  <Option4_Desc>set fertilize chance of sperm on every hour</Option4_Desc>
+  <Option4_Desc>set fertilize chance of 1mL of sperm on every hour&#10;this value determines beginning chance of impregnation</Option4_Desc>
   <Option5_Label>cum decay ratio per hour</Option5_Label>
-  <Option5_Desc>cum will decrease about this ratio</Option5_Desc>
+  <Option5_Desc>cum will decrease about this ratio&#10;this value affects on the fertility chacne indirectly</Option5_Desc>
   <Option6_Label>cum fertility decay ratio per hour</Option6_Label>
-  <Option6_Desc>cum will lose fertility about this ratio</Option6_Desc>
+  <Option6_Desc>cum will lose fertility about this ratio&#10;this value affects on the fertility chance indirectly</Option6_Desc>
   <Option7_Label>cycle accelerate</Option7_Label>
   <Option7_Desc>accelerate menstrution cycle</Option7_Desc>
   <Option8_Label>Debug</Option8_Label>
@@ -53,7 +53,7 @@
   <Option12_Label>enable menopause</Option12_Label>
   <Option12_Desc>enable menopause effect that makes pawn infertile in time progress&#10;if you have problems with long life races, turn off this option.&#10;this option will apply after save loaded</Option12_Desc>
   <Option13_Label>use multiple pregnancy</Option13_Label>
-  <Option13_Desc>use multiple pregnancy instead RJW's default pregnancy</Option13_Desc>
+  <Option13_Desc>use multiple pregnancy instead RJW's default pregnancy&#10;disable this option if you are in trouble with impregnation</Option13_Desc>
   <Option14_Label>enable hetero ovular twins</Option14_Label>
   <Option14_Desc>enable multiple eggs can get pregnant</Option14_Desc>
   <Option15_Label>enable enzygotic twins</Option15_Label>

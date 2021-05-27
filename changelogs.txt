@@ -1,3 +1,12 @@
+Version 1.0.1.15
+ - added more descrption on the mod options
+ - sick thought of in period removed
+ - pain offset of in period decreased
+ - added pain reliever
+ - added description for tampon about infection
+ - infection chance of dirty tampon decreased 2% to 1%
+
+
 Version 1.0.1.14
  - requires RJW 4.6.1 or later
  - fixed interspecies factor applied to normal pregnancy

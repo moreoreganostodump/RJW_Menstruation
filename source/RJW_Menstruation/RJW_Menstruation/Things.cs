@@ -134,7 +134,7 @@ namespace RJW_Menstruation
 
         public override void DirtyEffect()
         {
-            if (wearhours > MinHrstoDirtyEffect && Rand.Chance(0.02f))
+            if (wearhours > MinHrstoDirtyEffect && Rand.Chance(0.01f))
             {
                 Wearer.health.AddHediff(HediffDefOf.WoundInfection, Genital_Helper.get_genitalsBPR(Wearer));
             }

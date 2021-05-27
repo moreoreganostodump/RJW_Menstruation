@@ -1,17 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
   <Absorber_Tampon.label>탐폰</Absorber_Tampon.label>
-  <Absorber_Tampon.description>보지에서 나오는 액체를 흡수하는 탐폰입니다.</Absorber_Tampon.description>
+  <Absorber_Tampon.description>보지에서 나오는 액체를 흡수하는 탐폰입니다.&#10;오래 착용하고 있을 경우 감염이 발생할수도 있습니다.</Absorber_Tampon.description>
   <Absorber_Tampon_Dirty.label>더러운 탐폰</Absorber_Tampon_Dirty.label>
   <Absorber_Tampon_Dirty.description>사용된 축축한 탐폰입니다.</Absorber_Tampon_Dirty.description>
   <Absorber_Pad.label>생리대</Absorber_Pad.label>
-  <Absorber_Pad.description>보지에서 나오는 액체를 흡수하는 생리대입니다.</Absorber_Pad.description>
+  <Absorber_Pad.description>보지에서 나오는 액체를 흡수하는 생리대입니다.&#10;흡수량 이상의 액체가 나올경우 샐수있습니다.</Absorber_Pad.description>
   <Absorber_Pad_Dirty.label>젖은 생리대</Absorber_Pad_Dirty.label>
   <Absorber_Pad_Dirty.description>사용된 축축한 생리대입니다.</Absorber_Pad_Dirty.description>
   <OvaryRegenerationPill.label>난소 재생약</OvaryRegenerationPill.label>
   <OvaryRegenerationPill.description>난소를 재생시켜 배출할수있는 난자의 양을 증가시킵니다.&#10;난자 소모량이 클수록 효과가 줄어듭니다.&#10;갱년기 증상을 완화시키지 않습니다.</OvaryRegenerationPill.description>
   <SuperovulationInducingAgent.label>과배란 유도제</SuperovulationInducingAgent.label>
   <SuperovulationInducingAgent.description>과배란을 유도하는 약물입니다.&#10;조기폐경을 초래할수도 있습니다.</SuperovulationInducingAgent.description>
+  <PainReliever.label>진통제</PainReliever.label>
+  <PainReliever.description>하루동안 약간의 통증을 줄여줍니다.</PainReliever.description>
   <FilthMixture.label>혼합물</FilthMixture.label>
   
   

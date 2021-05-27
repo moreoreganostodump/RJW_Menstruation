@@ -9,7 +9,7 @@
 		<defaultLabelColor>(0.70,0.00,0.00)</defaultLabelColor>	
 		<isBad>true</isBad>
 		<tendable>false</tendable>
-		<makesSickThought>true</makesSickThought>
+		<makesSickThought>false</makesSickThought>
 		<makesAlert>false</makesAlert>	
 		<maxSeverity>1</maxSeverity>
 		<initialSeverity>0.1</initialSeverity>
@@ -23,7 +23,7 @@
 					<SexFrequency>0.50</SexFrequency>
 					<SexSatisfaction>0.95</SexSatisfaction>
 				</statFactors>
-				<painOffset>0.05</painOffset>
+				<painOffset>0.005</painOffset>
 			</li>
 			<li>
 				<minSeverity>0.2</minSeverity>
@@ -32,7 +32,7 @@
 					<SexFrequency>0.40</SexFrequency>
 					<SexSatisfaction>0.95</SexSatisfaction>
 				</statFactors>
-				<painOffset>0.1</painOffset>
+				<painOffset>0.01</painOffset>
 			</li>
 			<li>
 				<minSeverity>0.4</minSeverity>
@@ -41,7 +41,7 @@
 					<SexFrequency>0.20</SexFrequency>
 					<SexSatisfaction>0.95</SexSatisfaction>
 				</statFactors>
-				<painOffset>0.2</painOffset>
+				<painOffset>0.10</painOffset>
 			</li>
 			<li>
 				<minSeverity>0.6</minSeverity>
@@ -50,7 +50,7 @@
 					<SexFrequency>0.0</SexFrequency>
 					<SexSatisfaction>0.95</SexSatisfaction>
 				</statFactors>
-				<painOffset>0.4</painOffset>
+				<painOffset>0.20</painOffset>
 			</li>
 		</stages>	
 		<comps>
@@ -236,4 +236,28 @@
 		</comps>
 	</HediffDef>
 	
+	
+	<HediffDef Name="Hediff_PainReliever">
+		<hediffClass>HediffWithComps</hediffClass>
+		<defName>Hediff_PainReliever</defName>
+		<label>Pain reliever</label>
+		<description>relieves pain.</description>
+		<defaultLabelColor>(0.75,0.75,1.0)</defaultLabelColor>	
+		<isBad>false</isBad>
+		<tendable>false</tendable>
+		<makesSickThought>false</makesSickThought>
+		<makesAlert>false</makesAlert>	
+		<maxSeverity>5</maxSeverity>
+		<initialSeverity>1.0</initialSeverity>
+		<stages>
+			<li>
+				<painOffset>-0.1</painOffset>
+			</li>
+		</stages>	
+		<comps>
+			<li Class="HediffCompProperties_SeverityPerDay">
+				<severityPerDay>-1.0</severityPerDay>
+			</li>
+		</comps>
+	</HediffDef>
 </Defs>

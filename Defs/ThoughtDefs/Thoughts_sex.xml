@@ -11,7 +11,7 @@
 			<li>
 				<label>dripping fluids</label>
 				<description>It bothers me.</description>
-				<baseMoodEffect>-2</baseMoodEffect>
+				<baseMoodEffect>-1</baseMoodEffect>
 			</li>
 		</stages>
 	</ThoughtDef>
