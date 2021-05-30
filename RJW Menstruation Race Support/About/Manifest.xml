@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Manifest>
+	<identifier>RJW Menstruation Race Support</identifier>
+	<version>8.9.0</version>
+	<dependencies>
+	</dependencies>
+	<incompatibleWith />
+	<loadAfter>
+	</loadAfter>
+	<suggests>
+	</suggests>
+</Manifest>

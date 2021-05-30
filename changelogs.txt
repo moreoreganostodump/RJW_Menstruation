@@ -1,3 +1,7 @@
+Version 1.0.2.0
+ - support for RJW Race Support
+ - fixed erros with pawns that the litter size curve is not defined
+
 Version 1.0.1.15
  - added more descrption on the mod options
  - sick thought of in period removed
@@ -5,7 +9,6 @@ Version 1.0.1.15
  - added pain reliever
  - added description for tampon about infection
  - infection chance of dirty tampon decreased 2% to 1%
-
 
 Version 1.0.1.14
  - requires RJW 4.6.1 or later

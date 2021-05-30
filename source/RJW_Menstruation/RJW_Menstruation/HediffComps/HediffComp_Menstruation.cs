@@ -1232,12 +1232,22 @@ namespace RJW_Menstruation
         {
             estrusflag = false;
             int i = 0;
+            float eggnum;
+            try
+            {
+                eggnum = Rand.ByCurve(parent.pawn.RaceProps.litterSizeCurve) + eggstack;
+            }
+            catch(NullReferenceException)
+            {
+                eggnum = 1 + eggstack;
+            }
+
             do
             {
                 ovarypower--;
                 eggs.Add(new Egg((int)(Props.eggLifespanDays * 24 / CycleFactor)));
                 i++;
-            } while (i < Rand.ByCurve(parent.pawn.RaceProps.litterSizeCurve) + eggstack);
+            } while (i < (int)eggnum);
             eggstack = 0;
             if (Configurations.EnableMenopause && ovarypower < 1)
             {
