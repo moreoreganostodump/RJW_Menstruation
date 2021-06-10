@@ -37,6 +37,15 @@ namespace RJW_Menstruation
         public static readonly CompProperties_Menstruation VaginaCompProperties = (CompProperties_Menstruation)Vagina.comps.FirstOrDefault(x => x is CompProperties_Menstruation);
         public static readonly KeyBindingDef OpenStatusWindowKey = DefDatabase<KeyBindingDef>.GetNamed("OpenStatusWindow");
 
+
+        // Defs from Milkable Colonists
+        public static readonly HediffDef Hediff_Lactating_Drug = DefDatabase<HediffDef>.GetNamedSilentFail("Lactating_Drug");
+        public static readonly HediffDef Hediff_Lactating_Natural = DefDatabase<HediffDef>.GetNamedSilentFail("Lactating_Natural");
+        public static readonly HediffDef Hediff_Lactating_Permanent = DefDatabase<HediffDef>.GetNamedSilentFail("Lactating_Permanent");
+        public static readonly HediffDef Hediff_Heavy_Lactating_Permanent = DefDatabase<HediffDef>.GetNamedSilentFail("Heavy_Lactating_Permanent");
+        public static readonly JobDef Job_LactateSelf = DefDatabase<JobDef>.GetNamed("LactateSelf");
+
+
         // Defs from Licentia Labs
         public static readonly HediffDef Cumflation = DefDatabase<HediffDef>.GetNamedSilentFail("Cumflation");
         public static readonly ThoughtDef GotOverCumflated = DefDatabase<ThoughtDef>.GetNamedSilentFail("GotOverCumflated");

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Patch>
+	<Operation Class="PatchOperationConditional">
+		<xpath>/Defs/ThingDef[defName="HumanMilk" or defName="HumanoidMilk"]/graphicData</xpath>
+		<match Class="PatchOperationReplace">
+			<xpath>/Defs/ThingDef[defName="HumanMilk" or defName="HumanoidMilk"]/graphicData</xpath>
+			<value>
+				<graphicData>
+					<texPath>Things/Item/Milkbottle</texPath>
+					<graphicClass>Graphic_StackCount</graphicClass>
+				</graphicData>
+			</value>
+		</match>
+	</Operation>
+	
+	
+</Patch>

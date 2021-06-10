@@ -2,14 +2,22 @@
 using rjw;
 using System;
 using System.Linq;
+using System.Collections.Generic;
 using UnityEngine;
 using Verse;
+using Verse.Sound;
+using System.Threading;
+using System.Threading.Tasks;
+
 
 namespace RJW_Menstruation
 {
     public static class Colors
     {
         public static Color blood = new Color(0.78f, 0, 0);
+        //public static Color nippleblack = new Color(0.215f, 0.078f, 0); // 81,20,0
+        public static ColorInt white = new ColorInt(255,255,255,255);
+
 
 
         public static Color CMYKLerp(Color a, Color b, float t)
@@ -41,8 +49,7 @@ namespace RJW_Menstruation
 
     public static class Utility
     {
-
-
+        public static System.Random random = new System.Random(Environment.TickCount);
 
         public static float GetCumVolume(this Pawn pawn)
         {
@@ -64,6 +71,7 @@ namespace RJW_Menstruation
 
             return res;
         }
+
 
         public static HediffComp_Menstruation GetMenstruationComp(this Pawn pawn)
         {
@@ -88,6 +96,37 @@ namespace RJW_Menstruation
                 return hediff.TryGetComp<HediffComp_Menstruation>();
             }
             return null;
+        }
+
+        public static HediffComp_Breast GetBreastComp(this Pawn pawn)
+        {
+            var hedifflist = Genital_Helper.get_PartsHediffList(pawn, Genital_Helper.get_breastsBPR(pawn))?.FindAll((Hediff h) => h is Hediff_PartBaseNatural || h is Hediff_PartBaseArtifical);
+            HediffComp_Breast result;
+            if (hedifflist.NullOrEmpty()) return null;
+            else
+            {
+                foreach(Hediff h in hedifflist)
+                {
+                    result = h.TryGetComp<HediffComp_Breast>();
+                    if (result != null) return result;
+                }
+            }
+            return null;
+        }
+
+        public static HediffComp_Breast GetBreastComp(this Hediff hediff)
+        {
+            if (hediff is Hediff_PartBaseNatural)
+            {
+                return hediff.TryGetComp<HediffComp_Breast>();
+            }
+            return null;
+        }
+
+        public static List<ThingComp> GetMilkComps(this Pawn pawn)
+        {
+            List<ThingComp> milkcomp = pawn.AllComps.FindAll(x => x is CompMilkable || x.GetType().ToString().ToLower().Contains("milkable"));
+            return milkcomp;
         }
 
         public static bool HasMenstruationComp(this Pawn pawn)
@@ -156,6 +195,8 @@ namespace RJW_Menstruation
         public static Texture2D GetPregnancyIcon(HediffComp_Menstruation comp, Hediff hediff)
         {
             string icon = "";
+            Texture2D result = null;
+            int babycount = 1;
             if (hediff is Hediff_MechanoidPregnancy)
             {
                 return ContentFinder<Texture2D>.Get(("Womb/Mechanoid_Fluid"), true);
@@ -163,9 +204,14 @@ namespace RJW_Menstruation
             else if (hediff is Hediff_BasePregnancy)
             {
                 Hediff_BasePregnancy h = (Hediff_BasePregnancy)hediff;
+                babycount = h.babies.Count;
                 string fetustex = h.babies?.FirstOrDefault()?.def.GetModExtension<PawnDNAModExtension>()?.fetusTexPath ?? "Fetus/Fetus_Default";
                 if (h.GestationProgress < 0.2f) icon = comp.wombTex + "_Implanted";
-                else if (h.GestationProgress < 0.3f) icon += "Fetus/Fetus_Early00";
+                else if (h.GestationProgress < 0.3f)
+                {
+                    if (h.babies?.First()?.def?.race?.FleshType == FleshTypeDefOf.Insectoid) icon += "Fetus/Insects/Insect_Early00";
+                    else icon += "Fetus/Fetus_Early00";
+                }
                 else if (h.GestationProgress < 0.4f) icon += fetustex + "00";
                 else if (h.GestationProgress < 0.5f) icon += fetustex + "01";
                 else if (h.GestationProgress < 0.6f) icon += fetustex + "02";
@@ -174,7 +220,22 @@ namespace RJW_Menstruation
                 else icon += fetustex + "05";
             }
             else icon = "Fetus/Slime_Abomi02";
-            return ContentFinder<Texture2D>.Get((icon), true);
+
+            result = TryGetTwinsIcon(icon, babycount);
+
+            if (result == null) result = ContentFinder<Texture2D>.Get((icon), true);
+            return result;
+        }
+
+        public static Texture2D TryGetTwinsIcon(string path, int babycount)
+        {
+            Texture2D result = null;
+            for (int i = babycount; i>1; i--)
+            {
+                result = ContentFinder<Texture2D>.Get((path + "_Multiplet_" + i), false);
+                if (result != null) return result;
+            }
+            return null;
         }
 
         public static Texture2D GetCumIcon(this HediffComp_Menstruation comp)
@@ -206,6 +267,7 @@ namespace RJW_Menstruation
 
         public static Texture2D GetWombIcon(this HediffComp_Menstruation comp)
         {
+            if (comp.Pawn.health.hediffSet.GetHediffs<Hediff_InsectEgg>().FirstOrDefault() != null) return ContentFinder<Texture2D>.Get(("Womb/Womb_Egged"), true);
             string icon = comp.wombTex;
             HediffComp_Menstruation.Stage stage = comp.curStage;
             if (stage == HediffComp_Menstruation.Stage.Bleeding) icon += "_Bleeding";
@@ -264,10 +326,130 @@ namespace RJW_Menstruation
             }
         }
 
+        public static void DrawBreastIcon(this Pawn pawn, Rect rect)
+        {
+            var hediff = Genital_Helper.get_PartsHediffList(pawn, Genital_Helper.get_breastsBPR(pawn)).FirstOrDefault((Hediff h) => h.def.defName.ToLower().Contains("breast"));
+            Texture2D breast, nipple, areola;
+            if (hediff != null)
+            {
+                HediffComp_Breast comp = hediff.TryGetComp<HediffComp_Breast>();
+                string icon;
+                if (comp != null) icon = comp.Props.BreastTex ?? "Breasts/Breast_Breast";
+                else icon = "Breasts/Breast_Breast";
+                if (hediff.Severity < 0.20f) icon += "_Breast00";
+                else if (hediff.Severity < 0.40f) icon += "_Breast01";
+                else if (hediff.Severity < 0.60f) icon += "_Breast02";
+                else if (hediff.Severity < 0.80f) icon += "_Breast03";
+                else if (hediff.Severity < 1.00f) icon += "_Breast04";
+                else icon += "_Breast05";
+
+                string nippleicon, areolaicon;
+
+                nippleicon = icon + "_Nipple0" + GetNippleIndex(comp.NippleSize);
+                //areolaicon = icon + "_Areola0" + GetNippleIndex(comp.AreolaSize);
+                areolaicon = "Womb/Empty";
+
+
+                breast = ContentFinder<Texture2D>.Get(icon, false);
+                areola = ContentFinder<Texture2D>.Get(areolaicon, false);
+                nipple = ContentFinder<Texture2D>.Get(nippleicon, false);
+                GUI.color = pawn.story.SkinColor;
+                GUI.DrawTexture(rect, breast, ScaleMode.ScaleToFit);
+                GUI.color = comp.NippleColor;
+                GUI.DrawTexture(rect, nipple, ScaleMode.ScaleToFit);
+                if (Configurations.Debug) TooltipHandler.TipRegion(rect, comp.DebugInfo());
+            }
+            else
+            {
+                breast = ContentFinder<Texture2D>.Get("Breasts/Breast_Breast00", false);
+                nipple = ContentFinder<Texture2D>.Get("Breasts/Breast_Breast00_Nipple00", false);
+                areola = ContentFinder<Texture2D>.Get("Breasts/Breast_Breast00_Areola00", false);
+
+                GUI.color = pawn.story.SkinColor;
+                GUI.DrawTexture(rect, breast, ScaleMode.ScaleToFit);
+                GUI.color = Color.white;
+                GUI.DrawTexture(rect, areola, ScaleMode.ScaleToFit);
+                GUI.DrawTexture(rect, nipple, ScaleMode.ScaleToFit);
+            }
+        }
+
+        public static int GetNippleIndex(float nipplesize)
+        {
+            if (nipplesize < 0.25f) return 0;
+            else if (nipplesize < 0.50f) return 1;
+            else if (nipplesize < 0.75f) return 2;
+            else return 3;
+        }
+
+
+        public static void DrawMilkBars(this Pawn pawn, Rect rect)
+        {
+            //List<ThingComp> milkcomp = pawn.AllComps.FindAll(x => x is CompMilkable || x.GetType().ToString().ToLower().Contains("milkable"));
+            ThingComp milkcomp = null;
+            float res = 0;
+            if (VariousDefOf.Hediff_Heavy_Lactating_Permanent != null)
+            {
+                if (pawn.health.hediffSet.HasHediff(VariousDefOf.Hediff_Heavy_Lactating_Permanent)) milkcomp = pawn.AllComps.FirstOrDefault(x => x.GetType().ToString().ToLower().Contains("hypermilkable"));
+                else milkcomp = pawn.AllComps.FirstOrDefault(x => x.GetType().ToString().ToLower().Contains("milkable"));
+            }
+            else
+            {
+                milkcomp = pawn.GetComp<CompMilkable>();
+            }
+
+            if (milkcomp != null)
+            {
+                if (milkcomp is CompMilkable)
+                {
+                    CompMilkable m = (CompMilkable)milkcomp;
+                    res = Math.Max(m.Fullness, res);
+                    Widgets.FillableBar(rect, Math.Min(res, 1.0f), TextureCache.milkTexture, Texture2D.blackTexture, true);
+                    DrawMilkBottle(rect, pawn, JobDefOf.Milk, m.Fullness);
+                }
+                else
+                {
+                    float fullness = (float)milkcomp.GetMemberValue("fullness");
+                    res = Math.Max(fullness, res);
+                    Widgets.FillableBar(rect, Math.Min(res, 1.0f), TextureCache.milkTexture, Texture2D.blackTexture, true);
+                    DrawMilkBottle(rect, pawn, VariousDefOf.Job_LactateSelf,fullness);
+
+                }
+            }
+        }
+
+        public static void DrawMilkBottle(Rect rect, Pawn pawn, JobDef milkjob,float fullness)
+        {
+            Texture2D texture;
+            Rect buttonrect = new Rect(rect.x, rect.y, rect.height, rect.height);
+            if (fullness > 0.0f)
+            {
+                if (fullness < 0.3f) texture = ContentFinder<Texture2D>.Get("Milk/Milkbottle_Small", false);
+                else if (fullness < 0.7f) texture = ContentFinder<Texture2D>.Get("Milk/Milkbottle_Medium", false);
+                else texture = ContentFinder<Texture2D>.Get("Milk/Milkbottle_Large", false);
+                GUIContent icon = new GUIContent(texture);
+                GUIStyle style = GUIStyle.none;
+                style.normal.background = texture;
+                string tooltip = Translations.Button_MilkTooltip;
+
+                TooltipHandler.TipRegion(buttonrect, tooltip);
+                if (GUI.Button(buttonrect, icon, style))
+                {
+                    if (fullness < 0.1f) SoundDefOf.ClickReject.PlayOneShotOnCamera();
+                    else
+                    {
+                        SoundDefOf.Click.PlayOneShotOnCamera();
+                        pawn.jobs.TryTakeOrderedJob_NewTemp(new Verse.AI.Job(milkjob, pawn));
+                    }
+                }
+                Widgets.DrawHighlightIfMouseover(buttonrect);
+            }
+        }
+
+
         public static string GetVaginaLabel(this Pawn pawn)
         {
             var hediff = Genital_Helper.get_PartsHediffList(pawn, Genital_Helper.get_genitalsBPR(pawn)).Find((Hediff h) => h.def.defName.ToLower().Contains("vagina"));
-            return hediff.LabelBase.CapitalizeFirst() + "\n(" + hediff.LabelInBrackets + ")";
+            return hediff.LabelBase.CapitalizeFirst() + "\n(" + hediff.LabelInBrackets + ")" + "\n" + xxx.CountOfSex.LabelCap.CapitalizeFirst() + ": " + pawn.records.GetAsInt(xxx.CountOfSex);
         }
         public static string GetAnusLabel(this Pawn pawn)
         {
@@ -275,6 +457,13 @@ namespace RJW_Menstruation
             if (hediff != null) return hediff.LabelBase.CapitalizeFirst() + "\n(" + hediff.LabelInBrackets + ")";
             else return "";
         }
+        public static string GetBreastLabel(this Pawn pawn)
+        {
+            var hediff = Genital_Helper.get_PartsHediffList(pawn, Genital_Helper.get_breastsBPR(pawn)).FirstOrDefault((Hediff h) => h.def.defName.ToLower().Contains("breast"));
+            if (hediff != null) return hediff.LabelBase.CapitalizeFirst() + "\n(" + hediff.LabelInBrackets + ")";
+            else return "";
+        }
+
 
         public static bool ShowFetusImage(this Hediff_BasePregnancy hediff)
         {
@@ -358,7 +547,23 @@ namespace RJW_Menstruation
             }
         }
 
-        
+        public static float RandGaussianLike(float min, float max, int iterations = 3)
+        {
+            double res = 0;
+            for (int i = 0; i < iterations; i++)
+            {
+                res += random.NextDouble();
+            }
+            res = res / iterations;
+
+            return (float)res*(max-min) + min;
+
+        }
+
+        public static float VariationRange(this float num, float variant)
+        {
+            return num * Rand.Range(1.0f - variant, 1.0f + variant);
+        }
 
     }
 }

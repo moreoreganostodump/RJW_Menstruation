@@ -27,7 +27,7 @@
 			</li>
 			<li>
 				<minSeverity>0.2</minSeverity>
-				<label>annoy</label>
+				<label>annoying</label>
 				<statFactors>
 					<SexFrequency>0.40</SexFrequency>
 					<SexSatisfaction>0.95</SexSatisfaction>
@@ -36,7 +36,7 @@
 			</li>
 			<li>
 				<minSeverity>0.4</minSeverity>
-				<label>ache</label>
+				<label>aching</label>
 				<statFactors>
 					<SexFrequency>0.20</SexFrequency>
 					<SexSatisfaction>0.95</SexSatisfaction>

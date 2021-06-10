@@ -15,6 +15,7 @@
   <Stage_Climacteric>Climacteric</Stage_Climacteric>
   <Stage_Anestrus>Anestrus</Stage_Anestrus>
   <Button_HealthTab>Status</Button_HealthTab>
+  <Button_MilkTooltip>Lactate self</Button_MilkTooltip>
   <Dialog_WombInfo01>State</Dialog_WombInfo01>
   <Dialog_WombInfo02>Fetus</Dialog_WombInfo02>
   <Dialog_WombInfo03>Father</Dialog_WombInfo03>
@@ -43,8 +44,8 @@
   <Option8_Desc>show debug informations.</Option8_Desc>
   <Option9_Label>womb status</Option9_Label>
   <Option9_Desc>draw womb icon in status window</Option9_Desc>
-  <Option10_Label>vagina status</Option10_Label>
-  <Option10_Desc>draw vagina and anus icon in status window</Option10_Desc>
+  <Option10_Label>vagina and breast status</Option10_Label>
+  <Option10_Desc>draw vagina, anus and breast icon in status window</Option10_Desc>
   <Option11_Label>Fetus information level</Option11_Label>
   <Option11_Desc_1>Show all informations about fetus</Option11_Desc_1>
   <Option11_Desc_2>Show all informations about fetus after noticed pregnancy</Option11_Desc_2>
@@ -79,6 +80,16 @@
   <Option23_Label>Dominant hybrid extension</Option23_Label>
   <Option23_Label_1>Mother</Option23_Label_1>
   <Option23_Label_2>Father</Option23_Label_2>
+  <Option24_Label>Transition variance of nipples after pregnancy</Option24_Label>
+  <Option24_Desc>Set how much nipples/areolas be darker/wider on every pregnancy.</Option24_Desc>
+  <Option25_Label>Permanent transition variance of Nipples</Option25_Label>
+  <Option25_Desc>Set how much nipples/areolas be darker/wider permanently on every pregnancy.</Option25_Desc>
+  <Option26_Label>Maximum transition</Option26_Label>
+  <Option26_Desc>Nipples/areolas won't be darker/wider than this value.</Option26_Desc>
+  <Option27_Label>Transition speed of nipples</Option27_Label>
+  <Option27_Desc>Set how fast transition of nipples/areolas.</Option27_Desc>
+  <Option28_Label></Option28_Label>
+  <Option28_Desc></Option28_Desc>
   
   <FloatMenu_CleanSelf>Vaginal washing</FloatMenu_CleanSelf>
   

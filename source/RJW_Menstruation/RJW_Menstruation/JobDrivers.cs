@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using RimWorld;
+using Verse;
 using Verse.AI;
 
 namespace RJW_Menstruation
@@ -33,7 +35,11 @@ namespace RJW_Menstruation
                 }
             };
             //yield return excreting;
-
+            yield break;
         }
     }
+
+    
+
+
 }

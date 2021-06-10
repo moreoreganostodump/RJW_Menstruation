@@ -57,7 +57,7 @@ namespace RJW_Menstruation
                 if (Utility.ShowFetusImage((Hediff_BasePregnancy)hediff))
                 {
                     icon = Utility.GetPregnancyIcon(comp, hediff);
-                    if (hediff is Hediff_BasePregnancy && Utility.ShowFetusImage((Hediff_BasePregnancy)hediff))
+                    if (hediff is Hediff_BasePregnancy)
                     {
                         Hediff_BasePregnancy h = (Hediff_BasePregnancy)hediff;
                         if (h.GestationProgress < 0.2f) icon_overay = comp.GetCumIcon();
@@ -73,8 +73,17 @@ namespace RJW_Menstruation
             }
             else
             {
-                icon = comp.GetWombIcon();
-                icon_overay = comp.GetCumIcon();
+                Hediff hediff = pawn.health.hediffSet.GetHediffs<Hediff_InsectEgg>().FirstOrDefault();
+                if (hediff != null)
+                {
+                    icon = ContentFinder<Texture2D>.Get(("Womb/Womb_Egged"), true);
+                    icon_overay = ContentFinder<Texture2D>.Get(("Womb/Empty"), true);
+                }
+                else
+                {
+                    icon = comp.GetWombIcon();
+                    icon_overay = comp.GetCumIcon();
+                }
             }
             foreach (string s in comp.GetCumsInfo) description += s + "\n";
 
@@ -95,6 +104,7 @@ namespace RJW_Menstruation
                     Dialog_WombStatus.ToggleWindow(pawn, comp);
                 }
             };
+            
             return gizmo;
         }
     }

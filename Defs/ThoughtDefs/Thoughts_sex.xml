@@ -108,8 +108,8 @@
 		<stages>
 			<li>
 				<label>{0} came inside</label>
-				<description>That son of bitch came inside of me!</description>
-				<baseMoodEffect>-5</baseMoodEffect>
+				<description>The chance is low. But i don't like it.</description>
+				<baseMoodEffect>-3</baseMoodEffect>
 				<baseOpinionOffset>-5</baseOpinionOffset>
 			</li>
 		</stages>
@@ -125,8 +125,8 @@
 		<stages>
 			<li>
 				<label>{0} came inside</label>
-				<description>That son of bitch came inside of me!&#10;I don't want to be pregnant with his baby</description>
-				<baseMoodEffect>-10</baseMoodEffect>
+				<description>I don't want to be pregnant with his baby</description>
+				<baseMoodEffect>-5</baseMoodEffect>
 				<baseOpinionOffset>-10</baseOpinionOffset>
 			</li>
 		</stages>

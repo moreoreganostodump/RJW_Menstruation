@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+	<Operation Class="PatchOperationAddModExtension">
+		<xpath>Defs/ThingDef[defName="Race's defName"]</xpath>
+		<value>
+				<li Class="RJW_Menstruation.PawnDNAModExtension">
+					<fetusTexPath>Fetus/Fetus_Default</fetusTexPath>
+					<cumColor>(255,255,255,255)</cumColor>
+					<cumThickness>0.2</cumThickness> 
+					<hybridExtension>
+						<Other Race's defName>
+							<Race or PawnKind defName>1.0</Race or PawnKind defName>
+							<Race or PawnKind defName>5.0</Race or PawnKind defName>
+							<Race or PawnKind defName>7.0</Race or PawnKind defName>
+							<Race or PawnKind defName>2.0</Race or PawnKind defName>
+						</Other Race's defName>
+						<Other Race's defName>
+							<Race or PawnKind defName>98.0</Race or PawnKind defName>
+							<Race or PawnKind defName>2.0</Race or PawnKind defName>
+						</Other Race's defName>
+					</hybridExtension>
+				</li>
+		</value>
+	</Operation>
+-->
+
+<Patch>
+	<Operation Class="PatchOperationAddModExtension">
+		<xpath>Defs/ThingDef[@Name="BigBirdThingBase"]</xpath>
+		<value>
+				<li Class="RJW_Menstruation.PawnDNAModExtension">
+					<fetusTexPath>Fetus/Birds/Fetus_Bird</fetusTexPath>
+					<cumColor>(255,255,255,255)</cumColor> 
+					<cumThickness>0.2</cumThickness>
+					<hybridExtension>
+					</hybridExtension>
+				</li>
+		</value>
+	</Operation>
+	
+	<Operation Class="PatchOperationAddModExtension">
+		<xpath>Defs/ThingDef[defName="Chicken"]</xpath>
+		<value>
+				<li Class="RJW_Menstruation.PawnDNAModExtension">
+					<fetusTexPath>Fetus/Birds/Fetus_Bird</fetusTexPath>
+					<cumColor>(255,255,255,255)</cumColor> 
+					<cumThickness>0.2</cumThickness>
+					<hybridExtension>
+					</hybridExtension>
+				</li>
+		</value>
+	</Operation>
+	
+	<Operation Class="PatchOperationAddModExtension">
+		<xpath>Defs/ThingDef[defName="Duck"]</xpath>
+		<value>
+				<li Class="RJW_Menstruation.PawnDNAModExtension">
+					<fetusTexPath>Fetus/Birds/Fetus_Bird</fetusTexPath>
+					<cumColor>(255,255,255,255)</cumColor> 
+					<cumThickness>0.2</cumThickness>
+					<hybridExtension>
+					</hybridExtension>
+				</li>
+		</value>
+	</Operation>
+	
+	<Operation Class="PatchOperationAddModExtension">
+		<xpath>Defs/ThingDef[defName="Goose"]</xpath>
+		<value>
+				<li Class="RJW_Menstruation.PawnDNAModExtension">
+					<fetusTexPath>Fetus/Birds/Fetus_Bird</fetusTexPath>
+					<cumColor>(255,255,255,255)</cumColor> 
+					<cumThickness>0.2</cumThickness>
+					<hybridExtension>
+					</hybridExtension>
+				</li>
+		</value>
+	</Operation>
+	
+	<Operation Class="PatchOperationAddModExtension">
+		<xpath>Defs/ThingDef[defName="YorkshireTerrier"]</xpath>
+		<value>
+				<li Class="RJW_Menstruation.PawnDNAModExtension">
+					<fetusTexPath>Fetus/Canines/Fetus_Dog</fetusTexPath>
+					<cumColor>(255,255,255,255)</cumColor> 
+					<cumThickness>0.05</cumThickness>
+					<hybridExtension>
+					</hybridExtension>
+				</li>
+		</value>
+	</Operation>
+	
+	
+	<Operation Class="PatchOperationAddModExtension">
+		<xpath>Defs/ThingDef[defName="Husky"]</xpath>
+		<value>
+				<li Class="RJW_Menstruation.PawnDNAModExtension">
+					<fetusTexPath>Fetus/Canines/Fetus_Dog</fetusTexPath>
+					<cumColor>(255,255,255,255)</cumColor> 
+					<cumThickness>0.05</cumThickness>
+					<hybridExtension>
+					</hybridExtension>
+				</li>
+		</value>
+	</Operation>
+	
+	<Operation Class="PatchOperationAddModExtension">
+		<xpath>Defs/ThingDef[defName="LabradorRetriever"]</xpath>
+		<value>
+				<li Class="RJW_Menstruation.PawnDNAModExtension">
+					<fetusTexPath>Fetus/Canines/Fetus_Dog</fetusTexPath>
+					<cumColor>(255,255,255,255)</cumColor> 
+					<cumThickness>0.05</cumThickness>
+					<hybridExtension>
+					</hybridExtension>
+				</li>
+		</value>
+	</Operation>
+	
+	<Operation Class="PatchOperationAddModExtension">
+		<xpath>Defs/ThingDef[defName="YorkshireTerrier"]</xpath>
+		<value>
+				<li Class="RJW_Menstruation.PawnDNAModExtension">
+					<fetusTexPath>Fetus/Canines/Fetus_Dog</fetusTexPath>
+					<cumColor>(255,255,255,255)</cumColor> 
+					<cumThickness>0.05</cumThickness>
+					<hybridExtension>
+					</hybridExtension>
+				</li>
+		</value>
+	</Operation>
+	
+	
+	<Operation Class="PatchOperationAddModExtension">
+		<xpath>Defs/ThingDef[defName="Warg"]</xpath>
+		<value>
+				<li Class="RJW_Menstruation.PawnDNAModExtension">
+					<fetusTexPath>Fetus/Canines/Fetus_Dog</fetusTexPath>
+					<cumColor>(255,255,255,255)</cumColor> 
+					<cumThickness>0.05</cumThickness>
+					<hybridExtension>
+					</hybridExtension>
+				</li>
+		</value>
+	</Operation>
+	
+	<Operation Class="PatchOperationAddModExtension">
+		<xpath>Defs/ThingDef[@Name="ThingBaseWolf"]</xpath>
+		<value>
+				<li Class="RJW_Menstruation.PawnDNAModExtension">
+					<fetusTexPath>Fetus/Canines/Fetus_Dog</fetusTexPath>
+					<cumColor>(255,255,255,255)</cumColor> 
+					<cumThickness>0.05</cumThickness>
+					<hybridExtension>
+					</hybridExtension>
+				</li>
+		</value>
+	</Operation>
+	
+	<Operation Class="PatchOperationAddModExtension">
+		<xpath>Defs/ThingDef[@Name="ThingBaseFox"]</xpath>
+		<value>
+				<li Class="RJW_Menstruation.PawnDNAModExtension">
+					<fetusTexPath>Fetus/Canines/Fetus_Dog</fetusTexPath>
+					<cumColor>(255,255,255,255)</cumColor> 
+					<cumThickness>0.05</cumThickness>
+					<hybridExtension>
+					</hybridExtension>
+				</li>
+		</value>
+	</Operation>
+	
+	<Operation Class="PatchOperationAddModExtension">
+		<xpath>Defs/ThingDef[defName="Pig"]</xpath>
+		<value>
+				<li Class="RJW_Menstruation.PawnDNAModExtension">
+					<fetusTexPath>Fetus/Livestocks/Fetus_Pig</fetusTexPath>
+					<cumColor>(255,255,255,255)</cumColor> 
+					<cumThickness>0.8</cumThickness>
+					<hybridExtension>
+					</hybridExtension>
+				</li>
+		</value>
+	</Operation>
+	
+	<Operation Class="PatchOperationAddModExtension">
+		<xpath>Defs/ThingDef[@Name="BaseInsect"]</xpath>
+		<value>
+				<li Class="RJW_Menstruation.PawnDNAModExtension">
+					<fetusTexPath>Fetus/Insects/Fetus_Insect</fetusTexPath>
+					<cumColor>(153,212,89,255)</cumColor> 
+					<cumThickness>0.5</cumThickness>
+					<hybridExtension>
+					</hybridExtension>
+				</li>
+		</value>
+	</Operation>
+	
+	
+	
+</Patch>

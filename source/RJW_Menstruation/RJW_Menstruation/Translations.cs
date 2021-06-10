@@ -18,6 +18,7 @@ namespace RJW_Menstruation
         public static readonly string Stage_Climacteric = "Stage_Climacteric".Translate();
         public static readonly string Stage_Anestrus = "Stage_Anestrus".Translate();
         public static readonly string Button_HealthTab = "Button_HealthTab".Translate();
+        public static readonly string Button_MilkTooltip = "Button_MilkTooltip".Translate();
 
         public static readonly string Dialog_WombInfo01 = "Dialog_WombInfo01".Translate();
         public static readonly string Dialog_WombInfo02 = "Dialog_WombInfo02".Translate();
@@ -85,6 +86,16 @@ namespace RJW_Menstruation
         public static readonly string Option23_Label = "Option23_Label".Translate();
         public static readonly string Option23_Label_1 = "Option23_Label_1".Translate();
         public static readonly string Option23_Label_2 = "Option23_Label_2".Translate();
+        public static readonly string Option24_Label = "Option24_Label".Translate();
+        public static readonly string Option24_Desc  = "Option24_Desc".Translate();
+        public static readonly string Option25_Label = "Option25_Label".Translate();
+        public static readonly string Option25_Desc  = "Option25_Desc".Translate();
+        public static readonly string Option26_Label = "Option26_Label".Translate();
+        public static readonly string Option26_Desc  = "Option26_Desc".Translate();
+        public static readonly string Option27_Label = "Option27_Label".Translate();
+        public static readonly string Option27_Desc  = "Option27_Desc".Translate();
+        public static readonly string Option28_Label = "Option28_Label".Translate();
+        public static readonly string Option28_Desc  = "Option28_Desc".Translate();
 
         public static readonly string FloatMenu_CleanSelf = "FloatMenu_CleanSelf".Translate();
 

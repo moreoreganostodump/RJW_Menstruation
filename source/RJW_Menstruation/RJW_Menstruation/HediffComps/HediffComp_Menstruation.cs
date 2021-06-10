@@ -41,6 +41,7 @@ namespace RJW_Menstruation
         public SeasonalBreed breedingSeason = SeasonalBreed.Always;
         public int estrusDaysBeforeOvulation = 3;
 
+
         public CompProperties_Menstruation()
         {
 
@@ -109,6 +110,7 @@ namespace RJW_Menstruation
         protected string customvagtex = null;
         protected bool estrusflag = false;
         protected int opcache = -1;
+        protected HediffComp_Breast breastcache = null;
 
         public int ovarypowerthreshold
         {
@@ -274,7 +276,6 @@ namespace RJW_Menstruation
             }
 
         }
-
         public string wombTex
         {
             get
@@ -287,7 +288,6 @@ namespace RJW_Menstruation
                 customwombtex = value;
             }
         }
-
         public string vagTex
         {
             get
@@ -300,7 +300,6 @@ namespace RJW_Menstruation
                 customvagtex = value;
             }
         }
-
         public string GetFertilizingInfo
         {
             get
@@ -327,7 +326,6 @@ namespace RJW_Menstruation
                 return res;
             }
         }
-
         public bool IsEggFertilizing
         {
             get
@@ -344,7 +342,6 @@ namespace RJW_Menstruation
                 else return false;
             }
         }
-
         /// <summary>
         /// returns fertstage. if not fertilized returns -1
         /// </summary>
@@ -390,7 +387,6 @@ namespace RJW_Menstruation
                 else return eggs.Count;
             }
         }
-
         public Color BloodColor
         {
             get
@@ -407,6 +403,18 @@ namespace RJW_Menstruation
 
             }
         }
+        public HediffComp_Breast Breast
+        {
+            get
+            {
+                if (breastcache == null)
+                {
+                    breastcache = parent.pawn.GetBreastComp();
+                }
+                return breastcache;
+            }
+        }
+
 
         public override void CompExposeData()
         {
@@ -1278,9 +1286,16 @@ namespace RJW_Menstruation
         {
             if (!eggs.NullOrEmpty())
             {
-                EggDecay();
                 FertilizationCheck();
-                if (Implant()) GoNextStage(Stage.Pregnant);
+                EggDecay();
+                if (Implant())
+                {
+                    if (Breast != null)
+                    {
+                        Breast.PregnancyTransition();
+                    }
+                    GoNextStage(Stage.Pregnant);
+                }
                 else
                 {
                     curStageHrs += Configurations.CycleAcceleration;
@@ -1332,12 +1347,19 @@ namespace RJW_Menstruation
         {
             if (!eggs.NullOrEmpty())
             {
-                EggDecay();
                 FertilizationCheck();
+                EggDecay();
                 Implant();
             }
             if (parent.pawn.IsPregnant()) StayCurrentStageConst(Stage.Pregnant);
-            else GoNextStage(Stage.Recover);
+            else
+            {
+                if (Breast != null)
+                {
+                    Breast.BirthTransition();
+                }
+                GoNextStage(Stage.Recover);
+            } 
         }
 
         protected virtual void YoungAction()
@@ -1445,8 +1467,8 @@ namespace RJW_Menstruation
                     {
                         if (!eggs.NullOrEmpty())
                         {
-                            EggDecay();
                             FertilizationCheck();
+                            EggDecay();
                             if (Implant()) GoNextStage(Stage.Pregnant);
                             else
                             {

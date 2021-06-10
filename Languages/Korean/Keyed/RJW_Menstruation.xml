@@ -15,6 +15,7 @@
   <Stage_Climacteric>갱년기</Stage_Climacteric>
   <Stage_Anestrus>휴지기</Stage_Anestrus>
   <Button_HealthTab>상태창</Button_HealthTab>
+  <Button_MilkTooltip>모유 짜기</Button_MilkTooltip>
   <Dialog_WombInfo01>상태</Dialog_WombInfo01>
   <Dialog_WombInfo02>태아</Dialog_WombInfo02>
   <Dialog_WombInfo03>부</Dialog_WombInfo03>
@@ -43,8 +44,8 @@
   <Option8_Desc>디버그정보를 보여줍니다.</Option8_Desc>
   <Option9_Label>자궁 그림</Option9_Label>
   <Option9_Desc>상태창에 자궁그림을 표시합니다.</Option9_Desc>
-  <Option10_Label>보지 그림</Option10_Label>
-  <Option10_Desc>상태창에 보지와 항문그림을 표시합니다.</Option10_Desc>
+  <Option10_Label>가슴, 보지 그림</Option10_Label>
+  <Option10_Desc>상태창에 가슴, 보지와 항문그림을 표시합니다.</Option10_Desc>
   <Option11_Label>태아 정보</Option11_Label>
   <Option11_Desc_1>태아에 대한 모든 정보를 표시합니다.</Option11_Desc_1>
   <Option11_Desc_2>임신을 발견한 이후에 태아에 대한 모든 정보를 표시합니다.</Option11_Desc_2>
@@ -79,6 +80,14 @@
   <Option23_Label>우선순위</Option23_Label>
   <Option23_Label_1>모</Option23_Label_1>
   <Option23_Label_2>부</Option23_Label_2>
+  <Option24_Label>임신후 유두 변화량</Option24_Label>
+  <Option24_Desc>임신후에 유두가 얼마나 어두워지고 커지는지 설정합니다.</Option24_Desc>
+  <Option25_Label>유두 영구변화량</Option25_Label>
+  <Option25_Desc>매번 임신할때마다 유두가 얼마나 영구적으로 어두워지고 커지는지 설정합니다.</Option25_Desc>
+  <Option26_Label>최대 변화량</Option26_Label>
+  <Option26_Desc>유두는 이 값 이상으로 변하지 않습니다.</Option26_Desc>
+  <Option27_Label>유두 변화 속도</Option27_Label>
+  <Option27_Desc>유두가 얼마나 빨리 변하는지 설정합니다.</Option27_Desc>
   
   <FloatMenu_CleanSelf>질세척</FloatMenu_CleanSelf>
   

@@ -21,6 +21,14 @@ namespace RJW_Menstruation
                 HugsLibController.Instance.TickDelayScheduler.TryUnscheduleCallback(comp.actionref);
                 comp.Initialize();
             }
+            HediffComp_Breast bcomp = __instance.GetBreastComp();
+            if (bcomp != null)
+            {
+                HugsLibController.Instance.TickDelayScheduler.TryUnscheduleCallback(bcomp.action);
+                bcomp.Initialize();
+            }
+
+
         }
     }
 

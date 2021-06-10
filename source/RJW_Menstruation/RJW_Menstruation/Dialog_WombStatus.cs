@@ -1,4 +1,5 @@
-﻿using RimWorld;
+﻿using System;
+using RimWorld;
 using rjw;
 using System.Linq;
 using UnityEngine;
@@ -19,7 +20,10 @@ namespace RJW_Menstruation
         private const float fontheight = 30;
         private const float genitalRectWidth = 102;
         private const float genitalRectHeight = 140;
+        private const float breastRectWidth = 102;
+        private const float breastRectHeight = 100;
 
+        
         private Texture2D womb;
         private Texture2D cum;
         private Texture2D vagina;
@@ -39,10 +43,10 @@ namespace RJW_Menstruation
         {
             get
             {
-                float width = 300f + 2 * windowMargin;
+                float width = 450f + 2 * windowMargin;
                 float height = 820f;
                 if (!Configurations.DrawWombStatus) height -= wombRectHeight;
-                if (!Configurations.DrawVaginaStatus) height -= genitalRectHeight;
+                if (!Configurations.DrawVaginaStatus) width -= 150f;
                 return new Vector2(width, height);
             }
         }
@@ -82,7 +86,6 @@ namespace RJW_Menstruation
 
         public override void DoWindowContents(Rect inRect)
         {
-            bool flag = false;
             soundClose = SoundDefOf.InfoCard_Close;
             //closeOnClickedOutside = true;
             absorbInputAroundWindow = false;
@@ -93,7 +96,6 @@ namespace RJW_Menstruation
 
             if (Event.current.type == EventType.KeyDown && (Event.current.keyCode == KeyCode.Return || Event.current.keyCode == KeyCode.Escape))
             {
-                flag = true;
                 Event.current.Use();
             }
 
@@ -117,6 +119,8 @@ namespace RJW_Menstruation
             buttonstyle.onHover = buttonstyle.onNormal;
             buttonstyle.hover = buttonstyle.normal;
             boxstyle.border.left = 4; boxstyle.border.right = 4; boxstyle.border.bottom = 4; boxstyle.border.top = 4;
+
+            fontstyleleft.normal.textColor = Color.white;
 
             float preginfoheight = 0f;
             bool pregnant = pawn.IsPregnant();
@@ -228,19 +232,28 @@ namespace RJW_Menstruation
 
             //Widgets.Label(wombInfoRect,Translations.Dialog_WombInfo01 + ": " + comp.GetCurStageLabel);
 
+            Rect cumlistTitle, cumlistRect;
             if (Configurations.DrawVaginaStatus && !pawn.IsAnimal())
             {
-                Rect genitalRect = new Rect(24, pawnRectHeight + 2 * fontheight, genitalRectWidth, genitalRectHeight + fontheight * 2);
+                Rect genitalRect = new Rect(pawnRectWidth + 24, pawnRectHeight + 2 * fontheight, genitalRectWidth, genitalRectHeight + fontheight * 2);
+                Rect breastRect = new Rect(pawnRectWidth + 24, 40f, breastRectWidth, breastRectHeight + fontheight);
                 DrawVagina(genitalRect);
+                DrawBreast(breastRect);
+                cumlistTitle = new Rect(wombRectWidth + 4f, 0, 150f, fontheight);
+                cumlistRect = new Rect(wombRectWidth + 4f, fontheight, 150f, mainRect.yMax - fontheight + preginfoheight + 3);
+            }
+            else
+            {
+                cumlistTitle = new Rect(pawnRectWidth, 0, 150f, fontheight);
+                cumlistRect = new Rect(pawnRectWidth, fontheight, 150f, mainRect.yMax - wombRectHeight - fontheight);
             }
 
+            Rect infoRect = new Rect(0, pawnRectHeight + 2*fontheight, pawnRectWidth, pawnRect.yMax + 2*fontheight - wombInfoRect.y);
+            DrawInfos(infoRect);
 
 
-            Rect cumlistTitle = new Rect(pawnRectWidth, 0, wombRectWidth - pawnRectWidth, fontheight);
+
             GUI.Label(cumlistTitle, Translations.Dialog_WombInfo04);
-
-
-            Rect cumlistRect = new Rect(pawnRectWidth, fontheight, wombRectWidth - pawnRectWidth, mainRect.yMax - wombrecth - fontheight);
             DrawCumlist(cumlistRect);
 
 
@@ -289,7 +302,7 @@ namespace RJW_Menstruation
         private void DrawVagina(Rect rect)
         {
             Rect genitalIconRect = new Rect(rect.x, rect.y + fontheight, genitalRectWidth, genitalRectHeight);
-            Rect genitalVaginaLabelRect = new Rect(rect.x, rect.y, genitalRectWidth, fontheight);
+            Rect genitalVaginaLabelRect = new Rect(rect.x, rect.y + 10f, genitalRectWidth, fontheight);
             Rect genitalAnusLabelRect = new Rect(rect.x, rect.y + fontheight + genitalRectHeight, genitalRectWidth, fontheight);
 
             vagina = pawn.GetGenitalIcon();
@@ -305,7 +318,70 @@ namespace RJW_Menstruation
             GUI.color = Color.white;
             GUI.Label(genitalVaginaLabelRect, pawn.GetVaginaLabel(), fontstylecenter);
             GUI.Label(genitalAnusLabelRect, pawn.GetAnusLabel(), fontstylecenter);
+        }
 
+        private void DrawBreast(Rect rect)
+        {
+            Rect BreastIconRect = new Rect(rect.x, rect.y + fontheight, breastRectWidth, breastRectHeight);
+            Rect BreastLabelRect = new Rect(rect.x, rect.y, breastRectWidth, fontheight);
+            Rect MilkGaugeRect = new Rect(rect.x, rect.yMax, breastRectWidth, 20f);
+
+            GUI.color = new Color(1.00f, 0.47f, 0.47f, 1);
+            GUI.Box(rect, "", boxstyle);
+
+            pawn.DrawBreastIcon(BreastIconRect);
+            
+
+            GUI.color = Color.white;
+            GUI.Label(BreastLabelRect, pawn.GetBreastLabel(), fontstylecenter);
+
+            pawn.DrawMilkBars(MilkGaugeRect);
+
+
+        }
+
+        private void DrawInfos(Rect rect)
+        {
+            Rect lineRect = new Rect(rect.x, rect.y, rect.width, 20f);
+            float statvalue;
+            const float height = 24f;
+
+            statvalue = pawn.GetStatValue(xxx.sex_drive_stat);
+            FillableBarLabeled(lineRect, "  " + xxx.sex_drive_stat.LabelCap.CapitalizeFirst() + " " + statvalue.ToStringPercent(), statvalue/2 ,TextureCache.slaaneshTexture,Texture2D.blackTexture);
+            lineRect.y += height;
+
+            statvalue = pawn.GetStatValue(xxx.vulnerability_stat);
+            FillableBarLabeled(lineRect, "  " + xxx.vulnerability_stat.LabelCap.CapitalizeFirst() + " " + statvalue.ToStringPercent(), statvalue/2, TextureCache.khorneTexture,Texture2D.blackTexture);
+            lineRect.y += height;
+
+            statvalue = pawn.GetStatValue(xxx.sex_stat);
+            FillableBarLabeled(lineRect, "  " + xxx.sex_stat.LabelCap.CapitalizeFirst() + " " + statvalue.ToStringPercent(), statvalue / 2, TextureCache.tzeentchTexture, Texture2D.blackTexture);
+            lineRect.y += height;
+
+            statvalue = pawn.records.GetValue(xxx.CountOfBirthHuman);
+            FillableBarLabeled(lineRect, "  " + xxx.CountOfBirthHuman.LabelCap.CapitalizeFirst() + " " + statvalue, statvalue / 10, TextureCache.humanTexture, Texture2D.blackTexture);
+            lineRect.y += height;
+
+            statvalue = pawn.records.GetValue(xxx.CountOfBirthAnimal);
+            FillableBarLabeled(lineRect, "  " + xxx.CountOfBirthAnimal.LabelCap.CapitalizeFirst() + " " + statvalue, statvalue / 20, TextureCache.animalTexture, Texture2D.blackTexture);
+            lineRect.y += height;
+
+            statvalue = pawn.records.GetValue(xxx.CountOfBirthEgg);
+            FillableBarLabeled(lineRect, "  " + xxx.CountOfBirthEgg.LabelCap.CapitalizeFirst() + " " + statvalue, statvalue / 100, TextureCache.nurgleTexture, Texture2D.blackTexture);
+            lineRect.y += height;
+            lineRect.y += height;
+            lineRect.y += height;
+
+            statvalue = Configurations.ImplantationChance * comp.Props.baseImplantationChanceFactor * comp.ImplantFactor;
+            FillableBarLabeled(lineRect, "  " + xxx.reproduction.LabelCap.CapitalizeFirst() + " " + statvalue.ToStringPercent(), statvalue, TextureCache.fertilityTexture, Texture2D.blackTexture);
+            lineRect.y += height;
+        }
+
+        private void FillableBarLabeled(Rect rect, string label, float fillPercent, Texture2D filltexture, Texture2D bgtexture)
+        {
+            Widgets.FillableBar(rect, Math.Min(fillPercent,1.0f), filltexture, bgtexture, true);
+            GUI.Label(rect, label, fontstyleleft);
+            Widgets.DrawHighlightIfMouseover(rect);
         }
 
 

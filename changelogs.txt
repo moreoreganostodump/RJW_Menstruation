@@ -1,3 +1,17 @@
+Version 1.0.3.0
+ - added various fetus images
+ - added twin fetus image
+ - male insects can impregnate female
+ - now insects egg display on womb icon
+ - added breast to status window
+   - added milk status bar(milkable colonists compatible)
+   - added self lactating button
+   - self lactating enlarges nipple
+   - initial nipple size is determined by breast size
+ - added status bars
+   - you can check when the pawn get breeder/incubator quirk with this
+ - fixed problems when cycle acceleration is too high
+
 Version 1.0.2.0
  - support for RJW Race Support
  - fixed erros with pawns that the litter size curve is not defined

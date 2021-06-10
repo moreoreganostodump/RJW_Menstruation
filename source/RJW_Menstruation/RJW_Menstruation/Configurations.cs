@@ -19,7 +19,10 @@ namespace RJW_Menstruation
         public const int EnzygoticTwinsChanceAdjustDefault = 2;
         public const int MaxEnzygoticTwinsDefault = 9;
         public const int BleedingAmountDefault = 50;
-
+        public const float NippleTransitionVarianceDefault = 0.2f;
+        public const float NipplePermanentTransitionVarianceDefault = 0.02f;
+        public const float NippleMaximumTransitionDefault = 0.4f;
+        public const float NippleTransitionSpeedDefault = 0.1f;
 
         public static float ImplantationChance = ImplantationChanceDefault;
         public static int ImplantationChanceAdjust = ImplantationChanceAdjustDefault;
@@ -49,6 +52,19 @@ namespace RJW_Menstruation
         public static PawnFlags ShowFlag = PawnFlags.Colonist | PawnFlags.Prisoner;
         public static bool UseHybridExtention = true;
         public static bool MotherFirst = false;
+
+        public static float NippleTransitionVariance = NippleTransitionVarianceDefault;
+        public static float NipplePermanentTransitionVariance = NipplePermanentTransitionVarianceDefault;
+        public static float NippleMaximumTransition = NippleMaximumTransitionDefault;
+        public static float NippleTransitionSpeed = NippleTransitionSpeedDefault;
+        public static float NippleTransitionRatio
+        {
+            get
+            {
+                return NippleTransitionVariance * NippleTransitionSpeed;
+            }
+        }
+
 
 
         public static bool HARActivated = false;
@@ -127,6 +143,10 @@ namespace RJW_Menstruation
             Scribe_Values.Look(ref ShowFlag, "ShowFlag", ShowFlag, true);
             Scribe_Values.Look(ref UseHybridExtention, "UseHybridExtention", UseHybridExtention, true);
             Scribe_Values.Look(ref MotherFirst, "MotherFirst", MotherFirst, true);
+            Scribe_Values.Look(ref NippleTransitionVariance, "NippleTransitionVariance", NippleTransitionVariance, true);
+            Scribe_Values.Look(ref NipplePermanentTransitionVariance, "NipplePermanentTransitionVariance", NipplePermanentTransitionVariance, true);
+            Scribe_Values.Look(ref NippleMaximumTransition, "NippleMaximumTransition", NippleMaximumTransition, true);
+            Scribe_Values.Look(ref NippleTransitionSpeed, "NippleTransitionSpeed", NippleTransitionSpeed, true);
             base.ExposeData();
         }
 
@@ -178,7 +198,7 @@ namespace RJW_Menstruation
         public override void DoSettingsWindowContents(Rect inRect)
         {
             Rect outRect = new Rect(0f, 30f, inRect.width, inRect.height - 30f);
-            Rect mainRect = new Rect(0f, 0f, inRect.width - 30f, inRect.height + 300f);
+            Rect mainRect = new Rect(0f, 0f, inRect.width - 30f, inRect.height + 480f);
             Listing_Standard listmain = new Listing_Standard();
             listmain.maxOneColumn = true;
             listmain.BeginScrollView(outRect, ref scroll, ref mainRect);
@@ -190,7 +210,7 @@ namespace RJW_Menstruation
             //listmain.CheckboxLabeled(Translations.Option1_Label, ref Configurations.EnableWombIcon, Translations.Option1_Desc);
             if (Configurations.EnableWombIcon || Configurations.EnableButtonInHT)
             {
-                Listing_Standard wombsection = listmain.BeginSection_NewTemp(186);
+                Listing_Standard wombsection = listmain.BeginSection_NewTemp(376);
                 wombsection.CheckboxLabeled(Translations.Option9_Label, ref Configurations.DrawWombStatus, Translations.Option9_Desc);
                 if (Configurations.DrawWombStatus)
                 {
@@ -246,6 +266,25 @@ namespace RJW_Menstruation
                     Configurations.ShowFlag ^= Configurations.PawnFlags.Hostile;
                 }
 
+                int Adjust = (int)(Configurations.NippleTransitionVariance * 1000);
+                wombsection.Label(Translations.Option24_Label + " " + Configurations.NippleTransitionVariance* 100 + " / 100", -1,Translations.Option24_Desc);
+                Adjust = (int)wombsection.Slider(Adjust,0,1000);
+                Configurations.NippleTransitionVariance = (float)Adjust / 1000;
+
+                Adjust = (int)(Configurations.NipplePermanentTransitionVariance * 1000);
+                wombsection.Label(Translations.Option25_Label + " " + Configurations.NipplePermanentTransitionVariance*100 + " / 100", -1, Translations.Option25_Desc);
+                Adjust = (int)wombsection.Slider(Adjust, 0, 1000);
+                Configurations.NipplePermanentTransitionVariance = (float)Adjust / 1000;
+
+                Adjust = (int)(Configurations.NippleMaximumTransition * 1000);
+                wombsection.Label(Translations.Option26_Label + " " + Configurations.NippleMaximumTransition* 100 + " / 100", -1, Translations.Option26_Desc);
+                Adjust = (int)wombsection.Slider(Adjust, 0, 1000);
+                Configurations.NippleMaximumTransition = (float)Adjust / 1000;
+
+                Adjust = (int)(Configurations.NippleTransitionSpeed * 1000);
+                wombsection.Label(Translations.Option27_Label + " " + Configurations.NippleTransitionSpeed, -1, Translations.Option27_Desc);
+                Adjust = (int)wombsection.Slider(Adjust, 0, 1000);
+                Configurations.NippleTransitionSpeed = (float)Adjust / 1000;
 
                 listmain.EndSection(wombsection);
             }
@@ -326,7 +365,12 @@ namespace RJW_Menstruation
                 Configurations.MaxEnzygoticTwins = Configurations.MaxEnzygoticTwinsDefault;
                 Configurations.BleedingAmount = Configurations.BleedingAmountDefault;
                 Configurations.MotherFirst = false;
-            }
+                Configurations.NippleTransitionVariance = Configurations.NippleTransitionVarianceDefault;
+                Configurations.NipplePermanentTransitionVariance = Configurations.NipplePermanentTransitionVarianceDefault;
+                Configurations.NippleMaximumTransition = Configurations.NippleMaximumTransitionDefault;
+                Configurations.NippleTransitionSpeed = Configurations.NippleTransitionSpeedDefault;
+
+    }
 
             listmain.End();
 
