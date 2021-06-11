@@ -87,7 +87,7 @@
   <Option26_Label>Maximum transition</Option26_Label>
   <Option26_Desc>Nipples/areolas won't be darker/wider than this value.</Option26_Desc>
   <Option27_Label>Transition speed of nipples</Option27_Label>
-  <Option27_Desc>Set how fast transition of nipples/areolas.</Option27_Desc>
+  <Option27_Desc>Set speed of transition of nipples/areolas.&#10;1 = instant transition</Option27_Desc>
   <Option28_Label></Option28_Label>
   <Option28_Desc></Option28_Desc>
   

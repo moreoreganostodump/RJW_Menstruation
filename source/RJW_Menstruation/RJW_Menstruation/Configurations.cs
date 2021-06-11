@@ -22,7 +22,7 @@ namespace RJW_Menstruation
         public const float NippleTransitionVarianceDefault = 0.2f;
         public const float NipplePermanentTransitionVarianceDefault = 0.02f;
         public const float NippleMaximumTransitionDefault = 0.4f;
-        public const float NippleTransitionSpeedDefault = 0.1f;
+        public const float NippleTransitionSpeedDefault = 0.035f;
 
         public static float ImplantationChance = ImplantationChanceDefault;
         public static int ImplantationChanceAdjust = ImplantationChanceAdjustDefault;

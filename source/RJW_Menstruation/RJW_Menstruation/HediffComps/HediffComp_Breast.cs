@@ -38,7 +38,7 @@ namespace RJW_Menstruation
         public const float defaultareola = -1;
         public const float defaultnipple = -1;
         public const float variation = 0.2f;
-        public const int tickinterval = 1250;
+        public const int tickinterval = 3750;
 
         public CompProperties_Breast Props;
 
@@ -167,7 +167,7 @@ namespace RJW_Menstruation
         {
             alphaCurrent = Mathf.Lerp(alphaCurrent, alpha, Configurations.NippleTransitionRatio);
             areolaSizeCurrent = Mathf.Lerp(areolaSizeCurrent, areolaSize, Configurations.NippleTransitionRatio);
-            nippleSizeCurrent = Mathf.Lerp(nippleSizeCurrent, NippleSize, Configurations.NippleTransitionRatio);
+            nippleSizeCurrent = Mathf.Lerp(nippleSizeCurrent, nippleSize, Configurations.NippleTransitionRatio);
             UpdateColor();
             HugsLibController.Instance.TickDelayScheduler.ScheduleCallback(action, tickinterval, parent.pawn);
         }
@@ -185,11 +185,11 @@ namespace RJW_Menstruation
         public void PregnancyTransition()
         {
             alphaPermanent = Math.Min(MaxAlpha, alphaPermanent + Configurations.NipplePermanentTransitionVariance.VariationRange(variation));
-            areolaSizePermanent = Math.Min(MaxAreola, (areolaSizePermanent + Configurations.NipplePermanentTransitionVariance.VariationRange(variation))/10);
-            nippleSizePermanent = Math.Min(MaxNipple, (nippleSizePermanent + Configurations.NipplePermanentTransitionVariance.VariationRange(variation))/20);
+            areolaSizePermanent = Math.Min(MaxAreola, areolaSizePermanent + Configurations.NipplePermanentTransitionVariance.VariationRange(variation));
+            nippleSizePermanent = Math.Min(MaxNipple, nippleSizePermanent + Configurations.NipplePermanentTransitionVariance.VariationRange(variation));
             alpha = Math.Min(MaxAlpha, alpha + Configurations.NippleTransitionVariance.VariationRange(variation));
-            areolaSize = Math.Min(MaxAreola, (areolaSize + Configurations.NippleTransitionVariance.VariationRange(variation))/10);
-            nippleSize = Math.Min(MaxNipple, (nippleSize + Configurations.NippleTransitionVariance.VariationRange(variation))/20);
+            areolaSize = Math.Min(MaxAreola, areolaSize + Configurations.NippleTransitionVariance.VariationRange(variation));
+            nippleSize = Math.Min(MaxNipple, nippleSize + Configurations.NippleTransitionVariance.VariationRange(variation));
         }
 
         public void BirthTransition()

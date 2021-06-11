@@ -36,8 +36,8 @@ namespace MilkModule
             {
                 if (breastcomp != null)
                 {
-                    breastcomp.AdjustAreolaSize(Rand.Range(0.0f,0.001f * Configurations.NipplePermanentTransitionVariance));
-                    breastcomp.AdjustNippleSize(Rand.Range(0.0f,0.001f * Configurations.NipplePermanentTransitionVariance));
+                    breastcomp.AdjustAreolaSize(Rand.Range(0.0f,0.0001f * Configurations.NipplePermanentTransitionVariance));
+                    breastcomp.AdjustNippleSize(Rand.Range(0.0f,0.0001f * Configurations.NipplePermanentTransitionVariance));
                 }
 
             };

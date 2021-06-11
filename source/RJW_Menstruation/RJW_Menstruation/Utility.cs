@@ -51,6 +51,7 @@ namespace RJW_Menstruation
     {
         public static System.Random random = new System.Random(Environment.TickCount);
 
+
         public static float GetCumVolume(this Pawn pawn)
         {
             CompHediffBodyPart part = Genital_Helper.get_PartsHediffList(pawn, Genital_Helper.get_genitalsBPR(pawn))?.FindAll((Hediff hed) => hed.def.defName.ToLower().Contains("penis")).InRandomOrder().FirstOrDefault()?.TryGetComp<CompHediffBodyPart>();
@@ -346,17 +347,21 @@ namespace RJW_Menstruation
                 string nippleicon, areolaicon;
 
                 nippleicon = icon + "_Nipple0" + GetNippleIndex(comp.NippleSize);
-                //areolaicon = icon + "_Areola0" + GetNippleIndex(comp.AreolaSize);
-                areolaicon = "Womb/Empty";
-
+                areolaicon = icon + "_Areola0" + GetAreolaIndex(comp.AreolaSize);
+                
 
                 breast = ContentFinder<Texture2D>.Get(icon, false);
                 areola = ContentFinder<Texture2D>.Get(areolaicon, false);
                 nipple = ContentFinder<Texture2D>.Get(nippleicon, false);
                 GUI.color = pawn.story.SkinColor;
                 GUI.DrawTexture(rect, breast, ScaleMode.ScaleToFit);
+
                 GUI.color = comp.NippleColor;
+                GUI.DrawTexture(rect, areola, ScaleMode.ScaleToFit);
+
                 GUI.DrawTexture(rect, nipple, ScaleMode.ScaleToFit);
+
+
                 if (Configurations.Debug) TooltipHandler.TipRegion(rect, comp.DebugInfo());
             }
             else
@@ -381,6 +386,14 @@ namespace RJW_Menstruation
             else return 3;
         }
 
+        public static int GetAreolaIndex(float nipplesize)
+        {
+            if (nipplesize < 0.15f) return 0;
+            else if (nipplesize < 0.30f) return 1;
+            else if (nipplesize < 0.45f) return 2;
+            else if (nipplesize < 0.70f) return 3;
+            else return 4;
+        }
 
         public static void DrawMilkBars(this Pawn pawn, Rect rect)
         {
@@ -434,7 +447,9 @@ namespace RJW_Menstruation
                 TooltipHandler.TipRegion(buttonrect, tooltip);
                 if (GUI.Button(buttonrect, icon, style))
                 {
-                    if (fullness < 0.1f) SoundDefOf.ClickReject.PlayOneShotOnCamera();
+                    if (fullness < 0.1f 
+                        || !pawn.IsColonistPlayerControlled 
+                        || pawn.Downed) SoundDefOf.ClickReject.PlayOneShotOnCamera();
                     else
                     {
                         SoundDefOf.Click.PlayOneShotOnCamera();
