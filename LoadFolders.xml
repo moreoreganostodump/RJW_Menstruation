@@ -3,5 +3,7 @@
 	<default>
 		<li>/</li>
 		<li IfModActive="Abraxas.RJW.RaceSupport">RJW Menstruation Race Support</li>
+		<li IfModActive="rjw.milk.humanoid">MilkModule</li>
+		
 	</default>
 </loadFolders>

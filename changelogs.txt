@@ -3,6 +3,7 @@ Version 1.0.3.1
  - now implantation chance is independent with rjw pregnancy settings
  - fixed broken vagina support
  - breasts support for race support
+ - minor bug fixes
 
 Version 1.0.3.0
  - added various fetus images (thanks to GluxDesigns)
