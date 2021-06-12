@@ -1,3 +1,9 @@
+Version 1.0.3.1
+ - fixed problems that pawns get climacteric stage after pregnancy even the menopause setting is off
+ - now implantation chance is independent with rjw pregnancy settings
+ - fixed broken vagina support
+ - breasts support for race support
+
 Version 1.0.3.0
  - added various fetus images (thanks to GluxDesigns)
  - added twin fetus image

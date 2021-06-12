@@ -46,7 +46,7 @@ namespace RJW_Menstruation
                 float width = 450f + 2 * windowMargin;
                 float height = 820f;
                 if (!Configurations.DrawWombStatus) height -= wombRectHeight;
-                if (!Configurations.DrawVaginaStatus) width -= 150f;
+                if (!Configurations.DrawVaginaStatus || pawn.IsAnimal()) width -= 150f;
                 return new Vector2(width, height);
             }
         }
@@ -59,6 +59,9 @@ namespace RJW_Menstruation
 
         public void ChangePawn(Pawn pawn, HediffComp_Menstruation comp)
         {
+
+            if (this.pawn.IsAnimal() && !pawn.IsAnimal()) windowRect.width += 150f;
+            else if (!this.pawn.IsAnimal() && pawn.IsAnimal()) windowRect.width -= 150f;
             this.pawn = pawn;
             this.comp = comp;
         }

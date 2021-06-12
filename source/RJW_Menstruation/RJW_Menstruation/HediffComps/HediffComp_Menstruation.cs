@@ -203,8 +203,8 @@ namespace RJW_Menstruation
             {
                 float factor = 1.0f;
                 if (parent.pawn.Has(Quirk.Breeder)) factor = 10.0f;
-                if (xxx.is_animal(parent.pawn)) factor *= RJWPregnancySettings.animal_impregnation_chance / 100f;
-                else factor *= RJWPregnancySettings.humanlike_impregnation_chance / 100f;
+                //if (xxx.is_animal(parent.pawn)) factor *= RJWPregnancySettings.animal_impregnation_chance / 100f;
+                //else factor *= RJWPregnancySettings.humanlike_impregnation_chance / 100f;
                 return parent.pawn.health.capacities.GetLevel(xxx.reproduction) * factor;
             }
         }
@@ -640,7 +640,7 @@ namespace RJW_Menstruation
             }
         }
 
-        public void AfterNotCumIn()
+        public virtual void AfterNotCumIn()
         {
 
         }
@@ -649,59 +649,10 @@ namespace RJW_Menstruation
         /// Action for both Cum and NotCum
         /// </summary>
         /// <param name="fd">Fluid deviation</param>
-        public void AfterFluidIn(float fd)
+        public virtual void AfterFluidIn(float fd)
         {
-            //ModLog.Message("LLActivated: " + Configurations.LLActivated);
-            //if (Configurations.LLActivated)
-            //{
-            //    LLCumflationIn(fd);
-            //}
 
 
-        }
-
-        /// <summary>
-        /// Cumflation for Licentia Labs
-        /// </summary>
-        /// <param name="fd"></param>
-        public void LLCumflationIn(float fd)
-        {
-            if (TotalCumPercent > 1.0f)
-            {
-                ModLog.Message("cumflation in");
-                BodyPartRecord genital = Genital_Helper.get_genitalsBPR(parent.pawn);
-                HediffWithComps hediff = parent.pawn.health?.hediffSet?.GetHediffs<HediffWithComps>()?.FirstOrDefault(x => x.def == VariousDefOf.Cumflation && x.Part.Equals(genital));
-
-                if (hediff == null) // 1.0 fd = 0.002 severity
-                {
-                    ModLog.Message("hediff null");
-                    hediff = (HediffWithComps)HediffMaker.MakeHediff(VariousDefOf.Cumflation, parent.pawn);
-                    hediff.Severity = (TotalCumPercent - 1.0f) * 0.002f;
-                    parent.pawn.health.AddHediff(hediff, genital);
-                    ModLog.Message("added hediff");
-                }
-                else
-                {
-                    ModLog.Message("increase severity: " + hediff.Part.Label);
-                    hediff.Severity += fd * 0.002f;
-                }
-            }
-        }
-
-        public void LLCumflationOut(float fd)
-        {
-            HediffWithComps hediff = parent.pawn.health?.hediffSet?.GetHediffs<HediffWithComps>()?.FirstOrDefault(x => x.def == VariousDefOf.Cumflation && x.Part.def.Equals(xxx.genitalsDef));
-            if (hediff != null)
-            {
-                if (TotalCumPercent < 1.0f) parent.pawn.health.RemoveHediff(hediff);
-                else
-                {
-                    ModLog.Message("decrease severity: " + hediff?.Part?.Label + TotalCumPercent * 0.002f);
-                    hediff.Severity -= fd * 0.002f;
-                    if (hediff.Severity < TotalCumPercent * 0.002f) hediff.Severity = TotalCumPercent * 0.002f;
-                }
-
-            }
         }
 
 
@@ -718,7 +669,7 @@ namespace RJW_Menstruation
         /// <summary>
         /// For natural leaking
         /// </summary>
-        public void AfterCumOut()
+        public virtual void AfterCumOut()
         {
             parent.pawn.needs.mood.thoughts.memories.TryGainMemory(VariousDefOf.LeakingFluids);
         }
@@ -727,12 +678,9 @@ namespace RJW_Menstruation
         /// For all type of leaking
         /// </summary>
         /// <param name="fd"></param>
-        public void AfterFluidOut(float fd)
+        public virtual void AfterFluidOut(float fd)
         {
-            //if (Configurations.LLActivated)
-            //{
-            //    LLCumflationOut(fd);
-            //}
+
         }
 
 
@@ -905,14 +853,7 @@ namespace RJW_Menstruation
 
                 if (!Configurations.EnableMenopause)
                 {
-                    Hediff hediff = parent.pawn.health.hediffSet.GetFirstHediffOfDef(VariousDefOf.Hediff_Climacteric);
-                    if (hediff != null) parent.pawn.health.RemoveHediff(hediff);
-                    hediff = parent.pawn.health.hediffSet.GetFirstHediffOfDef(VariousDefOf.Hediff_Menopause);
-                    if (hediff != null) parent.pawn.health.RemoveHediff(hediff);
-                    if (curStage == Stage.ClimactericBleeding) curStage = Stage.Bleeding;
-                    else if (curStage == Stage.ClimactericFollicular) curStage = Stage.Follicular;
-                    else if (curStage == Stage.ClimactericLuteal) curStage = Stage.Luteal;
-
+                    RemoveClimactericEffect();
                 }
                 else if (ovarypower < -50000)
                 {
@@ -1413,7 +1354,7 @@ namespace RJW_Menstruation
                     {
                         if (curStageHrs >= recoveryIntervalhours)
                         {
-                            if (ovarypower < ovarypowerthreshold)
+                            if (Configurations.EnableMenopause && ovarypower < ovarypowerthreshold)
                             {
                                 GoNextStage(Stage.ClimactericFollicular);
                             }
@@ -1446,7 +1387,12 @@ namespace RJW_Menstruation
                 case Stage.ClimactericFollicular:
                     action = delegate
                     {
-                        if (curStageHrs >= (follicularIntervalhours - bleedingIntervalhours) * CycleFactor)
+                        if (!Configurations.EnableMenopause)
+                        {
+                            RemoveClimactericEffect();
+                            StayCurrentStage();
+                        }
+                        else if (curStageHrs >= (follicularIntervalhours - bleedingIntervalhours) * CycleFactor)
                         {
                             GoNextStage(Stage.Ovulatory);
                         }
@@ -1465,7 +1411,12 @@ namespace RJW_Menstruation
                 case Stage.ClimactericLuteal:
                     action = delegate
                     {
-                        if (!eggs.NullOrEmpty())
+                        if (!Configurations.EnableMenopause)
+                        {
+                            RemoveClimactericEffect();
+                            StayCurrentStage();
+                        }
+                        else if (!eggs.NullOrEmpty())
                         {
                             FertilizationCheck();
                             EggDecay();
@@ -1509,7 +1460,12 @@ namespace RJW_Menstruation
                 case Stage.ClimactericBleeding:
                     action = delegate
                     {
-                        if (curStageHrs >= bleedingIntervalhours)
+                        if (!Configurations.EnableMenopause)
+                        {
+                            RemoveClimactericEffect();
+                            StayCurrentStage();
+                        }
+                        else if (curStageHrs >= bleedingIntervalhours)
                         {
                             follicularIntervalhours = PeriodRandomizer(follicularIntervalhours, Props.deviationFactor * 6);
                             GoNextStage(Stage.ClimactericFollicular);
@@ -1588,6 +1544,16 @@ namespace RJW_Menstruation
             }
         }
 
+        protected void RemoveClimactericEffect()
+        {
+            Hediff hediff = parent.pawn.health.hediffSet.GetFirstHediffOfDef(VariousDefOf.Hediff_Climacteric);
+            if (hediff != null) parent.pawn.health.RemoveHediff(hediff);
+            hediff = parent.pawn.health.hediffSet.GetFirstHediffOfDef(VariousDefOf.Hediff_Menopause);
+            if (hediff != null) parent.pawn.health.RemoveHediff(hediff);
+            if (curStage == Stage.ClimactericBleeding) curStage = Stage.Bleeding;
+            else if (curStage == Stage.ClimactericFollicular) curStage = Stage.Follicular;
+            else if (curStage == Stage.ClimactericLuteal) curStage = Stage.Luteal;
+        }
 
         protected int PeriodRandomizer(int intervalhours, float deviation)
         {

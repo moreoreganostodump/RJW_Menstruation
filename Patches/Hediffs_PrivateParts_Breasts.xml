@@ -1,15 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- one cycle = folicularIntervalDays + lutealIntervalDays -->
-<!-- folicularIntervalDays includes bleedingIntervalDays.  -->
-<!-- bleedingIntervalDays must be smaller than folicularIntervalDays  -->
-<!-- unit of maxCumCapacity is ml -->
-<!-- actual max cum capacity is 500times of maxCumCapacity -->
-<!-- one egg = 1 ovaryPower-->
 
 <Patch>
 	<Operation Class="PatchOperationAdd">
 		<xpath>Defs/rjw.HediffDef_PartBase[defName="Breasts"]</xpath>
+		<value>
+			<comps>
+				<li Class="RJW_Menstruation.CompProperties_Breast">
+					<BreastTex>Breasts/Breast</BreastTex>
+					<BlacknippleColor>(55,20,0)</BlacknippleColor>
+				</li>
+			</comps>
+		</value>
+	</Operation>
+	
+	<Operation Class="PatchOperationAdd">
+		<xpath>Defs/rjw.HediffDef_PartBase[defName="SlimeBreasts"]</xpath>
 		<value>
 			<comps>
 				<li Class="RJW_Menstruation.CompProperties_Breast">

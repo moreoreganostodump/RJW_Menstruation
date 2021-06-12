@@ -46,10 +46,7 @@ namespace RJW_Menstruation
         public static readonly JobDef Job_LactateSelf = DefDatabase<JobDef>.GetNamed("LactateSelf");
 
 
-        // Defs from Licentia Labs
-        public static readonly HediffDef Cumflation = DefDatabase<HediffDef>.GetNamedSilentFail("Cumflation");
-        public static readonly ThoughtDef GotOverCumflated = DefDatabase<ThoughtDef>.GetNamedSilentFail("GotOverCumflated");
-        public static readonly ThoughtDef GotOverCumflatedEnjoyed = DefDatabase<ThoughtDef>.GetNamedSilentFail("GotOverCumflatedEnjoyed");
+
 
 
 

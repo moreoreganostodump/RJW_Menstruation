@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Patch>
+
+
+	<Operation Class="PatchOperationAdd">
+		<xpath>Defs/rjw.HediffDef_PartBase[defName="BigRaceBreats"]</xpath>
+		<value>
+			<comps>
+				<li Class="RJW_Menstruation.CompProperties_Breast">
+					<BreastTex>Breasts/Breast</BreastTex>
+					<BlacknippleColor>(55,20,0)</BlacknippleColor>
+				</li>
+			</comps>
+		</value>
+	</Operation>
+	
+	<Operation Class="PatchOperationAdd">
+		<xpath>Defs/rjw.HediffDef_PartBase[defName="OrcBreasts"]</xpath>
+		<value>
+			<comps>
+				<li Class="RJW_Menstruation.CompProperties_Breast">
+					<BreastTex>Breasts/Breast</BreastTex>
+					<BlacknippleColor>(55,20,0)</BlacknippleColor>
+				</li>
+			</comps>
+		</value>
+	</Operation>
+	
+	<Operation Class="PatchOperationAdd">
+		<xpath>Defs/rjw.HediffDef_PartBase[defName="GhoulBreasts"]</xpath>
+		<value>
+			<comps>
+				<li Class="RJW_Menstruation.CompProperties_Breast">
+					<BreastTex>Breasts/Breast</BreastTex>
+					<BlacknippleColor>(55,20,0)</BlacknippleColor>
+				</li>
+			</comps>
+		</value>
+	</Operation>
+	
+	<Operation Class="PatchOperationAdd">
+		<xpath>Defs/rjw.HediffDef_PartBase[defName="GhostBreasts"]</xpath>
+		<value>
+			<comps>
+				<li Class="RJW_Menstruation.CompProperties_Breast">
+					<BreastTex>Breasts/Breast</BreastTex>
+					<BlacknippleColor>(55,20,0)</BlacknippleColor>
+				</li>
+			</comps>
+		</value>
+	</Operation>
+	
+	<Operation Class="PatchOperationAdd">
+		<xpath>Defs/rjw.HediffDef_PartBase[defName="NecroBreasts"]</xpath>
+		<value>
+			<comps>
+				<li Class="RJW_Menstruation.CompProperties_Breast">
+					<BreastTex>Breasts/Breast</BreastTex>
+					<BlacknippleColor>(55,20,0)</BlacknippleColor>
+				</li>
+			</comps>
+		</value>
+	</Operation>
+	
+	<Operation Class="PatchOperationAdd">
+		<xpath>Defs/rjw.HediffDef_PartBase[defName="NephilaBreasts"]</xpath>
+		<value>
+			<comps>
+				<li Class="RJW_Menstruation.CompProperties_Breast">
+					<BreastTex>Breasts/Breast</BreastTex>
+					<BlacknippleColor>(55,20,0)</BlacknippleColor>
+				</li>
+			</comps>
+		</value>
+	</Operation>
+	
+	<Operation Class="PatchOperationAdd">
+		<xpath>Defs/rjw.HediffDef_PartBase[defName="NephilaSlimeBreasts"]</xpath>
+		<value>
+			<comps>
+				<li Class="RJW_Menstruation.CompProperties_Breast">
+					<BreastTex>Breasts/Breast</BreastTex>
+					<BlacknippleColor>(55,20,0)</BlacknippleColor>
+				</li>
+			</comps>
+		</value>
+	</Operation>
+	
+	
+	
+</Patch>

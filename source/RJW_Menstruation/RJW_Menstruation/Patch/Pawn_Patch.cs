@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Verse;
+using rjw;
 
 namespace RJW_Menstruation
 {
@@ -109,6 +110,31 @@ namespace RJW_Menstruation
         }
 
     }
+
+    [HarmonyPatch(typeof(PawnColumnWorker_Pregnant), "GetIconFor")]
+    public class PawnColumnWorker_Patch_Icon
+    {
+        public static void Postfix(Pawn pawn, ref Texture2D __result)
+        {
+            if (pawn.IsPregnant()) __result = ContentFinder<Texture2D>.Get("UI/Icons/Animal/Pregnant", true);
+        }
+
+    }
+
+    [HarmonyPatch(typeof(PawnColumnWorker_Pregnant), "GetTooltipText")]
+    public class PawnColumnWorker_Patch_Tooltip
+    {
+        public static bool Prefix(Pawn pawn, ref string __result)
+        {
+            float gestationProgress = PregnancyHelper.GetPregnancy(pawn).Severity;
+            int num = (int)(pawn.RaceProps.gestationPeriodDays * 60000f);
+            int numTicks = (int)(gestationProgress * (float)num);
+            __result = "PregnantIconDesc".Translate(numTicks.ToStringTicksToDays("F0"), num.ToStringTicksToDays("F0"));
+            return false;
+        }
+
+    }
+
 
 
     //[HarmonyPatch(typeof(JobGiver_OptimizeApparel), "ApparelScoreGain_NewTmp")]

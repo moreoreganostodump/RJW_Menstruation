@@ -12,6 +12,7 @@ namespace RJW_Menstruation
                 || comp.curStage.Equals(HediffComp_Menstruation.Stage.Luteal)
                 || comp.curStage.Equals(HediffComp_Menstruation.Stage.ClimactericFollicular)
                 || comp.curStage.Equals(HediffComp_Menstruation.Stage.ClimactericLuteal)
+                || comp.curStage.Equals(HediffComp_Menstruation.Stage.Anestrus)
                 ))
             {
                 comp.SetEstrus(comp.Props.eggLifespanDays);
