@@ -15,6 +15,42 @@
 	</Operation>
 	
 	<Operation Class="PatchOperationAdd">
+		<xpath>Defs/rjw.HediffDef_PartBase[defName="HydraulicBreasts"]</xpath>
+		<value>
+			<comps>
+				<li Class="RJW_Menstruation.CompProperties_Breast">
+					<BreastTex>Breasts/Breast</BreastTex>
+					<BlacknippleColor>(55,20,0)</BlacknippleColor>
+				</li>
+			</comps>
+		</value>
+	</Operation>
+	
+	<Operation Class="PatchOperationAdd">
+		<xpath>Defs/rjw.HediffDef_PartBase[defName="BionicBreasts"]</xpath>
+		<value>
+			<comps>
+				<li Class="RJW_Menstruation.CompProperties_Breast">
+					<BreastTex>Breasts/Breast</BreastTex>
+					<BlacknippleColor>(55,20,0)</BlacknippleColor>
+				</li>
+			</comps>
+		</value>
+	</Operation>
+	
+	<Operation Class="PatchOperationAdd">
+		<xpath>Defs/rjw.HediffDef_PartBase[defName="ArchotechBreasts"]</xpath>
+		<value>
+			<comps>
+				<li Class="RJW_Menstruation.CompProperties_Breast">
+					<BreastTex>Breasts/Breast</BreastTex>
+					<BlacknippleColor>(55,20,0)</BlacknippleColor>
+				</li>
+			</comps>
+		</value>
+	</Operation>
+	
+	<Operation Class="PatchOperationAdd">
 		<xpath>Defs/rjw.HediffDef_PartBase[defName="SlimeBreasts"]</xpath>
 		<value>
 			<comps>
