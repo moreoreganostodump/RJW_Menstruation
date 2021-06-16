@@ -11,13 +11,28 @@ namespace RJW_Menstruation
     {
         public override void DiscoverPregnancy()
         {
-            if (!is_discovered && xxx.is_human(pawn) && !pawn.Has(Quirk.Breeder) && pawn.relations?.DirectRelations?.Find(x => x.def.Equals(PawnRelationDefOf.Spouse) || x.def.Equals(PawnRelationDefOf.Fiance)) == null)
-            {
-                pawn.needs.mood.thoughts.memories.TryGainMemory(VariousDefOf.UnwantedPregnancy);
-            }
+            PregnancyThought();
             base.DiscoverPregnancy();
         }
 
+        protected void PregnancyThought()
+        {
+            if (!is_discovered && xxx.is_human(pawn))
+            {
+                if (!pawn.Has(Quirk.Breeder) && pawn.relations?.DirectRelations?.Find(x => x.def.Equals(PawnRelationDefOf.Spouse) || x.def.Equals(PawnRelationDefOf.Fiance)) == null)
+                {
+                    if (pawn.Has(Quirk.ImpregnationFetish) || pawn.relations?.DirectRelations?.Find(x => x.def.Equals(PawnRelationDefOf.Lover)) != null)
+                    {
+                        pawn.needs.mood.thoughts.memories.TryGainMemory(VariousDefOf.UnwantedPregnancyMild);
+                    }
+                    else
+                    {
+                        pawn.needs.mood.thoughts.memories.TryGainMemory(VariousDefOf.UnwantedPregnancy);
+                    }
+                }
+
+            }
+        }
 
         public override void GiveBirth()
         {

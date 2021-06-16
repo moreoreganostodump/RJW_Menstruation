@@ -23,6 +23,7 @@ namespace RJW_Menstruation
         public static readonly PawnRelationDef Relation_spawn = DefDatabase<PawnRelationDef>.AllDefs.FirstOrDefault(d => d.defName == "RJW_Pup");
         public static readonly NeedDef SexNeed = DefDatabase<NeedDef>.GetNamed("Sex");
         public static readonly JobDef VaginaWashing = DefDatabase<JobDef>.GetNamed("VaginaWashing");
+        public static readonly JobDef Job_LactateSelf = DefDatabase<JobDef>.GetNamed("LactateSelf");
         public static readonly ThoughtDef LeakingFluids = DefDatabase<ThoughtDef>.GetNamed("LeakingFluids");
         public static readonly ThoughtDef CameInsideF = DefDatabase<ThoughtDef>.GetNamed("CameInsideF");
         public static readonly ThoughtDef CameInsideFLowFert = DefDatabase<ThoughtDef>.GetNamed("CameInsideFLowFert");
@@ -33,6 +34,9 @@ namespace RJW_Menstruation
         public static readonly ThoughtDef CameInsideM = DefDatabase<ThoughtDef>.GetNamed("CameInsideM");
         public static readonly ThoughtDef HaterCameInsideM = DefDatabase<ThoughtDef>.GetNamed("HaterCameInsideM");
         public static readonly ThoughtDef UnwantedPregnancy = DefDatabase<ThoughtDef>.GetNamed("UnwantedPregnancy");
+        public static readonly ThoughtDef UnwantedPregnancyMild = DefDatabase<ThoughtDef>.GetNamed("UnwantedPregnancyMild");
+        public static readonly ThoughtDef TookContraptivePill = DefDatabase<ThoughtDef>.GetNamed("TookContraptivePill");
+        public static readonly ThoughtDef HateTookContraptivePill = DefDatabase<ThoughtDef>.GetNamed("HateTookContraptivePill");
         public static readonly HediffDef_PartBase Vagina = DefDatabase<HediffDef_PartBase>.GetNamed("Vagina");
         public static readonly CompProperties_Menstruation VaginaCompProperties = (CompProperties_Menstruation)Vagina.comps.FirstOrDefault(x => x is CompProperties_Menstruation);
         public static readonly KeyBindingDef OpenStatusWindowKey = DefDatabase<KeyBindingDef>.GetNamed("OpenStatusWindow");
@@ -43,7 +47,7 @@ namespace RJW_Menstruation
         public static readonly HediffDef Hediff_Lactating_Natural = DefDatabase<HediffDef>.GetNamedSilentFail("Lactating_Natural");
         public static readonly HediffDef Hediff_Lactating_Permanent = DefDatabase<HediffDef>.GetNamedSilentFail("Lactating_Permanent");
         public static readonly HediffDef Hediff_Heavy_Lactating_Permanent = DefDatabase<HediffDef>.GetNamedSilentFail("Heavy_Lactating_Permanent");
-        public static readonly JobDef Job_LactateSelf = DefDatabase<JobDef>.GetNamed("LactateSelf");
+        public static readonly JobDef Job_LactateSelf_MC = DefDatabase<JobDef>.GetNamed("LactateSelf_MC");
 
 
 

@@ -414,18 +414,25 @@ namespace RJW_Menstruation
             {
                 if (milkcomp is CompMilkable)
                 {
-                    CompMilkable m = (CompMilkable)milkcomp;
-                    res = Math.Max(m.Fullness, res);
-                    Widgets.FillableBar(rect, Math.Min(res, 1.0f), TextureCache.milkTexture, Texture2D.blackTexture, true);
-                    DrawMilkBottle(rect, pawn, JobDefOf.Milk, m.Fullness);
+                    bool active = (bool)milkcomp.GetPropertyValue("Active");
+                    if (active)
+                    {
+                        CompMilkable m = (CompMilkable)milkcomp;
+                        res = Math.Max(m.Fullness, res);
+                        Widgets.FillableBar(rect, Math.Min(res, 1.0f), TextureCache.milkTexture, Texture2D.blackTexture, true);
+                        DrawMilkBottle(rect, pawn, VariousDefOf.Job_LactateSelf, m.Fullness);
+                    }
                 }
                 else
                 {
-                    float fullness = (float)milkcomp.GetMemberValue("fullness");
-                    res = Math.Max(fullness, res);
-                    Widgets.FillableBar(rect, Math.Min(res, 1.0f), TextureCache.milkTexture, Texture2D.blackTexture, true);
-                    DrawMilkBottle(rect, pawn, VariousDefOf.Job_LactateSelf,fullness);
-
+                    bool active = (bool)milkcomp.GetPropertyValue("Active");
+                    if (active)
+                    {
+                        float fullness = (float)milkcomp.GetMemberValue("fullness");
+                        res = Math.Max(fullness, res);
+                        Widgets.FillableBar(rect, Math.Min(res, 1.0f), TextureCache.milkTexture, Texture2D.blackTexture, true);
+                        DrawMilkBottle(rect, pawn, VariousDefOf.Job_LactateSelf_MC, fullness);
+                    }
                 }
             }
         }

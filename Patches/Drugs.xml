@@ -7,4 +7,11 @@
 				<li Class="RJW_Menstruation.FertPillOutcomDoer"/>
 		</value>
 	</Operation>
+	
+	<Operation Class="PatchOperationAdd">
+		<xpath>Defs/ThingDef[defName="RJW_Contraceptive"]/ingestible/outcomeDoers</xpath>
+		<value>
+				<li Class="RJW_Menstruation.ContraptiveOutcomDoer"/>
+		</value>
+	</Operation>
 </Patch>

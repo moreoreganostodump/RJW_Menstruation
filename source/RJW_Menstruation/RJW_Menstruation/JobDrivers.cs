@@ -39,7 +39,84 @@ namespace RJW_Menstruation
         }
     }
 
-    
+    public class JobDriver_MilkSelf : JobDriver
+    {
+        protected float progress = 0;
+        protected float MilkingTime
+        {
+            get
+            {
+                return 250f * Fullness + 50f;
+            }
+        }
+        protected virtual float Fullness
+        {
+            get
+            {
+                return comp?.Fullness ?? 0;
+            }
+        }
+
+        private CompMilkable comp;
+
+        public override bool TryMakePreToilReservations(bool errorOnFailed)
+        {
+            return pawn.Reserve(pawn, job, 1, -1, null, errorOnFailed);
+        }
+
+        protected virtual void PreMakeNewToils()
+        {
+            comp = pawn.GetComp<CompMilkable>();
+        }
+
+        protected override IEnumerable<Toil> MakeNewToils()
+        {
+            PreMakeNewToils();
+            this.FailOnDespawnedNullOrForbidden(TargetIndex.A);
+            this.FailOnNotCasualInterruptible(TargetIndex.A);
+            Toil milking = new Toil();
+            milking.initAction = delegate ()
+            {
+                pawn.pather.StopDead();
+            };
+            milking.tickAction = MilkingTick;
+            milking.AddFinishAction(Finish);
+            milking.defaultCompleteMode = ToilCompleteMode.Never;
+            milking.WithProgressBar(TargetIndex.A, () => progress / MilkingTime);
+            yield return milking;
+            yield break;
+        }
+
+        protected void MilkingTick()
+        {
+            progress += pawn.GetStatValue(StatDefOf.AnimalGatherSpeed);
+            if (progress > MilkingTime)
+            {
+                Gathered();
+                pawn.jobs.EndCurrentJob(JobCondition.Succeeded);
+            }
+            PostTickAction();
+        }
+
+        protected virtual void Gathered()
+        {
+            pawn.GetComp<CompMilkable>().Gathered(pawn);
+        }
+
+        protected virtual void Finish()
+        {
+            if(pawn.CurJobDef == JobDefOf.Wait_MaintainPosture)
+            {
+                pawn.jobs.EndCurrentJob(JobCondition.InterruptForced);
+            }
+        }
+
+        protected virtual void PostTickAction()
+        {
+        }
+
+
+    }
 
 
 }

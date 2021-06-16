@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Manifest>
 	<identifier>RJW Menstruation</identifier>
-	<version>1.0.3.1</version>
+	<version>1.0.3.2</version>
 	<dependencies>
 	</dependencies>
 	<incompatibleWith />
@@ -9,6 +9,6 @@
 	</loadAfter>
 	<suggests>
 	</suggests>
-  <manifestUri>https://github.com/moreoreganostodump/RJW_Menstruation/blob/master/About/Manifest.xml</manifestUri>
+  <manifestUri>https://raw.githubusercontent.com/moreoreganostodump/RJW_Menstruation/master/About/Manifest.xml</manifestUri>
   <downloadUri>https://github.com/moreoreganostodump/RJW_Menstruation</downloadUri>
 </Manifest>

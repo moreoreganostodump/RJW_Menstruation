@@ -56,6 +56,7 @@ namespace RJW_Menstruation
         protected float originareola = -1f;
         protected float originnipple = -1f;
         protected Color cachedcolor;
+        protected bool loaded = false;
 
         public Action action;
 
@@ -134,6 +135,18 @@ namespace RJW_Menstruation
 
         public override void CompPostTick(ref float severityAdjustment) { }
 
+        public override void CompPostPostAdd(DamageInfo? dinfo)
+        {
+            if (!loaded) Initialize();
+        }
+
+        public override void CompPostPostRemoved()
+        {
+            HugsLibController.Instance.TickDelayScheduler.TryUnscheduleCallback(action);
+            ModLog.Message(parent.pawn.Label + "breast tick scheduler removed");
+            base.CompPostPostRemoved();
+        }
+
         public void Initialize()
         {
             Props = (CompProperties_Breast)props;
@@ -160,8 +173,11 @@ namespace RJW_Menstruation
                 nippleSizeCurrent = nippleSizePermanent;
             }
             UpdateColor();
+            loaded = true;
             HugsLibController.Instance.TickDelayScheduler.ScheduleCallback(action, tickinterval, parent.pawn);
         }
+
+        
 
         public void Transition()
         {
@@ -223,6 +239,7 @@ namespace RJW_Menstruation
             float variance = breastSizeIncreased * Math.Min(ratio, 1.0f);
             breastSizeIncreased -= variance;
             parent.Severity -= variance;
+            
         }
         
         public void UpdateColor()

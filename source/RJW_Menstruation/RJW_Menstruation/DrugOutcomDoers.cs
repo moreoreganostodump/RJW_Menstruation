@@ -1,5 +1,7 @@
-﻿using RimWorld;
+﻿using System.Collections.Generic;
+using RimWorld;
 using Verse;
+using rjw;
 
 namespace RJW_Menstruation
 {
@@ -51,6 +53,31 @@ namespace RJW_Menstruation
 
 
         }
+    }
+
+    public class ContraptiveOutcomDoer : IngestionOutcomeDoer
+    {
+        protected override void DoIngestionOutcomeSpecial(Pawn pawn, Thing ingested)
+        {
+            
+            List<Thought_Memory> memories = pawn.needs?.mood?.thoughts?.memories?.Memories.FindAll(
+                x => 
+                x.def == VariousDefOf.CameInsideF
+             || x.def == VariousDefOf.CameInsideFFetish
+             || x.def == VariousDefOf.HaterCameInsideF);
+            if (!memories.NullOrEmpty())
+            {
+                foreach (Thought_Memory m in memories)
+                {
+                    if (m.def == VariousDefOf.HaterCameInsideF) m.moodPowerFactor = 0.5f;
+                    else m.moodPowerFactor = 0.3f;
+                    
+                }
+                if (pawn.Has(Quirk.Breeder)) pawn.needs.mood.thoughts.memories.TryGainMemoryFast(VariousDefOf.HateTookContraptivePill);
+                else pawn.needs.mood.thoughts.memories.TryGainMemoryFast(VariousDefOf.TookContraptivePill);
+            }
+        }
+         
     }
 
 

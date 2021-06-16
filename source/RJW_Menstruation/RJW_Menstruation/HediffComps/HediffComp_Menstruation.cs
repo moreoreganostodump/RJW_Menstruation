@@ -596,48 +596,8 @@ namespace RJW_Menstruation
 
         public virtual void AfterCumIn(Pawn cummer)
         {
-            if (xxx.is_human(parent.pawn) && xxx.is_human(cummer))
-            {
-                if (parent.pawn.GetStatValue(StatDefOf.PawnBeauty) >= 0 || cummer.Has(Quirk.ImpregnationFetish) || cummer.Has(Quirk.Breeder))
-                {
-                    if (cummer.relations.OpinionOf(parent.pawn) <= -25)
-                    {
-                        cummer.needs.mood.thoughts.memories.TryGainMemory(VariousDefOf.HaterCameInsideM, parent.pawn);
-                    }
-                    else
-                    {
-                        cummer.needs.mood.thoughts.memories.TryGainMemory(VariousDefOf.CameInsideM, parent.pawn);
-                    }
-                }
+            ThoughtCumInside(cummer);
 
-                if (IsDangerDay)
-                {
-                    if (parent.pawn.Has(Quirk.Breeder) || parent.pawn.Has(Quirk.ImpregnationFetish))
-                    {
-                        parent.pawn.needs.mood.thoughts.memories.TryGainMemory(VariousDefOf.CameInsideFFetish, cummer);
-                    }
-                    else if (!parent.pawn.relations.DirectRelationExists(PawnRelationDefOf.Spouse, cummer) && !parent.pawn.relations.DirectRelationExists(PawnRelationDefOf.Fiance, cummer))
-                    {
-                        if (parent.pawn.health.capacities.GetLevel(xxx.reproduction) < 0.50f) parent.pawn.needs.mood.thoughts.memories.TryGainMemory(VariousDefOf.CameInsideFLowFert, cummer);
-                        else parent.pawn.needs.mood.thoughts.memories.TryGainMemory(VariousDefOf.CameInsideF, cummer);
-                    }
-                    else if (parent.pawn.relations.OpinionOf(cummer) <= -5)
-                    {
-                        parent.pawn.needs.mood.thoughts.memories.TryGainMemory(VariousDefOf.HaterCameInsideF, cummer);
-                    }
-                }
-                else
-                {
-                    if (parent.pawn.Has(Quirk.Breeder) || parent.pawn.Has(Quirk.ImpregnationFetish))
-                    {
-                        parent.pawn.needs.mood.thoughts.memories.TryGainMemory(VariousDefOf.CameInsideFFetishSafe, cummer);
-                    }
-                    else if (parent.pawn.relations.OpinionOf(cummer) <= -5)
-                    {
-                        parent.pawn.needs.mood.thoughts.memories.TryGainMemory(VariousDefOf.HaterCameInsideFSafe, cummer);
-                    }
-                }
-            }
         }
 
         public virtual void AfterNotCumIn()
@@ -671,7 +631,7 @@ namespace RJW_Menstruation
         /// </summary>
         public virtual void AfterCumOut()
         {
-            parent.pawn.needs.mood.thoughts.memories.TryGainMemory(VariousDefOf.LeakingFluids);
+            parent.pawn.needs?.mood?.thoughts?.memories?.TryGainMemory(VariousDefOf.LeakingFluids);
         }
 
         /// <summary>
@@ -1319,6 +1279,57 @@ namespace RJW_Menstruation
             {
                 StayCurrentStage();
             }
+        }
+
+        protected virtual void ThoughtCumInside(Pawn cummer)
+        {
+            if (xxx.is_human(parent.pawn) && xxx.is_human(cummer))
+            {
+                if (parent.pawn.GetStatValue(StatDefOf.PawnBeauty) >= 0 || cummer.Has(Quirk.ImpregnationFetish) || cummer.Has(Quirk.Breeder))
+                {
+                    if (cummer.relations.OpinionOf(parent.pawn) <= -25)
+                    {
+                        cummer.needs.mood.thoughts.memories.TryGainMemory(VariousDefOf.HaterCameInsideM, parent.pawn);
+                    }
+                    else
+                    {
+                        cummer.needs.mood.thoughts.memories.TryGainMemory(VariousDefOf.CameInsideM, parent.pawn);
+                    }
+                }
+
+                if (IsDangerDay)
+                {
+                    if (parent.pawn.Has(Quirk.Breeder) || parent.pawn.Has(Quirk.ImpregnationFetish))
+                    {
+                        parent.pawn.needs.mood.thoughts.memories.TryGainMemory(VariousDefOf.CameInsideFFetish, cummer);
+                    }
+                    else if (!parent.pawn.relations.DirectRelationExists(PawnRelationDefOf.Spouse, cummer) && !parent.pawn.relations.DirectRelationExists(PawnRelationDefOf.Fiance, cummer))
+                    {
+                        if (parent.pawn.health.capacities.GetLevel(xxx.reproduction) < 0.50f) parent.pawn.needs.mood.thoughts.memories.TryGainMemory(VariousDefOf.CameInsideFLowFert, cummer);
+                        else parent.pawn.needs.mood.thoughts.memories.TryGainMemory(VariousDefOf.CameInsideF, cummer);
+                    }
+                    else if (parent.pawn.relations.OpinionOf(cummer) <= -5)
+                    {
+                        parent.pawn.needs.mood.thoughts.memories.TryGainMemory(VariousDefOf.HaterCameInsideF, cummer);
+                    }
+                }
+                else
+                {
+                    if (parent.pawn.Has(Quirk.Breeder) || parent.pawn.Has(Quirk.ImpregnationFetish))
+                    {
+                        parent.pawn.needs.mood.thoughts.memories.TryGainMemory(VariousDefOf.CameInsideFFetishSafe, cummer);
+                    }
+                    else if (parent.pawn.relations.OpinionOf(cummer) <= -5)
+                    {
+                        parent.pawn.needs.mood.thoughts.memories.TryGainMemory(VariousDefOf.HaterCameInsideFSafe, cummer);
+                    }
+                }
+            }
+        }
+
+        protected virtual void ThoughtCummer()
+        {
+
         }
 
 

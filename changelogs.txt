@@ -1,4 +1,11 @@
+Version 1.0.3.2
+ - fixed self-lactating not work properly
+ - pawns having impregnation fetish or lover get less mood penalty on pregnancy
+ - minor bug fixes
+ - contraptive pills decreases mood debuffs from creampie (breeders will get reversed effect)
+
 Version 1.0.3.1
+*Note* Remove previous version before installing
  - fixed problems that pawns get climacteric stage after pregnancy even the menopause setting is off
  - now implantation chance is independent with rjw pregnancy settings
  - fixed broken vagina support
