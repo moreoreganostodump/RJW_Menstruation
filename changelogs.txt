@@ -13,7 +13,7 @@ Version 1.0.3.1
  - minor bug fixes
 
 Version 1.0.3.0
- - added various fetus images (thanks to GluxDesigns)
+ - added various fetus images (thanks to Glux)
  - added twin fetus image
  - male insects can impregnate female
  - now insects egg display on womb icon

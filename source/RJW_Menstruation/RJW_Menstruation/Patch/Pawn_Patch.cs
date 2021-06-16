@@ -113,49 +113,49 @@ namespace RJW_Menstruation
 
 
     //Merged to RJW
-    [HarmonyPatch(typeof(PawnColumnWorker_Pregnant), "GetIconFor")]
-    public class PawnColumnWorker_Patch_Icon
-    {
-        public static void Postfix(Pawn pawn, ref Texture2D __result)
-        {
-            if (pawn.IsVisiblyPregnant()) __result = ContentFinder<Texture2D>.Get("UI/Icons/Animal/Pregnant", true);
-        }
-    
-    }
-    
-    [HarmonyPatch(typeof(PawnColumnWorker_Pregnant), "GetTooltipText")]
-    public class PawnColumnWorker_Patch_Tooltip
-    {
-        public static bool Prefix(Pawn pawn, ref string __result)
-        {
-            float gestationProgress = PregnancyHelper.GetPregnancy(pawn).Severity;
-            int num = (int)(pawn.RaceProps.gestationPeriodDays * 60000f);
-            int numTicks = (int)(gestationProgress * (float)num);
-            __result = "PregnantIconDesc".Translate(numTicks.ToStringTicksToDays("F0"), num.ToStringTicksToDays("F0"));
-            return false;
-        }
-    
-    }
-    
-    [HarmonyPatch(typeof(TransferableUIUtility), "DoExtraAnimalIcons")]
-    public class TransferableUIUtility_Patch_Icon
-    {
-        private static readonly Texture2D PregnantIcon = ContentFinder<Texture2D>.Get("UI/Icons/Animal/Pregnant", true);
-        public static void Postfix(Transferable trad, Rect rect, ref float curX)
-        {
-            Pawn pawn = trad.AnyThing as Pawn;
-            if (pawn.IsVisiblyPregnant())
-            {
-                Rect rect3 = new Rect(curX - 24f, (rect.height - 24f) / 2f, 24f, 24f);
-                curX -= 24f;
-                if (Mouse.IsOver(rect3))
-                {
-                    TooltipHandler.TipRegion(rect3, PawnColumnWorker_Pregnant.GetTooltipText(pawn));
-                }
-                GUI.DrawTexture(rect3, PregnantIcon);
-            }
-        }
-    }
+    //[HarmonyPatch(typeof(PawnColumnWorker_Pregnant), "GetIconFor")]
+    //public class PawnColumnWorker_Patch_Icon
+    //{
+    //    public static void Postfix(Pawn pawn, ref Texture2D __result)
+    //    {
+    //        if (pawn.IsVisiblyPregnant()) __result = ContentFinder<Texture2D>.Get("UI/Icons/Animal/Pregnant", true);
+    //    }
+    //
+    //}
+    //
+    //[HarmonyPatch(typeof(PawnColumnWorker_Pregnant), "GetTooltipText")]
+    //public class PawnColumnWorker_Patch_Tooltip
+    //{
+    //    public static bool Prefix(Pawn pawn, ref string __result)
+    //    {
+    //        float gestationProgress = PregnancyHelper.GetPregnancy(pawn).Severity;
+    //        int num = (int)(pawn.RaceProps.gestationPeriodDays * 60000f);
+    //        int numTicks = (int)(gestationProgress * (float)num);
+    //        __result = "PregnantIconDesc".Translate(numTicks.ToStringTicksToDays("F0"), num.ToStringTicksToDays("F0"));
+    //        return false;
+    //    }
+    //
+    //}
+    //
+    //[HarmonyPatch(typeof(TransferableUIUtility), "DoExtraAnimalIcons")]
+    //public class TransferableUIUtility_Patch_Icon
+    //{
+    //    private static readonly Texture2D PregnantIcon = ContentFinder<Texture2D>.Get("UI/Icons/Animal/Pregnant", true);
+    //    public static void Postfix(Transferable trad, Rect rect, ref float curX)
+    //    {
+    //        Pawn pawn = trad.AnyThing as Pawn;
+    //        if (pawn.IsVisiblyPregnant())
+    //        {
+    //            Rect rect3 = new Rect(curX - 24f, (rect.height - 24f) / 2f, 24f, 24f);
+    //            curX -= 24f;
+    //            if (Mouse.IsOver(rect3))
+    //            {
+    //                TooltipHandler.TipRegion(rect3, PawnColumnWorker_Pregnant.GetTooltipText(pawn));
+    //            }
+    //            GUI.DrawTexture(rect3, PregnantIcon);
+    //        }
+    //    }
+    //}
 
 
     //[HarmonyPatch(typeof(JobGiver_OptimizeApparel), "ApparelScoreGain_NewTmp")]
