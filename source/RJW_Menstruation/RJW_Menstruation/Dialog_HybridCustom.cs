@@ -475,7 +475,7 @@ namespace RJW_Menstruation
             TooltipHandler.TipRegion(rect, Translations.CustomHybrid_Tooltip(info.GetDef.label, extension.GetDef.label, label, value/totalWeight*100));
         }
 
-
+        
     }
 
 
