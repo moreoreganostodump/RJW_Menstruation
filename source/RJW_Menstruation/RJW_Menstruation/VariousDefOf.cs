@@ -1,6 +1,8 @@
 ﻿using RimWorld;
 using rjw;
 using System.Linq;
+using System;
+using System.Collections.Generic;
 using Verse;
 
 namespace RJW_Menstruation
@@ -40,6 +42,36 @@ namespace RJW_Menstruation
         public static readonly HediffDef_PartBase Vagina = DefDatabase<HediffDef_PartBase>.GetNamed("Vagina");
         public static readonly CompProperties_Menstruation VaginaCompProperties = (CompProperties_Menstruation)Vagina.comps.FirstOrDefault(x => x is CompProperties_Menstruation);
         public static readonly KeyBindingDef OpenStatusWindowKey = DefDatabase<KeyBindingDef>.GetNamed("OpenStatusWindow");
+        public static readonly PawnColumnDef RJW_EarnedMoneyByWhore = DefDatabase<PawnColumnDef>.GetNamed("RJW_EarnedMoneyByWhore");
+
+        private static List<ThingDef> allraces = null;
+        private static List<PawnKindDef> allkinds = null;
+
+        public static List<ThingDef> AllRaces
+        {
+            get
+            {
+                if (allraces == null)
+                {
+                    List<ThingDef> allThings = DefDatabase<ThingDef>.AllDefsListForReading;
+                    allraces = allThings.FindAll(x => x.race != null);
+                }
+                return allraces;
+            }
+        }
+        public static List<PawnKindDef> AllKinds
+        {
+            get
+            {
+                if (allkinds == null)
+                {
+                    List<PawnKindDef> allKinds = DefDatabase<PawnKindDef>.AllDefsListForReading;
+                    allkinds = allKinds.FindAll(x => x.race != null);
+                }
+                return allkinds;
+            }
+        }
+
 
 
         // Defs from Milkable Colonists
@@ -47,8 +79,7 @@ namespace RJW_Menstruation
         public static readonly HediffDef Hediff_Lactating_Natural = DefDatabase<HediffDef>.GetNamedSilentFail("Lactating_Natural");
         public static readonly HediffDef Hediff_Lactating_Permanent = DefDatabase<HediffDef>.GetNamedSilentFail("Lactating_Permanent");
         public static readonly HediffDef Hediff_Heavy_Lactating_Permanent = DefDatabase<HediffDef>.GetNamedSilentFail("Heavy_Lactating_Permanent");
-        public static readonly JobDef Job_LactateSelf_MC = DefDatabase<JobDef>.GetNamed("LactateSelf_MC");
-
+        public static readonly JobDef Job_LactateSelf_MC = DefDatabase<JobDef>.GetNamedSilentFail("LactateSelf_MC");
 
 
 

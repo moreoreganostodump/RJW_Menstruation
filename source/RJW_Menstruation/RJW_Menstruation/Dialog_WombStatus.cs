@@ -372,8 +372,23 @@ namespace RJW_Menstruation
             statvalue = pawn.records.GetValue(xxx.CountOfBirthEgg);
             FillableBarLabeled(lineRect, "  " + xxx.CountOfBirthEgg.LabelCap.CapitalizeFirst() + " " + statvalue, statvalue / 100, TextureCache.nurgleTexture, Texture2D.blackTexture);
             lineRect.y += height;
-            lineRect.y += height;
-            lineRect.y += height;
+
+            statvalue = pawn.records.GetValue(xxx.CountOfWhore);
+            if (statvalue > 0)
+            {
+                FillableBarLabeled(lineRect, "  " + xxx.CountOfWhore.LabelCap.CapitalizeFirst() + " " + statvalue, statvalue / 500, TextureCache.slaaneshTexture, Texture2D.blackTexture);
+                statvalue = pawn.records.GetValue(xxx.EarnedMoneyByWhore);
+                lineRect.y += height;
+                FillableBarLabeled(lineRect, "  " + VariousDefOf.RJW_EarnedMoneyByWhore.label.CapitalizeFirst() + " " + statvalue, statvalue / 10000, TextureCache.ghalmarazTexture, Texture2D.blackTexture);
+                
+                
+                lineRect.y += height;
+            }
+            else
+            {
+                lineRect.y += height;
+                lineRect.y += height;
+            }
 
             statvalue = Configurations.ImplantationChance * comp.Props.baseImplantationChanceFactor * comp.ImplantFactor;
             FillableBarLabeled(lineRect, "  " + xxx.reproduction.LabelCap.CapitalizeFirst() + " " + statvalue.ToStringPercent(), statvalue, TextureCache.fertilityTexture, Texture2D.blackTexture);

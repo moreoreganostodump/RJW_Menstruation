@@ -88,9 +88,14 @@
   <Option26_Desc>Nipples/areolas won't be darker/wider than this value.</Option26_Desc>
   <Option27_Label>Transition speed of nipples</Option27_Label>
   <Option27_Desc>Set speed of transition of nipples/areolas.&#10;1 = instant transition</Option27_Desc>
-  <Option28_Label></Option28_Label>
-  <Option28_Desc></Option28_Desc>
+  <Option28_Label>Customize Hybrids</Option28_Label>
+  <Option28_Tooltip>Open custom hybrid editor.&#10;This will overrides hybrid definitions of XML files.</Option28_Tooltip>
   
   <FloatMenu_CleanSelf>Vaginal washing</FloatMenu_CleanSelf>
   
+  <CustomHybrid_List_Title>Custom Hybrid Editor</CustomHybrid_List_Title>
+  <CustomHybrid_Title>Hybrids of {0}</CustomHybrid_Title>
+  <CustomHybrid_Tooltip>When {0} breed with {1}, {2} will be born at {3}% of chance.&#10;If both races have hybrid definitions for each other, the father's definition will be used.</CustomHybrid_Tooltip>
+  
+
 </LanguageData>

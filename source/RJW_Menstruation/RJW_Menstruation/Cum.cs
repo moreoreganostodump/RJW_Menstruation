@@ -16,6 +16,16 @@ namespace RJW_Menstruation
         public string notcumLabel = "";
         private bool useCustomColor = false;
         private float notcumthickness = 0;
+        private float cumthickness = 1.0f;
+
+        public float CumThickness
+        {
+            get
+            {
+                return cumthickness;
+            }
+        }
+
         public float decayresist
         {
             get
@@ -131,6 +141,30 @@ namespace RJW_Menstruation
             Scribe_Values.Look(ref customColor, "customColor", customColor, true);
 
         }
+
+        public void MakeThinner(int speed)
+        {
+            for (int i=0; i<speed; i++)
+            {
+                cumthickness = Mathf.Lerp(cumthickness, decayresist, 0.4f);
+            }
+        }
+
+        public void MergeWithCum(float volumein, ThingDef updatefilthDef = null)
+        {
+            if (updatefilthDef != null) filthDef = updatefilthDef;
+            volume = volumein;
+            fertvolume = volumein;
+            cumthickness = Mathf.Lerp(cumthickness, 1.0f, volumein / volume);
+        }
+
+        public void MergeWithFluid(float volumein, float thickness, ThingDef updatefilthDef = null)
+        {
+            if (updatefilthDef != null) filthDef = updatefilthDef;
+            volume = volumein;
+            cumthickness = Mathf.Lerp(cumthickness, thickness, volumein / volume);
+        }
+
     }
 
 

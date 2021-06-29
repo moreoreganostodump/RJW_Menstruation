@@ -510,9 +510,7 @@ namespace RJW_Menstruation
                     {
                         if (cum.pawn.Equals(pawn))
                         {
-                            cum.volume += volume;
-                            cum.fertvolume += volume * CumInFactor;
-                            cum.FilthDef = filthdef;
+                            cum.MergeWithCum(volume, filthdef);
                             merged = true;
                         }
                         cum.volume *= 1 - cumoutrate;
@@ -528,9 +526,7 @@ namespace RJW_Menstruation
                     {
                         if (cum.pawn.Equals(pawn))
                         {
-                            cum.volume += volume;
-                            cum.fertvolume += volume;
-                            cum.FilthDef = filthdef;
+                            cum.MergeWithCum(volume, filthdef);
                             merged = true;
                         }
                     }
@@ -561,10 +557,7 @@ namespace RJW_Menstruation
                     {
                         if (cum.notcum && cum.pawn.Equals(pawn) && cum.notcumLabel.Equals(notcumlabel))
                         {
-                            cum.volume += volume;
-                            cum.decayresist = decayresist;
-                            cum.fertvolume = 0;
-                            cum.FilthDef = filthdef;
+                            cum.MergeWithFluid(volume, decayresist, filthdef);
                             merged = true;
                         }
                         cum.volume *= 1 - cumoutrate;
@@ -580,10 +573,7 @@ namespace RJW_Menstruation
                     {
                         if (cum.notcum && cum.pawn.Equals(pawn) && cum.notcumLabel.Equals(notcumlabel))
                         {
-                            cum.volume += volume;
-                            cum.decayresist = decayresist;
-                            cum.fertvolume = 0;
-                            cum.FilthDef = filthdef;
+                            cum.MergeWithFluid(volume, decayresist, filthdef);
                             merged = true;
                         }
                     }
@@ -665,6 +655,7 @@ namespace RJW_Menstruation
                 cum.volume *= Math.Max(0, (1 - (Configurations.CumDecayRatio * (1 - cum.decayresist)) * leakfactor));
                 cum.fertvolume *= Math.Max(0, (1 - (Configurations.CumDecayRatio * (1 - cum.decayresist)) * leakfactor) * (1 - (Configurations.CumFertilityDecayRatio * (1 - cum.decayresist))));
                 vd -= cum.volume;
+                cum.MakeThinner(Configurations.CycleAcceleration);
                 totalleak += AbsorbCum(cum, vd, absorber);
                 string tmp = "FilthLabelWithSource".Translate(cum.FilthDef.label, cum.pawn?.LabelShort ?? "Unknown", 1.ToString());
                 filthlabels.Add(tmp.Replace(" x1", ""));

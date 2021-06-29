@@ -1,3 +1,9 @@
+Version 1.0.4.0
+ - minor bug fixes
+ - cums will get maximum thickness initially and become thinner gradually
+ - added custom hybrid editor
+ 
+
 Version 1.0.3.2
  - fixed self-lactating not work properly
  - pawns having impregnation fetish or lover get less mood penalty on pregnancy

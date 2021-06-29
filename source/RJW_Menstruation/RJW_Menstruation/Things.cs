@@ -16,7 +16,7 @@ namespace RJW_Menstruation
         public float cumThickness = 0f;
         public List<HybridExtension> hybridExtension;
 
-        public HybridExtension GetHybridExtention(string race)
+        public HybridExtension GetHybridExtension(string race)
         {
             if (hybridExtension.NullOrEmpty()) return null;
             else
@@ -27,7 +27,7 @@ namespace RJW_Menstruation
 
         public PawnKindDef GetHybridWith(string race)
         {
-            return GetHybridExtention(race)?.ChooseOne() ?? null;
+            return GetHybridExtension(race)?.ChooseOne() ?? null;
         }
     }
 
@@ -36,19 +36,22 @@ namespace RJW_Menstruation
 
         public Dictionary<string, float> hybridInfo;
         public ThingDef thingDef;
-       
+
         public HybridExtension() { }
+
 
         public PawnKindDef ChooseOne()
         {
+
             if (hybridInfo.EnumerableNullOrEmpty()) return null;
             PawnKindDef res = null;
             do
             {
-                res = DefDatabase<PawnKindDef>.GetNamedSilentFail(hybridInfo.RandomElementByWeight(x => x.Value).Key);
-                if (res == null) res = DefDatabase<ThingDef>.GetNamedSilentFail(hybridInfo.RandomElementByWeight(x => x.Value).Key).race.AnyPawnKind;
+                string key = hybridInfo.RandomElementByWeight(x => x.Value).Key;
+                res = DefDatabase<PawnKindDef>.GetNamedSilentFail(key);
+                if (res == null) res = DefDatabase<ThingDef>.GetNamedSilentFail(key).race.AnyPawnKind;
 
-                if (res == null) hybridInfo.Remove(res.defName);
+                if (res == null) hybridInfo.Remove(key);
             } while (res == null && !hybridInfo.EnumerableNullOrEmpty());
 
             return res;
@@ -63,9 +66,9 @@ namespace RJW_Menstruation
             
             if (childNodes.Count >= 1) foreach (XmlNode node in childNodes)
                 {
-#if DEBUG
+                    #if DEBUG
                     Log.Message(xmlRoot.Name + "HybridInfo: " + node.Name + " " + node.InnerText);
-#endif
+                    #endif
                     hybridInfo.Add(node.Name, ParseHelper.FromString<float>(node.InnerText));
                 }
 
@@ -73,8 +76,123 @@ namespace RJW_Menstruation
 
         }
 
+
+
     }
 
+    public class HybridInformations : IExposable
+    {
+        public List<HybridExtensionExposable> hybridExtension = new List<HybridExtensionExposable>();
+
+        private ThingDef thingDef;
+        private string thingDefName;
+
+        public string defName
+        {
+            get
+            {
+                return thingDefName;
+            }
+        }
+        public bool IsNull
+        {
+            get
+            {
+                return thingDefName?.Length < 1;
+            }
+        }
+        public ThingDef GetDef
+        {
+            get
+            {
+                if (thingDef != null) return thingDef;
+                else
+                {
+                    thingDef = DefDatabase<ThingDef>.GetNamedSilentFail(thingDefName);
+                    return thingDef;
+                }
+            }
+        }
+
+        public HybridInformations() { }
+
+        public HybridInformations(ThingDef def)
+        {
+            thingDef = def;
+            thingDefName = def.defName;
+        }
+
+        public HybridExtensionExposable GetHybridExtension(string race)
+        {
+            if (hybridExtension.NullOrEmpty()) return null;
+            else
+            {
+                return hybridExtension.Find(x => x.GetDef.defName?.Equals(race) ?? false);
+            }
+        }
+
+        public PawnKindDef GetHybridWith(string race)
+        {
+            return GetHybridExtension(race)?.ChooseOne() ?? null;
+        }
+
+        public void ExposeData()
+        {
+            Scribe_Values.Look(ref thingDefName, "thingDefName");
+            Scribe_Collections.Look(ref hybridExtension, "hybridExtension", LookMode.Deep, new object[0]);
+        }
+
+        
+
+    }
+
+    public class HybridExtensionExposable : HybridExtension, IExposable
+    {
+        private string thingDefName;
+
+        public string defName
+        {
+            get
+            {
+                return thingDefName;
+            }
+        }
+        public bool IsNull
+        {
+            get
+            {
+                return thingDefName?.Length < 1;
+            }
+        }
+        public ThingDef GetDef
+        {
+            get
+            {
+                if (thingDef != null) return thingDef;
+                else
+                {
+                    thingDef = DefDatabase<ThingDef>.GetNamedSilentFail(thingDefName);
+                    return thingDef;
+                }
+            }
+        }
+
+        public HybridExtensionExposable() { }
+
+        public HybridExtensionExposable(ThingDef def)
+        {
+            thingDef = def;
+            thingDefName = def.defName;
+            hybridInfo = new Dictionary<string, float>();
+        }
+
+        public void ExposeData()
+        {
+            Scribe_Values.Look(ref thingDefName, "thingDefName");
+            Scribe_Collections.Look(ref hybridInfo, "hybridInfo", LookMode.Value, LookMode.Value);
+
+        }
+    }
 
 
 

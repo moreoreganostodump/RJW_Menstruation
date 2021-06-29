@@ -235,7 +235,9 @@ namespace RJW_Menstruation
             PawnGenerationRequest request = new PawnGenerationRequest(
                 newborn: true,
                 allowDowned: true,
+                faction: mother.IsPrisoner ? null : mother.Faction,
                 canGeneratePawnRelations: false,
+                forceGenerateNewPawn: true,
                 colonistRelationChanceFactor: 0,
                 allowFood: false,
                 allowAddictions: false,
@@ -412,21 +414,16 @@ namespace RJW_Menstruation
             PawnKindDef tmp = spawn_kind_def;
             if (father != null)
                 FatherRaceName = father.kindDef.race.defName;
+
+
+            if (FatherRaceName != "" && Configurations.UseHybridExtention)
+            {
+                spawn_kind_def = GetHybrid(father, mother);
+                Log.Message("pawnkind: " + spawn_kind_def?.defName);
+            }
+
             if (MotherRaceName != FatherRaceName && FatherRaceName != "")
             {
-
-                if (Configurations.UseHybridExtention)
-                {
-                    if (Configurations.MotherFirst)
-                    {
-                        spawn_kind_def = GetHybrid(mother, father);
-                    }
-                    else
-                    {
-                        spawn_kind_def = GetHybrid(father, mother);
-                    }
-                    Log.Message("pawnkind: " + spawn_kind_def?.defName);
-                }
                 if (!Configurations.UseHybridExtention || spawn_kind_def == null)
                 {
                     spawn_kind_def = tmp;
@@ -459,7 +456,7 @@ namespace RJW_Menstruation
                 }
 
             }
-            else
+            else if (!Configurations.UseHybridExtention || spawn_kind_def == null)
             {
                 spawn_kind_def = mother.RaceProps.AnyPawnKind;
             }
@@ -491,8 +488,23 @@ namespace RJW_Menstruation
 
         public PawnKindDef GetHybrid(Pawn first, Pawn second)
         {
-            PawnDNAModExtension dna;
             PawnKindDef res = null;
+            Pawn opposite = second;
+            HybridInformations info = Configurations.HybridOverride.FirstOrDefault(x => x.defName == first.def.defName);
+            if (info == null)
+            {
+                info = Configurations.HybridOverride.FirstOrDefault(x => x.defName == second.def.defName);
+                opposite = first;
+            }
+
+            if (info != null)
+            {
+                res = info.GetHybridWith(opposite.def.defName) ?? null;
+            }
+            if (res != null) return res;
+
+
+            PawnDNAModExtension dna;
             dna = first.def.GetModExtension<PawnDNAModExtension>();
             if (dna != null)
             {

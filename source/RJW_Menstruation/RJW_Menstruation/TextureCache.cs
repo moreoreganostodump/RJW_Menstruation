@@ -76,6 +76,14 @@ namespace RJW_Menstruation
                 return fertilitytexturecache;
             }
         }
+        public static Texture2D ghalmarazTexture
+        {
+            get
+            {
+                if (ghalmaraztexturecache == null) ghalmaraztexturecache = SolidColorMaterials.NewSolidColorTexture(0.7f, 0.7f, 0.0f, 1.0f);
+                return ghalmaraztexturecache;
+            }
+        }
 
         
 
@@ -88,6 +96,7 @@ namespace RJW_Menstruation
         private static Texture2D humantexturecache = null;
         private static Texture2D animaltexturecache = null;
         private static Texture2D fertilitytexturecache = null;
+        private static Texture2D ghalmaraztexturecache = null;
 
 
 

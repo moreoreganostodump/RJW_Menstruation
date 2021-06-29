@@ -57,6 +57,7 @@
   <ItemGroup>
     <Compile Include="Configurations.cs" />
     <Compile Include="Cum.cs" />
+    <Compile Include="Dialog_HybridCustom.cs" />
     <Compile Include="Dialog_WombStatus.cs" />
     <Compile Include="DrugOutcomDoers.cs" />
     <Compile Include="FilthMaker_Colored.cs" />

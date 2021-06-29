@@ -52,6 +52,8 @@ namespace RJW_Menstruation
         public static System.Random random = new System.Random(Environment.TickCount);
 
 
+
+
         public static float GetCumVolume(this Pawn pawn)
         {
             CompHediffBodyPart part = Genital_Helper.get_PartsHediffList(pawn, Genital_Helper.get_genitalsBPR(pawn))?.FindAll((Hediff hed) => hed.def.defName.ToLower().Contains("penis")).InRandomOrder().FirstOrDefault()?.TryGetComp<CompHediffBodyPart>();

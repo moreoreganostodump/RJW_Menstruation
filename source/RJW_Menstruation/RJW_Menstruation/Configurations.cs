@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Verse;
 
@@ -65,6 +66,7 @@ namespace RJW_Menstruation
             }
         }
 
+        public static List<HybridInformations> HybridOverride = new List<HybridInformations>();
 
 
         public static bool HARActivated = false;
@@ -100,6 +102,26 @@ namespace RJW_Menstruation
         {
             if (b) return Translations.Option23_Label_1;
             else return Translations.Option23_Label_2;
+        }
+
+        public static bool IsOverrideExist(ThingDef def)
+        {
+            List<HybridInformations> removeList = new List<HybridInformations>();
+            if (!HybridOverride.NullOrEmpty())
+                foreach(HybridInformations o in HybridOverride)
+                {
+                    if (o.IsNull) removeList.Add(o);
+                    if (o.defName == def.defName) return true;
+                }
+            if (!removeList.NullOrEmpty())
+            {
+                foreach(HybridInformations o in removeList)
+                {
+                    HybridOverride.Remove(o);
+                }
+            }
+            removeList.Clear();
+            return false;
         }
 
         [Flags]
@@ -147,6 +169,7 @@ namespace RJW_Menstruation
             Scribe_Values.Look(ref NipplePermanentTransitionVariance, "NipplePermanentTransitionVariance", NipplePermanentTransitionVariance, true);
             Scribe_Values.Look(ref NippleMaximumTransition, "NippleMaximumTransition", NippleMaximumTransition, true);
             Scribe_Values.Look(ref NippleTransitionSpeed, "NippleTransitionSpeed", NippleTransitionSpeed, true);
+            Scribe_Collections.Look(ref HybridOverride, saveDestroyedThings: true, label: "HybridOverride", lookMode: LookMode.Deep, ctorArgs: new object[0]);
             base.ExposeData();
         }
 
@@ -326,9 +349,10 @@ namespace RJW_Menstruation
                 Listing_Standard twinsection = listmain.BeginSection_NewTemp(sectionheight);
                 Rect hybridrect = twinsection.GetRect(25);
                 Widgets.CheckboxLabeled(hybridrect.LeftHalf(), Translations.Option22_Label, ref Configurations.UseHybridExtention, false, null, null, true);
-                if (Widgets.ButtonText(hybridrect.RightHalf(), Translations.Option23_Label + ": " + Configurations.HybridString(Configurations.MotherFirst)))
+                if (Widgets.ButtonText(hybridrect.RightHalf(), Translations.Option28_Label))
                 {
-                    Configurations.MotherFirst = !Configurations.MotherFirst;
+                    Dialog_HybridCustom.ToggleWindow();
+                    //Configurations.MotherFirst = !Configurations.MotherFirst;
                 }
 
                 twinsection.CheckboxLabeled(Translations.Option14_Label, ref Configurations.EnableHeteroOvularTwins, Translations.Option14_Desc);
@@ -370,7 +394,7 @@ namespace RJW_Menstruation
                 Configurations.NippleMaximumTransition = Configurations.NippleMaximumTransitionDefault;
                 Configurations.NippleTransitionSpeed = Configurations.NippleTransitionSpeedDefault;
 
-    }
+            }
 
             listmain.End();
 

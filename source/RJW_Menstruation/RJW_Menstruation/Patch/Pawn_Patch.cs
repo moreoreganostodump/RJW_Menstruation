@@ -140,11 +140,14 @@ namespace RJW_Menstruation
     //[HarmonyPatch(typeof(TransferableUIUtility), "DoExtraAnimalIcons")]
     //public class TransferableUIUtility_Patch_Icon
     //{
-    //    private static readonly Texture2D PregnantIcon = ContentFinder<Texture2D>.Get("UI/Icons/Animal/Pregnant", true);
-    //    public static void Postfix(Transferable trad, Rect rect, ref float curX)
+    //    //private static readonly Texture2D PregnantIcon = ContentFinder<Texture2D>.Get("UI/Icons/Animal/Pregnant", true);
+    //
+    //
+    //
+    //    public static void Postfix(Transferable trad, Rect rect, ref float curX, Texture2D ___PregnantIcon)
     //    {
     //        Pawn pawn = trad.AnyThing as Pawn;
-    //        if (pawn.IsVisiblyPregnant())
+    //        if (pawn?.health?.hediffSet != null && pawn.IsVisiblyPregnant())
     //        {
     //            Rect rect3 = new Rect(curX - 24f, (rect.height - 24f) / 2f, 24f, 24f);
     //            curX -= 24f;
@@ -152,25 +155,9 @@ namespace RJW_Menstruation
     //            {
     //                TooltipHandler.TipRegion(rect3, PawnColumnWorker_Pregnant.GetTooltipText(pawn));
     //            }
-    //            GUI.DrawTexture(rect3, PregnantIcon);
+    //            GUI.DrawTexture(rect3, ___PregnantIcon);
     //        }
     //    }
-    //}
-
-
-    //[HarmonyPatch(typeof(JobGiver_OptimizeApparel), "ApparelScoreGain_NewTmp")]
-    //public class OptimizeApparel_Patch
-    //{
-    //    public static bool Prefix(ref float __result, Pawn pawn, Apparel ap, List<float> wornScoresCache)
-    //    {
-    //        if (ap is Absorber)
-    //        {
-    //            __result = -1000f;
-    //            return false;
-    //        }
-    //        return true;
-    //    }
-    //
     //}
 
 
