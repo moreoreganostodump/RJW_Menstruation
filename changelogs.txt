@@ -1,8 +1,10 @@
 Version 1.0.4.0
  - minor bug fixes
  - cums will get maximum thickness initially and become thinner gradually
- - added custom hybrid editor
- 
+ - added in-game custom hybrid editor
+   - you can customize hybrid definition easily
+   - this will override definitions from xml files
+   - removed hybrid priority option(father's definition will be prioritized)
 
 Version 1.0.3.2
  - fixed self-lactating not work properly
