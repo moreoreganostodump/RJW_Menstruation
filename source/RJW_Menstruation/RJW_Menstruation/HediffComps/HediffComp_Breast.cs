@@ -34,11 +34,12 @@ namespace RJW_Menstruation
 
     public class HediffComp_Breast : HediffComp
     {
-        public const float defaultalpha = -1;
-        public const float defaultareola = -1;
-        public const float defaultnipple = -1;
-        public const float variation = 0.2f;
-        public const int tickinterval = 3750;
+        public const float DEFAULTALPHA = -1;
+        public const float DEFAULTAREOLA = -1;
+        public const float DEFAULTNIPPLE = -1;
+        public const float VARIANT = 0.2f;
+        public const int TICKINTERVAL = 3750;
+        public const float MAX_BREAST_INCREMENT = 0.10f;
 
         public CompProperties_Breast Props;
 
@@ -57,7 +58,7 @@ namespace RJW_Menstruation
         protected float originnipple = -1f;
         protected Color cachedcolor;
         protected bool loaded = false;
-
+        protected bool pregnant = false;
         public Action action;
 
         public float MaxAlpha
@@ -117,19 +118,20 @@ namespace RJW_Menstruation
         public override void CompExposeData()
         {
             base.CompExposeData();
-            Scribe_Values.Look(ref alphaPermanent, "alphaPermanent", defaultalpha, true);
-            Scribe_Values.Look(ref alphaCurrent, "alphaCurrent", defaultalpha, true);
-            Scribe_Values.Look(ref alpha, "alpha", defaultalpha, true);
-            Scribe_Values.Look(ref areolaSizePermanent, "areolaSizePermanent", defaultareola, true);
-            Scribe_Values.Look(ref areolaSizeCurrent, "areolaSizeCurrent", defaultareola, true);
-            Scribe_Values.Look(ref areolaSize, "areolaSize", defaultareola, true);
-            Scribe_Values.Look(ref nippleSizePermanent, "nippleSizePermanent", defaultnipple, true);
-            Scribe_Values.Look(ref nippleSizeCurrent, "nippleSizeCurrent", defaultnipple, true);
-            Scribe_Values.Look(ref nippleSize, "nippleSize", defaultnipple, true);
+            Scribe_Values.Look(ref alphaPermanent, "alphaPermanent", DEFAULTALPHA, true);
+            Scribe_Values.Look(ref alphaCurrent, "alphaCurrent", DEFAULTALPHA, true);
+            Scribe_Values.Look(ref alpha, "alpha", DEFAULTALPHA, true);
+            Scribe_Values.Look(ref areolaSizePermanent, "areolaSizePermanent", DEFAULTAREOLA, true);
+            Scribe_Values.Look(ref areolaSizeCurrent, "areolaSizeCurrent", DEFAULTAREOLA, true);
+            Scribe_Values.Look(ref areolaSize, "areolaSize", DEFAULTAREOLA, true);
+            Scribe_Values.Look(ref nippleSizePermanent, "nippleSizePermanent", DEFAULTNIPPLE, true);
+            Scribe_Values.Look(ref nippleSizeCurrent, "nippleSizeCurrent", DEFAULTNIPPLE, true);
+            Scribe_Values.Look(ref nippleSize, "nippleSize", DEFAULTNIPPLE, true);
             Scribe_Values.Look(ref breastSizeIncreased, "breastSizeIncreased", breastSizeIncreased, true);
             Scribe_Values.Look(ref originalpha, "originalpha", originalpha, true);
             Scribe_Values.Look(ref originareola, "originareola", originareola, true);
             Scribe_Values.Look(ref originnipple, "originnipple", originnipple, true);
+            Scribe_Values.Look(ref pregnant, "pregnant", pregnant, true);
             
         }
 
@@ -174,7 +176,7 @@ namespace RJW_Menstruation
             }
             UpdateColor();
             loaded = true;
-            HugsLibController.Instance.TickDelayScheduler.ScheduleCallback(action, tickinterval, parent.pawn);
+            HugsLibController.Instance.TickDelayScheduler.ScheduleCallback(action, TICKINTERVAL, parent.pawn);
         }
 
         
@@ -185,7 +187,24 @@ namespace RJW_Menstruation
             areolaSizeCurrent = Mathf.Lerp(areolaSizeCurrent, areolaSize, Configurations.NippleTransitionRatio);
             nippleSizeCurrent = Mathf.Lerp(nippleSizeCurrent, nippleSize, Configurations.NippleTransitionRatio);
             UpdateColor();
-            HugsLibController.Instance.TickDelayScheduler.ScheduleCallback(action, tickinterval, parent.pawn);
+            HugsLibController.Instance.TickDelayScheduler.ScheduleCallback(action, TICKINTERVAL, parent.pawn);
+            if (pregnant)
+            {
+                if (breastSizeIncreased < MAX_BREAST_INCREMENT)
+                {
+                    breastSizeIncreased += 0.02f;
+                    parent.Severity += 0.02f;
+                }
+            }
+            else
+            {
+                if (breastSizeIncreased > 0)
+                {
+                    breastSizeIncreased -= 0.02f;
+                    parent.Severity -= 0.02f;
+                }
+            }
+            
         }
 
         public void ChangeColorFermanant(float alpha)
@@ -200,12 +219,13 @@ namespace RJW_Menstruation
 
         public void PregnancyTransition()
         {
-            alphaPermanent = Math.Min(MaxAlpha, alphaPermanent + Configurations.NipplePermanentTransitionVariance.VariationRange(variation));
-            areolaSizePermanent = Math.Min(MaxAreola, areolaSizePermanent + Configurations.NipplePermanentTransitionVariance.VariationRange(variation));
-            nippleSizePermanent = Math.Min(MaxNipple, nippleSizePermanent + Configurations.NipplePermanentTransitionVariance.VariationRange(variation));
-            alpha = Math.Min(MaxAlpha, alpha + Configurations.NippleTransitionVariance.VariationRange(variation));
-            areolaSize = Math.Min(MaxAreola, areolaSize + Configurations.NippleTransitionVariance.VariationRange(variation));
-            nippleSize = Math.Min(MaxNipple, nippleSize + Configurations.NippleTransitionVariance.VariationRange(variation));
+            alphaPermanent = Math.Min(MaxAlpha, alphaPermanent + Configurations.NipplePermanentTransitionVariance.VariationRange(VARIANT));
+            areolaSizePermanent = Math.Min(MaxAreola, areolaSizePermanent + Configurations.NipplePermanentTransitionVariance.VariationRange(VARIANT));
+            nippleSizePermanent = Math.Min(MaxNipple, nippleSizePermanent + Configurations.NipplePermanentTransitionVariance.VariationRange(VARIANT));
+            alpha = Math.Min(MaxAlpha, alpha + Configurations.NippleTransitionVariance.VariationRange(VARIANT));
+            areolaSize = Math.Min(MaxAreola, areolaSize + Configurations.NippleTransitionVariance.VariationRange(VARIANT));
+            nippleSize = Math.Min(MaxNipple, nippleSize + Configurations.NippleTransitionVariance.VariationRange(VARIANT));
+            pregnant = true;
         }
 
         public void BirthTransition()
@@ -213,6 +233,7 @@ namespace RJW_Menstruation
             alpha = alphaPermanent;
             areolaSize = areolaSizePermanent;
             nippleSize = nippleSizePermanent;
+            pregnant = false;
         }
 
 
@@ -244,7 +265,7 @@ namespace RJW_Menstruation
         
         public void UpdateColor()
         {
-            cachedcolor = Colors.CMYKLerp(parent.pawn.story.SkinColor, Props.BlackNippleColor, Alpha);
+            cachedcolor = Colors.CMYKLerp(parent?.pawn?.story?.SkinColor ?? Color.white, Props.BlackNippleColor, Alpha);
         }
 
         public string DebugInfo()

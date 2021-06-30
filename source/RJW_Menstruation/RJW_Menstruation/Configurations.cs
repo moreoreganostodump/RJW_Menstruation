@@ -53,6 +53,7 @@ namespace RJW_Menstruation
         public static PawnFlags ShowFlag = PawnFlags.Colonist | PawnFlags.Prisoner;
         public static bool UseHybridExtention = true;
         public static bool MotherFirst = false;
+        public static bool AllowShrinkIcon = false;
 
         public static float NippleTransitionVariance = NippleTransitionVarianceDefault;
         public static float NipplePermanentTransitionVariance = NipplePermanentTransitionVarianceDefault;
@@ -65,6 +66,8 @@ namespace RJW_Menstruation
                 return NippleTransitionVariance * NippleTransitionSpeed;
             }
         }
+        
+
 
         public static List<HybridInformations> HybridOverride = new List<HybridInformations>();
 
@@ -169,6 +172,7 @@ namespace RJW_Menstruation
             Scribe_Values.Look(ref NipplePermanentTransitionVariance, "NipplePermanentTransitionVariance", NipplePermanentTransitionVariance, true);
             Scribe_Values.Look(ref NippleMaximumTransition, "NippleMaximumTransition", NippleMaximumTransition, true);
             Scribe_Values.Look(ref NippleTransitionSpeed, "NippleTransitionSpeed", NippleTransitionSpeed, true);
+            Scribe_Values.Look(ref AllowShrinkIcon, "AllowShrinkIcon", AllowShrinkIcon, true);
             Scribe_Collections.Look(ref HybridOverride, saveDestroyedThings: true, label: "HybridOverride", lookMode: LookMode.Deep, ctorArgs: new object[0]);
             base.ExposeData();
         }
@@ -233,13 +237,14 @@ namespace RJW_Menstruation
             //listmain.CheckboxLabeled(Translations.Option1_Label, ref Configurations.EnableWombIcon, Translations.Option1_Desc);
             if (Configurations.EnableWombIcon || Configurations.EnableButtonInHT)
             {
-                Listing_Standard wombsection = listmain.BeginSection_NewTemp(376);
+                Listing_Standard wombsection = listmain.BeginSection_NewTemp(400);
                 wombsection.CheckboxLabeled(Translations.Option9_Label, ref Configurations.DrawWombStatus, Translations.Option9_Desc);
                 if (Configurations.DrawWombStatus)
                 {
                     wombsection.CheckboxLabeled(Translations.Option18_Label, ref Configurations.DrawEggOverlay, Translations.Option18_Desc);
                 }
                 wombsection.CheckboxLabeled(Translations.Option10_Label, ref Configurations.DrawVaginaStatus, Translations.Option10_Desc);
+                wombsection.CheckboxLabeled(Translations.Option29_Label, ref Configurations.AllowShrinkIcon, Translations.Option29_Desc);
                 if (wombsection.ButtonText(Translations.Option11_Label + ": " + Configurations.LevelString(Configurations.InfoDetail)))
                 {
                     if (Configurations.InfoDetail == Configurations.DetailLevel.Hide) Configurations.InfoDetail = Configurations.DetailLevel.All;
@@ -354,6 +359,7 @@ namespace RJW_Menstruation
                     Dialog_HybridCustom.ToggleWindow();
                     //Configurations.MotherFirst = !Configurations.MotherFirst;
                 }
+                TooltipHandler.TipRegion(hybridrect, Translations.Option28_Tooltip);
 
                 twinsection.CheckboxLabeled(Translations.Option14_Label, ref Configurations.EnableHeteroOvularTwins, Translations.Option14_Desc);
                 twinsection.CheckboxLabeled(Translations.Option15_Label, ref Configurations.EnableEnzygoticTwins, Translations.Option15_Desc);

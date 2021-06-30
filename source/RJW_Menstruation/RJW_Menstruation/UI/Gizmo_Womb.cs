@@ -33,7 +33,7 @@ namespace RJW_Menstruation
             if (Configurations.DrawEggOverlay) comp.DrawEggOverlay(rect);
 
         }
-
+        
 
 
 

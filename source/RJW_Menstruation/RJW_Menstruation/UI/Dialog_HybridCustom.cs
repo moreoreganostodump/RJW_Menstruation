@@ -52,7 +52,7 @@ namespace RJW_Menstruation
                     Configurations.HybridOverride = new List<HybridInformations>();
                 }
                 Configurations.HybridOverride.Add(new HybridInformations(def));
-                Configurations.HybridOverride.SortBy(x => x.GetDef?.label);
+                Configurations.HybridOverride.SortBy(x => x.GetDef?.label ?? "Undefined");
             }
             
         }
@@ -126,7 +126,7 @@ namespace RJW_Menstruation
                 {
                     var element = removeList.Last();
                     Configurations.HybridOverride.Add(element);
-                    Configurations.HybridOverride.SortBy(x => x.GetDef.label);
+                    Configurations.HybridOverride.SortBy(x => x.GetDef?.label ?? "Undefined");
                     removeList.Remove(element);
                 }
 
@@ -160,7 +160,7 @@ namespace RJW_Menstruation
         protected void DoRow(Rect rect, HybridInformations extension, int index)
         {
             Rect buttonRect = new Rect(rect.xMax - 90f, rect.y, 80f, rect.height);
-            Widgets.Label(rect, extension.GetDef.label);
+            Widgets.Label(rect, extension.GetDef?.label ?? "Undefined");
             if (Widgets.ButtonText(buttonRect, "Delete"))
             {
                 removeList.Add(extension);
@@ -310,7 +310,7 @@ namespace RJW_Menstruation
             Rect labelRect = new Rect(inRect.xMin, inRect.yMin, 300, 24);
             Rect buttonRect = new Rect(inRect.xMax - 120, 0, 100, 30);
 
-            Widgets.Label(labelRect, Translations.CustomHybrid_Title(info.GetDef.label));
+            Widgets.Label(labelRect, Translations.CustomHybrid_Title(info.GetDef?.label ?? "Undefined"));
             Widgets.DrawLineHorizontal(inRect.x, labelRect.yMax, inRect.width);
             if (Widgets.ButtonText(buttonRect, "Add"))
             {
@@ -367,7 +367,7 @@ namespace RJW_Menstruation
             Rect mainRect = new Rect(rect.x, rect.y, rect.width, rowH);
             Rect subRect = new Rect(rect.x, rect.y + rowH, rect.width, rect.height - rowH);
             Rect buttonRect = new Rect(rect.xMax - 90f, rect.y, 80f, rowH);
-            Widgets.Label(mainRect, extension.GetDef.label);
+            Widgets.Label(mainRect, extension.GetDef?.label ?? "Undefined");
 
             if (Widgets.ButtonText(buttonRect, "Delete"))
             {
@@ -388,7 +388,12 @@ namespace RJW_Menstruation
                             }
                         }
                     }
-                if (!list.NullOrEmpty()) Find.WindowStack.Add(new FloatMenu(list));
+                if (!list.NullOrEmpty())
+                {
+                    list.SortBy(x => x.Label);
+                    Find.WindowStack.Add(new FloatMenu(list));
+                }
+                    
             }
             buttonRect.x -= 80f;
 
@@ -424,13 +429,13 @@ namespace RJW_Menstruation
         protected void DoSubRow(Rect rect, string key, HybridExtensionExposable extension , List<string> removeelements)
         {
             bool isPawnKind = false;
-            float value = extension.hybridInfo.TryGetValue(key);
+            int value = (int)extension.hybridInfo.TryGetValue(key);
             string valuestr = value.ToString();
             string label = null;
             label = DefDatabase<ThingDef>.GetNamedSilentFail(key)?.label;
             if (label == null)
             {
-                label = DefDatabase<PawnKindDef>.GetNamedSilentFail(key)?.label;
+                label = DefDatabase<PawnKindDef>.GetNamedSilentFail(key)?.label ?? "Undefined";
                 isPawnKind = true;
             }
             Rect buttonRect = new Rect(rect.xMax - 90f, rect.y, 80f, rect.height);
@@ -462,17 +467,17 @@ namespace RJW_Menstruation
             }
             else
             {
-                label += ": " + key;
-                Widgets.Label(buttonRect, "PawnKind");
+                Widgets.Label(buttonRect, "  PawnKind");
                 buttonRect.x -= 80f;
             }
+            label += ": " + key;
             Widgets.Label(rect, " - " + label);
-            Widgets.TextFieldNumeric(buttonRect, ref value, ref valuestr,0,10000);
+            Widgets.TextFieldNumeric(buttonRect, ref value, ref valuestr,0,9999999);
             extension.hybridInfo.SetOrAdd(key, value);
             buttonRect.x -= 80f;
             Widgets.Label(buttonRect, String.Format("{0,0:P2}", value / totalWeight));
             Widgets.DrawHighlightIfMouseover(rect);
-            TooltipHandler.TipRegion(rect, Translations.CustomHybrid_Tooltip(info.GetDef.label, extension.GetDef.label, label, value/totalWeight*100));
+            TooltipHandler.TipRegion(rect, Translations.CustomHybrid_Tooltip(info.GetDef?.label ?? "Undefined", extension.GetDef?.label ?? "Undefined", label, String.Format("{0,0:0.########%}", value/totalWeight)));
         }
 
         

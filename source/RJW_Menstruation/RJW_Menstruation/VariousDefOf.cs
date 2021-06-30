@@ -53,8 +53,9 @@ namespace RJW_Menstruation
             {
                 if (allraces == null)
                 {
+                    
                     List<ThingDef> allThings = DefDatabase<ThingDef>.AllDefsListForReading;
-                    allraces = allThings.FindAll(x => x.race != null);
+                    allraces = allThings.FindAll(x => x.race != null && x.race.IsFlesh);
                 }
                 return allraces;
             }

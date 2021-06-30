@@ -95,6 +95,7 @@ namespace RJW_Menstruation
                 defaultDesc = description,
                 icon = icon,
                 icon_overay = icon_overay,
+                shrinkable = Configurations.AllowShrinkIcon,
                 cumcolor = c,
                 comp = comp,
                 order = 100,

@@ -110,6 +110,8 @@ namespace RJW_Menstruation
             {
                 Close();
             }
+            closeRect.x -= 20f;
+
         }
 
         private void MainContents(Rect mainRect)

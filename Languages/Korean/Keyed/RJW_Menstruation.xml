@@ -90,11 +90,13 @@
   <Option27_Desc>유두가 얼마나 빨리 변하는지 설정합니다.</Option27_Desc>
   <Option28_Label>잡종 정의 변경하기</Option28_Label>
   <Option28_Tooltip>사용자 지정 잡종 편집기를 엽니다.&#10;이 설정은 XML파일의 잡종 정의를 대체합니다.</Option28_Tooltip>
+  <Option29_Label>아이콘 축소 허용</Option29_Label>
+  <Option29_Desc>아이콘 축소를 허용합니다.</Option29_Desc>
   
   <FloatMenu_CleanSelf>질세척</FloatMenu_CleanSelf>
   
   <CustomHybrid_List_Title>사용자 지정 잡종 편집기</CustomHybrid_List_Title>
   <CustomHybrid_Title>{0}의 잡종설정</CustomHybrid_Title>
-  <CustomHybrid_Tooltip>{0}이(가) {1}와(과) 교미했을 때, {2}이(가) {3}%의 확률로 태어납니다.&#10;만약 두 종족이 서로에 대한 잡종 정의가 있을경우 아버지 쪽의 정의가 우선적으로 사용됩니다.</CustomHybrid_Tooltip>
+  <CustomHybrid_Tooltip>{0}이(가) {1}와(과) 교미했을 때, {2}이(가) {3}의 확률로 태어납니다.&#10;만약 두 종족이 서로에 대한 잡종 정의가 있을경우 아버지 쪽의 정의가 우선적으로 사용됩니다.</CustomHybrid_Tooltip>
   
 </LanguageData>

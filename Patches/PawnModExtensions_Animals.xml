@@ -185,6 +185,19 @@
 	</Operation>
 	
 	<Operation Class="PatchOperationAddModExtension">
+		<xpath>Defs/ThingDef[defName="WildBoar"]</xpath>
+		<value>
+				<li Class="RJW_Menstruation.PawnDNAModExtension">
+					<fetusTexPath>Fetus/Livestocks/Fetus_Pig</fetusTexPath>
+					<cumColor>(255,255,255,255)</cumColor> 
+					<cumThickness>0.8</cumThickness>
+					<hybridExtension>
+					</hybridExtension>
+				</li>
+		</value>
+	</Operation>
+
+	<Operation Class="PatchOperationAddModExtension">
 		<xpath>Defs/ThingDef[@Name="BaseInsect"]</xpath>
 		<value>
 				<li Class="RJW_Menstruation.PawnDNAModExtension">

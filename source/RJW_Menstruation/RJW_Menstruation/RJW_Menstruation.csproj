@@ -57,8 +57,8 @@
   <ItemGroup>
     <Compile Include="Configurations.cs" />
     <Compile Include="Cum.cs" />
-    <Compile Include="Dialog_HybridCustom.cs" />
-    <Compile Include="Dialog_WombStatus.cs" />
+    <Compile Include="UI\Dialog_HybridCustom.cs" />
+    <Compile Include="UI\Dialog_WombStatus.cs" />
     <Compile Include="DrugOutcomDoers.cs" />
     <Compile Include="FilthMaker_Colored.cs" />
     <Compile Include="HARCompatibility.cs" />
@@ -67,7 +67,7 @@
     <Compile Include="Hediff_MultiplePregnancy.cs" />
     <Compile Include="JobDrivers.cs" />
     <Compile Include="Patch\GetGizmos.cs" />
-    <Compile Include="Gizmo_Womb.cs" />
+    <Compile Include="UI\Gizmo_Womb.cs" />
     <Compile Include="Patch\Harmony.cs" />
     <Compile Include="HediffComps\HediffComp_Menstruation.cs" />
     <Compile Include="Patch\Pawn_Patch.cs" />

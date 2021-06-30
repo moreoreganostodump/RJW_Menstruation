@@ -345,7 +345,7 @@ namespace RJW_Menstruation
                     updateTraits(baby, traitpool);
 
                 }
-                else
+                else if (baby.relations != null)
                 {
                     baby.relations.AddDirectRelation(VariousDefOf.Relation_birthgiver, mother);
                     mother.relations.AddDirectRelation(VariousDefOf.Relation_spawn, baby);
@@ -419,7 +419,7 @@ namespace RJW_Menstruation
             if (FatherRaceName != "" && Configurations.UseHybridExtention)
             {
                 spawn_kind_def = GetHybrid(father, mother);
-                Log.Message("pawnkind: " + spawn_kind_def?.defName);
+                //Log.Message("pawnkind: " + spawn_kind_def?.defName);
             }
 
             if (MotherRaceName != FatherRaceName && FatherRaceName != "")
@@ -490,10 +490,10 @@ namespace RJW_Menstruation
         {
             PawnKindDef res = null;
             Pawn opposite = second;
-            HybridInformations info = Configurations.HybridOverride.FirstOrDefault(x => x.defName == first.def.defName);
+            HybridInformations info = Configurations.HybridOverride.FirstOrDefault(x => x.defName == first.def.defName && x.hybridExtension.Exists(y => y.defName == second.def.defName));
             if (info == null)
             {
-                info = Configurations.HybridOverride.FirstOrDefault(x => x.defName == second.def.defName);
+                info = Configurations.HybridOverride.FirstOrDefault(x => x.defName == second.def.defName && x.hybridExtension.Exists(y => y.defName == first.def.defName));
                 opposite = first;
             }
 

@@ -96,11 +96,13 @@ namespace RJW_Menstruation
         public static readonly string Option27_Desc  = "Option27_Desc".Translate();
         public static readonly string Option28_Label = "Option28_Label".Translate();
         public static readonly string Option28_Tooltip = "Option28_Tooltip".Translate();
+        public static readonly string Option29_Label = "Option29_Label".Translate();
+        public static readonly string Option29_Desc  = "Option29_Desc".Translate();
 
         public static readonly string FloatMenu_CleanSelf = "FloatMenu_CleanSelf".Translate();
 
         public static readonly string CustomHybrid_List_Title = "CustomHybrid_List_Title".Translate();
         static public string CustomHybrid_Title(string label) { return TranslatorFormattedStringExtensions.Translate("CustomHybrid_Title", label); }
-        static public string CustomHybrid_Tooltip(string label, string breedee, string baby, float chance) { return TranslatorFormattedStringExtensions.Translate("CustomHybrid_Tooltip", label, breedee, baby, chance); }
+        static public string CustomHybrid_Tooltip(string label, string breedee, string baby, string chance) { return TranslatorFormattedStringExtensions.Translate("CustomHybrid_Tooltip", label, breedee, baby, chance); }
     }
 }

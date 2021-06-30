@@ -9,6 +9,7 @@ using UnityEngine;
 
 namespace RJW_Menstruation
 {
+    [StaticConstructorOnStartup]
     public static class TextureCache
     {
 
