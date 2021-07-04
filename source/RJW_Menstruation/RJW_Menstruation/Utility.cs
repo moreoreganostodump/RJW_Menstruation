@@ -184,7 +184,8 @@ namespace RJW_Menstruation
                 if (!h.babies.NullOrEmpty()) return h.babies.First();
                 else
                 {
-                    Log.Error("Baby not exist: baby was not created or removed");
+                    Log.Error("Baby not exist: baby was not created or removed. Remove pregnancy.");
+                    pawn.health.RemoveHediff(hediff);
                     return null;
                 }
             }

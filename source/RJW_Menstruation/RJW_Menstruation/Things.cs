@@ -34,7 +34,7 @@ namespace RJW_Menstruation
     public class HybridExtension
     {
 
-        public Dictionary<string, float> hybridInfo;
+        public Dictionary<string, float> hybridInfo = new Dictionary<string, float>();
         public ThingDef thingDef;
 
         public HybridExtension() { }
@@ -60,7 +60,6 @@ namespace RJW_Menstruation
 
         public void LoadDataFromXmlCustom(XmlNode xmlRoot)
         {
-            hybridInfo = new Dictionary<string, float>();
             DirectXmlCrossRefLoader.RegisterObjectWantsCrossRef(this, "thingDef", xmlRoot.Name);
             XmlNodeList childNodes = xmlRoot.ChildNodes;
             

@@ -490,10 +490,10 @@ namespace RJW_Menstruation
         {
             PawnKindDef res = null;
             Pawn opposite = second;
-            HybridInformations info = Configurations.HybridOverride.FirstOrDefault(x => x.defName == first.def.defName && x.hybridExtension.Exists(y => y.defName == second.def.defName));
+            HybridInformations info = Configurations.HybridOverride.FirstOrDefault(x => x.defName == first.def?.defName && (x.hybridExtension?.Exists(y => y.defName == second.def?.defName) ?? false));
             if (info == null)
             {
-                info = Configurations.HybridOverride.FirstOrDefault(x => x.defName == second.def.defName && x.hybridExtension.Exists(y => y.defName == first.def.defName));
+                info = Configurations.HybridOverride.FirstOrDefault(x => x.defName == second.def?.defName && (x.hybridExtension?.Exists(y => y.defName == first.def?.defName) ?? false));
                 opposite = first;
             }
 

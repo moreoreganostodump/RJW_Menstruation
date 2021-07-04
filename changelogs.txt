@@ -1,10 +1,14 @@
+Version 1.0.4.2
+ - fixed errors on hybrid custom
+ - fixed errors on pregnancy 
+
 Version 1.0.4.1
  - fixed errors when the race mods are uninstalled
  - minor bug fixes
  - removed mechanoids from hybrid table
  - increased probability weight range of custom hybrid
  - breasts size increase gradually after pregnancy about one cup 
- 
+
 Version 1.0.4.0
  - minor bug fixes
  - cums will get maximum thickness initially and become thinner gradually
