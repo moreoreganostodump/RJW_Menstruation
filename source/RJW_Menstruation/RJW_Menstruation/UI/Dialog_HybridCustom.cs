@@ -336,12 +336,12 @@ namespace RJW_Menstruation
             float additionalHeight = 0f;
             if (!info.hybridExtension.NullOrEmpty()) foreach(HybridExtensionExposable e in info.hybridExtension)
                 {
-                    additionalHeight += e.hybridInfo?.Count() ?? 1 * rowH;
+                    additionalHeight += (e.hybridInfo?.Count() ?? 1) * rowH;
                 }
 
 
             Rect outRect = new Rect(inRect.x, inRect.y + 30f, inRect.width, inRect.height - 30f);
-            Rect mainRect = new Rect(inRect.x, inRect.y + 30f, inRect.width - 30f, rowH * info.hybridExtension?.Count() ?? 1 + additionalHeight);
+            Rect mainRect = new Rect(inRect.x, inRect.y + 30f, inRect.width - 30f, rowH * (info.hybridExtension?.Count() ?? 1) + additionalHeight);
             Listing_Standard listmain = new Listing_Standard();
 
             listmain.BeginScrollView(outRect, ref scroll, ref mainRect);
@@ -351,7 +351,7 @@ namespace RJW_Menstruation
             {
                 foreach (HybridExtensionExposable extension in info.hybridExtension)
                 {
-                    DoRow(listmain.GetRect(rowH + rowH * extension.hybridInfo?.Count() ?? 1), extension);
+                    DoRow(listmain.GetRect(rowH + rowH * (extension.hybridInfo?.Count() ?? 1)), extension);
                 }
 
             }

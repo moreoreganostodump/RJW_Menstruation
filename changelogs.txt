@@ -1,3 +1,6 @@
+Version 1.0.4.2a
+ - fixed hybrid custom UI
+
 Version 1.0.4.2
  - fixed errors on hybrid custom
  - fixed errors on pregnancy 
