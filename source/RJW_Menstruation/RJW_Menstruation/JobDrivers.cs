@@ -20,7 +20,7 @@ namespace RJW_Menstruation
             HediffComp_Menstruation Comp = Utility.GetMenstruationComp(pawn);
             this.FailOn(delegate
             {
-                return !(Comp.TotalCumPercent > 0.01);
+                return !(Comp.TotalCumPercent > 0.001);
             });
             Toil excreting = Toils_General.Wait(excretingTime, TargetIndex.None);//duration of 
 
@@ -30,8 +30,8 @@ namespace RJW_Menstruation
             {
                 initAction = delegate ()
                 {
-                    Comp.CumOutForce(null, 0.5f);
-                    if (Comp.TotalCumPercent > 0.01) this.JumpToToil(excreting);
+                    Comp.CumOut(null, 0.5f);
+                    if (Comp.TotalCumPercent > 0.001) JumpToToil(excreting);
                 }
             };
             //yield return excreting;

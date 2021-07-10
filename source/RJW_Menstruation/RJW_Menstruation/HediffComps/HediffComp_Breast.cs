@@ -260,9 +260,26 @@ namespace RJW_Menstruation
             float variance = breastSizeIncreased * Math.Min(ratio, 1.0f);
             breastSizeIncreased -= variance;
             parent.Severity -= variance;
-            
         }
-        
+
+        public void AdjustNippleSizeImmidiately(float amount)
+        {
+            originnipple = Math.Max(0, originnipple + amount);
+            nippleSizePermanent = Math.Min(MaxNipple, nippleSizePermanent + amount);
+            nippleSize = Math.Min(MaxNipple, nippleSize + amount);
+            nippleSizeCurrent = nippleSize;
+        }
+
+        public void AdjustAreolaSizeImmidiately(float amount)
+        {
+            originareola = Math.Max(0, originareola + amount);
+            areolaSizePermanent = Math.Min(MaxAreola, areolaSizePermanent + amount);
+            areolaSize = Math.Min(MaxAreola, areolaSize + amount);
+            areolaSizeCurrent = areolaSize;
+        }
+
+
+
         public void UpdateColor()
         {
             cachedcolor = Colors.CMYKLerp(parent?.pawn?.story?.SkinColor ?? Color.white, Props.BlackNippleColor, Alpha);

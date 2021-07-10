@@ -9,14 +9,30 @@ namespace RJW_Menstruation
     {
         public Pawn pawn;
 
-        public float volume; // ml
-        public float fertvolume;
+        protected float volume; // ml
+        protected float fertvolume;
         public float fertFactor = 1.0f;
         public bool notcum = false; // for other fluids
         public string notcumLabel = "";
-        private bool useCustomColor = false;
-        private float notcumthickness = 0;
-        private float cumthickness = 1.0f;
+        protected bool useCustomColor = false;
+        protected float notcumthickness = 0;
+        protected float cumthickness = 1.0f;
+
+        public float Volume
+        {
+            get
+            {
+                return volume;
+            }
+        }
+
+        public float FertVolume
+        {
+            get
+            {
+                return fertvolume;
+            }
+        }
 
         public float CumThickness
         {
@@ -38,7 +54,7 @@ namespace RJW_Menstruation
                 notcumthickness = value;
             }
         }
-        private Color customColor;
+        protected Color customColor;
 
         public PawnDNAModExtension DNA
         {
@@ -63,7 +79,7 @@ namespace RJW_Menstruation
                 else return DNAcache;
             }
         }
-        private PawnDNAModExtension DNAcache = null;
+        protected PawnDNAModExtension DNAcache = null;
         public ThingDef FilthDef
         {
             get
@@ -76,7 +92,7 @@ namespace RJW_Menstruation
                 filthDef = value;
             }
         }
-        private ThingDef filthDef = null;
+        protected ThingDef filthDef = null;
         public Color color
         {
             get
@@ -102,6 +118,14 @@ namespace RJW_Menstruation
             fertvolume = 1.0f;
         }
 
+        /// <summary>
+        /// Not Cum
+        /// </summary>
+        /// <param name="pawn"></param>
+        /// <param name="volume"></param>
+        /// <param name="notcumlabel"></param>
+        /// <param name="decayresist"></param>
+        /// <param name="filthDef"></param>
         public Cum(Pawn pawn, float volume, string notcumlabel, float decayresist = 0, ThingDef filthDef = null)
         {
             this.pawn = pawn;
@@ -117,12 +141,7 @@ namespace RJW_Menstruation
         {
             this.pawn = pawn;
             this.volume = volume;
-            if (fertility > 0)
-            {
-                this.fertvolume = volume;
-                this.fertFactor = fertility;
-            }
-            else this.fertvolume = 0;
+            this.fertvolume = volume * fertility;
             this.filthDef = filthDef;
         }
 
@@ -150,20 +169,56 @@ namespace RJW_Menstruation
             }
         }
 
-        public void MergeWithCum(float volumein, ThingDef updatefilthDef = null)
+        public void MergeWithCum(float volumein, float fertility,  ThingDef updatefilthDef = null)
         {
             if (updatefilthDef != null) filthDef = updatefilthDef;
-            volume = volumein;
-            fertvolume = volumein;
+            volume += volumein;
+            fertvolume += volumein*fertility;
             cumthickness = Mathf.Lerp(cumthickness, 1.0f, volumein / volume);
         }
 
         public void MergeWithFluid(float volumein, float thickness, ThingDef updatefilthDef = null)
         {
             if (updatefilthDef != null) filthDef = updatefilthDef;
-            volume = volumein;
+            volume += volumein;
             cumthickness = Mathf.Lerp(cumthickness, thickness, volumein / volume);
         }
+
+        public bool ShouldRemove()
+        {
+            if (fertvolume < 0.001f && volume < 0.001f) return true;
+            return false;
+        }
+
+
+        public float DismishNatural(float leakfactor, float antisperm = 0.0f)
+        {
+            float totalleak = volume;
+            volume *= Math.Max(0, (1 - (Configurations.CumDecayRatio * (1 - decayresist)) * leakfactor));
+            fertvolume *= Math.Max(0, 1 - (Configurations.CumFertilityDecayRatio * (1 - decayresist) + antisperm));
+            CutMinor();
+            totalleak -= volume;
+            return totalleak;
+        }
+        
+        public float DismishForce(float portion, float leakfactor = 1.0f)
+        {
+            float totalleak = volume;
+            volume *= Math.Max(0, 1 - (portion * (1 - decayresist)) * leakfactor);
+            fertvolume *= Math.Max(0, 1 - (portion * (1 - decayresist)) * leakfactor);
+            CutMinor();
+            totalleak -= volume;
+            return totalleak;
+
+        }
+
+        protected void CutMinor()
+        {
+            if (volume < 0.01f) volume = 0f;
+            if (fertvolume < 0.001f) fertvolume = 0f;
+
+        }
+
 
     }
 

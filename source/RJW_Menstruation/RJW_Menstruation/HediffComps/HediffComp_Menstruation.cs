@@ -111,6 +111,7 @@ namespace RJW_Menstruation
         protected bool estrusflag = false;
         protected int opcache = -1;
         protected HediffComp_Breast breastcache = null;
+        protected float antisperm = 0.0f;
 
         public int ovarypowerthreshold
         {
@@ -137,7 +138,7 @@ namespace RJW_Menstruation
                 if (cums.NullOrEmpty()) return 0;
                 foreach (Cum cum in cums)
                 {
-                    res += cum.volume;
+                    res += cum.Volume;
                 }
                 return res;
             }
@@ -150,7 +151,7 @@ namespace RJW_Menstruation
                 if (cums.NullOrEmpty()) return 0;
                 foreach (Cum cum in cums)
                 {
-                    if (!cum.notcum) res += cum.fertvolume;
+                    if (!cum.notcum) res += cum.FertVolume;
                 }
                 return res;
             }
@@ -163,7 +164,7 @@ namespace RJW_Menstruation
                 if (cums.NullOrEmpty()) return 0;
                 foreach (Cum cum in cums)
                 {
-                    res += cum.volume;
+                    res += cum.Volume;
                 }
                 return res / Props.maxCumCapacity;
             }
@@ -214,8 +215,8 @@ namespace RJW_Menstruation
             {
                 if (!cums.NullOrEmpty()) foreach (Cum cum in cums)
                     {
-                        if (!cum.notcum) yield return String.Format(cum.pawn?.Label + ": {0:0.##}ml", cum.volume);
-                        else yield return String.Format(cum.notcumLabel + ": {0:0.##}ml", cum.volume);
+                        if (!cum.notcum) yield return String.Format(cum.pawn?.Label + ": {0:0.##}ml", cum.Volume);
+                        else yield return String.Format(cum.notcumLabel + ": {0:0.##}ml", cum.Volume);
                     }
                 else yield return Translations.Info_noCum;
             }
@@ -231,8 +232,11 @@ namespace RJW_Menstruation
                     float mixedsofar = 0;
                     foreach (Cum cum in cums)
                     {
-                        mixedcolor = Colors.CMYKLerp(mixedcolor, cum.color, cum.volume / (mixedsofar + cum.volume));
-                        mixedsofar += cum.volume;
+                        if (cum.Volume > 0)
+                        {
+                            mixedcolor = Colors.CMYKLerp(mixedcolor, cum.color, cum.Volume / (mixedsofar + cum.Volume));
+                            mixedsofar += cum.Volume;
+                        }
                     }
                 }
                 return mixedcolor;
@@ -334,7 +338,7 @@ namespace RJW_Menstruation
                 {
                     if (!cums.NullOrEmpty()) foreach (Cum cum in cums)
                         {
-                            if (cum.fertvolume > 0) return true;
+                            if (cum.FertVolume > 0) return true;
                         }
                     return false;
 
@@ -367,6 +371,8 @@ namespace RJW_Menstruation
         {
             get
             {
+                if (parent.pawn.health.hediffSet.HasHediff(VariousDefOf.RJW_IUD)) return false;
+
                 if (curStage == Stage.Follicular || curStage == Stage.ClimactericFollicular)
                 {
                     if (curStageHrs > 0.7f * (follicularIntervalhours - bleedingIntervalhours)) return true;
@@ -432,7 +438,7 @@ namespace RJW_Menstruation
             Scribe_Values.Look(ref eggstack, "eggstack", eggstack, true);
             Scribe_Values.Look(ref estrusflag, "estrusflag", estrusflag, true);
 
-
+            
         }
 
 
@@ -510,11 +516,10 @@ namespace RJW_Menstruation
                     {
                         if (cum.pawn.Equals(pawn))
                         {
-                            cum.MergeWithCum(volume, filthdef);
+                            cum.MergeWithCum(volume, fertility, filthdef);
                             merged = true;
                         }
-                        cum.volume *= 1 - cumoutrate;
-                        cum.fertvolume *= 1 - cumoutrate;
+                        cum.DismishForce(cumoutrate);
                     }
                 if (!merged) cums.Add(new Cum(pawn, volume * (1 - cumoutrate), fertility, filthdef));
             }
@@ -526,7 +531,7 @@ namespace RJW_Menstruation
                     {
                         if (cum.pawn.Equals(pawn))
                         {
-                            cum.MergeWithCum(volume, filthdef);
+                            cum.MergeWithCum(volume, fertility, filthdef);
                             merged = true;
                         }
                     }
@@ -560,8 +565,7 @@ namespace RJW_Menstruation
                             cum.MergeWithFluid(volume, decayresist, filthdef);
                             merged = true;
                         }
-                        cum.volume *= 1 - cumoutrate;
-                        cum.fertvolume *= 1 - cumoutrate;
+                        cum.DismishForce(cumoutrate);
                     }
                 if (!merged) cums.Add(new Cum(pawn, volume * (1 - cumoutrate), notcumlabel, decayresist, filthdef));
             }
@@ -584,13 +588,13 @@ namespace RJW_Menstruation
             AfterFluidIn(cumd);
         }
 
-        public virtual void AfterCumIn(Pawn cummer)
+        protected virtual void AfterCumIn(Pawn cummer)
         {
             ThoughtCumInside(cummer);
 
         }
 
-        public virtual void AfterNotCumIn()
+        protected virtual void AfterNotCumIn()
         {
 
         }
@@ -599,15 +603,19 @@ namespace RJW_Menstruation
         /// Action for both Cum and NotCum
         /// </summary>
         /// <param name="fd">Fluid deviation</param>
-        public virtual void AfterFluidIn(float fd)
+        protected virtual void AfterFluidIn(float fd)
         {
 
 
         }
 
 
-        public void BeforeCumOut(out Absorber absorber)
+        protected void BeforeCumOut(out Absorber absorber)
         {
+
+            if (parent.pawn.health.hediffSet.HasHediff(VariousDefOf.RJW_IUD)) antisperm = 0.70f;
+            else antisperm = 0.0f;
+
             absorber = (Absorber)parent.pawn.apparel?.WornApparel?.Find(x => x is Absorber);
             if (absorber != null)
             {
@@ -619,7 +627,7 @@ namespace RJW_Menstruation
         /// <summary>
         /// For natural leaking
         /// </summary>
-        public virtual void AfterCumOut()
+        protected virtual void AfterCumOut()
         {
             parent.pawn.needs?.mood?.thoughts?.memories?.TryGainMemory(VariousDefOf.LeakingFluids);
         }
@@ -628,7 +636,7 @@ namespace RJW_Menstruation
         /// For all type of leaking
         /// </summary>
         /// <param name="fd"></param>
-        public virtual void AfterFluidOut(float fd)
+        protected virtual void AfterFluidOut(float fd)
         {
 
         }
@@ -651,16 +659,12 @@ namespace RJW_Menstruation
             List<Cum> removecums = new List<Cum>();
             foreach (Cum cum in cums)
             {
-                float vd = cum.volume;
-                cum.volume *= Math.Max(0, (1 - (Configurations.CumDecayRatio * (1 - cum.decayresist)) * leakfactor));
-                cum.fertvolume *= Math.Max(0, (1 - (Configurations.CumDecayRatio * (1 - cum.decayresist)) * leakfactor) * (1 - (Configurations.CumFertilityDecayRatio * (1 - cum.decayresist))));
-                vd -= cum.volume;
+                float vd = cum.DismishNatural(leakfactor, antisperm);
                 cum.MakeThinner(Configurations.CycleAcceleration);
                 totalleak += AbsorbCum(cum, vd, absorber);
                 string tmp = "FilthLabelWithSource".Translate(cum.FilthDef.label, cum.pawn?.LabelShort ?? "Unknown", 1.ToString());
                 filthlabels.Add(tmp.Replace(" x1", ""));
-                if (cum.fertvolume < 0.01f) cum.fertvolume = 0;
-                if (cum.volume < 0.01f) removecums.Add(cum);
+                if (cum.ShouldRemove()) removecums.Add(cum);
             }
             if (cums.Count > 1) MakeCumFilthMixture(totalleak, filthlabels);
             else if (cums.Count == 1) MakeCumFilth(cums.First(), totalleak);
@@ -683,25 +687,21 @@ namespace RJW_Menstruation
         /// <returns></returns>
         public float CumOut(Cum targetcum, float portion = 0.1f)
         {
-            float leakfactor = 1.0f;
+            if (cums.NullOrEmpty()) return 0;
             float totalleak = 0;
             List<string> filthlabels = new List<string>();
-            if (cums.NullOrEmpty()) return 0;
             float outcum = 0;
             float cumd = TotalCumPercent;
             List<Cum> removecums = new List<Cum>();
             foreach (Cum cum in cums)
             {
-                float vd = cum.volume;
-                if (cum.Equals(targetcum)) outcum = cum.volume * (portion * (1 - cum.decayresist));
-                cum.volume *= Math.Max(0, 1 - (portion * (1 - cum.decayresist)) * leakfactor);
-                cum.fertvolume *= Math.Max(0, (1 - (portion * (1 - cum.decayresist)) * leakfactor) * (1 - (Configurations.CumFertilityDecayRatio * (1 - cum.decayresist))));
+                float vd = cum.DismishForce(portion);
+                if (cum.Equals(targetcum)) outcum = vd;
                 //MakeCumFilth(cum, vd - cum.volume);
                 string tmp = "FilthLabelWithSource".Translate(cum.FilthDef.label, cum.pawn?.LabelShort ?? "Unknown", 1.ToString());
                 filthlabels.Add(tmp.Replace(" x1", ""));
-                totalleak += vd - cum.volume;
-                if (cum.fertvolume < 0.01f) cum.fertvolume = 0;
-                if (cum.volume < 0.01f) removecums.Add(cum);
+                totalleak += vd;
+                if (cum.ShouldRemove()) removecums.Add(cum);
             }
             if (cums.Count > 1) MakeCumFilthMixture(totalleak, filthlabels);
             else if (cums.Count == 1) MakeCumFilth(cums.First(), totalleak);
@@ -714,47 +714,6 @@ namespace RJW_Menstruation
             AfterFluidOut(cumd);
             return outcum;
         }
-
-        /// <summary>
-        /// Ignores cum's decayratio and absorber and get excreted amount of specific cum
-        /// </summary>
-        /// <param name="targetcum"></param>
-        /// <param name="portion"></param>
-        /// <returns></returns>
-        public float CumOutForce(Cum targetcum = null, float portion = 0.1f)
-        {
-            if (cums.NullOrEmpty()) return 0;
-            float outcum = 0;
-            float totalleak = 0;
-            List<string> filthlabels = new List<string>();
-            float cumd = TotalCumPercent;
-            List<Cum> removecums = new List<Cum>();
-            foreach (Cum cum in cums)
-            {
-                float vd = cum.volume;
-                if (cum.Equals(targetcum)) outcum = cum.volume * (portion);
-                cum.volume *= 1 - (portion);
-                cum.fertvolume *= (1 - (portion)) * (1 - (Configurations.CumFertilityDecayRatio));
-                //MakeCumFilth(cum, vd - cum.volume);
-                string tmp = "FilthLabelWithSource".Translate(cum.FilthDef.label, cum.pawn?.LabelShort ?? "Unknown", 1.ToString());
-                filthlabels.Add(tmp.Replace(" x1", ""));
-                totalleak += vd - cum.volume;
-                if (cum.fertvolume < 0.01f) cum.fertvolume = 0;
-                if (cum.volume < 0.1f) removecums.Add(cum);
-            }
-            if (cums.Count > 1) MakeCumFilthMixture(totalleak, filthlabels);
-            else if (cums.Count == 1) MakeCumFilth(cums.First(), totalleak);
-            foreach (Cum cum in removecums)
-            {
-                cums.Remove(cum);
-            }
-            removecums.Clear();
-            cumd = TotalCumPercent - cumd;
-            AfterFluidOut(cumd);
-            return outcum;
-        }
-
-
 
 
 
@@ -762,7 +721,7 @@ namespace RJW_Menstruation
         /// Fertilize eggs and return the result
         /// </summary>
         /// <returns></returns>
-        public bool FertilizationCheck()
+        protected bool FertilizationCheck()
         {
             if (!eggs.NullOrEmpty())
             {
@@ -864,7 +823,7 @@ namespace RJW_Menstruation
             loaded = true;
         }
 
-        public void AfterSimulator()
+        protected void AfterSimulator()
         {
             if (Configurations.EnableMenopause && ovarypower < ovarypowerthreshold)
             {
@@ -926,7 +885,7 @@ namespace RJW_Menstruation
             foreach (Cum cum in cums)
             {
                 float rand = Rand.Range(0.0f, 1.0f);
-                if (cum.pawn != null && !cum.notcum && rand < cum.fertvolume * cum.fertFactor * Configurations.FertilizeChance * Props.basefertilizationChanceFactor)
+                if (cum.pawn != null && !cum.notcum && rand < cum.FertVolume * cum.fertFactor * Configurations.FertilizeChance * Props.basefertilizationChanceFactor)
                 {
                     if (!RJWPregnancySettings.bestial_pregnancy_enabled && (xxx.is_animal(parent.pawn) ^ xxx.is_animal(cum.pawn))) continue;
                     return cum.pawn;

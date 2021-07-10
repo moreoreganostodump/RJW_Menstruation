@@ -86,7 +86,7 @@ namespace RJW_Menstruation
             }
         }
 
-        
+        public static readonly Texture2D FertChanceTex = SolidColorMaterials.NewSolidColorTexture(new Color(1f, 1f, 1f, 0.4f));
 
 
         private static Texture2D milktexturecache = null;

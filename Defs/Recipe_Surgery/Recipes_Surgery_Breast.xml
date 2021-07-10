@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <RecipeDef Abstract="True" Name="BaseBreastSurgery">
+    <effectWorking>Surgery</effectWorking>
+    <soundWorking>Recipe_Surgery</soundWorking>
+    <workSpeedStat>MedicalOperationSpeed</workSpeedStat>
+    <workSkill>Medicine</workSkill>
+    <workSkillLearnFactor>0.2</workSkillLearnFactor>
+    <workAmount>400</workAmount>
+	<anesthetize>false</anesthetize>
+	<recipeUsers>
+		<li>Human</li>
+	</recipeUsers>
+    <surgerySuccessChanceFactor>100</surgerySuccessChanceFactor>
+    <ingredients>
+      <li>
+        <filter>
+          <categories>
+            <li>Medicine</li>
+          </categories>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <fixedIngredientFilter>
+      <categories>
+        <li>Medicine</li>
+      </categories>
+    </fixedIngredientFilter>
+  </RecipeDef>
+
+  <RecipeDef ParentName="BaseBreastSurgery">
+    <defName>Surgery_ExpandAreola</defName>
+    <label>expand areola</label>
+    <description>expand areola.</description>
+    <workerClass>RJW_Menstruation.Recipe_ExpandAreola</workerClass>
+    <jobString>expanding areola</jobString>
+  </RecipeDef>
+    
+  <RecipeDef ParentName="BaseBreastSurgery">
+    <defName>Surgery_ContractAreola</defName>
+    <label>contract areola</label>
+    <description>contract areola.</description>
+    <workerClass>RJW_Menstruation.Recipe_ContractAreola</workerClass>
+    <jobString>contracting areola</jobString>
+  </RecipeDef>
+
+  <RecipeDef ParentName="BaseBreastSurgery">
+    <defName>Surgery_ExpandNipple</defName>
+    <label>expand nipple</label>
+    <description>expand nipple.</description>
+    <workerClass>RJW_Menstruation.Recipe_ExpandNipple</workerClass>
+    <jobString>expanding nipple</jobString>
+  </RecipeDef>
+    
+  <RecipeDef ParentName="BaseBreastSurgery">
+    <defName>Surgery_ContractNipple</defName>
+    <label>contract nipple</label>
+    <description>contract nipple.</description>
+    <workerClass>RJW_Menstruation.Recipe_ContractNipple</workerClass>
+    <jobString>contracting nipple</jobString>
+  </RecipeDef>
+
+  
+</Defs>

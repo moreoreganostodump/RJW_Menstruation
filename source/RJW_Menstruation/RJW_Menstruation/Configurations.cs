@@ -9,10 +9,10 @@ namespace RJW_Menstruation
     {
         public const float ImplantationChanceDefault = 0.65f;
         public const int ImplantationChanceAdjustDefault = 65;
-        public const float FertilizeChanceDefault = 0.05f;
-        public const int FertilizeChanceAdjustDefault = 50;
-        public const float CumDecayRatioDefault = 0.15f;
-        public const int CumDecayRatioAdjustDefault = 150;
+        public const float FertilizeChanceDefault = 0.15f;
+        public const int FertilizeChanceAdjustDefault = 150;
+        public const float CumDecayRatioDefault = 0.30f;
+        public const int CumDecayRatioAdjustDefault = 300;
         public const float CumFertilityDecayRatioDefault = 0.2f;
         public const int CumFertilityDecayRatioAdjustDefault = 200;
         public const int CycleAccelerationDefault = 6;

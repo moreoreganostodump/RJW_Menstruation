@@ -1,3 +1,13 @@
+Version 1.0.4.3
+ - fixed errors on pregnancy
+ - added surgeries for nipple/areola
+ - changed cum calculate method
+   - cum's fertility will remain 
+   - IUD will diminish cum's fertility
+ - changed default settings
+   - fertilization chance raised 5% to 15%
+   - cum decay ratio raised 15% to 30%
+
 Version 1.0.4.2a
  - fixed hybrid custom UI
 

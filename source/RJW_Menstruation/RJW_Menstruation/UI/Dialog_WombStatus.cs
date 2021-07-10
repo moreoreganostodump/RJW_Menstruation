@@ -394,6 +394,8 @@ namespace RJW_Menstruation
 
             statvalue = Configurations.ImplantationChance * comp.Props.baseImplantationChanceFactor * comp.ImplantFactor;
             FillableBarLabeled(lineRect, "  " + xxx.reproduction.LabelCap.CapitalizeFirst() + " " + statvalue.ToStringPercent(), statvalue, TextureCache.fertilityTexture, Texture2D.blackTexture);
+            Rect overayRect = new Rect(lineRect.x, lineRect.y, lineRect.width * Math.Min(1.0f, comp.GetFertilityChance()), lineRect.height);
+            GUI.DrawTexture(overayRect, TextureCache.FertChanceTex);
             lineRect.y += height;
         }
 

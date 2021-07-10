@@ -43,7 +43,7 @@ namespace RJW_Menstruation
             }
         }
 
-        public override void AfterCumIn(Pawn cummer)
+        protected override void AfterCumIn(Pawn cummer)
         {
             base.AfterCumIn(cummer);
             if (curStage == Stage.Follicular) curStage = Stage.Ovulatory;

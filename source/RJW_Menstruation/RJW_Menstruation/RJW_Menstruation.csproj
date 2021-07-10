@@ -57,6 +57,8 @@
   <ItemGroup>
     <Compile Include="Configurations.cs" />
     <Compile Include="Cum.cs" />
+    <Compile Include="HediffComps\MenstruationUtility.cs" />
+    <Compile Include="Recipe_Surgery.cs" />
     <Compile Include="UI\Dialog_HybridCustom.cs" />
     <Compile Include="UI\Dialog_WombStatus.cs" />
     <Compile Include="DrugOutcomDoers.cs" />
