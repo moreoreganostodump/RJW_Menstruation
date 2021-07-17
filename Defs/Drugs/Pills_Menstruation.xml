@@ -4,7 +4,7 @@
 	<ThingDef ParentName="MakeableDrugPillBase">
 		<defName>OvaryRegenerationPill</defName>
 		<label>Ovary regeneration pill</label>
-		<description>Recovers ovary's health.&#10;Less effective on unhealthy ovary.&#10;Does not relieve climacteric symptoms.</description>
+		<description>Recovers ovary's health.&#10;Less effective on unhealthy ovary.&#10;Does not recover menopause.</description>
 		<graphicData>
 			<texPath>Things/Item/ORPill</texPath>
 			<graphicClass>Graphic_StackCount</graphicClass>

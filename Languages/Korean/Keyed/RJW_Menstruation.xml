@@ -37,7 +37,7 @@
   <Option5_Label>시간당 정액배출비율</Option5_Label>
   <Option5_Desc>이 비율만큼 매 시간마다 정액이 배출됩니다.</Option5_Desc>
   <Option6_Label>시간당 정자 사망비율</Option6_Label>
-  <Option6_Desc>이 비율만큼 매 시간마다 정자가 사망해 정액이 생식능력을 잃습니다.</Option6_Desc>
+  <Option6_Desc>이 비율만큼 매 시간마다 정자가 사망해 정액이 생식능력을 잃습니다.&#10;정자 예상수명: 정액이 대부분의 생식능력을 잃는 시간입니다.</Option6_Desc>
   <Option7_Label>주기 가속</Option7_Label>
   <Option7_Desc>월경주기를 더 빠르게합니다.</Option7_Desc>
   <Option8_Label>Debug</Option8_Label>
@@ -92,6 +92,7 @@
   <Option28_Tooltip>사용자 지정 잡종 편집기를 엽니다.&#10;이 설정은 XML파일의 잡종 정의를 대체합니다.</Option28_Tooltip>
   <Option29_Label>아이콘 축소 허용</Option29_Label>
   <Option29_Desc>아이콘 축소를 허용합니다.</Option29_Desc>
+  <EstimatedCumLifespan>정자 예상수명</EstimatedCumLifespan>
   
   <FloatMenu_CleanSelf>질세척</FloatMenu_CleanSelf>
   

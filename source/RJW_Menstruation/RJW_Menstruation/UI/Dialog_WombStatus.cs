@@ -44,7 +44,7 @@ namespace RJW_Menstruation
             get
             {
                 float width = 450f + 2 * windowMargin;
-                float height = 820f;
+                float height = 780f + 2 * windowMargin;
                 if (!Configurations.DrawWombStatus) height -= wombRectHeight;
                 if (!Configurations.DrawVaginaStatus || pawn.IsAnimal()) width -= 150f;
                 return new Vector2(width, height);
@@ -132,7 +132,7 @@ namespace RJW_Menstruation
             Hediff hediff = PregnancyHelper.GetPregnancy(pawn);
             if (pregnant && Utility.ShowFetusImage((Hediff_BasePregnancy)hediff))
             {
-                womb = Utility.GetPregnancyIcon(comp, hediff);
+                womb = comp.GetPregnancyIcon(hediff);
                 if (hediff is Hediff_MultiplePregnancy)
                 {
                     Hediff_MultiplePregnancy h = (Hediff_MultiplePregnancy)hediff;
@@ -297,6 +297,7 @@ namespace RJW_Menstruation
             //Widgets.DrawTextureFitted(wombRect, cum,1.0f);
             GUI.DrawTexture(rect, womb, ScaleMode.ScaleToFit, true, 0, Color.white, 0, 0);
             GUI.DrawTexture(rect, cum, ScaleMode.ScaleToFit, true, 0, cumcolor, 0, 0);
+
             GUI.color = Color.white;
 
 
@@ -378,11 +379,10 @@ namespace RJW_Menstruation
             statvalue = pawn.records.GetValue(xxx.CountOfWhore);
             if (statvalue > 0)
             {
-                FillableBarLabeled(lineRect, "  " + xxx.CountOfWhore.LabelCap.CapitalizeFirst() + " " + statvalue, statvalue / 500, TextureCache.slaaneshTexture, Texture2D.blackTexture);
+                FillableBarLabeled(lineRect, "  " + xxx.CountOfWhore.LabelCap.CapitalizeFirst() + " " + statvalue, statvalue / 50, TextureCache.slaaneshTexture, Texture2D.blackTexture);
                 statvalue = pawn.records.GetValue(xxx.EarnedMoneyByWhore);
                 lineRect.y += height;
                 FillableBarLabeled(lineRect, "  " + VariousDefOf.RJW_EarnedMoneyByWhore.label.CapitalizeFirst() + " " + statvalue, statvalue / 10000, TextureCache.ghalmarazTexture, Texture2D.blackTexture);
-                
                 
                 lineRect.y += height;
             }

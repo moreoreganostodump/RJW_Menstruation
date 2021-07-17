@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using RimWorld;
 using Verse;
 using rjw;
@@ -9,7 +10,7 @@ namespace RJW_Menstruation
     {
         protected override void DoIngestionOutcomeSpecial(Pawn pawn, Thing ingested)
         {
-            HediffComp_Menstruation comp = Utility.GetMenstruationComp(pawn);
+            HediffComp_Menstruation comp = pawn.GetMenstruationComp();
             if (comp != null && (comp.curStage.Equals(HediffComp_Menstruation.Stage.Follicular)
                 || comp.curStage.Equals(HediffComp_Menstruation.Stage.Luteal)
                 || comp.curStage.Equals(HediffComp_Menstruation.Stage.ClimactericFollicular)
@@ -31,10 +32,10 @@ namespace RJW_Menstruation
 
         protected override void DoIngestionOutcomeSpecial(Pawn pawn, Thing ingested)
         {
-            HediffComp_Menstruation comp = Utility.GetMenstruationComp(pawn);
-            if (comp != null)
+            HediffComp_Menstruation comp = pawn.GetMenstruationComp();
+            if (Configurations.EnableMenopause && comp != null)
             {
-                comp.ovarypower = (int)(comp.ovarypower * (1 + effectOffset));
+                comp.RecoverOvary(1 + effectOffset);
             }
 
 
@@ -45,7 +46,7 @@ namespace RJW_Menstruation
     {
         protected override void DoIngestionOutcomeSpecial(Pawn pawn, Thing ingested)
         {
-            HediffComp_Menstruation comp = Utility.GetMenstruationComp(pawn);
+            HediffComp_Menstruation comp = pawn.GetMenstruationComp();
             if (comp != null)
             {
                 comp.eggstack += Rand.Range(1, 4);

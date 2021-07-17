@@ -206,12 +206,12 @@ namespace RJW_Menstruation
             {
                 if (xxx.is_human(father))
                 {
-                    melanin = (mother.story.melanin + father.story.melanin) / 2;
+                    melanin = (mother.story?.melanin ?? 0f + father.story?.melanin ?? 0f) / 2;
                     lastname = NameTriple.FromString(father.Name.ToStringFull).Last;
                 }
                 else
                 {
-                    melanin = mother.story.melanin;
+                    melanin = mother.story?.melanin ?? 0f;
                     lastname = NameTriple.FromString(mother.Name.ToStringFull).Last;
                 }
 
@@ -220,7 +220,7 @@ namespace RJW_Menstruation
             {
                 if (xxx.is_human(father))
                 {
-                    melanin = father.story.melanin;
+                    melanin = father.story?.melanin ?? 0f;
                     lastname = NameTriple.FromString(father.Name.ToStringFull).Last;
                 }
                 else
@@ -410,10 +410,10 @@ namespace RJW_Menstruation
 
             string MotherRaceName = "";
             string FatherRaceName = "";
-            MotherRaceName = mother.kindDef.race.defName;
+            MotherRaceName = mother.kindDef?.race?.defName;
             PawnKindDef tmp = spawn_kind_def;
             if (father != null)
-                FatherRaceName = father.kindDef.race.defName;
+                FatherRaceName = father.kindDef?.race?.defName;
 
 
             if (FatherRaceName != "" && Configurations.UseHybridExtention)
@@ -458,7 +458,7 @@ namespace RJW_Menstruation
             }
             else if (!Configurations.UseHybridExtention || spawn_kind_def == null)
             {
-                spawn_kind_def = mother.RaceProps.AnyPawnKind;
+                spawn_kind_def = mother.RaceProps?.AnyPawnKind ?? mother.kindDef;
             }
 
             if (spawn_kind_def.defName.Contains("Nymph"))
@@ -476,7 +476,7 @@ namespace RJW_Menstruation
                 if (spawn_kind_def_list.NullOrEmpty())
                     spawn_kind_def = PawnKindDefOf.Colonist;
 
-                spawn_kind_def = spawn_kind_def_list.RandomElement();
+                if (!spawn_kind_def_list.NullOrEmpty()) spawn_kind_def = spawn_kind_def_list.RandomElement();
             }
 
 

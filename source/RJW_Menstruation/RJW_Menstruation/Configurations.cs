@@ -177,6 +177,7 @@ namespace RJW_Menstruation
             base.ExposeData();
         }
 
+       
 
     }
 
@@ -243,6 +244,7 @@ namespace RJW_Menstruation
                 {
                     wombsection.CheckboxLabeled(Translations.Option18_Label, ref Configurations.DrawEggOverlay, Translations.Option18_Desc);
                 }
+                
                 wombsection.CheckboxLabeled(Translations.Option10_Label, ref Configurations.DrawVaginaStatus, Translations.Option10_Desc);
                 wombsection.CheckboxLabeled(Translations.Option29_Label, ref Configurations.AllowShrinkIcon, Translations.Option29_Desc);
                 if (wombsection.ButtonText(Translations.Option11_Label + ": " + Configurations.LevelString(Configurations.InfoDetail)))
@@ -333,7 +335,17 @@ namespace RJW_Menstruation
             Configurations.CumDecayRatioAdjust = (int)listmain.Slider(Configurations.CumDecayRatioAdjust, 0, 1000);
             Configurations.CumDecayRatio = (float)Configurations.CumDecayRatioAdjust / 1000;
 
-            listmain.Label(Translations.Option6_Label + " " + Configurations.CumFertilityDecayRatio * 100 + "%", -1, Translations.Option6_Desc);
+            int semenlifespan = (int)(-5 / ((float)Math.Log10((1 - Configurations.CumFertilityDecayRatio)*10) - 1)) + 1;
+            string estimatedlifespan;
+            if (semenlifespan < 0)
+            {
+                estimatedlifespan = String.Format(": Infinite", semenlifespan);
+            }
+            else
+            {
+                estimatedlifespan = String.Format(": {0:0}h", semenlifespan);
+            }
+            listmain.LabelDouble(Translations.Option6_Label + " " + Configurations.CumFertilityDecayRatio * 100 + "%", Translations.EstimatedCumLifespan + estimatedlifespan, Translations.Option6_Desc);
             Configurations.CumFertilityDecayRatioAdjust = (int)listmain.Slider(Configurations.CumFertilityDecayRatioAdjust, 0, 1000);
             Configurations.CumFertilityDecayRatio = (float)Configurations.CumFertilityDecayRatioAdjust / 1000;
 

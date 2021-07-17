@@ -1,3 +1,10 @@
+Version 1.0.4.4
+ - ovary regeneration pill can restore climacteric (not menopause)
+ - menstrual blood uses race's blood def
+ - added estimated sperm lifespan in modsetting
+ - fixed errors on pregnancy
+ - changed cum calculation method
+ 
 Version 1.0.4.3
  - fixed errors on pregnancy
  - added surgeries for nipple/areola

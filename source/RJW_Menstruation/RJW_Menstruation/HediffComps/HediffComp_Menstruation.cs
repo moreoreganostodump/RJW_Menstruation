@@ -60,12 +60,6 @@ namespace RJW_Menstruation
         }
     }
 
-
-
-
-
-
-
     public class HediffComp_Menstruation : HediffComp
     {
         const float minmakefilthvalue = 1.0f;
@@ -444,7 +438,11 @@ namespace RJW_Menstruation
 
         public override void CompPostPostAdd(DamageInfo? dinfo)
         {
-            if (!loaded) Initialize();
+            if (!loaded)
+            {
+                InitOvary((int)Utility.RandGaussianLike(18,40));
+                Initialize();
+            }
         }
 
         public override void CompPostTick(ref float severityAdjustment)
@@ -458,9 +456,8 @@ namespace RJW_Menstruation
 
         public override void CompPostPostRemoved()
         {
-
             HugsLibController.Instance.TickDelayScheduler.TryUnscheduleCallback(actionref);
-            ModLog.Message(parent.pawn.Label + "tick scheduler removed");
+            Log.Message(parent.pawn.Label + "tick scheduler removed");
             base.CompPostPostRemoved();
         }
 
@@ -715,8 +712,37 @@ namespace RJW_Menstruation
             return outcum;
         }
 
+        /// <summary>
+        /// Force excrete cums in womb and get mixture of cum.
+        /// </summary>
+        /// <param name="mixtureDef"></param>
+        /// <param name="portion"></param>
+        /// <returns></returns>
+        public Cum MixtureOut(ThingDef mixtureDef ,float portion = 0.1f)
+        {
+            if (cums.NullOrEmpty()) return null;
+            Color color = GetCumMixtureColor;
+            float totalleak = 0;
+            List<string> cumlabels = new List<string>();
+            float cumd = TotalCumPercent;
+            List<Cum> removecums = new List<Cum>();
+            foreach (Cum cum in cums)
+            {
+                float vd = cum.DismishForce(portion);
+                string tmp = "FilthLabelWithSource".Translate(cum.FilthDef.label, cum.pawn?.LabelShort ?? "Unknown", 1.ToString());
+                cumlabels.Add(tmp.Replace(" x1", ""));
+                totalleak += vd;
+                if (cum.ShouldRemove()) removecums.Add(cum);
+            }
+            foreach (Cum cum in removecums)
+            {
+                cums.Remove(cum);
+            }
+            removecums.Clear();
+            return new CumMixture(parent.pawn, totalleak, cumlabels, color, mixtureDef);
+        }
 
-
+        
         /// <summary>
         /// Fertilize eggs and return the result
         /// </summary>
@@ -761,43 +787,7 @@ namespace RJW_Menstruation
                 if (eggs == null) eggs = new List<Egg>();
 
 
-                if (!Configurations.EnableMenopause)
-                {
-                    RemoveClimactericEffect();
-                }
-                else if (ovarypower < -50000)
-                {
-                    if (Props.ovaryPower > 10000000) ovarypower = Props.ovaryPower;
-                    else
-                    {
-                        float avglittersize;
-                        try
-                        {
-                            avglittersize = Rand.ByCurveAverage(parent.pawn.def.race.litterSizeCurve);
-                        }
-                        catch (NullReferenceException)
-                        {
-                            avglittersize = 1;
-                        }
-                        ovarypower = (int)(((Props.ovaryPower * Rand.Range(0.7f, 1.3f) * parent.pawn.def.race.lifeExpectancy / ThingDefOf.Human.race.lifeExpectancy)
-                            - (Math.Max(0, parent.pawn.ageTracker.AgeBiologicalYears - RJWSettings.sex_minimum_age * parent.pawn.def.race.lifeExpectancy / ThingDefOf.Human.race.lifeExpectancy))
-                            * (60 / (Props.folicularIntervalDays + Props.lutealIntervalDays) * Configurations.CycleAcceleration)) * avglittersize);
-                        if (ovarypower < 1)
-                        {
-                            Hediff hediff = HediffMaker.MakeHediff(VariousDefOf.Hediff_Menopause, parent.pawn);
-                            hediff.Severity = 0.2f;
-                            parent.pawn.health.AddHediff(hediff, Genital_Helper.get_genitalsBPR(parent.pawn));
-                            curStage = Stage.Young;
-                        }
-                        else if (ovarypower < ovarypowerthreshold)
-                        {
-                            Hediff hediff = HediffMaker.MakeHediff(VariousDefOf.Hediff_Climacteric, parent.pawn);
-                            hediff.Severity = 0.008f * (ovarypowerthreshold - ovarypower);
-                            parent.pawn.health.AddHediff(hediff, Genital_Helper.get_genitalsBPR(parent.pawn));
-                        }
-                    }
-                }
-
+                InitOvary(parent.pawn.ageTracker.AgeBiologicalYears);
 
                 if (parent.pawn.IsPregnant()) curStage = Stage.Pregnant;
                 if (parent.pawn.IsAnimal())
@@ -822,6 +812,57 @@ namespace RJW_Menstruation
             //Log.Message(parent.pawn.Label + " - Initialized menstruation comp");
             loaded = true;
         }
+
+        protected void InitOvary(int ageYear)
+        {
+            if (!Configurations.EnableMenopause)
+            {
+                RemoveClimactericEffect();
+            }
+            else if (ovarypower < -50000)
+            {
+                if (Props.ovaryPower > 10000000) ovarypower = Props.ovaryPower;
+                else
+                {
+                    float avglittersize;
+                    try
+                    {
+                        avglittersize = Rand.ByCurveAverage(parent.pawn.def.race.litterSizeCurve);
+                    }
+                    catch (NullReferenceException)
+                    {
+                        avglittersize = 1;
+                    }
+                    
+                    ovarypower = (int)(((Props.ovaryPower * Utility.RandGaussianLike(0.70f, 1.30f) * parent.pawn.def.race.lifeExpectancy / ThingDefOf.Human.race.lifeExpectancy)
+                        - (Math.Max(0, ageYear - RJWSettings.sex_minimum_age * parent.pawn.def.race.lifeExpectancy / ThingDefOf.Human.race.lifeExpectancy))
+                        * (60 / (Props.folicularIntervalDays + Props.lutealIntervalDays) * Configurations.CycleAcceleration)) * avglittersize);
+                    if (ovarypower < 1)
+                    {
+                        Hediff hediff = HediffMaker.MakeHediff(VariousDefOf.Hediff_Menopause, parent.pawn);
+                        hediff.Severity = 0.2f;
+                        parent.pawn.health.AddHediff(hediff, Genital_Helper.get_genitalsBPR(parent.pawn));
+                        curStage = Stage.Young;
+                    }
+                    else if (ovarypower < ovarypowerthreshold)
+                    {
+                        Hediff hediff = HediffMaker.MakeHediff(VariousDefOf.Hediff_Climacteric, parent.pawn);
+                        hediff.Severity = 0.008f * (ovarypowerthreshold - ovarypower);
+                        parent.pawn.health.AddHediff(hediff, Genital_Helper.get_genitalsBPR(parent.pawn));
+                    }
+                }
+            }
+        }
+
+        public void RecoverOvary(float multiply = 0.2f)
+        {
+            ovarypower = Math.Max(0, (int)(ovarypower * multiply));
+            if (ovarypower >= ovarypowerthreshold)
+            {
+                RemoveClimactericEffect();
+            }
+        }
+
 
         protected void AfterSimulator()
         {
@@ -969,7 +1010,7 @@ namespace RJW_Menstruation
         protected void BleedOut()
         {
             //FilthMaker.TryMakeFilth(parent.pawn.Position, parent.pawn.Map, ThingDefOf.Filth_Blood,parent.pawn.Label);
-            CumIn(parent.pawn, Rand.Range(0.02f * Configurations.BleedingAmount, 0.04f * Configurations.BleedingAmount), Translations.Menstrual_Blood, -5.0f, ThingDefOf.Filth_Blood);
+            CumIn(parent.pawn, Rand.Range(0.02f * Configurations.BleedingAmount, 0.04f * Configurations.BleedingAmount), Translations.Menstrual_Blood, -5.0f, parent.pawn.def.race?.BloodDef ?? ThingDefOf.Filth_Blood);
             GetNotCum(Translations.Menstrual_Blood).color = BloodColor;
         }
 
@@ -1116,6 +1157,7 @@ namespace RJW_Menstruation
                 hediff = HediffMaker.MakeHediff(VariousDefOf.Hediff_Menopause, parent.pawn);
                 hediff.Severity = 0.2f;
                 parent.pawn.health.AddHediff(hediff, Genital_Helper.get_genitalsBPR(parent.pawn));
+                ovarypower = 0;
                 GoNextStage(Stage.Young);
             }
             else if (Configurations.EnableMenopause && ovarypower < ovarypowerthreshold)
@@ -1215,7 +1257,14 @@ namespace RJW_Menstruation
 
         protected virtual void YoungAction()
         {
-            if (parent.pawn.health.capacities.GetLevel(xxx.reproduction) <= 0) StayCurrentStageConst(Stage.Young);
+            if (!Configurations.EnableMenopause && ovarypower < 0 && ovarypower > -10000)
+            {
+                RemoveClimactericEffect();
+            }
+            if (parent.pawn.health.capacities.GetLevel(xxx.reproduction) <= 0)
+            {
+                StayCurrentStageConst(Stage.Young);
+            }
             else GoNextStage(Stage.Follicular);
         }
 
@@ -1277,10 +1326,6 @@ namespace RJW_Menstruation
             }
         }
 
-        protected virtual void ThoughtCummer()
-        {
-
-        }
 
 
         private Action PeriodSimulator(Stage targetstage)

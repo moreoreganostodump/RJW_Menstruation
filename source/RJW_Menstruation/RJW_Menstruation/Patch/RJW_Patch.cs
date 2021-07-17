@@ -35,7 +35,7 @@ namespace RJW_Menstruation
                 else return true;
 
                 if (female.IsAnimal() && !Configurations.EnableAnimalCycle) return true;
-                HediffComp_Menstruation comp = Utility.GetMenstruationComp(female);
+                HediffComp_Menstruation comp = female.GetMenstruationComp();
                 if (comp != null)
                 {
                     if (Genital_Helper.has_penis_fertile(male, maleparts) && PregnancyHelper.CanImpregnate(male, female, sextype))
@@ -47,9 +47,8 @@ namespace RJW_Menstruation
                     {
                         comp.CumIn(male, Rand.Range(0.5f,3.0f) * RJWSettings.cum_on_body_amount_adjust * male.BodySize, 1.0f);
                     }
-                    else comp.CumIn(male, male.GetCumVolume(), 0);
+                    else comp.CumIn(male, male.GetCumVolume(maleparts), 0);
                 }
-
 
                 //if (Genital_Helper.has_vagina(partner, partnerparts))
                 //{

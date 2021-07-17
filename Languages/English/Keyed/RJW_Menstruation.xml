@@ -37,7 +37,7 @@
   <Option5_Label>cum decay ratio per hour</Option5_Label>
   <Option5_Desc>cum will decrease about this ratio&#10;this value affects on the fertility chacne indirectly</Option5_Desc>
   <Option6_Label>cum fertility decay ratio per hour</Option6_Label>
-  <Option6_Desc>cum will lose fertility about this ratio&#10;this value affects on the fertility chance indirectly</Option6_Desc>
+  <Option6_Desc>cum will lose fertility about this ratio&#10;this value affects on the fertility chance indirectly&#10;estimated sperm lifespan: cum lose most of fertility at this time.</Option6_Desc>
   <Option7_Label>cycle accelerate</Option7_Label>
   <Option7_Desc>accelerate menstrution cycle</Option7_Desc>
   <Option8_Label>Debug</Option8_Label>
@@ -92,7 +92,8 @@
   <Option28_Tooltip>Open custom hybrid editor.&#10;This will overrides hybrid definitions of XML files.</Option28_Tooltip>
   <Option29_Label>Allow shrink icon</Option29_Label>
   <Option29_Desc>Let icon become smaller If needed.</Option29_Desc>
-  
+  <EstimatedCumLifespan>estimated sperm lifespan</EstimatedCumLifespan>
+
   <FloatMenu_CleanSelf>Vaginal washing</FloatMenu_CleanSelf>
   
   <CustomHybrid_List_Title>Custom Hybrid Editor</CustomHybrid_List_Title>

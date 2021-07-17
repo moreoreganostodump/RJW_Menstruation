@@ -1,5 +1,6 @@
 ﻿using RimWorld;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Verse;
 
@@ -147,7 +148,7 @@ namespace RJW_Menstruation
 
 
 
-        public void ExposeData()
+        public virtual void ExposeData()
         {
             Scribe_References.Look(ref pawn, "pawn", true);
             Scribe_Values.Look(ref volume, "volume", volume, true);
@@ -158,6 +159,7 @@ namespace RJW_Menstruation
             Scribe_Values.Look(ref notcumLabel, "notcumLabel", notcumLabel, true);
             Scribe_Values.Look(ref useCustomColor, "useCustomColor", useCustomColor, true);
             Scribe_Values.Look(ref customColor, "customColor", customColor, true);
+            Scribe_Defs.Look(ref filthDef, "filthDef");
 
         }
 
@@ -222,7 +224,50 @@ namespace RJW_Menstruation
 
     }
 
+    public class CumMixture : Cum, IDisposable
+    {
+        protected List<string> cums;
 
+
+        public CumMixture()
+        {
+            notcum = true;
+            cums = new List<string>();
+        }
+
+        public CumMixture(Pawn pawn, float volume, List<string> cums, Color color,  ThingDef mixtureDef)
+        {
+            this.pawn = pawn;
+            this.volume = volume;
+            this.cums = cums;
+            this.customColor = color;
+            this.useCustomColor = true;
+        }
+
+        public void Dispose()
+        {
+            cums.Clear();
+            
+        }
+
+        public override void ExposeData()
+        {
+            base.ExposeData();
+            Scribe_Collections.Look(ref cums, "cumslabel", LookMode.Value, new object[0]);
+        }
+
+        public string GetIngredients()
+        {
+            string res = "";
+            if (!cums.NullOrEmpty()) for(int i=0; i<cums.Count; i++)
+                {
+                    res += cums[i];
+                    if (i < cums.Count - 1) res += ", ";
+                }
+            return res;
+        }
+
+    }
 
 
 

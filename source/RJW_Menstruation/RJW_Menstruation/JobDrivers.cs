@@ -17,7 +17,7 @@ namespace RJW_Menstruation
         protected override IEnumerable<Toil> MakeNewToils()
         {
 
-            HediffComp_Menstruation Comp = Utility.GetMenstruationComp(pawn);
+            HediffComp_Menstruation Comp = pawn.GetMenstruationComp();
             this.FailOn(delegate
             {
                 return !(Comp.TotalCumPercent > 0.001);

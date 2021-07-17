@@ -99,6 +99,8 @@ namespace RJW_Menstruation
         public static readonly string Option29_Label = "Option29_Label".Translate();
         public static readonly string Option29_Desc  = "Option29_Desc".Translate();
 
+        public static readonly string EstimatedCumLifespan = "EstimatedCumLifespan".Translate();
+
         public static readonly string FloatMenu_CleanSelf = "FloatMenu_CleanSelf".Translate();
 
         public static readonly string CustomHybrid_List_Title = "CustomHybrid_List_Title".Translate();

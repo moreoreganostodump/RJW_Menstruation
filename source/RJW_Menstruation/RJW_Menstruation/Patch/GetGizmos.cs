@@ -56,7 +56,7 @@ namespace RJW_Menstruation
                 Hediff hediff = PregnancyHelper.GetPregnancy(pawn);
                 if (Utility.ShowFetusImage((Hediff_BasePregnancy)hediff))
                 {
-                    icon = Utility.GetPregnancyIcon(comp, hediff);
+                    icon = comp.GetPregnancyIcon(hediff);
                     if (hediff is Hediff_BasePregnancy)
                     {
                         Hediff_BasePregnancy h = (Hediff_BasePregnancy)hediff;
