@@ -43,6 +43,8 @@ namespace RJW_Menstruation
         public static readonly CompProperties_Menstruation VaginaCompProperties = (CompProperties_Menstruation)Vagina.comps.FirstOrDefault(x => x is CompProperties_Menstruation);
         public static readonly KeyBindingDef OpenStatusWindowKey = DefDatabase<KeyBindingDef>.GetNamed("OpenStatusWindow");
         public static readonly PawnColumnDef RJW_EarnedMoneyByWhore = DefDatabase<PawnColumnDef>.GetNamed("RJW_EarnedMoneyByWhore");
+        public static readonly RecordDef AmountofCreampied = DefDatabase<RecordDef>.GetNamed("AmountofCreampied");
+
 
         private static List<ThingDef> allraces = null;
         private static List<PawnKindDef> allkinds = null;

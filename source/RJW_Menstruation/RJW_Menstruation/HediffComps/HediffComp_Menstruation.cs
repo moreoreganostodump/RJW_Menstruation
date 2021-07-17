@@ -440,6 +440,7 @@ namespace RJW_Menstruation
         {
             if (!loaded)
             {
+                Props = (CompProperties_Menstruation)props;
                 InitOvary((int)Utility.RandGaussianLike(18,40));
                 Initialize();
             }
@@ -535,6 +536,8 @@ namespace RJW_Menstruation
                 if (!merged) cums.Add(new Cum(pawn, volume, fertility, filthdef));
             }
             cumd = TotalCumPercent - cumd;
+
+            parent.pawn.records.AddTo(VariousDefOf.AmountofCreampied, injectedvolume);
             AfterCumIn(pawn);
             AfterFluidIn(cumd);
         }

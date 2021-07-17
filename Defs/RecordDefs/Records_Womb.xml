@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Defs>
+	<RecordDef>
+		<defName>AmountofCreampied</defName>
+		<label>creampied</label>
+		<description>The amount of cums I have been creampied.</description>
+		<type>Float</type>
+	</RecordDef>
+
+	<RecordDef>
+		<defName>AmountofFertilizedEggs</defName>
+		<label>fertilized eggs</label>
+		<description>The amount of my eggs raped by sperm.</description>
+		<type>Int</type>
+	</RecordDef>
+	
+
+</Defs>

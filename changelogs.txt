@@ -1,3 +1,7 @@
+Version 1.0.4.4a
+ - added records
+ - fixed errors on initializing
+
 Version 1.0.4.4
  - ovary regeneration pill can restore climacteric (not menopause)
  - menstrual blood uses race's blood def
