@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <Hediff_MenstrualCramp.label>생리통</Hediff_MenstrualCramp.label>
+  <Hediff_MenstrualCramp.description>생리중입니다.</Hediff_MenstrualCramp.description>
+  <Hediff_MenstrualCramp.stages.0.label>불편함</Hediff_MenstrualCramp.stages.0.label>
+  <Hediff_MenstrualCramp.stages.1.label>짜증남</Hediff_MenstrualCramp.stages.1.label>
+  <Hediff_MenstrualCramp.stages.2.label>아픔</Hediff_MenstrualCramp.stages.2.label>
+  <Hediff_MenstrualCramp.stages.3.label>고통스러움</Hediff_MenstrualCramp.stages.3.label>
+  <Hediff_Climacteric.label>갱년기</Hediff_Climacteric.label>
+  <Hediff_Climacteric.description>갱년기입니다.</Hediff_Climacteric.description>
+  <Hediff_Climacteric.stages.0.label>초기</Hediff_Climacteric.stages.0.label>
+  <Hediff_Climacteric.stages.1.label>중기</Hediff_Climacteric.stages.1.label>
+  <Hediff_Climacteric.stages.2.label>후기</Hediff_Climacteric.stages.2.label>
+  <Hediff_Climacteric.stages.3.label>폐경</Hediff_Climacteric.stages.3.label>
+  <Hediff_Menopause.label>폐경</Hediff_Menopause.label>
+  <Hediff_Menopause.description>임신할수 없습니다.</Hediff_Menopause.description>
+  <Hediff_Estrus.label>발정기</Hediff_Estrus.label>
+  <Hediff_Estrus.description>발정기입니다.</Hediff_Estrus.description>
+  <Hediff_Estrus_Consealed.label>발정기(숨김)</Hediff_Estrus_Consealed.label>
+  <Hediff_Estrus_Consealed.description>발정기입니다.</Hediff_Estrus_Consealed.description>
+  <Hediff_PainReliever.label>진통제</Hediff_PainReliever.label>
+  <Hediff_PainReliever.description>약간의 고통을 줄여줍니다.</Hediff_PainReliever.description>
+
+  
+  
+</LanguageData>

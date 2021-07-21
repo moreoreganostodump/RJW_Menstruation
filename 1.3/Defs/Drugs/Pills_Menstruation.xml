@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<Defs>
+	<ThingDef ParentName="MakeableDrugPillBase">
+		<defName>OvaryRegenerationPill</defName>
+		<label>Ovary regeneration pill</label>
+		<description>Recovers ovary's health.&#10;Less effective on unhealthy ovary.&#10;Does not recover menopause.</description>
+		<graphicData>
+			<texPath>Things/Item/ORPill</texPath>
+			<graphicClass>Graphic_StackCount</graphicClass>
+		</graphicData>
+		<rotatable>false</rotatable>
+		<statBases>
+			<WorkToMake>2400</WorkToMake>
+			<MarketValue>160</MarketValue>
+			<Mass>0.05</Mass>
+		</statBases>
+		<techLevel>Industrial</techLevel>
+		<ingestible>
+			<drugCategory>Medical</drugCategory>
+			<outcomeDoers>
+				<li Class="RJW_Menstruation.OvaryPillOutcomDoer">
+					<effectOffset>0.3</effectOffset>
+				</li>
+			</outcomeDoers>
+		</ingestible>
+		<recipeMaker>
+			<researchPrerequisite>DrugProduction</researchPrerequisite>
+			<recipeUsers>
+				<li>DrugLab</li>
+			</recipeUsers>
+		</recipeMaker>
+		<costList>
+			<MedicineHerbal>10</MedicineHerbal>
+			<Neutroamine>4</Neutroamine>
+			<InsectJelly>8</InsectJelly>
+		</costList>
+		<comps>
+			<li Class="CompProperties_Drug">
+			<addictiveness>0</addictiveness>
+			<listOrder>1000</listOrder>
+				<overdoseSeverityOffset>
+					<min>0.08</min>
+					<max>0.14</max>
+				</overdoseSeverityOffset>
+			</li>
+		</comps>
+	</ThingDef>
+	
+	<ThingDef ParentName="MakeableDrugPillBase">
+		<defName>SuperovulationInducingAgent</defName>
+		<label>Superovulation inducing agent</label>
+		<description>Induce superovulation&#10;&#10;May cause early menopause</description>
+		<graphicData>
+			<texPath>Things/Item/SIA</texPath>
+			<graphicClass>Graphic_StackCount</graphicClass>
+		</graphicData>
+		<rotatable>false</rotatable>
+		<statBases>
+			<WorkToMake>2400</WorkToMake>
+			<MarketValue>140</MarketValue>
+			<Mass>0.05</Mass>
+		</statBases>
+		<techLevel>Industrial</techLevel>
+		<ingestible>
+			<drugCategory>Medical</drugCategory>
+			<outcomeDoers>
+				<li Class="RJW_Menstruation.SuperOvulationOutcomDoer">
+				</li>
+			</outcomeDoers>
+		</ingestible>
+		<recipeMaker>
+			<researchPrerequisite>DrugProduction</researchPrerequisite>
+			<recipeUsers>
+				<li>DrugLab</li>
+			</recipeUsers>
+		</recipeMaker>
+		<costList>
+			<MedicineHerbal>12</MedicineHerbal>
+			<Neutroamine>6</Neutroamine>
+		</costList>
+		<comps>
+			<li Class="CompProperties_Drug">
+			<addictiveness>0</addictiveness>
+			<listOrder>1000</listOrder>
+				<overdoseSeverityOffset>
+					<min>0.08</min>
+					<max>0.14</max>
+				</overdoseSeverityOffset>
+			</li>
+		</comps>
+	</ThingDef>
+	
+	<ThingDef ParentName="MakeableDrugPillBase">
+		<defName>PainReliever</defName>
+		<label>Pain reliever</label>
+		<description>Relieves menstrual pain for a day.&#10;&#10;Also effective on generic pain.</description>
+		<graphicData>
+			<texPath>Things/Item/PainReliever</texPath>
+			<graphicClass>Graphic_StackCount</graphicClass>
+		</graphicData>
+		<rotatable>false</rotatable>
+		<statBases>
+			<WorkToMake>1000</WorkToMake>
+			<MarketValue>12</MarketValue>
+			<Mass>0.01</Mass>
+		</statBases>
+		<techLevel>Industrial</techLevel>
+		<ingestible>
+			<drugCategory>Medical</drugCategory>
+			<outcomeDoers>
+				<li Class="IngestionOutcomeDoer_GiveHediff">
+					<hediffDef>Hediff_PainReliever</hediffDef>
+					<severity>1.0</severity>
+				</li>
+			</outcomeDoers>
+		</ingestible>
+		<recipeMaker>
+			<researchPrerequisite>DrugProduction</researchPrerequisite>
+			<recipeUsers>
+				<li>DrugLab</li>
+			</recipeUsers>
+		</recipeMaker>
+		<costList>
+			<MedicineHerbal>1</MedicineHerbal>
+		</costList>
+		<comps>
+			<li Class="CompProperties_Drug">
+			<addictiveness>0</addictiveness>
+			<listOrder>1000</listOrder>
+				<overdoseSeverityOffset>
+					<min>0.08</min>
+					<max>0.14</max>
+				</overdoseSeverityOffset>
+			</li>
+		</comps>
+	</ThingDef>
+	
+	
+</Defs>

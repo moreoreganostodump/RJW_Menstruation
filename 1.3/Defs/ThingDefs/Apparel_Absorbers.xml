@@ -1,0 +1,243 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="ApparelNoQualityBase">
+    <defName>Absorber_Tampon</defName>
+    <label>tampon</label>
+    <description>A tampon for absorbing fluids from vagina.&#10;May cause infection if using too long.</description>
+    <thingClass>RJW_Menstruation.Absorber_Tampon</thingClass>
+    <graphicData>
+      <texPath>Things/Item/Tampon</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <tickerType>Never</tickerType>
+    <smeltable>false</smeltable>
+	<tradeability>Sellable</tradeability>
+    <statBases>
+      <MaxHitPoints>20</MaxHitPoints>
+      <Mass>0.01</Mass>
+      <WorkToMake>1000</WorkToMake>
+      <Flammability>1.0</Flammability>
+      <EquipDelay>2</EquipDelay>
+	  <MaxAbsorbable>10</MaxAbsorbable>
+    </statBases>
+    <costStuffCount>5</costStuffCount>
+    <stuffCategories>
+      <li>Fabric</li>
+    </stuffCategories>
+    <recipeMaker>
+      <unfinishedThingDef>UnfinishedApparel</unfinishedThingDef>
+      <researchPrerequisite>ComplexClothing</researchPrerequisite>
+      <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+      <workSkill>Crafting</workSkill>
+      <effectWorking>Tailor</effectWorking>
+      <soundWorking>Recipe_Tailor</soundWorking>
+      <recipeUsers>
+        <li>ElectricTailoringBench</li>
+		<li>HandTailoringBench</li>
+      </recipeUsers>
+      <useIngredientsForColor>true</useIngredientsForColor>
+      <skillRequirements>
+        <Crafting>4</Crafting>
+      </skillRequirements>
+    </recipeMaker>
+    <thingCategories>
+      <li>ApparelUtility</li>
+    </thingCategories>
+    <apparel>
+      <careIfWornByCorpse>true</careIfWornByCorpse>
+      <careIfDamaged>false</careIfDamaged>
+      <wearPerDay>0</wearPerDay>
+	  <gender>Female</gender>
+      <bodyPartGroups>
+        <li>Torso</li>
+      </bodyPartGroups>
+      <layers>
+        <li>Absorber</li>
+      </layers>
+      <tags>
+        <li>Absorber</li>
+      </tags>
+    </apparel>
+	<modExtensions>
+		<li Class="RJW_Menstruation.AbsorberModExtension">
+			<leakAfterDirty>false</leakAfterDirty>
+			<effectsAfterDirty>true</effectsAfterDirty>
+			<minHourstoDirtyEffect>10</minHourstoDirtyEffect>
+			<dirtyDef>Absorber_Tampon_Dirty</dirtyDef>
+		</li>
+	</modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="ApparelNoQualityBase">
+	<defName>Absorber_Tampon_Dirty</defName>
+    <label>dirty tampon</label>
+    <description>An wet used tampon.&#10;May cause infection.</description>
+    <thingClass>RJW_Menstruation.Absorber_Tampon</thingClass>
+    <graphicData>
+      <texPath>Things/Item/Tampon</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <tickerType>Never</tickerType>
+    <smeltable>false</smeltable>
+	<tradeability>None</tradeability>
+    <statBases>
+      <MaxHitPoints>20</MaxHitPoints>
+      <Mass>0.05</Mass>
+	  <MarketValue>0</MarketValue>
+      <WorkToMake>1000</WorkToMake>
+      <Flammability>0.2</Flammability>
+      <EquipDelay>2</EquipDelay>
+	  <MaxAbsorbable>10</MaxAbsorbable>
+	  <Cleanliness>-5</Cleanliness>
+    </statBases>
+    <stuffCategories>
+      <li>Fabric</li>
+    </stuffCategories>
+    <thingCategories>
+      <li>ApparelUtility</li>
+    </thingCategories>
+    <apparel>
+      <careIfWornByCorpse>true</careIfWornByCorpse>
+      <careIfDamaged>false</careIfDamaged>
+      <wearPerDay>0</wearPerDay>
+	  <gender>Female</gender>
+      <bodyPartGroups>
+        <li>Torso</li>
+      </bodyPartGroups>
+      <layers>
+        <li>Absorber</li>
+      </layers>
+      <tags>
+        <li>Absorber</li>
+      </tags>
+    </apparel>
+	<modExtensions>
+		<li Class="RJW_Menstruation.AbsorberModExtension">
+			<leakAfterDirty>false</leakAfterDirty>
+			<effectsAfterDirty>true</effectsAfterDirty>
+			<minHourstoDirtyEffect>8</minHourstoDirtyEffect>
+			<dirtyDef>Absorber_Tampon_Dirty</dirtyDef>
+		</li>
+	</modExtensions>
+  </ThingDef>
+  
+  
+  <ThingDef ParentName="ApparelNoQualityBase">
+    <defName>Absorber_Pad</defName>
+    <label>sanitary pad</label>
+    <description>A pad for absorbing fluids from vagina.</description>
+    <thingClass>RJW_Menstruation.Absorber</thingClass>
+    <graphicData>
+      <texPath>Things/Item/Pad</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <tickerType>Never</tickerType>
+    <smeltable>false</smeltable>
+	<tradeability>Sellable</tradeability>
+    <statBases>
+      <MaxHitPoints>40</MaxHitPoints>
+      <Mass>0.02</Mass>
+      <WorkToMake>1000</WorkToMake>
+      <Flammability>1.0</Flammability>
+      <EquipDelay>4</EquipDelay>
+	  <MaxAbsorbable>25</MaxAbsorbable>
+    </statBases>
+    <costStuffCount>10</costStuffCount>
+    <stuffCategories>
+      <li>Fabric</li>
+    </stuffCategories>
+    <recipeMaker>
+      <unfinishedThingDef>UnfinishedApparel</unfinishedThingDef>
+      <workSpeedStat>GeneralLaborSpeed</workSpeedStat>
+      <workSkill>Crafting</workSkill>
+      <effectWorking>Tailor</effectWorking>
+      <soundWorking>Recipe_Tailor</soundWorking>
+      <recipeUsers>
+        <li>ElectricTailoringBench</li>
+		<li>HandTailoringBench</li>
+      </recipeUsers>
+      <useIngredientsForColor>true</useIngredientsForColor>
+      <skillRequirements>
+        <Crafting>4</Crafting>
+      </skillRequirements>
+    </recipeMaker>
+    <thingCategories>
+      <li>ApparelUtility</li>
+    </thingCategories>
+    <apparel>
+      <careIfWornByCorpse>true</careIfWornByCorpse>
+      <careIfDamaged>false</careIfDamaged>
+      <wearPerDay>0</wearPerDay>
+	  <gender>Female</gender>
+      <bodyPartGroups>
+        <li>Torso</li>
+      </bodyPartGroups>
+      <layers>
+        <li>Absorber</li>
+      </layers>
+      <tags>
+        <li>Absorber</li>
+      </tags>
+    </apparel>
+	<modExtensions>
+		<li Class="RJW_Menstruation.AbsorberModExtension">
+			<leakAfterDirty>true</leakAfterDirty>
+			<effectsAfterDirty>false</effectsAfterDirty>
+			<dirtyDef>Absorber_Pad_Dirty</dirtyDef>
+		</li>
+	</modExtensions>
+  </ThingDef>
+
+  <ThingDef ParentName="ApparelNoQualityBase">
+	<defName>Absorber_Pad_Dirty</defName>
+    <label>wet sanitary pad</label>
+    <description>An wet used pad.</description>
+    <thingClass>RJW_Menstruation.Absorber</thingClass>
+    <graphicData>
+      <texPath>Things/Item/Pad</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <tickerType>Never</tickerType>
+    <smeltable>false</smeltable>
+	<tradeability>None</tradeability>
+    <statBases>
+      <MaxHitPoints>40</MaxHitPoints>
+      <Mass>0.10</Mass>
+	  <MarketValue>0</MarketValue>
+      <WorkToMake>1000</WorkToMake>
+      <Flammability>0.2</Flammability>
+      <EquipDelay>4</EquipDelay>
+	  <MaxAbsorbable>25</MaxAbsorbable>
+	  <Cleanliness>-5</Cleanliness>
+    </statBases>
+    <stuffCategories>
+      <li>Fabric</li>
+    </stuffCategories>
+    <thingCategories>
+      <li>ApparelUtility</li>
+    </thingCategories>
+    <apparel>
+      <careIfWornByCorpse>true</careIfWornByCorpse>
+      <careIfDamaged>false</careIfDamaged>
+      <wearPerDay>0</wearPerDay>
+	  <gender>Female</gender>
+      <bodyPartGroups>
+        <li>Torso</li>
+      </bodyPartGroups>
+      <layers>
+        <li>Absorber</li>
+      </layers>
+      <tags>
+        <li>Absorber</li>
+      </tags>
+    </apparel>
+	<modExtensions>
+		<li Class="RJW_Menstruation.AbsorberModExtension">
+			<leakAfterDirty>true</leakAfterDirty>
+			<effectsAfterDirty>false</effectsAfterDirty>
+			<dirtyDef>Absorber_Pad_Dirty</dirtyDef>
+		</li>
+	</modExtensions>
+  </ThingDef>
+</Defs>

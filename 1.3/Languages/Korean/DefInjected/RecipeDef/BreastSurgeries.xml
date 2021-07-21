@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <Surgery_ExpandAreola.label>유륜확대 수술</Surgery_ExpandAreola.label>
+  <Surgery_ExpandAreola.description>유륜을 크게만듭니다.</Surgery_ExpandAreola.description>
+  <Surgery_ExpandAreola.jobString>유륜확대 수술중</Surgery_ExpandAreola.jobString>
+  <Surgery_ContractAreola.label>유륜축소 수술</Surgery_ContractAreola.label>
+  <Surgery_ContractAreola.description>유륜을 작게만듭니다.</Surgery_ContractAreola.description>
+  <Surgery_ContractAreola.jobString>유륜축소 수술중</Surgery_ContractAreola.jobString>
+  <Surgery_ExpandNipple.label>유두확대 수술</Surgery_ExpandNipple.label>
+  <Surgery_ExpandNipple.description>유두를 크게만듭니다.</Surgery_ExpandNipple.description>
+  <Surgery_ExpandNipple.jobString>유두확대 수술중</Surgery_ExpandNipple.jobString>
+  <Surgery_ContractNipple.label>유두축소 수술</Surgery_ContractNipple.label>
+  <Surgery_ContractNipple.description>유두를 작게만듭니다.</Surgery_ContractNipple.description>
+  <Surgery_ContractNipple.jobString>유두축소 수술중</Surgery_ContractNipple.jobString>
+</LanguageData>

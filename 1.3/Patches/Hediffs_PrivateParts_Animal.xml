@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- one cycle = folicularIntervalDays + lutealIntervalDays -->
+<!-- folicularIntervalDays includes bleedingIntervalDays.  -->
+<!-- bleedingIntervalDays must be smaller than folicularIntervalDays  -->
+<!-- unit of maxCumCapacity is ml -->
+<!-- actual max cum capacity is 500times of maxCumCapacity -->
+<!-- one egg = 1 ovaryPower-->
+<!-- the value for breeding season: Always, Spring, Summer, Fall, Winter, FirstHalf, SecondHalf -->
+<!-- total estrus days = estrusDaysBeforeOvulation + eggLifespanDays -->
+
+<Patch>
+	<Operation Class="PatchOperationAdd">
+		<xpath>Defs/rjw.HediffDef_PartBase[defName="DogVagina"]</xpath>
+		<value>
+			<comps>
+				<li Class="RJW_Menstruation.CompProperties_Menstruation">
+					<maxCumCapacity>8</maxCumCapacity>
+					<baseImplantationChanceFactor>1.0</baseImplantationChanceFactor>
+					<basefertilizationChanceFactor>1.0</basefertilizationChanceFactor>
+					<deviationFactor>0.05</deviationFactor>
+					<folicularIntervalDays>14</folicularIntervalDays>
+					<lutealIntervalDays>166</lutealIntervalDays>
+					<bleedingIntervalDays>8</bleedingIntervalDays>
+					<recoveryIntervalDays>15</recoveryIntervalDays>
+					<eggLifespanDays>4</eggLifespanDays>
+					<wombTex>Womb/Womb</wombTex>
+					<vagTex>Genitals/Vagina</vagTex>
+					<estrusDaysBeforeOvulation>9</estrusDaysBeforeOvulation>
+				</li>
+			</comps>
+		</value>
+	</Operation>
+	
+	<Operation Class="PatchOperationAdd">
+		<xpath>Defs/rjw.HediffDef_PartBase[defName="CatVagina"]</xpath>
+		<value>
+			<comps>
+				<li Class="RJW_Menstruation.CompProperties_InducedOvulator">
+					<maxCumCapacity>6</maxCumCapacity>
+					<baseImplantationChanceFactor>1.0</baseImplantationChanceFactor>
+					<basefertilizationChanceFactor>2.0</basefertilizationChanceFactor>
+					<deviationFactor>0.05</deviationFactor>
+					<folicularIntervalDays>9</folicularIntervalDays>
+					<lutealIntervalDays>10</lutealIntervalDays>
+					<bleedingIntervalDays>0</bleedingIntervalDays>
+					<recoveryIntervalDays>15</recoveryIntervalDays>
+					<eggLifespanDays>1</eggLifespanDays>
+					<wombTex>Womb/Womb</wombTex>
+					<vagTex>Genitals/Vagina</vagTex>
+					<breedingSeason>FirstHalf</breedingSeason>
+					<estrusDaysBeforeOvulation>9</estrusDaysBeforeOvulation>
+				</li>
+			</comps>
+		</value>
+	</Operation>
+	
+	<Operation Class="PatchOperationAdd">
+		<xpath>Defs/rjw.HediffDef_PartBase[defName="HorseVagina"]</xpath>
+		<value>
+			<comps>
+				<li Class="RJW_Menstruation.CompProperties_Menstruation">
+					<maxCumCapacity>25</maxCumCapacity>
+					<baseImplantationChanceFactor>1.0</baseImplantationChanceFactor>
+					<basefertilizationChanceFactor>1.0</basefertilizationChanceFactor>
+					<deviationFactor>0.05</deviationFactor>
+					<folicularIntervalDays>7</folicularIntervalDays>
+					<lutealIntervalDays>14</lutealIntervalDays>
+					<bleedingIntervalDays>0</bleedingIntervalDays>
+					<recoveryIntervalDays>30</recoveryIntervalDays>
+					<eggLifespanDays>1</eggLifespanDays>
+					<wombTex>Womb/Womb</wombTex>
+					<vagTex>Genitals/Vagina</vagTex>
+					<breedingSeason>FirstHalf</breedingSeason>
+					<estrusDaysBeforeOvulation>5</estrusDaysBeforeOvulation>
+				</li>
+			</comps>
+		</value>
+	</Operation>
+	
+	
+	<Operation Class="PatchOperationAdd">
+		<xpath>Defs/rjw.HediffDef_PartBase[defName="DragonVagina"]</xpath>
+		<value>
+			<comps>
+				<li Class="RJW_Menstruation.CompProperties_Menstruation">
+					<maxCumCapacity>50</maxCumCapacity>
+					<baseImplantationChanceFactor>0.5</baseImplantationChanceFactor>
+					<basefertilizationChanceFactor>0.2</basefertilizationChanceFactor>
+					<deviationFactor>0.05</deviationFactor>
+					<folicularIntervalDays>270</folicularIntervalDays>
+					<lutealIntervalDays>30</lutealIntervalDays>
+					<bleedingIntervalDays>0</bleedingIntervalDays>
+					<recoveryIntervalDays>300</recoveryIntervalDays>
+					<eggLifespanDays>30</eggLifespanDays>
+					<wombTex>Womb/Womb</wombTex>
+					<vagTex>Genitals/Vagina</vagTex>
+					<estrusDaysBeforeOvulation>0</estrusDaysBeforeOvulation>
+				</li>
+			</comps>
+		</value>
+	</Operation>
+	
+	<Operation Class="PatchOperationAdd">
+		<xpath>Defs/rjw.HediffDef_PartBase[defName="NarrowVagina"]</xpath>
+		<value>
+			<comps>
+				<li Class="RJW_Menstruation.CompProperties_Menstruation">
+					<maxCumCapacity>10</maxCumCapacity>
+					<baseImplantationChanceFactor>1.0</baseImplantationChanceFactor>
+					<basefertilizationChanceFactor>1.0</basefertilizationChanceFactor>
+					<deviationFactor>0.05</deviationFactor>
+					<folicularIntervalDays>5</folicularIntervalDays>
+					<lutealIntervalDays>16</lutealIntervalDays>
+					<bleedingIntervalDays>0</bleedingIntervalDays>
+					<recoveryIntervalDays>15</recoveryIntervalDays>
+					<eggLifespanDays>2</eggLifespanDays>
+					<wombTex>Womb/Womb</wombTex>
+					<vagTex>Genitals/Vagina</vagTex>
+					<estrusDaysBeforeOvulation>1</estrusDaysBeforeOvulation>
+				</li>
+			</comps>
+		</value>
+	</Operation>
+	
+	<Operation Class="PatchOperationAdd">
+		<xpath>Defs/rjw.HediffDef_PartBase[defName="RodentVagina"]</xpath>
+		<value>
+			<comps>
+				<li Class="RJW_Menstruation.CompProperties_InducedOvulator">
+					<maxCumCapacity>5</maxCumCapacity>
+					<baseImplantationChanceFactor>1.0</baseImplantationChanceFactor>
+					<basefertilizationChanceFactor>2.0</basefertilizationChanceFactor>
+					<deviationFactor>0.05</deviationFactor>
+					<folicularIntervalDays>6</folicularIntervalDays>
+					<lutealIntervalDays>9</lutealIntervalDays>
+					<bleedingIntervalDays>0</bleedingIntervalDays>
+					<recoveryIntervalDays>3</recoveryIntervalDays>
+					<eggLifespanDays>1</eggLifespanDays>
+					<wombTex>Womb/Womb</wombTex>
+					<vagTex>Genitals/Vagina</vagTex>
+					<estrusDaysBeforeOvulation>6</estrusDaysBeforeOvulation>
+				</li>
+			</comps>
+		</value>
+	</Operation>
+	
+	<Operation Class="PatchOperationAdd">
+		<xpath>Defs/rjw.HediffDef_PartBase[defName="SlimeVagina"]</xpath>
+		<value>
+			<comps>
+				<li Class="RJW_Menstruation.CompProperties_InducedOvulator">
+					<maxCumCapacity>5</maxCumCapacity>
+					<baseImplantationChanceFactor>2.0</baseImplantationChanceFactor>
+					<basefertilizationChanceFactor>2.0</basefertilizationChanceFactor>
+					<deviationFactor>0.05</deviationFactor>
+					<folicularIntervalDays>12</folicularIntervalDays>
+					<lutealIntervalDays>9</lutealIntervalDays>
+					<bleedingIntervalDays>0</bleedingIntervalDays>
+					<recoveryIntervalDays>3</recoveryIntervalDays>
+					<eggLifespanDays>1</eggLifespanDays>
+					<wombTex>Womb/Womb</wombTex>
+					<vagTex>Genitals/Vagina</vagTex>
+					<estrusDaysBeforeOvulation>6</estrusDaysBeforeOvulation>
+				</li>
+			</comps>
+		</value>
+	</Operation>
+	
+	<Operation Class="PatchOperationAdd">
+		<xpath>Defs/rjw.HediffDef_PartBase[defName="DemonVagina"]</xpath>
+		<value>
+			<comps>
+				<li Class="RJW_Menstruation.CompProperties_InducedOvulator">
+					<maxCumCapacity>10</maxCumCapacity>
+					<baseImplantationChanceFactor>2.0</baseImplantationChanceFactor>
+					<basefertilizationChanceFactor>2.0</basefertilizationChanceFactor>
+					<deviationFactor>0.05</deviationFactor>
+					<folicularIntervalDays>14</folicularIntervalDays>
+					<lutealIntervalDays>14</lutealIntervalDays>
+					<bleedingIntervalDays>0</bleedingIntervalDays>
+					<recoveryIntervalDays>3</recoveryIntervalDays>
+					<eggLifespanDays>1</eggLifespanDays>
+					<wombTex>Womb/Womb</wombTex>
+					<vagTex>Genitals/Vagina</vagTex>
+					<estrusDaysBeforeOvulation>6</estrusDaysBeforeOvulation>
+				</li>
+			</comps>
+		</value>
+	</Operation>
+	
+	
+</Patch>

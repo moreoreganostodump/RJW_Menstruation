@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<LanguageData>
+  <Hediff_MenstrualCramp.label>中樞性疼痛</Hediff_MenstrualCramp.label>
+  <Hediff_MenstrualCramp.description>經期中</Hediff_MenstrualCramp.description>
+  <Hediff_MenstrualCramp.stages.0.label>不快</Hediff_MenstrualCramp.stages.0.label>
+  <Hediff_MenstrualCramp.stages.1.label>惱人</Hediff_MenstrualCramp.stages.1.label>
+  <Hediff_MenstrualCramp.stages.2.label>疼痛</Hediff_MenstrualCramp.stages.2.label>
+  <Hediff_MenstrualCramp.stages.3.label>痛苦</Hediff_MenstrualCramp.stages.3.label>
+  <Hediff_Climacteric.label>更年期</Hediff_Climacteric.label>
+  <Hediff_Climacteric.description>到了更年期</Hediff_Climacteric.description>
+  <Hediff_Climacteric.stages.0.label>初期</Hediff_Climacteric.stages.0.label>
+  <Hediff_Climacteric.stages.1.label>中期</Hediff_Climacteric.stages.1.label>
+  <Hediff_Climacteric.stages.2.label>後期</Hediff_Climacteric.stages.2.label>
+  <Hediff_Climacteric.stages.3.label>更年期</Hediff_Climacteric.stages.3.label>
+  <Hediff_Menopause.label>更年期</Hediff_Menopause.label>
+  <Hediff_Menopause.description>不孕</Hediff_Menopause.description>
+
+  
+  
+
+</LanguageData>

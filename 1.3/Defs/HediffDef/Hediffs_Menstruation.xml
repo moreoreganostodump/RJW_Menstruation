@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>	
+	<HediffDef Name="Hediff_MenstrualCramp">
+		<hediffClass>HediffWithComps</hediffClass>	
+		<defName>Hediff_MenstrualCramp</defName>
+		<label>In period</label>
+		<labelNoun>in period</labelNoun>
+		<description>in period</description>
+		<defaultLabelColor>(0.70,0.00,0.00)</defaultLabelColor>	
+		<isBad>true</isBad>
+		<tendable>false</tendable>
+		<makesSickThought>false</makesSickThought>
+		<makesAlert>false</makesAlert>	
+		<maxSeverity>1</maxSeverity>
+		<initialSeverity>0.1</initialSeverity>
+		<injuryProps>
+			<canMerge>true</canMerge>
+		</injuryProps>	
+		<stages>
+			<li>
+				<label>unpleasant</label>
+				<statFactors>
+					<SexFrequency>0.50</SexFrequency>
+					<SexSatisfaction>0.95</SexSatisfaction>
+				</statFactors>
+				<painOffset>0.005</painOffset>
+			</li>
+			<li>
+				<minSeverity>0.2</minSeverity>
+				<label>annoying</label>
+				<statFactors>
+					<SexFrequency>0.40</SexFrequency>
+					<SexSatisfaction>0.95</SexSatisfaction>
+				</statFactors>
+				<painOffset>0.01</painOffset>
+			</li>
+			<li>
+				<minSeverity>0.4</minSeverity>
+				<label>aching</label>
+				<statFactors>
+					<SexFrequency>0.20</SexFrequency>
+					<SexSatisfaction>0.95</SexSatisfaction>
+				</statFactors>
+				<painOffset>0.10</painOffset>
+			</li>
+			<li>
+				<minSeverity>0.6</minSeverity>
+				<label>painful</label>
+				<statFactors>
+					<SexFrequency>0.0</SexFrequency>
+					<SexSatisfaction>0.95</SexSatisfaction>
+				</statFactors>
+				<painOffset>0.20</painOffset>
+			</li>
+		</stages>	
+		<comps>
+			<li Class="HediffCompProperties_SeverityPerDay">
+				<severityPerDay>-0.1</severityPerDay>
+			</li>
+		</comps>
+	</HediffDef>
+	
+	<HediffDef Name="Hediff_Menopause">
+		<hediffClass>HediffWithComps</hediffClass>	
+		<defName>Hediff_Menopause</defName>
+		<label>Menopause</label>
+		<labelNoun>menopause</labelNoun>
+		<description>reached menopause</description>
+		<labelNounPretty>{0} reached menopause</labelNounPretty>
+		<defaultLabelColor>(0.70,0.70,0.00)</defaultLabelColor>	
+		<isBad>false</isBad>
+		<tendable>false</tendable>
+		<makesSickThought>false</makesSickThought>
+		<makesAlert>true</makesAlert>	
+		<maxSeverity>1</maxSeverity>
+		<initialSeverity>0.1</initialSeverity>
+		<injuryProps>
+			<canMerge>true</canMerge>
+		</injuryProps>	
+		<stages>
+			<li>
+				<statFactors>
+					<SexFrequency>0.01</SexFrequency>
+					<SexSatisfaction>0.50</SexSatisfaction>
+				</statFactors>
+				<capMods>
+					<li>
+						<capacity>RJW_Fertility</capacity>
+						<postFactor>0.00</postFactor>
+					</li>
+				</capMods>
+			</li>
+		</stages>	
+		<comps>
+		</comps>
+	</HediffDef>
+	
+	<HediffDef Name="Hediff_Climacteric">
+		<hediffClass>HediffWithComps</hediffClass>	
+		<defName>Hediff_Climacteric</defName>
+		<label>Climacteric</label>
+		<labelNoun>climacteric</labelNoun>
+		<description>climacteric</description>
+		<defaultLabelColor>(0.70,0.70,0.00)</defaultLabelColor>	
+		<isBad>false</isBad>
+		<tendable>false</tendable>
+		<makesSickThought>false</makesSickThought>
+		<makesAlert>false</makesAlert>	
+		<maxSeverity>1</maxSeverity>
+		<initialSeverity>0.1</initialSeverity>
+		<injuryProps>
+			<canMerge>true</canMerge>
+		</injuryProps>	
+		<stages>
+			<li>
+				<label>early</label>
+				<statFactors>
+					<SexFrequency>0.50</SexFrequency>
+					<SexSatisfaction>0.8</SexSatisfaction>
+				</statFactors>
+				<capMods>
+					<li>
+						<capacity>RJW_Fertility</capacity>
+						<postFactor>0.50</postFactor>
+					</li>
+				</capMods>
+			</li>
+			<li>
+				<label>middle</label>
+				<minSeverity>0.2</minSeverity>
+				<statFactors>
+					<SexFrequency>0.25</SexFrequency>
+					<SexSatisfaction>0.7</SexSatisfaction>
+				</statFactors>
+				<capMods>
+					<li>
+						<capacity>RJW_Fertility</capacity>
+						<postFactor>0.25</postFactor>
+					</li>
+				</capMods>
+			</li>
+			<li>
+				<label>latter</label>
+				<minSeverity>0.4</minSeverity>
+				<statFactors>
+					<SexFrequency>0.10</SexFrequency>
+					<SexSatisfaction>0.6</SexSatisfaction>
+				</statFactors>
+				<capMods>
+					<li>
+						<capacity>RJW_Fertility</capacity>
+						<postFactor>0.10</postFactor>
+					</li>
+				</capMods>
+			</li>
+			<li>
+				<label>end</label>
+				<minSeverity>0.6</minSeverity>
+				<statFactors>
+					<SexFrequency>0.05</SexFrequency>
+					<SexSatisfaction>0.5</SexSatisfaction>
+				</statFactors>
+				<capMods>
+					<li>
+						<capacity>RJW_Fertility</capacity>
+						<postFactor>0.01</postFactor>
+					</li>
+				</capMods>
+			</li>
+		</stages>	
+		<comps>
+		</comps>
+	</HediffDef>
+	
+	
+	<HediffDef Name="Hediff_Estrus">
+		<hediffClass>HediffWithComps</hediffClass>
+		<defName>Hediff_Estrus</defName>
+		<label>Estrus</label>
+		<labelNoun>estrus</labelNoun>
+		<description>estrus</description>
+		<defaultLabelColor>(1.00,0.60,0.75)</defaultLabelColor>	
+		<isBad>false</isBad>
+		<tendable>false</tendable>
+		<makesSickThought>false</makesSickThought>
+		<makesAlert>false</makesAlert>	
+		<maxSeverity>10000</maxSeverity>
+		<initialSeverity>1.0</initialSeverity>
+		<injuryProps>
+			<canMerge>true</canMerge>
+		</injuryProps>	
+		<stages>
+			<li>
+				<statFactors>
+					<SexFrequency>5.0</SexFrequency>
+					<SexSatisfaction>1.5</SexSatisfaction>
+				</statFactors>
+			</li>
+		</stages>	
+		<comps>
+			<li Class="HediffCompProperties_SeverityPerDay">
+				<severityPerDay>-1.0</severityPerDay>
+			</li>
+		</comps>
+	</HediffDef>
+	
+	<HediffDef Name="Hediff_Estrus_Consealed">
+		<hediffClass>HediffWithComps</hediffClass>
+		<defName>Hediff_Estrus_Consealed</defName>
+		<label>Estrus(consealed)</label>
+		<labelNoun>estrus</labelNoun>
+		<description>estrus</description>
+		<defaultLabelColor>(1.00,0.60,0.75)</defaultLabelColor>	
+		<isBad>false</isBad>
+		<tendable>false</tendable>
+		<makesSickThought>false</makesSickThought>
+		<makesAlert>false</makesAlert>	
+		<maxSeverity>10000</maxSeverity>
+		<initialSeverity>1.0</initialSeverity>
+		<injuryProps>
+			<canMerge>true</canMerge>
+		</injuryProps>	
+		<stages>
+			<li>
+				<becomeVisible>false</becomeVisible>
+				<statFactors>
+					<SexFrequency>1.10</SexFrequency>
+					<SexSatisfaction>1.05</SexSatisfaction>
+				</statFactors>
+			</li>
+		</stages>	
+		<comps>
+			<li Class="HediffCompProperties_SeverityPerDay">
+				<severityPerDay>-1.0</severityPerDay>
+			</li>
+		</comps>
+	</HediffDef>
+	
+	
+	<HediffDef Name="Hediff_PainReliever">
+		<hediffClass>HediffWithComps</hediffClass>
+		<defName>Hediff_PainReliever</defName>
+		<label>Pain reliever</label>
+		<description>relieves pain.</description>
+		<defaultLabelColor>(0.75,0.75,1.0)</defaultLabelColor>	
+		<isBad>false</isBad>
+		<tendable>false</tendable>
+		<makesSickThought>false</makesSickThought>
+		<makesAlert>false</makesAlert>	
+		<maxSeverity>5</maxSeverity>
+		<initialSeverity>1.0</initialSeverity>
+		<stages>
+			<li>
+				<painOffset>-0.1</painOffset>
+			</li>
+		</stages>	
+		<comps>
+			<li Class="HediffCompProperties_SeverityPerDay">
+				<severityPerDay>-1.0</severityPerDay>
+			</li>
+		</comps>
+	</HediffDef>
+</Defs>

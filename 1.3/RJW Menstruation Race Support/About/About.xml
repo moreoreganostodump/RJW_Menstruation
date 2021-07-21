@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ModMetaData>
+	<name>RJW Menstruation Cycle Race Support</name>
+	<author>a</author>
+	<supportedVersions>
+		<li>1.2</li>
+	</supportedVersions>
+	<modDependencies>
+		<li>
+			<packageId>rjw.menstruation</packageId>
+			<displayName>RJW Menstruation</displayName>
+			<downloadUrl>https://github.com/moreoreganostodump/RJW_Menstruation</downloadUrl>
+		</li>
+		<li>
+			<packageId>Abraxas.RJW.RaceSupport</packageId>
+			<displayName>RJW - RaceSupport</displayName>
+			<downloadUrl>https://gitgud.io/Abraxas/rjw-race-support</downloadUrl>
+		</li>
+	</modDependencies>
+	<loadAfter>
+		<li>Abraxas.RJW.RaceSupport</li>
+		<li>rjw.menstruation</li>
+	</loadAfter>
+	<packageId>rjw.menstruation.racesupport</packageId>
+	<description>good good</description>
+</ModMetaData>

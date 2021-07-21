@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <Mod_Title>RJW Menstruation Cycle</Mod_Title>
+  
+  <Menstrual_Blood>생리혈</Menstrual_Blood>
+  <Info_noCum>없음</Info_noCum>
+  <Stage_Follicular>난포기</Stage_Follicular>
+  <Stage_Ovulatory>배란</Stage_Ovulatory> 
+  <Stage_Luteal>황체기</Stage_Luteal>
+  <Stage_Bleeding>생리중</Stage_Bleeding>
+  <Stage_Fertilized>황체기</Stage_Fertilized>
+  <Stage_Pregnant>임신</Stage_Pregnant>
+  <Stage_Recover>회복기</Stage_Recover>
+  <Stage_None>없음</Stage_None>
+  <Stage_Climacteric>갱년기</Stage_Climacteric>
+  <Stage_Anestrus>휴지기</Stage_Anestrus>
+  <Button_HealthTab>상태창</Button_HealthTab>
+  <Button_MilkTooltip>모유 짜기</Button_MilkTooltip>
+  <Dialog_WombInfo01>상태</Dialog_WombInfo01>
+  <Dialog_WombInfo02>태아</Dialog_WombInfo02>
+  <Dialog_WombInfo03>부</Dialog_WombInfo03>
+  <Dialog_WombInfo04>정액목록</Dialog_WombInfo04>
+  <Dialog_WombInfo05>수정됨</Dialog_WombInfo05>
+  <Dialog_WombInfo06>수정중</Dialog_WombInfo06>
+  <Dialog_WombInfo07>배란</Dialog_WombInfo07>
+  <Dialog_WombInfo08></Dialog_WombInfo08>
+  <Dialog_WombInfo09></Dialog_WombInfo09>
+  
+  <Option1_Label_1>자궁아이콘 활성화</Option1_Label_1>
+  <Option1_Label_2>건강탭에 버튼 추가</Option1_Label_2>
+  <Option2_Label>동물주기 활성화</Option2_Label>
+  <Option2_Desc>동물의 월경주기를 시뮬레이션합니다.&#10;변경한후에 세이브로드가 필요합니다.&#10;not recommended</Option2_Desc>
+  <Option3_Label>착상확률</Option3_Label>
+  <Option3_Desc>수정란의 착상확률을 설정합니다.</Option3_Desc>
+  <Option4_Label>수정확률</Option4_Label>
+  <Option4_Desc>1시간마다 정자가 난자를 수정시킬확률을 설정합니다.</Option4_Desc>
+  <Option5_Label>시간당 정액배출비율</Option5_Label>
+  <Option5_Desc>이 비율만큼 매 시간마다 정액이 배출됩니다.</Option5_Desc>
+  <Option6_Label>시간당 정자 사망비율</Option6_Label>
+  <Option6_Desc>이 비율만큼 매 시간마다 정자가 사망해 정액이 생식능력을 잃습니다.&#10;정자 예상수명: 정액이 대부분의 생식능력을 잃는 시간입니다.</Option6_Desc>
+  <Option7_Label>주기 가속</Option7_Label>
+  <Option7_Desc>월경주기를 더 빠르게합니다.</Option7_Desc>
+  <Option8_Label>Debug</Option8_Label>
+  <Option8_Desc>디버그정보를 보여줍니다.</Option8_Desc>
+  <Option9_Label>자궁 그림</Option9_Label>
+  <Option9_Desc>상태창에 자궁그림을 표시합니다.</Option9_Desc>
+  <Option10_Label>가슴, 보지 그림</Option10_Label>
+  <Option10_Desc>상태창에 가슴, 보지와 항문그림을 표시합니다.</Option10_Desc>
+  <Option11_Label>태아 정보</Option11_Label>
+  <Option11_Desc_1>태아에 대한 모든 정보를 표시합니다.</Option11_Desc_1>
+  <Option11_Desc_2>임신을 발견한 이후에 태아에 대한 모든 정보를 표시합니다.</Option11_Desc_2>
+  <Option11_Desc_3>태아에 대한 정보를 표시하지 않지만, 임신한 이후 태아이미지를 표시합니다.</Option11_Desc_3>
+  <Option11_Desc_4>태아에 대한 어떠한 정보도 표시하지 않습니다.</Option11_Desc_4>
+  <Option12_Label>폐경기 활성화</Option12_Label>
+  <Option12_Desc>시간이 지남에따라 불임상태로 만드는 폐경기를 활성화합니다.&#10;수명이 긴 종족을 사용할때 문제가 있으면 이 옵션을 끄세요.&#10;변경한후에 세이브로드가 필요합니다.</Option12_Desc>
+  <Option13_Label>다중임신</Option13_Label>
+  <Option13_Desc>RJW의 기본임신 대신 다중임신을 사용합니다.</Option13_Desc>
+  <Option14_Label>이란성 쌍둥이 활성화</Option14_Label>
+  <Option14_Desc>다수의 난자가 임신으로 이어지게 합니다.</Option14_Desc>
+  <Option15_Label>일란성 쌍둥이 활성화</Option15_Label>
+  <Option15_Desc>하나의 난자가 다수의 태아로 나뉘게 합니다.</Option15_Desc>
+  <Option16_Label>일란성 쌍둥이 확률</Option16_Label>
+  <Option16_Desc>일란성 쌍둥이가 발생할 확률을 설정합니다.</Option16_Desc>
+  <Option17_Label>최대 일란성 쌍둥이 수</Option17_Label>
+  <Option17_Desc>일란성 쌍둥이의 수를 제한합니다.</Option17_Desc>
+  <Option18_Label>난자 오버레이</Option18_Label>
+  <Option18_Desc>자궁그림 위에 난자그림를 표시합니다.</Option18_Desc>
+  <Option19_Label_1>생리양</Option19_Label_1>
+  <Option19_Label_2>예상되는 총 생리양</Option19_Label_2>
+  <Option19_Desc>생리혈의 양을 설정합니다.&#10;실제 생리양은 보지에따라 다를수 있습니다.&#10;일반적인 인간 여성의 생리량은 약 20~80ml입니다.</Option19_Desc>
+  <Option20_Label_1>정착민</Option20_Label_1>
+  <Option20_Label_2>죄수</Option20_Label_2>
+  <Option20_Label_3>동맹관계</Option20_Label_3>
+  <Option20_Label_4>중립</Option20_Label_4>
+  <Option20_Label_5>적대관계</Option20_Label_5>
+  <Option21_Label>표시 대상</Option21_Label>
+  <Option21_Desc>아이콘과 버튼을 표시할 대상입니다.</Option21_Desc>
+  <Option22_Label>잡종 정의 대체</Option22_Label>
+  <Option22_Desc>RJW와 RaceSupport의 잡종정의를 대체합니다.&#10;우선순위는 누구의 잡종 정의를 우선으로 사용할지 정합니다. 변경하지 않는것을 추천합니다.</Option22_Desc>
+  <Option23_Label>우선순위</Option23_Label>
+  <Option23_Label_1>모</Option23_Label_1>
+  <Option23_Label_2>부</Option23_Label_2>
+  <Option24_Label>임신후 유두 변화량</Option24_Label>
+  <Option24_Desc>임신후에 유두가 얼마나 어두워지고 커지는지 설정합니다.</Option24_Desc>
+  <Option25_Label>유두 영구변화량</Option25_Label>
+  <Option25_Desc>매번 임신할때마다 유두가 얼마나 영구적으로 어두워지고 커지는지 설정합니다.</Option25_Desc>
+  <Option26_Label>최대 변화량</Option26_Label>
+  <Option26_Desc>유두는 이 값 이상으로 변하지 않습니다.</Option26_Desc>
+  <Option27_Label>유두 변화 속도</Option27_Label>
+  <Option27_Desc>유두가 얼마나 빨리 변하는지 설정합니다.</Option27_Desc>
+  <Option28_Label>잡종 정의 변경하기</Option28_Label>
+  <Option28_Tooltip>사용자 지정 잡종 편집기를 엽니다.&#10;이 설정은 XML파일의 잡종 정의를 대체합니다.</Option28_Tooltip>
+  <Option29_Label>아이콘 축소 허용</Option29_Label>
+  <Option29_Desc>아이콘 축소를 허용합니다.</Option29_Desc>
+  <EstimatedCumLifespan>정자 예상수명</EstimatedCumLifespan>
+  <FertilityDesc>수정란이 임신으로 진행될 확률입니다.&#10;흰색 오버레이는 정자가 난자를 수정시킬 확률을 표시하는 것입니다.</FertilityDesc>
+  
+  <FloatMenu_CleanSelf>질세척</FloatMenu_CleanSelf>
+  
+  <CustomHybrid_List_Title>사용자 지정 잡종 편집기</CustomHybrid_List_Title>
+  <CustomHybrid_Title>{0}의 잡종설정</CustomHybrid_Title>
+  <CustomHybrid_Tooltip>{0}이(가) {1}와(과) 교미했을 때, {2}이(가) {3}의 확률로 태어납니다.&#10;만약 두 종족이 서로에 대한 잡종 정의가 있을경우 아버지 쪽의 정의가 우선적으로 사용됩니다.</CustomHybrid_Tooltip>
+  
+</LanguageData>
