@@ -165,10 +165,7 @@ namespace RJW_Menstruation
 
         public void MakeThinner(int speed)
         {
-            for (int i=0; i<speed; i++)
-            {
-                cumthickness = Mathf.Lerp(cumthickness, decayresist, 0.4f);
-            }
+            cumthickness = cumthickness.LerpMultiple(decayresist, 0.3f, speed);
         }
 
         public void MergeWithCum(float volumein, float fertility,  ThingDef updatefilthDef = null)

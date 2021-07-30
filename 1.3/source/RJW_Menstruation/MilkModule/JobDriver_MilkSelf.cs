@@ -20,7 +20,7 @@ namespace MilkModule
         {
             get
             {
-                return comp.Fullness;
+                return comp?.Fullness ?? 0f;
             }
         }
 
@@ -32,7 +32,7 @@ namespace MilkModule
 
         protected override void Gathered()
         {
-            comp.Gathered(pawn);
+            comp?.Gathered(pawn);
         }
 
         protected override void PostTickAction()
@@ -47,7 +47,7 @@ namespace MilkModule
 
         public static HumanCompHasGatherableBodyResource GetMilkComp(Pawn pawn)
         {
-            HumanCompHasGatherableBodyResource result;
+            HumanCompHasGatherableBodyResource result = null;
             if (pawn.health.hediffSet.HasHediff(VariousDefOf.Hediff_Heavy_Lactating_Permanent))
             {
                 result = pawn.TryGetComp<CompHyperMilkableHuman>();

@@ -1204,6 +1204,7 @@ namespace RJW_Menstruation
             }
             else
             {
+                eggs.Clear();
                 if (Props.bleedingIntervalDays == 0)
                 {
                     follicularIntervalhours = PeriodRandomizer(follicularIntervalhours, Props.deviationFactor);
@@ -1442,6 +1443,7 @@ namespace RJW_Menstruation
                         }
                         else
                         {
+                            eggs.Clear();
                             if (Props.bleedingIntervalDays == 0)
                             {
                                 follicularIntervalhours = PeriodRandomizer(follicularIntervalhours, Props.deviationFactor * 6);

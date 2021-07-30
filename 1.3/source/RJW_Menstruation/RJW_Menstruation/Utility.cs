@@ -436,7 +436,9 @@ namespace RJW_Menstruation
             if (res != null) return res;
             else
             {
-                res = pawn.relations?.GetFirstDirectRelationPawn(VariousDefOf.Relation_birthgiver, x => !x.Equals(mother)) ?? null;
+                
+                res = pawn.relations?.GetFirstDirectRelationPawn(PawnRelationDefOf.Parent, x => x != mother) ?? null;
+                if (res == null) res = pawn.relations?.GetFirstDirectRelationPawn(VariousDefOf.Relation_birthgiver, x => x != mother) ?? null;
                 return res;
             }
         }
@@ -454,6 +456,12 @@ namespace RJW_Menstruation
 
         }
 
+        public static float LerpMultiple(this float a, float b, float t, int num)
+        {
+            float tmult = Mathf.Pow(1 - t, num);
+            return tmult * a + (1 - tmult) * b;
+        }
+        
         public static float VariationRange(this float num, float variant)
         {
             return num * Rand.Range(1.0f - variant, 1.0f + variant);

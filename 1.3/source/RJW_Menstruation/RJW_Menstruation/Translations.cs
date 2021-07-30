@@ -100,7 +100,7 @@ namespace RJW_Menstruation
         public static readonly string Option29_Desc  = "Option29_Desc".Translate();
 
         public static readonly string EstimatedCumLifespan = "EstimatedCumLifespan".Translate();
-        public static readonly string FertilityDesc = "FertilityDesc".Translate();
+        public static string FertilityDesc(string value) => "FertilityDesc".Translate(value);
 
         public static readonly string FloatMenu_CleanSelf = "FloatMenu_CleanSelf".Translate();
 

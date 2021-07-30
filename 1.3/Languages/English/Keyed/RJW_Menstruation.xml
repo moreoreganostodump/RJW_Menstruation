@@ -39,7 +39,7 @@
   <Option6_Label>cum fertility decay ratio per hour</Option6_Label>
   <Option6_Desc>cum will lose fertility about this ratio&#10;this value affects on the fertility chance indirectly&#10;estimated sperm lifespan: cum lose most of fertility at this time.</Option6_Desc>
   <Option7_Label>cycle accelerate</Option7_Label>
-  <Option7_Desc>accelerate menstrution cycle</Option7_Desc>
+  <Option7_Desc>accelerate menstrution cycle&#10;This can cause early menopause and infertility.&#10;Setting this lower than x12 is recommended.&#10;Rimworld's timescale: x6(default)&#10;</Option7_Desc>
   <Option8_Label>Debug</Option8_Label>
   <Option8_Desc>show debug informations.</Option8_Desc>
   <Option9_Label>womb status</Option9_Label>
@@ -54,7 +54,7 @@
   <Option12_Label>enable menopause</Option12_Label>
   <Option12_Desc>enable menopause effect that makes pawn infertile in time progress&#10;if you have problems with long life races, turn off this option.&#10;this option will apply after save loaded</Option12_Desc>
   <Option13_Label>use multiple pregnancy</Option13_Label>
-  <Option13_Desc>use multiple pregnancy instead RJW's default pregnancy&#10;disable this option if you are in trouble with impregnation</Option13_Desc>
+  <Option13_Desc>use multiple pregnancy instead RJW's default pregnancy&#10;disable this option if you are in trouble with impregnation&#10;RJW pregnancy should be turned on.</Option13_Desc>
   <Option14_Label>enable hetero ovular twins</Option14_Label>
   <Option14_Desc>enable multiple eggs can get pregnant</Option14_Desc>
   <Option15_Label>enable enzygotic twins</Option15_Label>
@@ -93,7 +93,7 @@
   <Option29_Label>Allow shrink icon</Option29_Label>
   <Option29_Desc>Let icon become smaller If needed.</Option29_Desc>
   <EstimatedCumLifespan>estimated sperm lifespan</EstimatedCumLifespan>
-  <FertilityDesc>The chance of pregnancy of fertilized egg.&#10;The white overlay is indicates fertilization chance of sperms in womb.</FertilityDesc>
+  <FertilityDesc>Chance of fertilization within an hour: {0}%&#10;The chance of pregnancy of fertilized egg.&#10;The white overlay is indicates fertilization chance of sperms in womb.</FertilityDesc>
 
   <FloatMenu_CleanSelf>Vaginal washing</FloatMenu_CleanSelf>
   

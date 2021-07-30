@@ -89,6 +89,7 @@ namespace RJW_Menstruation
             string res = Translations.Dialog_WombInfo03 + ": ";
             if (!babies.NullOrEmpty())
             {
+
                 var babiesdistinct = babies.Distinct(new FatherComparer(pawn));
                 int iteration = 0;
                 foreach (Pawn baby in babiesdistinct)
@@ -158,7 +159,7 @@ namespace RJW_Menstruation
                 if (mother.Faction != baby.Faction)
                     baby.SetFaction(mother.Faction);
             }
-
+            
 
             foreach (Pawn sibling in siblings)
             {
