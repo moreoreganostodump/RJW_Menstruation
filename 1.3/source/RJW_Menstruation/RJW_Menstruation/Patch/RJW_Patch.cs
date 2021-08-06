@@ -1,7 +1,7 @@
 ﻿using HarmonyLib;
 using rjw;
 using Verse;
-
+using UnityEngine;
 
 namespace RJW_Menstruation
 {
@@ -107,9 +107,44 @@ namespace RJW_Menstruation
         }
     }
 
+    [HarmonyPatch(typeof(JobDriver_Sex), "Orgasm")]
+    public static class Orgasm_Patch
+    {
+        public static void Postfix(JobDriver_Sex __instance, int ___sex_ticks, int ___orgasmstick, Pawn ___pawn, xxx.rjwSextype ___sexType, bool ___usedCondom)
+        {
+            if (___sex_ticks - 1 > ___orgasmstick) //~3s at speed 1
+            {
+                return;
+            }
+
+            if (___pawn.jobs?.curDriver is JobDriver_SexBaseInitiator)
+            {
+                if (___sexType == xxx.rjwSextype.Vaginal && !___usedCondom)
+                {
+                    if (!___pawn.Dead && !__instance.Partner.Dead)
+                    {
+                        PregnancyHelper.impregnate(___pawn, __instance.Partner, ___sexType);
+                    }
+                }
+            }
+        }
+    }
 
 
-
+    [HarmonyPatch(typeof(Hediff_BasePregnancy), "PostBirth")]
+    public static class RJW_Patch_PostBirth
+    {
+        public static void Postfix(Pawn mother, Pawn father, Pawn baby)
+        {
+            if (Configurations.EnableBirthVaginaMorph)
+            {
+                Hediff vagina = mother.health.hediffSet.hediffs.FirstOrFallback(x => x.def.defName.ToLower().Contains("vagina"));
+                float morph = Mathf.Max(baby.BodySize - Mathf.Pow(vagina.Severity * mother.BodySize,2), 0f);
+                vagina.Severity += morph * Configurations.VaginaMorphPower;
+            }
+            
+        }
+    }
 
 
 

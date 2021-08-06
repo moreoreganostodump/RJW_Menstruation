@@ -92,7 +92,14 @@
   <Option28_Tooltip>사용자 지정 잡종 편집기를 엽니다.&#10;이 설정은 XML파일의 잡종 정의를 대체합니다.</Option28_Tooltip>
   <Option29_Label>아이콘 축소 허용</Option29_Label>
   <Option29_Desc>아이콘 축소를 허용합니다.</Option29_Desc>
+  <Option30_Label>난자 수명 배수</Option30_Label>
+  <Option30_Desc>난자 수명을 늘립니다.&#10;이 설정에 관계없이 황체기가 끝나면 난자는 죽습니다.</Option30_Desc>
+  <Option31_Label>출산 이후 보지 변화 활성화</Option31_Label>
+  <Option31_Desc>출산 이후 보지가 영구적으로 늘어나게 합니다.&#10;만약 이 설정을 다루고있는 다른 모드가 있다면, 이 설정을 끄세요.</Option31_Desc>
+  <Option32_Label>변화 강도</Option32_Label>
+  <Option32_Desc>변화 강도를 설정합니다.</Option32_Desc>
   <EstimatedCumLifespan>정자 예상수명</EstimatedCumLifespan>
+  <EstimatedEggLifespan>난자 예상수명</EstimatedEggLifespan>
   <FertilityDesc>한시간 안에 수정될 확률: {0}%&#10;수정란이 임신으로 진행될 확률입니다.&#10;흰색 오버레이는 정자가 난자를 수정시킬 확률을 표시하는 것입니다.</FertilityDesc>
   
   <FloatMenu_CleanSelf>질세척</FloatMenu_CleanSelf>

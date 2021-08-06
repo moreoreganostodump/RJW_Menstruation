@@ -834,10 +834,21 @@ namespace RJW_Menstruation
                     {
                         avglittersize = 1;
                     }
-                    
-                    ovarypower = (int)(((Props.ovaryPower * Utility.RandGaussianLike(0.70f, 1.30f) * parent.pawn.def.race.lifeExpectancy / ThingDefOf.Human.race.lifeExpectancy)
-                        - (Math.Max(0, ageYear - RJWSettings.sex_minimum_age * parent.pawn.def.race.lifeExpectancy / ThingDefOf.Human.race.lifeExpectancy))
-                        * (60 / (Props.folicularIntervalDays + Props.lutealIntervalDays) * Configurations.CycleAcceleration)) * avglittersize);
+
+                    //Old one. Sex minimum age based.
+                    //ovarypower = (int)(((Props.ovaryPower * Utility.RandGaussianLike(0.70f, 1.30f) * parent.pawn.def.race.lifeExpectancy / ThingDefOf.Human.race.lifeExpectancy)
+                    //    - (Math.Max(0, ageYear - RJWSettings.sex_minimum_age * parent.pawn.def.race.lifeExpectancy / ThingDefOf.Human.race.lifeExpectancy))
+                    //    * (60 / (Props.folicularIntervalDays + Props.lutealIntervalDays) * Configurations.CycleAcceleration)) * avglittersize);
+
+                    //New one. 
+                    float fertendage, lifenormalized;
+                    if (parent.pawn.IsAnimal()) fertendage = RJWPregnancySettings.fertility_endage_female_animal * 100f;
+                    else fertendage = RJWPregnancySettings.fertility_endage_female_humanlike * 80f;
+                    lifenormalized = parent.pawn.def.race.lifeExpectancy / ThingDefOf.Human.race.lifeExpectancy;
+                    fertendage *= lifenormalized;
+                    ovarypower = (int)((fertendage - parent.pawn.ageTracker.AgeBiologicalYearsFloat) * (60f / (Props.folicularIntervalDays + Props.lutealIntervalDays) * Configurations.CycleAcceleration) * avglittersize);
+                    ovarypower = (int)Mathf.Max(0, Mathf.Min(Props.ovaryPower * Utility.RandGaussianLike(0.70f,1.30f) * lifenormalized,ovarypower));
+
                     if (ovarypower < 1)
                     {
                         Hediff hediff = HediffMaker.MakeHediff(VariousDefOf.Hediff_Menopause, parent.pawn);
@@ -1626,7 +1637,7 @@ namespace RJW_Menstruation
             public Egg()
             {
                 fertilized = false;
-                lifespanhrs = 96;
+                lifespanhrs = (int)(96 * Configurations.EggLifespanMultiplier);
                 fertilizer = null;
                 position = 0;
             }
@@ -1634,7 +1645,7 @@ namespace RJW_Menstruation
             public Egg(int lifespanhrs)
             {
                 fertilized = false;
-                this.lifespanhrs = lifespanhrs;
+                this.lifespanhrs = (int)(lifespanhrs * Configurations.EggLifespanMultiplier);
                 fertilizer = null;
                 position = 0;
             }

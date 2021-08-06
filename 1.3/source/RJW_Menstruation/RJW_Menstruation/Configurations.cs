@@ -24,6 +24,8 @@ namespace RJW_Menstruation
         public const float NipplePermanentTransitionVarianceDefault = 0.02f;
         public const float NippleMaximumTransitionDefault = 0.4f;
         public const float NippleTransitionSpeedDefault = 0.035f;
+        public const float EggLifespanMultiplierDefault = 1.0f;
+        public const float VaginaMorphPowerDefault = 0.2f;
 
         public static float ImplantationChance = ImplantationChanceDefault;
         public static int ImplantationChanceAdjust = ImplantationChanceAdjustDefault;
@@ -54,6 +56,9 @@ namespace RJW_Menstruation
         public static bool UseHybridExtention = true;
         public static bool MotherFirst = false;
         public static bool AllowShrinkIcon = false;
+        public static float EggLifespanMultiplier = EggLifespanMultiplierDefault;
+        public static bool EnableBirthVaginaMorph = false;
+        public static float VaginaMorphPower = VaginaMorphPowerDefault;
 
         public static float NippleTransitionVariance = NippleTransitionVarianceDefault;
         public static float NipplePermanentTransitionVariance = NipplePermanentTransitionVarianceDefault;
@@ -67,6 +72,29 @@ namespace RJW_Menstruation
             }
         }
         
+        public static void SettoDefault()
+        {
+            ImplantationChanceAdjust = ImplantationChanceAdjustDefault;
+            FertilizeChanceAdjust = FertilizeChanceAdjustDefault;
+            CumDecayRatioAdjust = CumDecayRatioAdjustDefault;
+            CumFertilityDecayRatioAdjust = CumFertilityDecayRatioAdjustDefault;
+            EnableWombIcon = true;
+            EnableAnimalCycle = false;
+            CycleAcceleration = CycleAccelerationDefault;
+            EnzygoticTwinsChanceAdjust = EnzygoticTwinsChanceAdjustDefault;
+            EnableEnzygoticTwins = true;
+            EnableHeteroOvularTwins = true;
+            UseMultiplePregnancy = true;
+            MaxEnzygoticTwins = MaxEnzygoticTwinsDefault;
+            BleedingAmount = BleedingAmountDefault;
+            MotherFirst = false;
+            NippleTransitionVariance = NippleTransitionVarianceDefault;
+            NipplePermanentTransitionVariance = NipplePermanentTransitionVarianceDefault;
+            NippleMaximumTransition = NippleMaximumTransitionDefault;
+            NippleTransitionSpeed = NippleTransitionSpeedDefault;
+            EggLifespanMultiplier = EggLifespanMultiplierDefault;
+            VaginaMorphPower = VaginaMorphPowerDefault;
+        }
 
 
         public static List<HybridInformations> HybridOverride = new List<HybridInformations>();
@@ -173,6 +201,9 @@ namespace RJW_Menstruation
             Scribe_Values.Look(ref NippleMaximumTransition, "NippleMaximumTransition", NippleMaximumTransition, true);
             Scribe_Values.Look(ref NippleTransitionSpeed, "NippleTransitionSpeed", NippleTransitionSpeed, true);
             Scribe_Values.Look(ref AllowShrinkIcon, "AllowShrinkIcon", AllowShrinkIcon, true);
+            Scribe_Values.Look(ref EggLifespanMultiplier, "EggLifespanMultiplier", EggLifespanMultiplier, true);
+            Scribe_Values.Look(ref EnableBirthVaginaMorph, "EnableBirthVaginaMorph", EnableBirthVaginaMorph, true);
+            Scribe_Values.Look(ref VaginaMorphPower, "VaginaMorphPower", VaginaMorphPower, true);
             Scribe_Collections.Look(ref HybridOverride, saveDestroyedThings: true, label: "HybridOverride", lookMode: LookMode.Deep, ctorArgs: new object[0]);
             base.ExposeData();
         }
@@ -226,8 +257,8 @@ namespace RJW_Menstruation
         public override void DoSettingsWindowContents(Rect inRect)
         {
             Rect outRect = new Rect(0f, 30f, inRect.width, inRect.height - 30f);
-            Rect mainRect = new Rect(0f, 0f, inRect.width - 30f, inRect.height + 480f);
-    
+            Rect mainRect = new Rect(0f, 0f, inRect.width - 30f, inRect.height + 596f);
+            int Adjust;
             Listing_Standard listmain = new Listing_Standard();
             listmain.maxOneColumn = true;
             Widgets.BeginScrollView(outRect, ref scroll, mainRect);
@@ -297,7 +328,7 @@ namespace RJW_Menstruation
                     Configurations.ShowFlag ^= Configurations.PawnFlags.Hostile;
                 }
 
-                int Adjust = (int)(Configurations.NippleTransitionVariance * 1000);
+                Adjust = (int)(Configurations.NippleTransitionVariance * 1000);
                 wombsection.Label(Translations.Option24_Label + " " + Configurations.NippleTransitionVariance* 100 + " / 100", -1,Translations.Option24_Desc);
                 Adjust = (int)wombsection.Slider(Adjust,0,1000);
                 Configurations.NippleTransitionVariance = (float)Adjust / 1000;
@@ -335,6 +366,14 @@ namespace RJW_Menstruation
             listmain.Label(Translations.Option5_Label + " " + Configurations.CumDecayRatio * 100 + "%", -1, Translations.Option5_Desc);
             Configurations.CumDecayRatioAdjust = (int)listmain.Slider(Configurations.CumDecayRatioAdjust, 0, 1000);
             Configurations.CumDecayRatio = (float)Configurations.CumDecayRatioAdjust / 1000;
+
+
+            Adjust = (int)(Configurations.EggLifespanMultiplier * 20);
+            float lifespan = (24f / Configurations.CycleAcceleration * Configurations.EggLifespanMultiplier);
+            listmain.LabelDouble(Translations.Option30_Label + " x" + Configurations.EggLifespanMultiplier, Translations.EstimatedEggLifespan + String.Format(": {0:0}h {1:0}h {2:0}h", (int)lifespan, (int)(lifespan * 2), (int)(lifespan * 3)), Translations.Option30_Desc);
+            Adjust = (int)listmain.Slider(Adjust, 20, 1000);
+            Configurations.EggLifespanMultiplier = (float)Adjust / 20;
+
 
             int semenlifespan = (int)(-5 / ((float)Math.Log10((1 - Configurations.CumFertilityDecayRatio)*10) - 1)) + 1;
             string estimatedlifespan;
@@ -388,36 +427,45 @@ namespace RJW_Menstruation
                 listmain.EndSection(twinsection);
             }
 
+            listmain.CheckboxLabeled(Translations.Option31_Label, ref Configurations.EnableBirthVaginaMorph, Translations.Option31_Desc);
+            if (Configurations.EnableBirthVaginaMorph)
+            {
+                float sectionheight = 48f;
+                Listing_Standard vmsection = listmain.BeginSection(sectionheight);
+
+                LabelwithTextfield(vmsection.GetRect(24f), Translations.Option32_Label, Translations.Option32_Desc, ref Configurations.VaginaMorphPower, 0, 100f);
+                Adjust = (int)(Configurations.VaginaMorphPower * 1000);
+                Adjust = (int)vmsection.Slider(Adjust, 0, 1000);
+                Configurations.VaginaMorphPower = Adjust / 1000f;
+
+
+                listmain.EndSection(vmsection);
+            }
+
 
             Widgets.EndScrollView();
 
             listmain.CheckboxLabeled(Translations.Option8_Label, ref Configurations.Debug, Translations.Option8_Desc);
             if (listmain.ButtonText("reset to default"))
             {
-                Configurations.ImplantationChanceAdjust = Configurations.ImplantationChanceAdjustDefault;
-                Configurations.FertilizeChanceAdjust = Configurations.FertilizeChanceAdjustDefault;
-                Configurations.CumDecayRatioAdjust = Configurations.CumDecayRatioAdjustDefault;
-                Configurations.CumFertilityDecayRatioAdjust = Configurations.CumFertilityDecayRatioAdjustDefault;
-                Configurations.EnableWombIcon = true;
-                Configurations.EnableAnimalCycle = false;
-                Configurations.CycleAcceleration = Configurations.CycleAccelerationDefault;
-                Configurations.EnzygoticTwinsChanceAdjust = Configurations.EnzygoticTwinsChanceAdjustDefault;
-                Configurations.EnableEnzygoticTwins = true;
-                Configurations.EnableHeteroOvularTwins = true;
-                Configurations.UseMultiplePregnancy = true;
-                Configurations.MaxEnzygoticTwins = Configurations.MaxEnzygoticTwinsDefault;
-                Configurations.BleedingAmount = Configurations.BleedingAmountDefault;
-                Configurations.MotherFirst = false;
-                Configurations.NippleTransitionVariance = Configurations.NippleTransitionVarianceDefault;
-                Configurations.NipplePermanentTransitionVariance = Configurations.NipplePermanentTransitionVarianceDefault;
-                Configurations.NippleMaximumTransition = Configurations.NippleMaximumTransitionDefault;
-                Configurations.NippleTransitionSpeed = Configurations.NippleTransitionSpeedDefault;
+                Configurations.SettoDefault();
 
             }
 
             listmain.End();
 
 
+        }
+
+
+        public void LabelwithTextfield(Rect rect, string label, string tooltip, ref float value, float min, float max)
+        {
+            Rect textfieldRect = new Rect(rect.xMax - 100f, rect.y, 100f, rect.height);
+            string valuestr = value.ToString();
+            Widgets.Label(rect, label);
+            Widgets.TextFieldNumeric(textfieldRect, ref value, ref valuestr, min, max);
+            Widgets.DrawHighlightIfMouseover(rect);
+            TooltipHandler.TipRegion(rect, tooltip);
         }
 
 

@@ -343,7 +343,7 @@ namespace RJW_Menstruation
             GUI.Box(rect, "", boxstyle);
 
             pawn.DrawBreastIcon(BreastIconRect);
-            
+
 
             GUI.color = Color.white;
             GUI.Label(BreastLabelRect, pawn.GetBreastLabel(), fontstylecenter);

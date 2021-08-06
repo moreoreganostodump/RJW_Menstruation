@@ -237,7 +237,20 @@ namespace RJW_Menstruation
                 HediffComp_Breast comp = hediff.TryGetComp<HediffComp_Breast>();
                 string icon;
                 if (comp != null) icon = comp.Props.BreastTex ?? "Breasts/Breast_Breast";
-                else icon = "Breasts/Breast_Breast";
+                else
+                {
+                    breast = ContentFinder<Texture2D>.Get("Breasts/Breast_Breast00", false);
+                    nipple = ContentFinder<Texture2D>.Get("Breasts/Breast_Breast00_Nipple00", false);
+                    areola = ContentFinder<Texture2D>.Get("Breasts/Breast_Breast00_Areola00", false);
+
+                    GUI.color = pawn.story.SkinColor;
+                    GUI.DrawTexture(rect, breast, ScaleMode.ScaleToFit);
+                    GUI.color = Color.white;
+                    GUI.DrawTexture(rect, areola, ScaleMode.ScaleToFit);
+                    GUI.DrawTexture(rect, nipple, ScaleMode.ScaleToFit);
+                    return;
+                }
+
                 if (hediff.Severity < 0.20f) icon += "_Breast00";
                 else if (hediff.Severity < 0.40f) icon += "_Breast01";
                 else if (hediff.Severity < 0.60f) icon += "_Breast02";
@@ -264,6 +277,7 @@ namespace RJW_Menstruation
 
 
                 if (Configurations.Debug) TooltipHandler.TipRegion(rect, comp.DebugInfo());
+
             }
             else
             {
@@ -277,6 +291,8 @@ namespace RJW_Menstruation
                 GUI.DrawTexture(rect, areola, ScaleMode.ScaleToFit);
                 GUI.DrawTexture(rect, nipple, ScaleMode.ScaleToFit);
             }
+
+
         }
 
         public static int GetNippleIndex(float nipplesize)

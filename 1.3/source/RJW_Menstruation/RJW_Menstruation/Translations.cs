@@ -98,8 +98,15 @@ namespace RJW_Menstruation
         public static readonly string Option28_Tooltip = "Option28_Tooltip".Translate();
         public static readonly string Option29_Label = "Option29_Label".Translate();
         public static readonly string Option29_Desc  = "Option29_Desc".Translate();
+        public static readonly string Option30_Label = "Option30_Label".Translate();
+        public static readonly string Option30_Desc  = "Option30_Desc".Translate();
+        public static readonly string Option31_Label = "Option31_Label".Translate();
+        public static readonly string Option31_Desc  = "Option31_Desc".Translate();
+        public static readonly string Option32_Label = "Option32_Label".Translate();
+        public static readonly string Option32_Desc  = "Option32_Desc".Translate();
 
         public static readonly string EstimatedCumLifespan = "EstimatedCumLifespan".Translate();
+        public static readonly string EstimatedEggLifespan = "EstimatedEggLifespan".Translate();
         public static string FertilityDesc(string value) => "FertilityDesc".Translate(value);
 
         public static readonly string FloatMenu_CleanSelf = "FloatMenu_CleanSelf".Translate();

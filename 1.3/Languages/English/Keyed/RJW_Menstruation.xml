@@ -92,7 +92,14 @@
   <Option28_Tooltip>Open custom hybrid editor.&#10;This will overrides hybrid definitions of XML files.</Option28_Tooltip>
   <Option29_Label>Allow shrink icon</Option29_Label>
   <Option29_Desc>Let icon become smaller If needed.</Option29_Desc>
-  <EstimatedCumLifespan>estimated sperm lifespan</EstimatedCumLifespan>
+  <Option30_Label>Egg lifespan multiplier</Option30_Label>
+  <Option30_Desc>Multiply egg's lifespan.&#10;Eggs will die at end of luteal stage regardless of this setting.</Option30_Desc>
+  <Option31_Label>Enable vagina morph after birth</Option31_Label>
+  <Option31_Desc>Enable permanent vagina stretch after birth.&#10;If you are using another mod handling this, turn off this option.</Option31_Desc>
+  <Option32_Label>Morph power</Option32_Label>
+  <Option32_Desc>Set morph power.</Option32_Desc>
+  <EstimatedCumLifespan>Estimated sperm lifespan</EstimatedCumLifespan>
+  <EstimatedEggLifespan>Estimated egg lifespan</EstimatedEggLifespan>
   <FertilityDesc>Chance of fertilization within an hour: {0}%&#10;The chance of pregnancy of fertilized egg.&#10;The white overlay is indicates fertilization chance of sperms in womb.</FertilityDesc>
 
   <FloatMenu_CleanSelf>Vaginal washing</FloatMenu_CleanSelf>
