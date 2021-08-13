@@ -1,3 +1,15 @@
+Version 1.0.5.4
+ - lactating cause nipple morph
+ - clicking breast image will show nipple's origin state(before & after)
+ - fixed animal pregnancy error
+ - added cum effects
+   - use IngestionOutcomeDoer
+   - might you can make aphrodisiac cum with this
+   - added antisperm antibody
+   - added cyclosporine which cures antisperm antibody
+ - sexperience integrations
+   - added ability to gather cums in womb using cumbucket
+
 Version 1.0.5.3
  - now impregnate on every orgasm
  - added egg lifespan setting

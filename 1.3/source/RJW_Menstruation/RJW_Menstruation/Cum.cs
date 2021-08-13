@@ -18,6 +18,7 @@ namespace RJW_Menstruation
         protected bool useCustomColor = false;
         protected float notcumthickness = 0;
         protected float cumthickness = 1.0f;
+        protected Thing internalThing;
 
         public float Volume
         {
@@ -109,6 +110,19 @@ namespace RJW_Menstruation
             }
         }
 
+        public Thing CumThing
+        {
+            get
+            {
+                if (internalThing == null)
+                {
+                    internalThing = ThingMaker.MakeThing(VariousDefOf.CumFilth);
+                    internalThing.stackCount = (int)volume;
+                }
+                internalThing.stackCount = (int)volume;
+                return internalThing;
+            }
+        }
 
         public Cum() { }
 
@@ -151,6 +165,7 @@ namespace RJW_Menstruation
         public virtual void ExposeData()
         {
             Scribe_References.Look(ref pawn, "pawn", true);
+            Scribe_References.Look(ref internalThing, "internalThing", true);
             Scribe_Values.Look(ref volume, "volume", volume, true);
             Scribe_Values.Look(ref fertvolume, "fertvolume", fertvolume, true);
             Scribe_Values.Look(ref notcumthickness, "notcumthickness", notcumthickness, true);
@@ -208,14 +223,25 @@ namespace RJW_Menstruation
             CutMinor();
             totalleak -= volume;
             return totalleak;
+        }
 
+        public void CumEffects(Pawn pawn)
+        {
+            if (!notcum && DNA != null && volume >= 1.0f)
+            {
+                List<IngestionOutcomeDoer> doers = DNA.ingestionOutcomeDoers;
+                
+                if (!doers.NullOrEmpty()) for (int i = 0; i < doers.Count; i++)
+                    {
+                        doers[i].DoIngestionOutcome(pawn, CumThing);
+                    }
+            }
         }
 
         protected void CutMinor()
         {
             if (volume < 0.01f) volume = 0f;
             if (fertvolume < 0.001f) fertvolume = 0f;
-
         }
 
 
@@ -224,7 +250,8 @@ namespace RJW_Menstruation
     public class CumMixture : Cum, IDisposable
     {
         protected List<string> cums;
-
+        public bool ispurecum = true;
+        public List<string> Getingredients => cums;
 
         public CumMixture()
         {
@@ -232,13 +259,14 @@ namespace RJW_Menstruation
             cums = new List<string>();
         }
 
-        public CumMixture(Pawn pawn, float volume, List<string> cums, Color color,  ThingDef mixtureDef)
+        public CumMixture(Pawn pawn, float volume, List<string> cums, Color color,  ThingDef mixtureDef, bool pure)
         {
             this.pawn = pawn;
             this.volume = volume;
             this.cums = cums;
             this.customColor = color;
             this.useCustomColor = true;
+            ispurecum = pure;
         }
 
         public void Dispose()
@@ -263,7 +291,7 @@ namespace RJW_Menstruation
                 }
             return res;
         }
-
+        
     }
 
 

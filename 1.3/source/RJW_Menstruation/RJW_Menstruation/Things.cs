@@ -15,6 +15,7 @@ namespace RJW_Menstruation
         public Color CumColor => cumColor.ToColor;
         public float cumThickness = 0f;
         public List<HybridExtension> hybridExtension;
+        public List<IngestionOutcomeDoer> ingestionOutcomeDoers;
 
         public HybridExtension GetHybridExtension(string race)
         {

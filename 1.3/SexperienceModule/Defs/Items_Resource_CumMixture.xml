@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  <ThingDef ParentName="GatheredCum">
+    <defName>GatheredCumMixture</defName>
+    <label>cum mixture</label>
+    <description>Gathered mixture of cum.</description>
+	<thingClass>RJW_Menstruation.Sexperience.GatheredCumMixture</thingClass>
+    <graphicData>
+      <texPath>Things/Item/GatheredCum</texPath>
+      <drawSize>1</drawSize>
+	  <graphicClass>Graphic_StackCount</graphicClass>
+    </graphicData>
+  </ThingDef>
+</Defs>

@@ -201,12 +201,11 @@ namespace RJW_Menstruation
             Rect pawnLabelRect = new Rect(0, pawnRectHeight, pawnRectWidth, fontheight - 10);
             Rect pawnLabel2Rect = new Rect(0, pawnRectHeight + fontheight - 10, pawnRectWidth, fontheight - 10);
             fontstylecenter.normal.textColor = pawn.DrawColor;
-            GUI.Label(pawnLabelRect, pawn.Name.ToStringFull, fontstylecenter);
-            if (pawn.story != null) GUI.Label(pawnLabel2Rect, pawn.story.Title, fontstylecenter);
+            GUI.Label(pawnLabelRect, pawn.Name?.ToStringFull ?? pawn.Label, fontstylecenter);
+            if (pawn.story != null) GUI.Label(pawnLabel2Rect, pawn.ageTracker.AgeBiologicalYears + ", " + pawn.story.Title, fontstylecenter);
             GUI.color = Color.white;
 
-
-
+            
             float wombrecth = 0;
             if (Configurations.DrawWombStatus)
             {
@@ -342,7 +341,9 @@ namespace RJW_Menstruation
             GUI.color = new Color(1.00f, 0.47f, 0.47f, 1);
             GUI.Box(rect, "", boxstyle);
 
-            pawn.DrawBreastIcon(BreastIconRect);
+            
+
+            pawn.DrawBreastIcon(BreastIconRect, Mouse.IsOver(BreastIconRect) && Input.GetMouseButton(0));
 
 
             GUI.color = Color.white;

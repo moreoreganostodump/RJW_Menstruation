@@ -260,4 +260,30 @@
 			</li>
 		</comps>
 	</HediffDef>
+	
+	<HediffDef>
+		<hediffClass>HediffWithComps</hediffClass>
+		<defName>Hediff_Cyclosporine</defName>
+		<label>Cyclosporine</label>
+		<description>Immunosuppressant.</description>
+		<defaultLabelColor>(0.75,0.75,1.0)</defaultLabelColor>	
+		<isBad>false</isBad>
+		<tendable>false</tendable>
+		<makesSickThought>false</makesSickThought>
+		<makesAlert>false</makesAlert>	
+		<maxSeverity>10</maxSeverity>
+		<initialSeverity>1.0</initialSeverity>
+		<stages>
+			<li>
+				<statOffsets>
+					<ImmunityGainSpeed>-0.25</ImmunityGainSpeed>
+				</statOffsets>
+			</li>
+		</stages>	
+		<comps>
+			<li Class="HediffCompProperties_SeverityPerDay">
+				<severityPerDay>-1.0</severityPerDay>
+			</li>
+		</comps>
+	</HediffDef>
 </Defs>

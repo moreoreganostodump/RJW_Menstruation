@@ -25,6 +25,36 @@ namespace RJW_Menstruation
         }
     }
 
+    public class InduceOvulationOutcomDoer : IngestionOutcomeDoer
+    {
+        protected override void DoIngestionOutcomeSpecial(Pawn pawn, Thing ingested)
+        {
+            HediffComp_Menstruation comp = pawn.GetMenstruationComp();
+            if (comp != null && (comp.curStage.Equals(HediffComp_Menstruation.Stage.Follicular)
+                || comp.curStage.Equals(HediffComp_Menstruation.Stage.ClimactericFollicular)
+                || comp.curStage.Equals(HediffComp_Menstruation.Stage.Anestrus)
+                ))
+            {
+                comp.SetEstrus(comp.Props.eggLifespanDays);
+                comp.curStage = HediffComp_Menstruation.Stage.Ovulatory;
+                comp.eggstack += ingested.stackCount - 1;
+            }
+        }
+    }
+
+    public class IngestionOutcomeDoer_AdjustSeverity : IngestionOutcomeDoer
+    {
+        public HediffDef hediffDef;
+        public float severity;
+
+        protected override void DoIngestionOutcomeSpecial(Pawn pawn, Thing ingested)
+        {
+            Hediff hediff = pawn.health.hediffSet.GetFirstHediffOfDef(hediffDef);
+            if (hediff != null) hediff.Severity += severity;
+        }
+
+    }
+
     public class OvaryPillOutcomDoer : IngestionOutcomeDoer
     {
         public float effectOffset;
@@ -37,8 +67,6 @@ namespace RJW_Menstruation
             {
                 comp.RecoverOvary(1 + effectOffset);
             }
-
-
         }
     }
 

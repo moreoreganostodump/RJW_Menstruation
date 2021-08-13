@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<HediffDef>
+		<hediffClass>HediffWithComps</hediffClass>	
+		<defName>Hediff_ASA</defName>
+		<label>Antisperm antibody</label>
+		<labelNoun>antisperm antibody</labelNoun>
+		<description>Antisperm antibody.&#10;Increases death rate of sperm.</description>
+		<labelNounPretty>{0} got antisperm antibody</labelNounPretty>
+		<defaultLabelColor>(0.8,0.1,0.1)</defaultLabelColor>	
+		<isBad>false</isBad>
+		<tendable>false</tendable>
+		<makesSickThought>false</makesSickThought>
+		<makesAlert>true</makesAlert>	
+		<maxSeverity>1</maxSeverity>
+		<initialSeverity>0.1</initialSeverity>
+		<injuryProps>
+			<canMerge>true</canMerge>
+		</injuryProps>	
+		<stages>
+			<li>
+				<becomeVisible>false</becomeVisible>
+			</li>
+			<li>
+				<minSeverity>0.40</minSeverity>
+				<becomeVisible>true</becomeVisible>
+			</li>
+		</stages>	
+		<comps>
+		</comps>
+	</HediffDef>
+
+	<HediffDef>
+		<hediffClass>HediffWithComps</hediffClass>	
+		<defName>Hediff_ForceFertile</defName>
+		<label>fertile</label>
+		<labelNoun>fertile</labelNoun>
+		<description>fertile</description>
+		<labelNounPretty>{0} is fertile</labelNounPretty>
+		<defaultLabelColor>(0.3,0.3,0.8)</defaultLabelColor>	
+		<isBad>false</isBad>
+		<tendable>false</tendable>
+		<makesSickThought>false</makesSickThought>
+		<makesAlert>true</makesAlert>	
+		<maxSeverity>3</maxSeverity>
+		<initialSeverity>0.1</initialSeverity>
+		<injuryProps>
+			<canMerge>true</canMerge>
+		</injuryProps>	
+		<stages>
+			<li>
+				<becomeVisible>false</becomeVisible>
+				<capMods>
+					<li>
+						<capacity>RJW_Fertility</capacity>
+						<offset>0.05</offset>
+					</li>
+				</capMods>
+			</li>
+			<li>
+				<minSeverity>0.20</minSeverity>
+				<becomeVisible>false</becomeVisible>
+				<capMods>
+					<li>
+						<capacity>RJW_Fertility</capacity>
+						<offset>0.25</offset>
+					</li>
+				</capMods>
+			</li>
+			<li>
+				<minSeverity>0.40</minSeverity>
+				<becomeVisible>true</becomeVisible>
+				<capMods>
+					<li>
+						<capacity>RJW_Fertility</capacity>
+						<offset>0.50</offset>
+					</li>
+				</capMods>
+			</li>
+			<li>
+				<minSeverity>0.60</minSeverity>
+				<becomeVisible>true</becomeVisible>
+				<capMods>
+					<li>
+						<capacity>RJW_Fertility</capacity>
+						<offset>0.75</offset>
+					</li>
+				</capMods>
+			</li>
+			<li>
+				<minSeverity>0.80</minSeverity>
+				<becomeVisible>true</becomeVisible>
+				<capMods>
+					<li>
+						<capacity>RJW_Fertility</capacity>
+						<offset>1.00</offset>
+					</li>
+				</capMods>
+			</li>
+		</stages>	
+		<comps>
+			<li Class="HediffCompProperties_SeverityPerDay">
+				<severityPerDay>-1.0</severityPerDay>
+				<showHoursToRecover>true</showHoursToRecover>
+			</li>
+		</comps>
+	</HediffDef>
+
+
+
+</Defs>

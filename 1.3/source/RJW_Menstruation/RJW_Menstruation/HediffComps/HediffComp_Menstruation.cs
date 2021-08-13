@@ -111,7 +111,7 @@ namespace RJW_Menstruation
         {
             get
             {
-                if (opcache < 0) opcache = (int)(72f * ThingDefOf.Human.race.lifeExpectancy / parent.pawn.def.race.lifeExpectancy);
+                if (opcache < 0) opcache = (int)(72f * parent.pawn.def.race.lifeExpectancy / ThingDefOf.Human.race.lifeExpectancy);
                 return opcache;
             }
         }
@@ -610,9 +610,11 @@ namespace RJW_Menstruation
 
         protected void BeforeCumOut(out Absorber absorber)
         {
+            Hediff asa = parent.pawn.health.hediffSet.GetFirstHediffOfDef(VariousDefOf.Hediff_ASA);
+            float asafactor = asa?.Severity ?? 0f;
 
-            if (parent.pawn.health.hediffSet.HasHediff(VariousDefOf.RJW_IUD)) antisperm = 0.70f;
-            else antisperm = 0.0f;
+            if (parent.pawn.health.hediffSet.HasHediff(VariousDefOf.RJW_IUD)) antisperm = 0.70f + asafactor;
+            else antisperm = 0.0f + asafactor;
 
             absorber = (Absorber)parent.pawn.apparel?.WornApparel?.Find(x => x is Absorber);
             if (absorber != null)
@@ -657,6 +659,7 @@ namespace RJW_Menstruation
             List<Cum> removecums = new List<Cum>();
             foreach (Cum cum in cums)
             {
+                cum.CumEffects(parent.pawn);
                 float vd = cum.DismishNatural(leakfactor, antisperm);
                 cum.MakeThinner(Configurations.CycleAcceleration);
                 totalleak += AbsorbCum(cum, vd, absorber);
@@ -719,7 +722,7 @@ namespace RJW_Menstruation
         /// <param name="mixtureDef"></param>
         /// <param name="portion"></param>
         /// <returns></returns>
-        public Cum MixtureOut(ThingDef mixtureDef ,float portion = 0.1f)
+        public CumMixture MixtureOut(ThingDef mixtureDef ,float portion = 0.1f)
         {
             if (cums.NullOrEmpty()) return null;
             Color color = GetCumMixtureColor;
@@ -727,6 +730,7 @@ namespace RJW_Menstruation
             List<string> cumlabels = new List<string>();
             float cumd = TotalCumPercent;
             List<Cum> removecums = new List<Cum>();
+            bool pure = true;
             foreach (Cum cum in cums)
             {
                 float vd = cum.DismishForce(portion);
@@ -734,13 +738,14 @@ namespace RJW_Menstruation
                 cumlabels.Add(tmp.Replace(" x1", ""));
                 totalleak += vd;
                 if (cum.ShouldRemove()) removecums.Add(cum);
+                if (cum.notcum) pure = false;
             }
             foreach (Cum cum in removecums)
             {
                 cums.Remove(cum);
             }
             removecums.Clear();
-            return new CumMixture(parent.pawn, totalleak, cumlabels, color, mixtureDef);
+            return new CumMixture(parent.pawn, totalleak, cumlabels, color, mixtureDef, pure);
         }
 
         
@@ -866,7 +871,7 @@ namespace RJW_Menstruation
             }
         }
 
-        public void RecoverOvary(float multiply = 0.2f)
+        public void RecoverOvary(float multiply = 1.2f)
         {
             ovarypower = Math.Max(0, (int)(ovarypower * multiply));
             if (ovarypower >= ovarypowerthreshold)
@@ -1512,9 +1517,10 @@ namespace RJW_Menstruation
             action += delegate
             {
                 if (parent.pawn.health.capacities.GetLevel(xxx.reproduction) <= 0) curStage = Stage.Young;
-                CumOut();
+                //CumOut();
                 AfterSimulator();
             };
+            action = CumOut + action;
 
             actionref = action;
             return actionref;

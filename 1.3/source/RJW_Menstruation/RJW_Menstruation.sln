@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RJW_Menstruation", "RJW_Men
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MilkModule", "MilkModule\MilkModule.csproj", "{3591B3C1-EB57-44BF-AB69-A613E097A7F8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SexperienceModule", "SexperienceModule\SexperienceModule.csproj", "{7DB664D7-D4B4-4673-9FF1-62EC18305715}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{3591B3C1-EB57-44BF-AB69-A613E097A7F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3591B3C1-EB57-44BF-AB69-A613E097A7F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3591B3C1-EB57-44BF-AB69-A613E097A7F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7DB664D7-D4B4-4673-9FF1-62EC18305715}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7DB664D7-D4B4-4673-9FF1-62EC18305715}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7DB664D7-D4B4-4673-9FF1-62EC18305715}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7DB664D7-D4B4-4673-9FF1-62EC18305715}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

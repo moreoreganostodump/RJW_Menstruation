@@ -136,5 +136,53 @@
 		</comps>
 	</ThingDef>
 	
+	<ThingDef ParentName="MakeableDrugPillBase">
+		<defName>Cyclosporine</defName>
+		<label>cyclosporine</label>
+		<description>An immunosuppressant.&#10;Can cure antisperm antibody.</description>
+		<graphicData>
+			<texPath>Things/Item/Cyclosporine</texPath>
+			<graphicClass>Graphic_StackCount</graphicClass>
+		</graphicData>
+		<rotatable>false</rotatable>
+		<statBases>
+			<WorkToMake>1000</WorkToMake>
+			<MarketValue>12</MarketValue>
+			<Mass>0.01</Mass>
+		</statBases>
+		<techLevel>Industrial</techLevel>
+		<ingestible>
+			<drugCategory>Medical</drugCategory>
+			<outcomeDoers>
+				<li Class="IngestionOutcomeDoer_GiveHediff">
+					<hediffDef>Hediff_Cyclosporine</hediffDef>
+					<severity>1.0</severity>
+				</li>
+				<li Class="RJW_Menstruation.IngestionOutcomeDoer_AdjustSeverity">
+					<hediffDef>Hediff_ASA</hediffDef>
+					<severity>-0.20</severity>
+				</li>
+			</outcomeDoers>
+		</ingestible>
+		<recipeMaker>
+			<researchPrerequisite>DrugProduction</researchPrerequisite>
+			<recipeUsers>
+				<li>DrugLab</li>
+			</recipeUsers>
+		</recipeMaker>
+		<costList>
+			<MedicineHerbal>1</MedicineHerbal>
+		</costList>
+		<comps>
+			<li Class="CompProperties_Drug">
+			<addictiveness>0</addictiveness>
+			<listOrder>1000</listOrder>
+				<overdoseSeverityOffset>
+					<min>0.08</min>
+					<max>0.14</max>
+				</overdoseSeverityOffset>
+			</li>
+		</comps>
+	</ThingDef>
 	
 </Defs>

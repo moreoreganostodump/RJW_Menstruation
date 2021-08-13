@@ -83,6 +83,10 @@ namespace RJW_Menstruation
             }
         }
 
+        public float OriginAlpha => originalpha;
+        public float OriginNipple => originnipple;
+        public float OriginAreola => originareola;
+        public Color OriginColor => Colors.CMYKLerp(parent?.pawn?.story?.SkinColor ?? Color.white, Props.BlackNippleColor, originalpha);
 
         public Color NippleColor
         {

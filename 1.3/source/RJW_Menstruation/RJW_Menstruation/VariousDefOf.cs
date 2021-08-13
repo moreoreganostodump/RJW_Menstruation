@@ -20,6 +20,7 @@ namespace RJW_Menstruation
         public static readonly HediffDef Hediff_Menopause = DefDatabase<HediffDef>.GetNamed("Hediff_Menopause");
         public static readonly HediffDef Hediff_Estrus = DefDatabase<HediffDef>.GetNamed("Hediff_Estrus");
         public static readonly HediffDef Hediff_Estrus_Consealed = DefDatabase<HediffDef>.GetNamed("Hediff_Estrus_Consealed");
+        public static readonly HediffDef Hediff_ASA = DefDatabase<HediffDef>.GetNamed("Hediff_ASA");
         public static readonly StatDef MaxAbsorbable = DefDatabase<StatDef>.GetNamed("MaxAbsorbable");
         public static readonly PawnRelationDef Relation_birthgiver = DefDatabase<PawnRelationDef>.AllDefs.FirstOrDefault(d => d.defName == "RJW_Sire");
         public static readonly PawnRelationDef Relation_spawn = DefDatabase<PawnRelationDef>.AllDefs.FirstOrDefault(d => d.defName == "RJW_Pup");

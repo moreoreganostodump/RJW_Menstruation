@@ -228,7 +228,7 @@ namespace RJW_Menstruation
             }
         }
 
-        public static void DrawBreastIcon(this Pawn pawn, Rect rect)
+        public static void DrawBreastIcon(this Pawn pawn, Rect rect , bool drawOrigin = false)
         {
             var hediff = Genital_Helper.get_PartsHediffList(pawn, Genital_Helper.get_breastsBPR(pawn)).FirstOrDefault((Hediff h) => h.def.defName.ToLower().Contains("breast"));
             Texture2D breast, nipple, areola;
@@ -259,9 +259,20 @@ namespace RJW_Menstruation
                 else icon += "_Breast05";
 
                 string nippleicon, areolaicon;
+                float nipplesize, areolasize;
+                if (drawOrigin)
+                {
+                    nipplesize = comp.OriginNipple;
+                    areolasize = comp.OriginAreola;
+                }
+                else
+                {
+                    nipplesize = comp.NippleSize;
+                    areolasize = comp.AreolaSize;
+                }
 
-                nippleicon = icon + "_Nipple0" + GetNippleIndex(comp.NippleSize);
-                areolaicon = icon + "_Areola0" + GetAreolaIndex(comp.AreolaSize);
+                nippleicon = icon + "_Nipple0" + GetNippleIndex(nipplesize);
+                areolaicon = icon + "_Areola0" + GetAreolaIndex(areolasize);
                 
 
                 breast = ContentFinder<Texture2D>.Get(icon, false);
@@ -270,7 +281,14 @@ namespace RJW_Menstruation
                 GUI.color = pawn.story.SkinColor;
                 GUI.DrawTexture(rect, breast, ScaleMode.ScaleToFit);
 
-                GUI.color = comp.NippleColor;
+                if (drawOrigin)
+                {
+                    GUI.color = comp.OriginColor;
+                }
+                else
+                {
+                    GUI.color = comp.NippleColor;
+                }
                 GUI.DrawTexture(rect, areola, ScaleMode.ScaleToFit);
 
                 GUI.DrawTexture(rect, nipple, ScaleMode.ScaleToFit);

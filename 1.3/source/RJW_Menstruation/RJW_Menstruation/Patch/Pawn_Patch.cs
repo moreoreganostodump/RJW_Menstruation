@@ -42,7 +42,7 @@ namespace RJW_Menstruation
 
             foreach (LocalTargetInfo t in selftargets)
             {
-                if (pawn.HasMenstruationComp()) opts.AddDistinct(MakeSelfMenu(pawn, t));
+                if (t.Pawn == pawn && pawn.HasMenstruationComp()) opts.AddDistinct(MakeSelfMenu(pawn, t));
                 break;
             }
 
@@ -60,9 +60,6 @@ namespace RJW_Menstruation
 
             return option;
         }
-
-
-
     }
 
     //[HarmonyPatch(typeof(HealthCardUtility), "DrawHediffListing")]

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<Defs>
+	<JobDef>
+		<defName>VaginaWashingwithBucket</defName>
+		<driverClass>RJW_Menstruation.Sexperience.JobDriver_VaginaWashingWithBucket</driverClass>
+		<reportString>washing vagina</reportString>
+		<casualInterruptible>true</casualInterruptible>
+	</JobDef>
+</Defs>

@@ -207,7 +207,8 @@ namespace RJW_Menstruation
             {
                 if (xxx.is_human(father))
                 {
-                    melanin = (mother.story?.melanin ?? 0f + father.story?.melanin ?? 0f) / 2;
+                    melanin = ChildRelationUtility.GetRandomChildSkinColor(father.story?.melanin ?? 0f, mother.story?.melanin ?? 0f);
+                    //melanin = (mother.story?.melanin ?? 0f + father.story?.melanin ?? 0f) / 2;
                     lastname = NameTriple.FromString(father.Name.ToStringFull).Last;
                 }
                 else
@@ -215,24 +216,18 @@ namespace RJW_Menstruation
                     melanin = mother.story?.melanin ?? 0f;
                     lastname = NameTriple.FromString(mother.Name.ToStringFull).Last;
                 }
-
+            }
+            else if (xxx.is_human(father))
+            {
+                melanin = father.story?.melanin ?? 0f;
+                lastname = NameTriple.FromString(father.Name.ToStringFull).Last;
             }
             else
             {
-                if (xxx.is_human(father))
-                {
-                    melanin = father.story?.melanin ?? 0f;
-                    lastname = NameTriple.FromString(father.Name.ToStringFull).Last;
-                }
-                else
-                {
-                    melanin = Rand.Range(0, 1.0f);
-                    lastname = NameTriple.FromString(mother.Name.ToStringFull).Last;
-                }
+                melanin = Rand.Range(0, 1.0f);
+                lastname = "";
             }
-
-
-
+            
             PawnGenerationRequest request = new PawnGenerationRequest(
                 newborn: true,
                 allowDowned: true,
@@ -274,7 +269,8 @@ namespace RJW_Menstruation
                         firstheadpath = (string)baby.story.GetMemberValue("headGraphicPath");
                         if (firstheadpath == null)
                         {
-                            baby.story.SetMemberValue("headGraphicPath", GraphicDatabaseHeadRecords.GetHeadRandom(baby.gender, baby.story.SkinColor, baby.story.crownType, true).GraphicPath);
+                            Graphic_Multi head = GraphicDatabaseHeadRecords.GetHeadRandom(baby.gender, baby.story.SkinColor, baby.story.crownType, true);
+                            if (head != null) baby.story.SetMemberValue("headGraphicPath", head.GraphicPath);
                             firstheadpath = (string)baby.story.GetMemberValue("headGraphicPath");
                         }
                         if (Configurations.HARActivated && baby.IsHAR())
