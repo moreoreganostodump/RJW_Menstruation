@@ -3,16 +3,19 @@
   <Mod_Title>RJW Menstruation Cycle</Mod_Title>
   
   <Menstrual_Blood>月经血</Menstrual_Blood>
-  <Info_noCum>清空</Info_noCum>
+  <Info_noCum>空</Info_noCum>
   <Stage_Follicular>卵泡期</Stage_Follicular>
   <Stage_Ovulatory>排卵</Stage_Ovulatory> 
   <Stage_Luteal>黄体期</Stage_Luteal>
   <Stage_Bleeding>月经来潮</Stage_Bleeding>
   <Stage_Fertilized>已受精</Stage_Fertilized>
   <Stage_Pregnant>怀孕</Stage_Pregnant>
-  <Stage_Recover>从出生中恢复</Stage_Recover>
+  <Stage_Recover>产后恢复</Stage_Recover>
   <Stage_None>无</Stage_None>
   <Stage_Climacteric>更年期</Stage_Climacteric>
+  <Stage_Anestrus>非发情期</Stage_Anestrus>
+  <Button_HealthTab>状态</Button_HealthTab>
+  <Button_MilkTooltip>挤自己奶</Button_MilkTooltip>
   <Dialog_WombInfo01>状态</Dialog_WombInfo01>
   <Dialog_WombInfo02>胎儿</Dialog_WombInfo02>
   <Dialog_WombInfo03>父亲</Dialog_WombInfo03>
@@ -45,7 +48,7 @@
   <Option10_Desc>在状态窗口中绘制阴道和肛门图标</Option10_Desc>
   <Option11_Label>胎儿信息级别</Option11_Label>
   <Option11_Desc_1>显示有关胎儿的所有信息</Option11_Desc_1>
-  <Option11_Desc_2>显示妊娠後胎儿的所有信息</Option11_Desc_2>
+  <Option11_Desc_2>显示妊娠后胎儿的所有信息</Option11_Desc_2>
   <Option11_Desc_3>不显示有关胎儿的信息，但显示怀孕後胎儿的图象</Option11_Desc_3>
   <Option11_Desc_4>不显示胎儿图象和信息</Option11_Desc_4>
   <Option12_Label>激活更年期</Option12_Label>
@@ -60,7 +63,49 @@
   <Option16_Desc>设置双胞胎的出现率</Option16_Desc>
   <Option17_Label>最大双胞胎数量</Option17_Label>
   <Option17_Desc>设置最大双胞胎数量</Option17_Desc>
+  <Option18_Label>启用卵子图标</Option18_Label>
+  <Option18_Desc>启用覆盖在子宫图标上的卵子图标</Option18_Desc>
+  <Option19_Label_1>经血数量</Option19_Label_1>
+  <Option19_Label_2>预计经血总量</Option19_Label_2>
+  <Option19_Desc>设置经血量&#10;根据阴道不同出血量有变化&#10;通常人类女性的经血量为20-80ml左右每月</Option19_Desc>
+  <Option20_Label_1>殖民者</Option20_Label_1>
+  <Option20_Label_2>囚犯</Option20_Label_2>
+  <Option20_Label_3>盟友派系</Option20_Label_3>
+  <Option20_Label_4>中立者</Option20_Label_4>
+  <Option20_Label_5>敌对派系</Option20_Label_5>
+  <Option21_Label>目标小人</Option21_Label>
+  <Option21_Desc>按钮和图标会出现在这些人物上</Option21_Desc>
+  <Option22_Label>使用杂交扩展</Option22_Label>
+  <Option22_Desc>覆盖RJW and RaceSupport的杂交定义&#10;主杂交决定了谁的定义用在前面，不建议改变此项</Option22_Desc>
+  <Option23_Label>主杂交扩展</Option23_Label>
+  <Option23_Label_1>母方</Option23_Label_1>
+  <Option23_Label_2>父方</Option23_Label_2>
+  <Option24_Label>怀孕后乳头动态变化</Option24_Label>
+  <Option24_Desc>设定每次怀孕，乳头/乳晕变得更深色/宽大的程度。</Option24_Desc>
+  <Option25_Label>怀孕后乳头固定变化</Option25_Label>
+  <Option25_Desc>设定每次怀孕，乳头/乳晕永久性变得更深色/宽大的程度。</Option25_Desc>
+  <Option26_Label>最大变化</Option26_Label>
+  <Option26_Desc>乳头/乳晕不会变得比这个值更深色/宽大。</Option26_Desc>
+  <Option27_Label>乳头变化速度</Option27_Label>
+  <Option27_Desc>设定乳头/乳晕的变化速度。&#10;1 = 立刻变化</Option27_Desc>
+  <Option28_Label>自定义杂交</Option28_Label>
+  <Option28_Tooltip>打开自定义杂交编辑器&#10;该项会覆盖XML文件定义的杂交。</Option28_Tooltip>
+  <Option29_Label>允许缩放图标</Option29_Label>
+  <Option29_Desc>如有需要，允许图标缩小。</Option29_Desc>
+  <Option30_Label>卵子生命周期倍增</Option30_Label>
+  <Option30_Desc>倍增卵子生命周期。&#10;在已受精阶段结束后，卵子将无视该选项死去。</Option30_Desc>
+  <Option31_Label>启用产后阴道变化</Option31_Label>
+  <Option31_Desc>启用产后永久阴道扩张。&#10;如果你在用另一mod处理该项，关闭该选项。</Option31_Desc>
+  <Option32_Label>变形力度</Option32_Label>
+  <Option32_Desc>设置变形力度。</Option32_Desc>
+  <EstimatedCumLifespan>预计精子生命周期</EstimatedCumLifespan>
+  <EstimatedEggLifespan>预计卵子生命周期</EstimatedEggLifespan>
+  <FertilityDesc>1小时内受精几率: {0}%&#10;受精卵着床几率。&#10;白色覆盖层表示子宫内精子受精的几率。</FertilityDesc>
   
   <FloatMenu_CleanSelf>清洗阴道</FloatMenu_CleanSelf>
+  
+  <CustomHybrid_List_Title>自定义杂交编辑器</CustomHybrid_List_Title>
+  <CustomHybrid_Title>{0}的杂交种</CustomHybrid_Title>
+  <CustomHybrid_Tooltip>当{0}与{1}交配,将有{3}几率生出{2}。&#10;如果两个种族都有对方的杂交定义，将会使用父方的定义。</CustomHybrid_Tooltip>
   
 </LanguageData>
