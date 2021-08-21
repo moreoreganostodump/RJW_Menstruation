@@ -12,6 +12,8 @@ namespace RJW_Menstruation
 {
     public static class MenstruationUtility
     {
+
+
         public static HediffComp_Menstruation GetMenstruationComp(this Pawn pawn)
         {
             var hedifflist = Genital_Helper.get_PartsHediffList(pawn, Genital_Helper.get_genitalsBPR(pawn))?.FindAll((Hediff h) => h.def.defName.ToLower().Contains("vagina"));
@@ -36,6 +38,31 @@ namespace RJW_Menstruation
             }
             return null;
         }
+
+        public static HediffComp_Anus GetAnusComp(this Pawn pawn)
+        {
+            var hedifflist = Genital_Helper.get_PartsHediffList(pawn, Genital_Helper.get_genitalsBPR(pawn))?.FindAll((Hediff h) => h.def.defName.ToLower().Contains("anus"));
+            HediffComp_Anus result;
+            if (!hedifflist.NullOrEmpty())
+            {
+                foreach (Hediff h in hedifflist)
+                {
+                    result = h.TryGetComp<HediffComp_Anus>();
+                    if (result != null) return result;
+                }
+            }
+            return null;
+        }
+
+        public static HediffComp_Anus GetAnusComp(this Hediff hediff)
+        {
+            if (hediff is Hediff_PartBaseNatural || hediff is Hediff_PartBaseArtifical)
+            {
+                return hediff.TryGetComp<HediffComp_Anus>();
+            }
+            return null;
+        }
+
 
         public static float GetFertilityChance(this HediffComp_Menstruation comp)
         {
@@ -120,7 +147,6 @@ namespace RJW_Menstruation
             Texture2D cumtex = ContentFinder<Texture2D>.Get((icon), true);
             return cumtex;
         }
-
         public static Texture2D GetWombIcon(this HediffComp_Menstruation comp)
         {
             if (comp.Pawn.health.hediffSet.GetHediffs<Hediff_InsectEgg>().FirstOrDefault() != null) return ContentFinder<Texture2D>.Get(("Womb/Womb_Egged"), true);
@@ -161,5 +187,75 @@ namespace RJW_Menstruation
             GUI.DrawTexture(rect, comp.GetEggIcon(), ScaleMode.ScaleToFit);
         }
 
+
+        public static Texture2D GetGenitalIcon(this Pawn pawn, HediffComp_Menstruation comp, bool drawOrigin = false)
+        {
+            var hediff = Genital_Helper.get_PartsHediffList(pawn, Genital_Helper.get_genitalsBPR(pawn))?.Find((Hediff h) => h.def.defName.ToLower().Contains("vagina"));
+            if (hediff == null) return ContentFinder<Texture2D>.Get("Genitals/Vagina00", true);
+            //HediffComp_Menstruation comp = hediff.GetMenstruationComp();
+            string icon;
+            float severity;
+            if (drawOrigin) severity = comp.OriginVagSize;
+            else severity = hediff.Severity;
+            if (comp != null) icon = comp.vagTex;
+            else icon = "Genitals/Vagina";
+
+            if (severity < 0.20f) icon += "00";        //micro 
+            else if (severity < 0.30f) icon += "01";   //tight
+            else if (severity < 0.40f) icon += "02";   //tight
+            else if (severity < 0.47f) icon += "03";   //average
+            else if (severity < 0.53f) icon += "04";   //average
+            else if (severity < 0.60f) icon += "05";   //average
+            else if (severity < 0.70f) icon += "06";   //accomodating
+            else if (severity < 0.80f) icon += "07";   //accomodating
+            else if (severity < 0.87f) icon += "08";   //cavernous
+            else if (severity < 0.94f) icon += "09";   //cavernous
+            else if (severity < 1.01f) icon += "10";   //cavernous
+            else icon += "11";                                //abyssal
+
+            return ContentFinder<Texture2D>.Get((icon), true);
+        }
+
+        public static Texture2D GetAnalIcon(this Pawn pawn, bool drawOrigin = false)
+        {
+            var hediff = Genital_Helper.get_PartsHediffList(pawn, Genital_Helper.get_anusBPR(pawn)).FirstOrDefault((Hediff h) => h.def.defName.ToLower().Contains("anus"));
+            if (hediff != null)
+            {
+                string icon;
+                float severity;
+                HediffComp_Anus comp = hediff.GetAnusComp();
+                if (comp != null)
+                {
+                    CompProperties_Anus Props = (CompProperties_Anus)comp.props;
+                    icon = Props.analTex ?? "Genitals/Anal";
+                    if (drawOrigin) severity = comp.OriginAnusSize;
+                    else severity = hediff.Severity;
+                }
+                else
+                {
+                    icon = "Genitals/Anal";
+                    severity = hediff.Severity;
+                }
+                if (severity < 0.20f) icon += "00";        //micro 
+                else if (severity < 0.40f) icon += "01";   //tight
+                else if (severity < 0.60f) icon += "02";   //average
+                else if (severity < 0.80f) icon += "03";   //accomodating
+                else if (severity < 1.01f) icon += "04";   //cavernous
+                else icon += "05";                                //abyssal
+
+                return ContentFinder<Texture2D>.Get((icon), true);
+            }
+            else
+            {
+                return ContentFinder<Texture2D>.Get(("Genitals/Anal00"), true);
+            }
+        }
+
+        public static float GestationHours(this Hediff_BasePregnancy hediff)
+        {
+            return (1 / hediff?.progress_per_tick ?? 1) / 2500f;
+        }
     }
+
+
 }

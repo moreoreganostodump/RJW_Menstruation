@@ -92,12 +92,26 @@ namespace RJW_Menstruation
             Anestrus
         }
 
+
+        public static readonly Dictionary<Stage, Texture2D> StageTexture = new Dictionary<Stage, Texture2D>()
+        {
+            { Stage.Follicular, TextureCache.humanTexture },
+            { Stage.ClimactericFollicular, TextureCache.humanTexture },
+            { Stage.Luteal, TextureCache.fertilityTexture },
+            { Stage.ClimactericLuteal, TextureCache.fertilityTexture },
+            { Stage.Bleeding, TextureCache.khorneTexture },
+            { Stage.ClimactericBleeding, TextureCache.khorneTexture },
+            { Stage.Recover, TextureCache.nurgleTexture }
+        };
+
+
         protected List<Cum> cums;
         protected List<Egg> eggs;
         protected int follicularIntervalhours = -1;
         protected int lutealIntervalhours = -1;
         protected int bleedingIntervalhours = -1;
         protected int recoveryIntervalhours = -1;
+        protected int currentIntervalhours = -1;
         protected float crampPain = -1;
         protected Need sexNeed = null;
         protected string customwombtex = null;
@@ -106,6 +120,7 @@ namespace RJW_Menstruation
         protected int opcache = -1;
         protected HediffComp_Breast breastcache = null;
         protected float antisperm = 0.0f;
+        protected float? originvagsize = null;
 
         public int ovarypowerthreshold
         {
@@ -415,6 +430,64 @@ namespace RJW_Menstruation
             }
         }
 
+        public float OriginVagSize
+        {
+            get
+            {
+                if (originvagsize == null)
+                {
+                    originvagsize = parent.Severity;
+                }
+                return originvagsize ?? 0.1f;
+            }
+            set
+            {
+                originvagsize = value;
+            }
+        }
+
+        public float CurStageIntervalHours
+        {
+            get
+            {
+                switch (curStage)
+                {
+                    case Stage.Follicular:
+                    case Stage.ClimactericFollicular:
+                        return FollicularIntervalHours;
+                    case Stage.Luteal:
+                    case Stage.ClimactericLuteal:
+                        return lutealIntervalhours;
+                    case Stage.Bleeding:
+                    case Stage.ClimactericBleeding:
+                        return bleedingIntervalhours;
+                    case Stage.Recover:
+                        return recoveryIntervalhours;
+                    case Stage.Pregnant:
+                        return currentIntervalhours;
+                    default:
+                        return float.PositiveInfinity;
+                }
+            }
+        }
+
+        public float StageProgress
+        {
+            get
+            {
+                return curStageHrs / CurStageIntervalHours;
+            }
+        }
+
+        public Texture2D GetStageTexture
+        {
+            get
+            {
+                Texture2D tex;
+                if (!StageTexture.TryGetValue(curStage, out tex)) tex = TextureCache.tzeentchTexture;
+                return tex;
+            }
+        }
 
         public override void CompExposeData()
         {
@@ -427,12 +500,12 @@ namespace RJW_Menstruation
             Scribe_Values.Look(ref lutealIntervalhours, "lutealIntervalhours", lutealIntervalhours, true);
             Scribe_Values.Look(ref bleedingIntervalhours, "bleedingIntervalhours", bleedingIntervalhours, true);
             Scribe_Values.Look(ref recoveryIntervalhours, "recoveryIntervalhours", recoveryIntervalhours, true);
+            Scribe_Values.Look(ref currentIntervalhours, "currentIntervalhours", currentIntervalhours, true);
             Scribe_Values.Look(ref crampPain, "crampPain", crampPain, true);
             Scribe_Values.Look(ref ovarypower, "ovarypower", ovarypower, true);
             Scribe_Values.Look(ref eggstack, "eggstack", eggstack, true);
             Scribe_Values.Look(ref estrusflag, "estrusflag", estrusflag, true);
-
-            
+            Scribe_Values.Look(ref originvagsize, "originvagsize", originvagsize, true);
         }
 
 
@@ -795,7 +868,12 @@ namespace RJW_Menstruation
 
                 InitOvary(parent.pawn.ageTracker.AgeBiologicalYears);
 
-                if (parent.pawn.IsPregnant()) curStage = Stage.Pregnant;
+                if (parent.pawn.IsPregnant())
+                {
+                    Hediff_BasePregnancy hediff = (Hediff_BasePregnancy)PregnancyHelper.GetPregnancy(parent.pawn);
+                    currentIntervalhours = (int)(hediff?.GestationHours());
+                    curStage = Stage.Pregnant;
+                }
                 if (parent.pawn.IsAnimal())
                 {
                     if (Configurations.EnableAnimalCycle)
@@ -953,7 +1031,7 @@ namespace RJW_Menstruation
             return null;
         }
 
-        //for now, only one egg can be implanted
+        
         protected bool Implant()
         {
             if (!eggs.NullOrEmpty())
@@ -970,18 +1048,17 @@ namespace RJW_Menstruation
                             if (!Configurations.UseMultiplePregnancy)
                             {
                                 PregnancyHelper.PregnancyDecider(parent.pawn, egg.fertilizer);
+                                Hediff_BasePregnancy hediff = (Hediff_BasePregnancy)PregnancyHelper.GetPregnancy(parent.pawn);
+                                currentIntervalhours = (int)hediff?.GestationHours();
                                 pregnant = true;
                                 break;
                             }
                             else
                             {
                                 Hediff_BasePregnancy.Create<Hediff_MultiplePregnancy>(parent.pawn, egg.fertilizer);
-                                Hediff hediff = PregnancyHelper.GetPregnancy(parent.pawn);
-                                //if (hediff is Hediff_BasePregnancy)
-                                //{
-                                //    Hediff_BasePregnancy h = (Hediff_BasePregnancy)hediff;
-                                //    if (h.babies.Count > 1) h.babies.RemoveRange(1, h.babies.Count - 1);
-                                //}
+                                Hediff_BasePregnancy hediff = (Hediff_BasePregnancy)PregnancyHelper.GetPregnancy(parent.pawn);
+                                currentIntervalhours = (int)hediff?.GestationHours();
+
                                 pregnant = true;
                                 deadeggs.Add(egg);
                             }
@@ -1263,7 +1340,11 @@ namespace RJW_Menstruation
                 EggDecay();
                 Implant();
             }
-            if (parent.pawn.IsPregnant()) StayCurrentStageConst(Stage.Pregnant);
+            if (parent.pawn.IsPregnant())
+            {
+                curStageHrs += 1;
+                StayCurrentStageConst(Stage.Pregnant);
+            }
             else
             {
                 if (Breast != null)
@@ -1671,6 +1752,26 @@ namespace RJW_Menstruation
 
     public class HediffComp_Anus : HediffComp
     {
+        protected float? originanussize;
+
+        public float OriginAnusSize
+        {
+            get
+            {
+                if (originanussize == null)
+                {
+                    originanussize = parent.Severity;
+                }
+                return originanussize ?? 0.1f;
+            }
+        }
+
+        public override void CompExposeData()
+        {
+            base.CompExposeData();
+            Scribe_Values.Look(ref originanussize, "originanussize", originanussize, true);
+        }
+
         public override void CompPostTick(ref float severityAdjustment)
         {
         }

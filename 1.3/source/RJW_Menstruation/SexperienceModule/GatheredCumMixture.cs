@@ -13,7 +13,7 @@ namespace RJW_Menstruation.Sexperience
 {
     public class GatheredCumMixture : ThingWithComps
     {
-        public Color cumColor;
+        public Color cumColor = Color.white;
         public List<string> ingredients = new List<string>();
 
         public override Color DrawColor => cumColor;

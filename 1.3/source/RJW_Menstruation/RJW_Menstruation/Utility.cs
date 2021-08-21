@@ -52,7 +52,7 @@ namespace RJW_Menstruation
         public static System.Random random = new System.Random(Environment.TickCount);
 
 
-
+        
 
         public static float GetCumVolume(this Pawn pawn)
         {
@@ -179,54 +179,6 @@ namespace RJW_Menstruation
             return null;
         }
 
-        public static Texture2D GetGenitalIcon(this Pawn pawn)
-        {
-            var hediff = Genital_Helper.get_PartsHediffList(pawn, Genital_Helper.get_genitalsBPR(pawn))?.Find((Hediff h) => h.def.defName.ToLower().Contains("vagina"));
-            if (hediff == null) return ContentFinder<Texture2D>.Get("Genitals/Vagina00", true);
-            HediffComp_Menstruation comp = hediff.GetMenstruationComp();
-            string icon;
-            if (comp != null) icon = comp.vagTex;
-            else icon = "Genitals/Vagina";
-
-            if (hediff.Severity < 0.20f) icon += "00";        //micro 
-            else if (hediff.Severity < 0.30f) icon += "01";   //tight
-            else if (hediff.Severity < 0.40f) icon += "02";   //tight
-            else if (hediff.Severity < 0.47f) icon += "03";   //average
-            else if (hediff.Severity < 0.53f) icon += "04";   //average
-            else if (hediff.Severity < 0.60f) icon += "05";   //average
-            else if (hediff.Severity < 0.70f) icon += "06";   //accomodating
-            else if (hediff.Severity < 0.80f) icon += "07";   //accomodating
-            else if (hediff.Severity < 0.87f) icon += "08";   //cavernous
-            else if (hediff.Severity < 0.94f) icon += "09";   //cavernous
-            else if (hediff.Severity < 1.01f) icon += "10";   //cavernous
-            else icon += "11";                                //abyssal
-
-            return ContentFinder<Texture2D>.Get((icon), true);
-        }
-
-        public static Texture2D GetAnalIcon(this Pawn pawn)
-        {
-            var hediff = Genital_Helper.get_PartsHediffList(pawn, Genital_Helper.get_anusBPR(pawn)).FirstOrDefault((Hediff h) => h.def.defName.ToLower().Contains("anus"));
-            if (hediff != null)
-            {
-                CompProperties_Anus Props = (CompProperties_Anus)hediff.TryGetComp<HediffComp_Anus>()?.props;
-                string icon;
-                if (Props != null) icon = Props.analTex ?? "Genitals/Anal";
-                else icon = "Genitals/Anal";
-                if (hediff.Severity < 0.20f) icon += "00";        //micro 
-                else if (hediff.Severity < 0.40f) icon += "01";   //tight
-                else if (hediff.Severity < 0.60f) icon += "02";   //average
-                else if (hediff.Severity < 0.80f) icon += "03";   //accomodating
-                else if (hediff.Severity < 1.01f) icon += "04";   //cavernous
-                else icon += "05";                                //abyssal
-
-                return ContentFinder<Texture2D>.Get((icon), true);
-            }
-            else
-            {
-                return ContentFinder<Texture2D>.Get(("Genitals/Anal00"), true);
-            }
-        }
 
         public static void DrawBreastIcon(this Pawn pawn, Rect rect , bool drawOrigin = false)
         {
@@ -499,6 +451,23 @@ namespace RJW_Menstruation
         public static float VariationRange(this float num, float variant)
         {
             return num * Rand.Range(1.0f - variant, 1.0f + variant);
+        }
+
+        public static bool ShouldShowWombGizmo(this Pawn pawn)
+        {
+
+            if (Configurations.EnableWombIcon && pawn.gender == Gender.Female)
+            {
+                if (!pawn.IsAnimal())
+                {
+                    return true;
+                }
+                else if (Configurations.EnableAnimalCycle)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
     }

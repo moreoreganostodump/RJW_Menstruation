@@ -89,15 +89,15 @@ namespace RJW_Menstruation
         public static readonly Texture2D FertChanceTex = SolidColorMaterials.NewSolidColorTexture(new Color(1f, 1f, 1f, 0.4f));
 
 
-        private static Texture2D milktexturecache = null;
-        private static Texture2D slaaneshtexturecache = null;
-        private static Texture2D khornetexturecache = null;
-        private static Texture2D tzeentchtexturecache = null;
-        private static Texture2D nurgletexturecache = null;
-        private static Texture2D humantexturecache = null;
-        private static Texture2D animaltexturecache = null;
-        private static Texture2D fertilitytexturecache = null;
-        private static Texture2D ghalmaraztexturecache = null;
+        private static Texture2D milktexturecache = SolidColorMaterials.NewSolidColorTexture(0.992f, 1.0f, 0.960f, 1.0f);
+        private static Texture2D slaaneshtexturecache = SolidColorMaterials.NewSolidColorTexture(0.686f, 0.062f, 0.698f, 1.0f);
+        private static Texture2D khornetexturecache = SolidColorMaterials.NewSolidColorTexture(0.415f, 0.0f, 0.003f, 1.0f);
+        private static Texture2D tzeentchtexturecache = SolidColorMaterials.NewSolidColorTexture(0.082f, 0.453f, 0.6f, 1.0f);
+        private static Texture2D nurgletexturecache = SolidColorMaterials.NewSolidColorTexture(0.6f, 0.83f, 0.35f, 1.0f);
+        private static Texture2D humantexturecache = SolidColorMaterials.NewSolidColorTexture(0.878f, 0.674f, 0.411f, 1.0f);
+        private static Texture2D animaltexturecache = SolidColorMaterials.NewSolidColorTexture(0.411f, 0.521f, 0.878f, 1.0f);
+        private static Texture2D fertilitytexturecache = SolidColorMaterials.NewSolidColorTexture(0.843f, 0.474f, 0.6f, 1.0f);
+        private static Texture2D ghalmaraztexturecache = SolidColorMaterials.NewSolidColorTexture(0.7f, 0.7f, 0.0f, 1.0f);
 
 
 

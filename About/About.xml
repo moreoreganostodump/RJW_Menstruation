@@ -29,6 +29,9 @@
 		<li>UnlimitedHugs.HugsLib</li>
 		<li>brrainz.harmony</li>
 		<li>rim.job.world</li>
+		<li>Abraxas.RJW.RaceSupport</li>
+		<li>rjw.milk.humanoid</li>
+		<li>rjw.sexperience</li>
 	</loadAfter>
 	<packageId>rjw.menstruation</packageId>
 	<description>yes yes</description>

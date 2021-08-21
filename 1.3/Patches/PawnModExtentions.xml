@@ -42,9 +42,9 @@
 					<cumThickness>0.2</cumThickness>
 					<ingestionOutcomeDoers>
 						<li Class="IngestionOutcomeDoer_GiveHediff">
-							<chance>0.02</chance>
+							<chance>0.005</chance>
 							<hediffDef>Hediff_ASA</hediffDef>
-							<severity>0.02</severity>
+							<severity>0.01</severity>
 						</li>
 					</ingestionOutcomeDoers>
 					<hybridExtension>

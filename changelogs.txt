@@ -1,3 +1,9 @@
+Version 1.0.5.5
+ - clicking vagina and anus image will show origin state
+ - fixed loadfolders.xml for other platforms
+ - added load orders
+ - added stage progress bar
+
 Version 1.0.5.4
  - lactating cause nipple morph
  - clicking breast image will show nipple's origin state(before & after)

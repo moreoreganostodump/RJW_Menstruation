@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using RimWorld;
 using rjw;
 using System.Linq;
@@ -72,7 +73,16 @@ namespace RJW_Menstruation
             Dialog_WombStatus window = (Dialog_WombStatus)Find.WindowStack.Windows.FirstOrDefault(x => x.GetType().Equals(typeof(Dialog_WombStatus)));
             if (window != null)
             {
-                if (window.pawn != pawn)
+                List<Pawn> pawns = Find.Selector.SelectedPawns.FindAll(x => x.ShouldShowWombGizmo());
+                if (!pawns.NullOrEmpty() && pawns.Count > 1)
+                {
+                    int index = pawns.IndexOf(window.pawn);
+
+                    SoundDefOf.TabOpen.PlayOneShotOnCamera();
+                    Pawn newpawn = pawns[(index + 1) % pawns.Count];
+                    window.ChangePawn(newpawn, newpawn.GetMenstruationComp());
+                }
+                else if (window.pawn != pawn)
                 {
                     SoundDefOf.TabOpen.PlayOneShotOnCamera();
                     window.ChangePawn(pawn, comp);
@@ -223,13 +233,14 @@ namespace RJW_Menstruation
 
             }
 
-            Rect wombInfoRect = new Rect(0f, mainRect.yMax - wombrecth - fontheight - 2, wombRectWidth, fontheight);
-
+            Rect wombInfoRect = new Rect(0f, mainRect.yMax - wombrecth - fontheight - 2, wombRectWidth, fontheight - 4f);
+            Rect progressRect = new Rect(wombInfoRect.x,wombInfoRect.yMax,wombRectWidth, 4f);
             buttonstyle.normal.textColor = Color.white;
             //boxstyle.normal.background = Texture2D.whiteTexture;
             buttonstyle.alignment = TextAnchor.MiddleLeft;
             GUI.backgroundColor = new Color(0.24f, 0.29f, 0.35f, 1);
             GUI.Box(wombInfoRect, Translations.Dialog_WombInfo01 + ": " + comp.GetCurStageLabel, buttonstyle);
+            Widgets.FillableBar(progressRect, comp.StageProgress, comp.GetStageTexture);
             GUI.color = Color.white;
 
 
@@ -248,7 +259,7 @@ namespace RJW_Menstruation
             {
                 Rect genitalRect = new Rect(pawnRectWidth + 24, pawnRectHeight + 2 * fontheight, genitalRectWidth, genitalRectHeight + fontheight * 2);
                 Rect breastRect = new Rect(pawnRectWidth + 24, 40f, breastRectWidth, breastRectHeight + fontheight);
-                DrawVagina(genitalRect);
+                DrawVagina(genitalRect, comp);
                 DrawBreast(breastRect);
                 cumlistTitle = new Rect(wombRectWidth + 4f, 0, 150f, fontheight);
                 cumlistRect = new Rect(wombRectWidth + 4f, fontheight, 150f, mainRect.yMax - fontheight + preginfoheight + 3);
@@ -311,14 +322,15 @@ namespace RJW_Menstruation
 
 
 
-        private void DrawVagina(Rect rect)
+        private void DrawVagina(Rect rect, HediffComp_Menstruation comp)
         {
             Rect genitalIconRect = new Rect(rect.x, rect.y + fontheight, genitalRectWidth, genitalRectHeight);
             Rect genitalVaginaLabelRect = new Rect(rect.x, rect.y + 10f, genitalRectWidth, fontheight);
             Rect genitalAnusLabelRect = new Rect(rect.x, rect.y + fontheight + genitalRectHeight, genitalRectWidth, fontheight);
+            bool showOrigin = Mouse.IsOver(genitalIconRect) && Input.GetMouseButton(0);
 
-            vagina = pawn.GetGenitalIcon();
-            anal = pawn.GetAnalIcon();
+            vagina = pawn.GetGenitalIcon(comp, showOrigin);
+            anal = pawn.GetAnalIcon(showOrigin);
             GUI.color = new Color(1.00f, 0.47f, 0.47f, 1);
             GUI.Box(rect, "", boxstyle);
             GUI.color = pawn.story.SkinColor;

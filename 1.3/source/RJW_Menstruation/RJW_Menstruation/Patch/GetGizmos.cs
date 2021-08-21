@@ -19,17 +19,22 @@ namespace RJW_Menstruation
                 return;
             }
 
-            if (Configurations.EnableWombIcon && __instance.gender == Gender.Female)
+            if (__instance.ShouldShowWombGizmo())
             {
-                if (!__instance.IsAnimal())
-                {
-                    AddWombGizmos(__instance, ref gizmoList);
-                }
-                else if (Configurations.EnableAnimalCycle)
-                {
-                    AddWombGizmos(__instance, ref gizmoList);
-                }
+                AddWombGizmos(__instance, ref gizmoList);
             }
+
+            //if (Configurations.EnableWombIcon && __instance.gender == Gender.Female)
+            //{
+            //    if (!__instance.IsAnimal())
+            //    {
+            //        AddWombGizmos(__instance, ref gizmoList);
+            //    }
+            //    else if (Configurations.EnableAnimalCycle)
+            //    {
+            //        AddWombGizmos(__instance, ref gizmoList);
+            //    }
+            //}
 
 
 
