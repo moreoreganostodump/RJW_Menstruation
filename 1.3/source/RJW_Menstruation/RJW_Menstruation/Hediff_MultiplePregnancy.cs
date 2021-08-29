@@ -326,22 +326,22 @@ namespace RJW_Menstruation
                         }
                     }
 
-                    if (xxx.has_traits(pawn) && pawn.RaceProps.Humanlike)
-                    {
-                        foreach (Trait momtrait in pawn.story.traits.allTraits)
-                        {
-                            if (!RJWPregnancySettings.trait_filtering_enabled || !non_genetic_traits.Contains(momtrait.def.defName))
-                                traitpool.Add(momtrait);
-                        }
-                    }
-                    if (father != null && xxx.has_traits(father) && father.RaceProps.Humanlike)
-                    {
-                        foreach (Trait poptrait in father.story.traits.allTraits)
-                        {
-                            if (!RJWPregnancySettings.trait_filtering_enabled || !non_genetic_traits.Contains(poptrait.def.defName))
-                                traitpool.Add(poptrait);
-                        }
-                    }
+                    //if (xxx.has_traits(pawn) && pawn.RaceProps.Humanlike)
+                    //{
+                    //    foreach (Trait momtrait in pawn.story.traits.allTraits)
+                    //    {
+                    //        if (!RJWPregnancySettings.trait_filtering_enabled || !non_genetic_traits.Contains(momtrait.def.defName))
+                    //            traitpool.Add(momtrait);
+                    //    }
+                    //}
+                    //if (father != null && xxx.has_traits(father) && father.RaceProps.Humanlike)
+                    //{
+                    //    foreach (Trait poptrait in father.story.traits.allTraits)
+                    //    {
+                    //        if (!RJWPregnancySettings.trait_filtering_enabled || !non_genetic_traits.Contains(poptrait.def.defName))
+                    //            traitpool.Add(poptrait);
+                    //    }
+                    //}
                     updateTraits(baby, traitpool);
 
                 }

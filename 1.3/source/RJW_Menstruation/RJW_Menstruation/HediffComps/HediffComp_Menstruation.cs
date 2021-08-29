@@ -475,7 +475,7 @@ namespace RJW_Menstruation
         {
             get
             {
-                return curStageHrs / CurStageIntervalHours;
+                return Mathf.Clamp01(curStageHrs / CurStageIntervalHours);
             }
         }
 
@@ -1340,6 +1340,7 @@ namespace RJW_Menstruation
                 EggDecay();
                 Implant();
             }
+
             if (parent.pawn.IsPregnant())
             {
                 curStageHrs += 1;

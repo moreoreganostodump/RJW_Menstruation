@@ -74,10 +74,9 @@ namespace RJW_Menstruation
             if (window != null)
             {
                 List<Pawn> pawns = Find.Selector.SelectedPawns.FindAll(x => x.ShouldShowWombGizmo());
-                if (!pawns.NullOrEmpty() && pawns.Count > 1)
+                if (Input.GetKey(VariousDefOf.OpenStatusWindowKey.MainKey) && !pawns.NullOrEmpty() && pawns.Count > 1)
                 {
                     int index = pawns.IndexOf(window.pawn);
-
                     SoundDefOf.TabOpen.PlayOneShotOnCamera();
                     Pawn newpawn = pawns[(index + 1) % pawns.Count];
                     window.ChangePawn(newpawn, newpawn.GetMenstruationComp());

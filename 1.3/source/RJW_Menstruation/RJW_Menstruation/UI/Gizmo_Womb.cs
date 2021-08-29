@@ -11,7 +11,7 @@ namespace RJW_Menstruation
 
         public const float progressbarHeight = 2f;
 
-        protected override void DrawIcon(Rect rect, Material buttonMat, GizmoRenderParms parms)
+        public override void DrawIcon(Rect rect, Material buttonMat, GizmoRenderParms parms)
         {
             Texture2D badTex = icon;
             Texture2D overay = icon_overay;

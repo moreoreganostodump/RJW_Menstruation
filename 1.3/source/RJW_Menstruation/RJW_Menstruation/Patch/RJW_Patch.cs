@@ -9,8 +9,12 @@ namespace RJW_Menstruation
     [HarmonyPatch(typeof(PregnancyHelper), "impregnate")]
     public static class impregnate_Patch
     {
-        public static bool Prefix(Pawn pawn, Pawn partner, xxx.rjwSextype sextype = xxx.rjwSextype.None)
+        public static bool Prefix(SexProps props)
         {
+            xxx.rjwSextype sextype = props.sexType;
+            Pawn pawn = props.pawn;
+            Pawn partner = props.partner;
+
             if (sextype == xxx.rjwSextype.Vaginal)
             {
                 var pawnpartBPR = Genital_Helper.get_genitalsBPR(pawn);
@@ -106,30 +110,6 @@ namespace RJW_Menstruation
             return true;
         }
     }
-
-    [HarmonyPatch(typeof(JobDriver_Sex), "Orgasm")]
-    public static class Orgasm_Patch
-    {
-        public static void Postfix(JobDriver_Sex __instance, int ___sex_ticks, int ___orgasmstick, Pawn ___pawn, xxx.rjwSextype ___sexType, bool ___usedCondom)
-        {
-            if (___sex_ticks - 1 > ___orgasmstick) //~3s at speed 1
-            {
-                return;
-            }
-
-            if (___pawn.jobs?.curDriver is JobDriver_SexBaseInitiator)
-            {
-                if (___sexType == xxx.rjwSextype.Vaginal && !___usedCondom)
-                {
-                    if (!___pawn.Dead && !__instance.Partner.Dead)
-                    {
-                        PregnancyHelper.impregnate(___pawn, __instance.Partner, ___sexType);
-                    }
-                }
-            }
-        }
-    }
-
 
     [HarmonyPatch(typeof(Hediff_BasePregnancy), "PostBirth")]
     public static class RJW_Patch_PostBirth
