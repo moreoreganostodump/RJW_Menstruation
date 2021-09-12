@@ -121,6 +121,7 @@ namespace RJW_Menstruation
         protected HediffComp_Breast breastcache = null;
         protected float antisperm = 0.0f;
         protected float? originvagsize = null;
+        protected bool? hymen = null;
 
         public int ovarypowerthreshold
         {
@@ -506,6 +507,7 @@ namespace RJW_Menstruation
             Scribe_Values.Look(ref eggstack, "eggstack", eggstack, true);
             Scribe_Values.Look(ref estrusflag, "estrusflag", estrusflag, true);
             Scribe_Values.Look(ref originvagsize, "originvagsize", originvagsize, true);
+            Scribe_Values.Look(ref hymen, "hymen", hymen, true);
         }
 
 
@@ -930,7 +932,7 @@ namespace RJW_Menstruation
                     lifenormalized = parent.pawn.def.race.lifeExpectancy / ThingDefOf.Human.race.lifeExpectancy;
                     fertendage *= lifenormalized;
                     ovarypower = (int)((fertendage - parent.pawn.ageTracker.AgeBiologicalYearsFloat) * (60f / (Props.folicularIntervalDays + Props.lutealIntervalDays) * Configurations.CycleAcceleration) * avglittersize);
-                    ovarypower = (int)Mathf.Max(0, Mathf.Min(Props.ovaryPower * Utility.RandGaussianLike(0.70f,1.30f) * lifenormalized,ovarypower));
+                    ovarypower = (int)Mathf.Max(0, Mathf.Min(Props.ovaryPower * Utility.RandGaussianLike(0.70f,1.30f,5) * lifenormalized,ovarypower));
 
                     if (ovarypower < 1)
                     {

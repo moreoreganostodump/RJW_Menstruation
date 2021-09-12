@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+  <Mod_Title>RJW Ciclo menstrual</Mod_Title>
+  
+  <Menstrual_Blood>sangre menstrual</Menstrual_Blood>
+  <Info_noCum>Vacía</Info_noCum>
+  <Stage_Follicular>Folicular</Stage_Follicular>
+  <Stage_Ovulatory>Ovulación</Stage_Ovulatory> 
+  <Stage_Luteal>Luteal</Stage_Luteal>
+  <Stage_Bleeding>En periodo</Stage_Bleeding>
+  <Stage_Fertilized>Luteal</Stage_Fertilized>
+  <Stage_Pregnant>Embarazada</Stage_Pregnant>
+  <Stage_Recover>Recuperándose del nacimiento</Stage_Recover>
+  <Stage_None>Ninguna</Stage_None>
+  <Stage_Climacteric>Climaterio</Stage_Climacteric>
+  <Stage_Anestrus>Anestro</Stage_Anestrus>
+  <Button_HealthTab>Estado</Button_HealthTab>
+  <Dialog_WombInfo01>Estado</Dialog_WombInfo01>
+  <Dialog_WombInfo02>Fetos</Dialog_WombInfo02>
+  <Dialog_WombInfo03>Padre</Dialog_WombInfo03>
+  <Dialog_WombInfo04>Semen lista</Dialog_WombInfo04>
+  <Dialog_WombInfo05>Fecundada</Dialog_WombInfo05>
+  <Dialog_WombInfo06>Fertil</Dialog_WombInfo06>
+  <Dialog_WombInfo07>Ovulación</Dialog_WombInfo07>
+  <Dialog_WombInfo08></Dialog_WombInfo08>
+  <Dialog_WombInfo09></Dialog_WombInfo09>
+  
+  <Option1_Label_1>habilitar icono de útero</Option1_Label_1>
+  <Option1_Label_2>habilitar el botón en la pestaña de salud</Option1_Label_2>
+  <Option2_Label>habilitar ciclo animal</Option2_Label>
+  <Option2_Desc>simular el ciclo del animal.&#10;esta opción se aplicará después del cargado&#10;no recomendado</Option2_Desc>
+  <Option3_Label>posibilidad de implantación</Option3_Label>
+  <Option3_Desc>establecer la posibilidad de implantación del óvulo fertilizado&#10;este valor determina la posibilidad de finalización de la impregnación</Option3_Desc>
+  <Option4_Label>oportunidad de fertilización</Option4_Label>
+  <Option4_Desc>establecer la posibilidad de fertilización de 1 ml de esperma cada hora&#10;este valor determina la posibilidad inicial de impregnación</Option4_Desc>
+  <Option5_Label>Relación de descomposición semen por hora</Option5_Label>
+  <Option5_Desc>el semen disminuirá en esta proporción&#10;este valor afecta indirectamente al cambio de fertilidad</Option5_Desc>
+  <Option6_Label>índice de descomposición de la fertilidad acumulada por hora</Option6_Label>
+  <Option6_Desc>el semen perderá la fertilidad en esta proporción&#10;este valor afecta indirectamente a la probabilidad de fertilidad</Option6_Desc>
+  <Option7_Label>acelerar el ciclo X</Option7_Label>
+  <Option7_Desc>acelerar el ciclo de la menstruación</Option7_Desc>
+  <Option8_Label>Depurar</Option8_Label>
+  <Option8_Desc>mostrar información de depuración.</Option8_Desc>
+  <Option9_Label>estado del útero</Option9_Label>
+  <Option9_Desc>dibujar icono de útero en la ventana de estado</Option9_Desc>
+  <Option10_Label>estado de la vagina</Option10_Label>
+  <Option10_Desc>dibujar el icono de vagina y ano en la ventana de estado</Option10_Desc>
+  <Option11_Label>Nivel de información del feto</Option11_Label>
+  <Option11_Desc_1>Mostrar toda la información sobre el feto</Option11_Desc_1>
+  <Option11_Desc_2>Mostrar toda la información sobre el feto después de un embarazo notado</Option11_Desc_2>
+  <Option11_Desc_3>No muestre información sobre el feto, pero muestre la imagen del feto después de un embarazo notado</Option11_Desc_3>
+  <Option11_Desc_4>No mostrar la imagen ni la información del feto.</Option11_Desc_4>
+  <Option12_Label>permitir la menopausia</Option12_Label>
+  <Option12_Desc>Permitir el efecto de la menopausia que hace que el peón sea infértil con el paso del tiempo.&#10;Si tiene problemas con las carreras de larga duración, desactive esta opción.&#10;esta opción se aplicará después de guardar cargado</Option12_Desc>
+  <Option13_Label>usar embarazo múltiple</Option13_Label>
+  <Option13_Desc>use embarazo múltiple en lugar del embarazo predeterminado de RJW&#10;deshabilite esta opción si tiene problemas con la impregnación</Option13_Desc>
+  <Option14_Label>permitir gemelos hetero ovulares</Option14_Label>
+  <Option14_Desc>permitir que varios óvulos puedan quedar embarazadas</Option14_Desc>
+  <Option15_Label>permitir gemelos enzimáticos</Option15_Label>
+  <Option15_Desc>permitir que un solo huevo dé como resultado múltiples crías</Option15_Desc>
+  <Option16_Label>posibilidad de gemelos enzimáticos</Option16_Label>
+  <Option16_Desc>Establecer la posibilidad de gemel@s</Option16_Desc>
+  <Option17_Label>gemelos enzimáticos max</Option17_Label>
+  <Option17_Desc>Establecer el número máximo de gemelos</Option17_Desc>
+  <Option18_Label>habilitar la superposición de huevos</Option18_Label>
+  <Option18_Desc>habilitar la superposición de huevos en el icono del útero</Option18_Desc>
+  <Option19_Label_1>cantidad de sangrado</Option19_Label_1>
+  <Option19_Label_2>cantidad total estimada de sangrado</Option19_Label_2>
+  <Option19_Desc>establecer la cantidad de sangrado&#10;la cantidad de sangrado real puede ser diferente dependiendo de la vagina&#10;la cantidad de sangrado genérico de una mujer humana es de aproximadamente 20 ~ 80 ml por mes</Option19_Desc>
+  <Option20_Label_1>Colonos</Option20_Label_1>
+  <Option20_Label_2>Prisionero</Option20_Label_2>
+  <Option20_Label_3>todas las Facciones</Option20_Label_3>
+  <Option20_Label_4>Neutral</Option20_Label_4>
+  <Option20_Label_5>Facción enemiga</Option20_Label_5>
+  <Option21_Label>objetivo de colonos</Option21_Label>
+  <Option21_Desc>el artilugio y el botón aparecerán para estos peones</Option21_Desc>
+  <Option22_Label>usar extensión híbrida</Option22_Label>
+  <Option22_Desc>anula la definición híbrida de RJW y RaceSupport&#10;La extensión híbrida dominante determina qué definición se usa primero. No se recomienda cambiar esto</Option22_Desc>
+  <Option23_Label>Extensión híbrida dominante</Option23_Label>
+  <Option23_Label_1>Madre</Option23_Label_1>
+  <Option23_Label_2>Padre</Option23_Label_2>
+  
+  <FloatMenu_CleanSelf>Lavado Vaginal</FloatMenu_CleanSelf>
+  
+</LanguageData>

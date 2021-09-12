@@ -240,10 +240,10 @@ namespace RJW_Menstruation
                 relationWithExtraPawnChanceFactor: 0,
                 fixedMelanin: melanin,
                 fixedLastName: lastname,
-                kind: BabyPawnKindDecider(mother, father),
-                fixedIdeo: mother.Ideo,
-                forbidAnyTitle: true,
-                forceNoBackstory:true
+                kind: BabyPawnKindDecider(mother, father)
+                //fixedIdeo: mother.Ideo,
+                //forbidAnyTitle: true,
+                //forceNoBackstory:true
                 );
 
             int division = 1;
