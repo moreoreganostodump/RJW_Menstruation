@@ -1,9 +1,9 @@
 Version 1.0.5.7
- - requires RJW 4.8.4.1 or later
+ - requires RJW 4.8.1 or later
  - minor bug fixes
- 
+
 Version 1.0.5.6
- - requires RJW 4.8.3
+ - requires RJW 4.8.0.3
  - fixed womb gizmo not worked properly
 
 Version 1.0.5.5
