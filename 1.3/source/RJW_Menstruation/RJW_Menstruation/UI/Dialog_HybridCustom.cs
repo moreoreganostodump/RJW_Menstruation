@@ -34,7 +34,7 @@ namespace RJW_Menstruation
                         if (Configurations.IsOverrideExist(def)) continue;
                         else
                         {
-                            raceList.Add(new FloatMenuOption(def.label, delegate { AddHybridOverride(def); } ));
+                            raceList.Add(new FloatMenuOption(def.label, delegate { AddHybridOverride(def);}, def.uiIcon, Color.white ));
                         }
                     }
                 }
@@ -288,7 +288,7 @@ namespace RJW_Menstruation
                         if (info.hybridExtension.Exists(x => x.defName == def.defName)) continue;
                         else
                         {
-                            raceList.Add(new FloatMenuOption(def.label, delegate { AddHybridInfo(def); }));
+                            raceList.Add(new FloatMenuOption(def.label, delegate { AddHybridInfo(def); }, Widgets.GetIconFor(def), Color.white));
                         }
                     }
                 }
@@ -384,7 +384,7 @@ namespace RJW_Menstruation
                             if (extension.hybridInfo.ContainsKey(def.defName)) continue;
                             else
                             {
-                                list.Add(new FloatMenuOption(def.label, delegate { extension.hybridInfo.Add(def.defName, 1.0f); }));
+                                list.Add(new FloatMenuOption(def.label, delegate { extension.hybridInfo.Add(def.defName, 1.0f); }, Widgets.GetIconFor(def), Color.white));
                             }
                         }
                     }
@@ -456,7 +456,7 @@ namespace RJW_Menstruation
                                 if (extension.hybridInfo.ContainsKey(def.defName)) continue;
                                 else
                                 {
-                                    list.Add(new FloatMenuOption(def.label, delegate { extension.hybridInfo.Add(def.defName, 1.0f); }));
+                                    list.Add(new FloatMenuOption(def.label, delegate { extension.hybridInfo.Add(def.defName, 1.0f); }, Widgets.GetIconFor(def.race), Color.white));
                                 }
                             }
                         }

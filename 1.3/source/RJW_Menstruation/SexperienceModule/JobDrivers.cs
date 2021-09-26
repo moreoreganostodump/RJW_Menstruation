@@ -11,11 +11,10 @@ using RJWSexperience;
 
 namespace RJW_Menstruation.Sexperience
 {
-    public class JobDriver_VaginaWashingWithBucket : JobDriver
+    public class JobDriver_VaginaWashingWithBucket : JobDriver_CleanSelfWithBucket
     {
         const int excretingTime = 300;//ticks - 120 = 2 real seconds, 3 in-game minutes
 
-        protected Building_CumBucket Bucket => TargetB.Thing as Building_CumBucket;
 
         public override bool TryMakePreToilReservations(bool errorOnFailed)
         {
@@ -54,6 +53,16 @@ namespace RJW_Menstruation.Sexperience
                     if (Comp.TotalCumPercent > 0.001) JumpToToil(excreting);
                 }
             };
+
+            Toil cleaning = new Toil();
+            cleaning.initAction = CleaningInit;
+            cleaning.tickAction = CleaningTick;
+            cleaning.AddFinishAction(Finish);
+            cleaning.defaultCompleteMode = ToilCompleteMode.Never;
+            cleaning.WithProgressBar(TargetIndex.A, () => progress / CleaningTime);
+
+            yield return cleaning;
+
             //yield return excreting;
             yield break;
         }

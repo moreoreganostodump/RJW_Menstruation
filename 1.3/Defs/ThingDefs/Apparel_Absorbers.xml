@@ -12,14 +12,14 @@
     </graphicData>
     <tickerType>Never</tickerType>
     <smeltable>false</smeltable>
-	<tradeability>Sellable</tradeability>
+    <tradeability>Sellable</tradeability>
     <statBases>
       <MaxHitPoints>20</MaxHitPoints>
       <Mass>0.01</Mass>
       <WorkToMake>1000</WorkToMake>
       <Flammability>1.0</Flammability>
       <EquipDelay>2</EquipDelay>
-	  <MaxAbsorbable>10</MaxAbsorbable>
+      <MaxAbsorbable>10</MaxAbsorbable>
     </statBases>
     <costStuffCount>5</costStuffCount>
     <stuffCategories>
@@ -34,7 +34,7 @@
       <soundWorking>Recipe_Tailor</soundWorking>
       <recipeUsers>
         <li>ElectricTailoringBench</li>
-		<li>HandTailoringBench</li>
+        <li>HandTailoringBench</li>
       </recipeUsers>
       <useIngredientsForColor>true</useIngredientsForColor>
       <skillRequirements>
@@ -46,11 +46,12 @@
     </thingCategories>
     <apparel>
       <careIfWornByCorpse>true</careIfWornByCorpse>
+      <countsAsClothingForNudity>false</countsAsClothingForNudity>
       <careIfDamaged>false</careIfDamaged>
       <wearPerDay>0</wearPerDay>
-	  <gender>Female</gender>
+      <gender>Female</gender>
       <bodyPartGroups>
-        <li>Torso</li>
+        <li>GenitalsBPG</li>
       </bodyPartGroups>
       <layers>
         <li>Absorber</li>
@@ -59,18 +60,18 @@
         <li>Absorber</li>
       </tags>
     </apparel>
-	<modExtensions>
-		<li Class="RJW_Menstruation.AbsorberModExtension">
-			<leakAfterDirty>false</leakAfterDirty>
-			<effectsAfterDirty>true</effectsAfterDirty>
-			<minHourstoDirtyEffect>10</minHourstoDirtyEffect>
-			<dirtyDef>Absorber_Tampon_Dirty</dirtyDef>
-		</li>
-	</modExtensions>
+    <modExtensions>
+      <li Class="RJW_Menstruation.AbsorberModExtension">
+        <leakAfterDirty>false</leakAfterDirty>
+        <effectsAfterDirty>true</effectsAfterDirty>
+        <minHourstoDirtyEffect>10</minHourstoDirtyEffect>
+        <dirtyDef>Absorber_Tampon_Dirty</dirtyDef>
+      </li>
+    </modExtensions>
   </ThingDef>
 
   <ThingDef ParentName="ApparelNoQualityBase">
-	<defName>Absorber_Tampon_Dirty</defName>
+    <defName>Absorber_Tampon_Dirty</defName>
     <label>dirty tampon</label>
     <description>An wet used tampon.&#10;May cause infection.</description>
     <thingClass>RJW_Menstruation.Absorber_Tampon</thingClass>
@@ -80,16 +81,16 @@
     </graphicData>
     <tickerType>Never</tickerType>
     <smeltable>false</smeltable>
-	<tradeability>None</tradeability>
+    <tradeability>None</tradeability>
     <statBases>
       <MaxHitPoints>20</MaxHitPoints>
       <Mass>0.05</Mass>
-	  <MarketValue>0</MarketValue>
+      <MarketValue>0</MarketValue>
       <WorkToMake>1000</WorkToMake>
       <Flammability>0.2</Flammability>
       <EquipDelay>2</EquipDelay>
-	  <MaxAbsorbable>10</MaxAbsorbable>
-	  <Cleanliness>-5</Cleanliness>
+      <MaxAbsorbable>10</MaxAbsorbable>
+      <Cleanliness>-5</Cleanliness>
     </statBases>
     <stuffCategories>
       <li>Fabric</li>
@@ -99,11 +100,12 @@
     </thingCategories>
     <apparel>
       <careIfWornByCorpse>true</careIfWornByCorpse>
+      <countsAsClothingForNudity>false</countsAsClothingForNudity>
       <careIfDamaged>false</careIfDamaged>
       <wearPerDay>0</wearPerDay>
-	  <gender>Female</gender>
+      <gender>Female</gender>
       <bodyPartGroups>
-        <li>Torso</li>
+        <li>GenitalsBPG</li>
       </bodyPartGroups>
       <layers>
         <li>Absorber</li>
@@ -112,17 +114,17 @@
         <li>Absorber</li>
       </tags>
     </apparel>
-	<modExtensions>
-		<li Class="RJW_Menstruation.AbsorberModExtension">
-			<leakAfterDirty>false</leakAfterDirty>
-			<effectsAfterDirty>true</effectsAfterDirty>
-			<minHourstoDirtyEffect>8</minHourstoDirtyEffect>
-			<dirtyDef>Absorber_Tampon_Dirty</dirtyDef>
-		</li>
-	</modExtensions>
+    <modExtensions>
+      <li Class="RJW_Menstruation.AbsorberModExtension">
+        <leakAfterDirty>false</leakAfterDirty>
+        <effectsAfterDirty>true</effectsAfterDirty>
+        <minHourstoDirtyEffect>8</minHourstoDirtyEffect>
+        <dirtyDef>Absorber_Tampon_Dirty</dirtyDef>
+      </li>
+    </modExtensions>
   </ThingDef>
-  
-  
+
+
   <ThingDef ParentName="ApparelNoQualityBase">
     <defName>Absorber_Pad</defName>
     <label>sanitary pad</label>
@@ -134,14 +136,22 @@
     </graphicData>
     <tickerType>Never</tickerType>
     <smeltable>false</smeltable>
-	<tradeability>Sellable</tradeability>
+    <tradeability>Sellable</tradeability>
     <statBases>
       <MaxHitPoints>40</MaxHitPoints>
       <Mass>0.02</Mass>
       <WorkToMake>1000</WorkToMake>
       <Flammability>1.0</Flammability>
       <EquipDelay>4</EquipDelay>
-	  <MaxAbsorbable>25</MaxAbsorbable>
+      <MaxAbsorbable>25</MaxAbsorbable>
+      <StuffEffectMultiplierArmor>0.02</StuffEffectMultiplierArmor>
+      <StuffEffectMultiplierInsulation_Cold>0.02</StuffEffectMultiplierInsulation_Cold>
+      <StuffEffectMultiplierInsulation_Heat>0.05</StuffEffectMultiplierInsulation_Heat>
+      <ArmorRating_Sharp>0.01</ArmorRating_Sharp>
+      <ArmorRating_Blunt>0.04</ArmorRating_Blunt>
+      <ArmorRating_Heat>0.05</ArmorRating_Heat>
+      <Insulation_Cold>1</Insulation_Cold>
+      <Insulation_Heat>-1</Insulation_Heat>
     </statBases>
     <costStuffCount>10</costStuffCount>
     <stuffCategories>
@@ -155,7 +165,7 @@
       <soundWorking>Recipe_Tailor</soundWorking>
       <recipeUsers>
         <li>ElectricTailoringBench</li>
-		<li>HandTailoringBench</li>
+        <li>HandTailoringBench</li>
       </recipeUsers>
       <useIngredientsForColor>true</useIngredientsForColor>
       <skillRequirements>
@@ -167,11 +177,12 @@
     </thingCategories>
     <apparel>
       <careIfWornByCorpse>true</careIfWornByCorpse>
+      <countsAsClothingForNudity>true</countsAsClothingForNudity>
       <careIfDamaged>false</careIfDamaged>
       <wearPerDay>0</wearPerDay>
-	  <gender>Female</gender>
+      <gender>Female</gender>
       <bodyPartGroups>
-        <li>Torso</li>
+        <li>GenitalsBPG</li>
       </bodyPartGroups>
       <layers>
         <li>Absorber</li>
@@ -180,17 +191,17 @@
         <li>Absorber</li>
       </tags>
     </apparel>
-	<modExtensions>
-		<li Class="RJW_Menstruation.AbsorberModExtension">
-			<leakAfterDirty>true</leakAfterDirty>
-			<effectsAfterDirty>false</effectsAfterDirty>
-			<dirtyDef>Absorber_Pad_Dirty</dirtyDef>
-		</li>
-	</modExtensions>
+    <modExtensions>
+      <li Class="RJW_Menstruation.AbsorberModExtension">
+        <leakAfterDirty>true</leakAfterDirty>
+        <effectsAfterDirty>false</effectsAfterDirty>
+        <dirtyDef>Absorber_Pad_Dirty</dirtyDef>
+      </li>
+    </modExtensions>
   </ThingDef>
 
   <ThingDef ParentName="ApparelNoQualityBase">
-	<defName>Absorber_Pad_Dirty</defName>
+    <defName>Absorber_Pad_Dirty</defName>
     <label>wet sanitary pad</label>
     <description>An wet used pad.</description>
     <thingClass>RJW_Menstruation.Absorber</thingClass>
@@ -200,16 +211,24 @@
     </graphicData>
     <tickerType>Never</tickerType>
     <smeltable>false</smeltable>
-	<tradeability>None</tradeability>
+    <tradeability>None</tradeability>
     <statBases>
       <MaxHitPoints>40</MaxHitPoints>
       <Mass>0.10</Mass>
-	  <MarketValue>0</MarketValue>
+      <MarketValue>0</MarketValue>
       <WorkToMake>1000</WorkToMake>
       <Flammability>0.2</Flammability>
       <EquipDelay>4</EquipDelay>
-	  <MaxAbsorbable>25</MaxAbsorbable>
-	  <Cleanliness>-5</Cleanliness>
+      <MaxAbsorbable>25</MaxAbsorbable>
+      <Cleanliness>-5</Cleanliness>
+      <StuffEffectMultiplierArmor>0.02</StuffEffectMultiplierArmor>
+      <StuffEffectMultiplierInsulation_Cold>0.02</StuffEffectMultiplierInsulation_Cold>
+      <StuffEffectMultiplierInsulation_Heat>0.05</StuffEffectMultiplierInsulation_Heat>
+      <ArmorRating_Sharp>0.01</ArmorRating_Sharp>
+      <ArmorRating_Blunt>0.04</ArmorRating_Blunt>
+      <ArmorRating_Heat>0.1</ArmorRating_Heat>
+      <Insulation_Cold>-4</Insulation_Cold>
+      <Insulation_Heat>2</Insulation_Heat>
     </statBases>
     <stuffCategories>
       <li>Fabric</li>
@@ -219,11 +238,12 @@
     </thingCategories>
     <apparel>
       <careIfWornByCorpse>true</careIfWornByCorpse>
+      <countsAsClothingForNudity>true</countsAsClothingForNudity>
       <careIfDamaged>false</careIfDamaged>
       <wearPerDay>0</wearPerDay>
-	  <gender>Female</gender>
+      <gender>Female</gender>
       <bodyPartGroups>
-        <li>Torso</li>
+        <li>GenitalsBPG</li>
       </bodyPartGroups>
       <layers>
         <li>Absorber</li>
@@ -232,12 +252,12 @@
         <li>Absorber</li>
       </tags>
     </apparel>
-	<modExtensions>
-		<li Class="RJW_Menstruation.AbsorberModExtension">
-			<leakAfterDirty>true</leakAfterDirty>
-			<effectsAfterDirty>false</effectsAfterDirty>
-			<dirtyDef>Absorber_Pad_Dirty</dirtyDef>
-		</li>
-	</modExtensions>
+    <modExtensions>
+      <li Class="RJW_Menstruation.AbsorberModExtension">
+        <leakAfterDirty>true</leakAfterDirty>
+        <effectsAfterDirty>false</effectsAfterDirty>
+        <dirtyDef>Absorber_Pad_Dirty</dirtyDef>
+      </li>
+    </modExtensions>
   </ThingDef>
 </Defs>

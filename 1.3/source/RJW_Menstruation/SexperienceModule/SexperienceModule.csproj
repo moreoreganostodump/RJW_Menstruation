@@ -103,7 +103,9 @@
   <ItemGroup>
     <Compile Include="GatheredCumMixture.cs" />
     <Compile Include="JobDrivers.cs" />
+    <Compile Include="Patch\GetGizmos.cs" />
     <Compile Include="Patch\Harmony.cs" />
+    <Compile Include="Patch\Menstruation_Patch.cs" />
     <Compile Include="Patch\Pawn_Patch.cs" />
     <Compile Include="Patch\RJW_Patch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

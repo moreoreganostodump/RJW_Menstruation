@@ -12,12 +12,13 @@ namespace RJW_Menstruation
     {
         public static void Postfix(ref IEnumerable<Gizmo> __result, Pawn __instance)
         {
-            List<Gizmo> gizmoList = __result.ToList();
-
             if (!__instance.ShowStatus())
             {
                 return;
             }
+
+            List<Gizmo> gizmoList = __result.ToList();
+
 
             if (__instance.ShouldShowWombGizmo())
             {
@@ -46,9 +47,15 @@ namespace RJW_Menstruation
         private static void AddWombGizmos(Pawn __instance, ref List<Gizmo> gizmoList)
         {
             HediffComp_Menstruation comp = __instance.GetMenstruationComp();
-            if (comp != null) gizmoList.Add(CreateGizmo_WombStatus(__instance, comp));
+            if (comp != null) AddMenstruationGizmos(__instance, comp, ref gizmoList);
 
         }
+
+        private static void AddMenstruationGizmos(Pawn pawn, HediffComp_Menstruation comp, ref List<Gizmo> gizmolist)
+        {
+            gizmolist.Add(CreateGizmo_WombStatus(pawn, comp));
+        }
+
 
         private static Gizmo CreateGizmo_WombStatus(Pawn pawn, HediffComp_Menstruation comp)
         {
@@ -113,6 +120,7 @@ namespace RJW_Menstruation
             
             return gizmo;
         }
+
     }
 
 

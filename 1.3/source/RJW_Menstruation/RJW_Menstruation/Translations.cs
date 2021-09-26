@@ -19,6 +19,8 @@ namespace RJW_Menstruation
         public static readonly string Stage_Anestrus = "Stage_Anestrus".Translate();
         public static readonly string Button_HealthTab = "Button_HealthTab".Translate();
         public static readonly string Button_MilkTooltip = "Button_MilkTooltip".Translate();
+        public static readonly string Dialog_DoCleanWomb_Tooltip = "Dialog_DoCleanWomb_Tooltip".Translate();
+        public static readonly string Dialog_DontCleanWomb_Tooltip = "Dialog_DontCleanWomb_Tooltip".Translate();
 
         public static readonly string Dialog_WombInfo01 = "Dialog_WombInfo01".Translate();
         public static readonly string Dialog_WombInfo02 = "Dialog_WombInfo02".Translate();

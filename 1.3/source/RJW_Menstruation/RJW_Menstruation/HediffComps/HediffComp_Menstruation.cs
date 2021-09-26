@@ -73,7 +73,7 @@ namespace RJW_Menstruation
         public bool loaded = false;
         public int ovarypower = -100000;
         public int eggstack = 0;
-
+        public bool DoCleanWomb = false;
 
         public enum Stage
         {
@@ -121,7 +121,6 @@ namespace RJW_Menstruation
         protected HediffComp_Breast breastcache = null;
         protected float antisperm = 0.0f;
         protected float? originvagsize = null;
-        protected bool? hymen = null;
 
         public int ovarypowerthreshold
         {
@@ -507,7 +506,7 @@ namespace RJW_Menstruation
             Scribe_Values.Look(ref eggstack, "eggstack", eggstack, true);
             Scribe_Values.Look(ref estrusflag, "estrusflag", estrusflag, true);
             Scribe_Values.Look(ref originvagsize, "originvagsize", originvagsize, true);
-            Scribe_Values.Look(ref hymen, "hymen", hymen, true);
+            Scribe_Values.Look(ref DoCleanWomb, "DoCleanWomb", DoCleanWomb, true);
         }
 
 

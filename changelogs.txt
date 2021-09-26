@@ -1,3 +1,10 @@
+Version 1.0.5.8
+ - requires RJW 4.8.1 or later
+ - added toggle for gather cums in womb into a cum bucket
+ - fixed nudity pawns get mood debuff from tampons(pads will get debuffs)
+ - added blue breasts for hydraulic and bionic breasts
+ - now pads provide tiny armor rate to genitals
+
 Version 1.0.5.7
  - requires RJW 4.8.1 or later
  - minor bug fixes

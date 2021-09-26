@@ -25,6 +25,8 @@
   <Dialog_WombInfo07>Ovulation</Dialog_WombInfo07>
   <Dialog_WombInfo08></Dialog_WombInfo08>
   <Dialog_WombInfo09></Dialog_WombInfo09>
+  <Dialog_DoCleanWomb_Tooltip>Gather cums into bucket</Dialog_DoCleanWomb_Tooltip>
+  <Dialog_DontCleanWomb_Tooltip>Store cums in womb</Dialog_DontCleanWomb_Tooltip>
   
   <Option1_Label_1>enable womb icon</Option1_Label_1>
   <Option1_Label_2>enable button in health tab</Option1_Label_2>

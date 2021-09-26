@@ -195,7 +195,7 @@ namespace RJW_Menstruation
                     nipple = ContentFinder<Texture2D>.Get("Breasts/Breast_Breast00_Nipple00", false);
                     areola = ContentFinder<Texture2D>.Get("Breasts/Breast_Breast00_Areola00", false);
 
-                    GUI.color = pawn.story.SkinColor;
+                    GUI.color = pawn.story?.SkinColor ?? Color.white;
                     GUI.DrawTexture(rect, breast, ScaleMode.ScaleToFit);
                     GUI.color = Color.white;
                     GUI.DrawTexture(rect, areola, ScaleMode.ScaleToFit);

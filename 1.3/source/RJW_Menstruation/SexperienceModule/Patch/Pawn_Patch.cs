@@ -18,7 +18,9 @@ namespace RJW_Menstruation.Sexperience
         public static void Postfix(Vector3 clickPos, Pawn pawn, List<FloatMenuOption> opts)
         {
             var targets = GenUI.TargetsAt(clickPos, TargetingParameters.ForBuilding());
+            HediffComp_Menstruation comp = pawn.GetMenstruationComp();
 
+            if (comp != null && comp.TotalCumPercent > 0.001f)
             foreach (LocalTargetInfo t in targets)
             {
                 Building building = t.Thing as Building;
@@ -39,7 +41,7 @@ namespace RJW_Menstruation.Sexperience
 
         public static FloatMenuOption MakeMenu(Pawn pawn, LocalTargetInfo target)
         {
-            FloatMenuOption option = FloatMenuUtility.DecoratePrioritizedTask(new FloatMenuOption(Translations.FloatMenu_CleanSelf, delegate ()
+            FloatMenuOption option = FloatMenuUtility.DecoratePrioritizedTask(new FloatMenuOption(Keyed.RS_GatherCum, delegate ()
             {
                 pawn.jobs.TryTakeOrderedJob(new Verse.AI.Job(VariousDefOf.VaginaWashingwithBucket, null, target, target.Cell));
             }, MenuOptionPriority.Low), pawn, target);

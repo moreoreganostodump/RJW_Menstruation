@@ -19,8 +19,8 @@
 		<value>
 			<comps>
 				<li Class="RJW_Menstruation.CompProperties_Breast">
-					<BreastTex>Breasts/Breast</BreastTex>
-					<BlacknippleColor>(55,20,0)</BlacknippleColor>
+					<BreastTex>Breasts/Breasts_Artificial</BreastTex>
+					<BlacknippleColor>(255,255,255)</BlacknippleColor>
 				</li>
 			</comps>
 		</value>
@@ -31,8 +31,8 @@
 		<value>
 			<comps>
 				<li Class="RJW_Menstruation.CompProperties_Breast">
-					<BreastTex>Breasts/Breast</BreastTex>
-					<BlacknippleColor>(55,20,0)</BlacknippleColor>
+					<BreastTex>Breasts/Breasts_Artificial</BreastTex>
+					<BlacknippleColor>(255,255,255)</BlacknippleColor>
 				</li>
 			</comps>
 		</value>
@@ -44,7 +44,7 @@
 			<comps>
 				<li Class="RJW_Menstruation.CompProperties_Breast">
 					<BreastTex>Breasts/Breast</BreastTex>
-					<BlacknippleColor>(55,20,0)</BlacknippleColor>
+					<BlacknippleColor>(255,255,255)</BlacknippleColor>
 				</li>
 			</comps>
 		</value>

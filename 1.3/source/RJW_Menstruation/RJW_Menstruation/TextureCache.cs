@@ -87,7 +87,8 @@ namespace RJW_Menstruation
         }
 
         public static readonly Texture2D FertChanceTex = SolidColorMaterials.NewSolidColorTexture(new Color(1f, 1f, 1f, 0.4f));
-
+        public static readonly Texture2D GatherCum_Bucket = ContentFinder<Texture2D>.Get("UI/Icon/ToBucket");
+        public static readonly Texture2D GatherCum_Pussy = ContentFinder<Texture2D>.Get("UI/Icon/ToPussy");
 
         private static Texture2D milktexturecache = SolidColorMaterials.NewSolidColorTexture(0.992f, 1.0f, 0.960f, 1.0f);
         private static Texture2D slaaneshtexturecache = SolidColorMaterials.NewSolidColorTexture(0.686f, 0.062f, 0.698f, 1.0f);
@@ -98,6 +99,7 @@ namespace RJW_Menstruation
         private static Texture2D animaltexturecache = SolidColorMaterials.NewSolidColorTexture(0.411f, 0.521f, 0.878f, 1.0f);
         private static Texture2D fertilitytexturecache = SolidColorMaterials.NewSolidColorTexture(0.843f, 0.474f, 0.6f, 1.0f);
         private static Texture2D ghalmaraztexturecache = SolidColorMaterials.NewSolidColorTexture(0.7f, 0.7f, 0.0f, 1.0f);
+
 
 
 

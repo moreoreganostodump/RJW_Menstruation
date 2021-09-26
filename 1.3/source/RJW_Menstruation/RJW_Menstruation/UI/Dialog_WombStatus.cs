@@ -38,7 +38,20 @@ namespace RJW_Menstruation
         private GUIStyle boxstyle = new GUIStyle(GUI.skin.textArea);
         private GUIStyle buttonstyle = new GUIStyle(GUI.skin.button);
 
-
+        public Pawn Pawn
+        {
+            get
+            {
+                return pawn;
+            }
+        }
+        public HediffComp_Menstruation Comp
+        {
+            get
+            {
+                return comp;
+            }
+        }
 
 
         public override Vector2 InitialSize
