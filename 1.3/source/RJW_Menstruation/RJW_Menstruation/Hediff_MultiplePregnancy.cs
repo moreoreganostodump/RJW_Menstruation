@@ -309,7 +309,6 @@ namespace RJW_Menstruation
 
         public Pawn GenerateBaby(PawnGenerationRequest request, Pawn mother, Pawn father)
         {
-            
             Pawn baby = PawnGenerator.GeneratePawn(request);
             if (baby != null)
             {
@@ -356,6 +355,7 @@ namespace RJW_Menstruation
                     }
                 }
             }
+            else Log.Error("Baby not generated. Request: " + request.ToString());
             return baby;
         }
 

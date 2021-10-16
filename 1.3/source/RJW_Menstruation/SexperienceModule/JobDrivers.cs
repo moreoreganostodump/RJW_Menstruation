@@ -25,10 +25,10 @@ namespace RJW_Menstruation.Sexperience
         {
 
             HediffComp_Menstruation Comp = pawn.GetMenstruationComp();
-            this.FailOn(delegate
-            {
-                return !(Comp.TotalCumPercent > 0.001);
-            });
+            //this.FailOn(delegate
+            //{
+            //    return !(Comp.TotalCumPercent > 0.001);
+            //});
             yield return Toils_Goto.GotoThing(TargetIndex.B, PathEndMode.ClosestTouch);
             Toil excreting = Toils_General.Wait(excretingTime, TargetIndex.None);//duration of 
 
@@ -38,18 +38,22 @@ namespace RJW_Menstruation.Sexperience
             {
                 initAction = delegate ()
                 {
-                    CumMixture mixture = Comp.MixtureOut(RJWSexperience.VariousDefOf.GatheredCum, 0.5f);
-                    float amount = mixture.Volume;
-                    if (mixture.ispurecum)
+                    if (Comp.TotalCumPercent > 0.001)
                     {
-                        Bucket.AddCum(amount);
+                        CumMixture mixture = Comp.MixtureOut(RJWSexperience.VariousDefOf.GatheredCum, 0.5f);
+                        float amount = mixture.Volume;
+                        if (mixture.ispurecum)
+                        {
+                            Bucket.AddCum(amount);
+                        }
+                        else
+                        {
+                            GatheredCumMixture cummixture = (GatheredCumMixture)ThingMaker.MakeThing(VariousDefOf.GatheredCumMixture);
+                            cummixture.InitwithCum(mixture);
+                            Bucket.AddCum(amount, cummixture);
+                        }
                     }
-                    else
-                    {
-                        GatheredCumMixture cummixture = (GatheredCumMixture)ThingMaker.MakeThing(VariousDefOf.GatheredCumMixture);
-                        cummixture.InitwithCum(mixture);
-                        Bucket.AddCum(amount, cummixture);
-                    }
+                    else ReadyForNextToil();
                     if (Comp.TotalCumPercent > 0.001) JumpToToil(excreting);
                 }
             };

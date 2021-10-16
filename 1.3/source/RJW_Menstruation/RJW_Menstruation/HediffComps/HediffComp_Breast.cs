@@ -148,9 +148,17 @@ namespace RJW_Menstruation
 
         public override void CompPostPostRemoved()
         {
-            HugsLibController.Instance.TickDelayScheduler.TryUnscheduleCallback(action);
-            ModLog.Message(parent.pawn.Label + "breast tick scheduler removed");
-            base.CompPostPostRemoved();
+
+            if (parent?.pawn?.GetBreastComp() == this)
+            {
+                Log.Warning("Something tried to remove hediff with wrong way.");
+            }
+            else
+            {
+                HugsLibController.Instance.TickDelayScheduler.TryUnscheduleCallback(action);
+                Log.Message(parent.pawn.Label + "breast tick scheduler removed");
+                base.CompPostPostRemoved();
+            }
         }
 
         public void Initialize()

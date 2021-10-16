@@ -179,6 +179,10 @@ namespace RJW_Menstruation
             return null;
         }
 
+        public static Hediff_BasePregnancy GetRJWPregnancy(this Pawn pawn)
+        {
+            return (Hediff_BasePregnancy)pawn.health.hediffSet.hediffs.FirstOrDefault(x => x is Hediff_BasePregnancy);
+        }
 
         public static void DrawBreastIcon(this Pawn pawn, Rect rect , bool drawOrigin = false)
         {

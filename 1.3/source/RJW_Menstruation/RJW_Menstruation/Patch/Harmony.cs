@@ -11,6 +11,7 @@ namespace RJW_Menstruation
         {
             var har = new Harmony("RJW_Menstruation");
             har.PatchAll(Assembly.GetExecutingAssembly());
+            
         }
     }
 

@@ -122,7 +122,6 @@ namespace RJW_Menstruation
                 float morph = Mathf.Max(baby.BodySize - Mathf.Pow(vagina.Severity * mother.BodySize,2), 0f);
                 vagina.Severity += morph * Configurations.VaginaMorphPower;
             }
-            
         }
     }
 

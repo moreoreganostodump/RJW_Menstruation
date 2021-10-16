@@ -195,12 +195,12 @@ namespace RJW_Menstruation
         {
             if (updatefilthDef != null) filthDef = updatefilthDef;
             volume += volumein;
-            cumthickness = Mathf.Lerp(cumthickness, thickness, volumein / volume);
+            notcumthickness = Mathf.Lerp(notcumthickness, thickness, volumein / volume);
         }
 
         public bool ShouldRemove()
         {
-            if (fertvolume < 0.001f && volume < 0.001f) return true;
+            if ((notcum || fertvolume < 0.001f) && volume < 0.01f) return true;
             return false;
         }
 
@@ -218,7 +218,7 @@ namespace RJW_Menstruation
         public float DismishForce(float portion, float leakfactor = 1.0f)
         {
             float totalleak = volume;
-            volume *= Math.Max(0, 1 - (portion * (1 - decayresist)) * leakfactor);
+            volume *= Math.Max(0, 1 - (portion * (1 - decayresist/10)) * leakfactor);
             fertvolume *= Math.Max(0, 1 - (portion * (1 - decayresist)) * leakfactor);
             CutMinor();
             totalleak -= volume;

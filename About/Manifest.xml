@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Manifest>
 	<identifier>RJW Menstruation</identifier>
-	<version>1.0.5.8</version>
+	<version>1.0.5.9</version>
 	<dependencies>
 	</dependencies>
 	<incompatibleWith />
 	<loadAfter>
+		<li>UnlimitedHugs.HugsLib</li>
+		<li>brrainz.harmony</li>
+		<li>rim.job.world</li>
+		<li>Abraxas.RJW.RaceSupport</li>
+		<li>rjw.milk.humanoid</li>
+		<li>rjw.sexperience</li>
 	</loadAfter>
 	<suggests>
 	</suggests>

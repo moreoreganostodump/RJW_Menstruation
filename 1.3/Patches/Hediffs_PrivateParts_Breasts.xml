@@ -19,7 +19,7 @@
 		<value>
 			<comps>
 				<li Class="RJW_Menstruation.CompProperties_Breast">
-					<BreastTex>Breasts/Breasts_Artificial</BreastTex>
+					<BreastTex>Breasts_Artificial/Breast</BreastTex>
 					<BlacknippleColor>(255,255,255)</BlacknippleColor>
 				</li>
 			</comps>
@@ -31,7 +31,7 @@
 		<value>
 			<comps>
 				<li Class="RJW_Menstruation.CompProperties_Breast">
-					<BreastTex>Breasts/Breasts_Artificial</BreastTex>
+					<BreastTex>Breasts_Artificial/Breast</BreastTex>
 					<BlacknippleColor>(255,255,255)</BlacknippleColor>
 				</li>
 			</comps>

@@ -1,3 +1,6 @@
+Version 1.0.5.9
+ - minor bug fixes
+
 Version 1.0.5.8
  - requires RJW 4.8.1 or later
  - added toggle for gather cums in womb into a cum bucket
