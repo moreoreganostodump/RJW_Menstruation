@@ -253,7 +253,7 @@ namespace RJW_Menstruation
 
         public static float GestationHours(this Hediff_BasePregnancy hediff)
         {
-            return (1 / hediff?.progress_per_tick ?? 1) / 2500f;
+            return (1 / /*hediff?.progress_per_tick ??*/ 1) / 2500f;
         }
     }
 
